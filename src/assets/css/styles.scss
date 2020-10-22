@@ -1,0 +1,56 @@
+$primary-color: #122049;
+$primary-color-light: #192d66;
+
+$secondary-color-dark: #d64437;
+$secondary-color: #ed5c30;
+$secondary-color-light: #faa854;
+
+$accent-color: #208951;
+$accent-color-light: lighten($accent-color, 10);
+
+$link-color: $primary-color;
+
+$dropdown-color: $primary-color;
+
+$sidenav-bg-color: $primary-color;
+$sidenav-font-color: #fff;
+
+$footer-copyright-bg-color: $accent-color;
+
+$card-padding: 15px;
+// $primary_alt3: #fdd768;
+
+// $secondary-color: #208951;
+// $secondary-color-light: #2cba6e;
+
+$collection-bg-color: transparent;
+
+$input-focus-color: $primary-color;
+$button-floating-background: $primary-color;
+
+$progress-bar-color: $accent-color;
+
+$gray_light: #f0f0f0;
+$gray_mild: #eaeaea;
+$gray_medium: #666;
+$gray_dark: #1a1a1a;
+
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import '../../../node_modules/materialize-css/sass/materialize.scss';
+
+html {
+	font-family: "Lato", sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+
+.wrapper {
+	max-width: 1200px;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
