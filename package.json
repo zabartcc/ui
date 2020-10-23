@@ -10,7 +10,6 @@
   "dependencies": {
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
-    "luxon": "^1.25.0",
     "materialize-css": "^1.0.0-rc.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",

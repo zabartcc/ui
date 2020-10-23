@@ -21,51 +21,9 @@
 <script>
 export default {
 	mounted () {
-		let days = [
-			'Sunday',
-			'Monday',
-			'Tuesday',
-			'Wednesday',
-			'Thursday',
-			'Friday',
-			'Saturday'
-		];
-
-		let months = [
-			'January',
-			'February',
-			'March',
-			'April',
-			'May',
-			'June',
-			'July',
-			'August',
-			'September',
-			'October',
-			'November',
-			'December'
-		];
-
-		function ordinalDay (day) {
-			let ordinal = '';
-			if (day > 3 && day < 21) return day + 'th';
-			switch (day % 10) {
-			case 1: ordinal = 'st'; break;
-			case 2: ordinal = 'nd'; break;
-			case 3: ordinal = 'rd'; break;
-			}
-
-			return day + ordinal;
-		}
-
-		function addZero (num) {
-			if (num < 10) return '0' + num;
-			else return num;
-		}
-
 		setInterval(function () {
 			let d = new Date();
-			document.querySelector('.footer-copyright #time').innerHTML = days[d.getUTCDay()] + ', ' + months[d.getUTCMonth()] + ' ' + ordinalDay(d.getUTCDate()) + ', ' + d.getUTCFullYear() + ' ' + addZero(d.getUTCHours()) + ':' + addZero(d.getUTCMinutes()) + ':' + addZero(d.getUTCSeconds());
+			document.querySelector('.footer-copyright #time').innerHTML = d.toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
 		}, 1000);
 
 		document.getElementById('full_year').innerHTML = new Date().getFullYear();
