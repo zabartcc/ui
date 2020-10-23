@@ -11,18 +11,20 @@
 					</div>
 				</div>
 			</main>
-		<!-- <Footer /> -->
+		<Footer />
 	</div>
 </template>
 
 <script>
 import Header from '../partial/Header';
 import Sidebar from '../partial/Sidebar';
+import Footer from '../partial/Footer';
 
 export default {
 	components: {
 		Header,
 		Sidebar,
+		Footer
 	}, 
 };
 </script>
