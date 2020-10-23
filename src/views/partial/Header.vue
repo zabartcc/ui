@@ -210,7 +210,7 @@ export default {
 			font-size: 3rem;
 			color: #fff;
 			// padding: 0 15px;
-			text-shadow: -2px -2px 3px $primary-color;
+			text-shadow: -2px -2px 3px $primary-color-light;
 			// background: rgba(#fff,0.75);
 
 			span {

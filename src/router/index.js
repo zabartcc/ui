@@ -9,8 +9,12 @@ const routes = [
 				component: () => import('../views/page/Home.vue')
 			},
 			{ 
-				path: 'login/verify', 
+				path: '/login/verify', 
 				component: () => import('../views/page/LoginVerify.vue') 
+			},
+			{
+				path: '/controllers',
+				component: () => import('../views/page/controller/Roster.vue')
 			}
 		]
 	}

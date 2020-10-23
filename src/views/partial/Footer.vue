@@ -59,5 +59,8 @@ body .page-footer {
 	font-weight: 700;
 }
 
+#footer_text, .footer-copyright .wrapper {
+	padding: 10px;
+}
 
 </style>
