@@ -18,7 +18,6 @@
 			<div v-else>
 				<h4>No Controllers Currently Online.</h4>
 			</div>
-			<h6 class="as_of">As Of: {{atcUpdateTime}}</h6>
 		</div>
 		<div id="pilots_online">
 			<div v-if=pilotsOnline>
@@ -27,49 +26,46 @@
 			<div v-else>
 				<h4>No Departures/Arrivals Found.</h4>
 			</div>
-			<h6 class="as_of">As Of: {{pilotUpdateTime}}</h6>
 		</div>
+		<h6 class="as_of">As Of: {{getZuluTime()}}z</h6>
 	</div>
 </template>
 
 <script>
-import axios from '@/helpers/axios.js';
 import AtcOnlineItem from './AtcOnlineItem';
 import PilotOnlineItem from './PilotOnlineItem';
-import { DateTime } from 'luxon';
+import { SidebarMixin } from '@/mixins/SidebarMixin.js';
 
 export default {
 	components: {
 		AtcOnlineItem,
 		PilotOnlineItem
 	},
-	data () {
+	data() {
 		return {
 			pilotsOnline: null,
-			pilotUpdateTime: 0,
+			updateTime: '',
 			atcOnline: null,
-			atcUpdateTime: 0,
 			ratings: null
 		};
 	},
+	mixins: [SidebarMixin],
 	methods: {
-		getPilotsOnline () {
-			axios.get('/pilotonline').then(({ data }) => {
-				this.pilotsOnline = data;
-				this.pilotUpdateTime = DateTime.utc().toFormat("MMM dd, HH:mm'z'");
-			});
+		async getOnline() {
+			const pilotsOnline = await this.getPilotsOnline();
+			const atcOnline = await this.getAtcOnline();
+			this.pilotsOnline = pilotsOnline;
+			this.atcOnline = atcOnline;
+			this.getZuluTime(); // update time when refreshing who's online
 		},
-		getAtcOnline () {
-			axios.get('/atconline').then(({ data }) => {
-				this.atcOnline = data;
-				this.atcUpdateTime = DateTime.utc().toFormat("MMM dd, HH:mm'z'");
-			});
-		},
+		getZuluTime() {
+			var epoch = new Date();
+			return epoch.toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
+		}
 	},
-	mounted () {
-		this.getPilotsOnline();
-		this.getAtcOnline();
+	mounted() {
 		M.Tabs.init(document.querySelectorAll('.tabs'));
+		this.getOnline();
 	}
 };
 </script>

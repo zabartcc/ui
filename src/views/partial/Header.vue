@@ -224,7 +224,7 @@ export default {
 }
 
 nav {
-	background-color: $secondary-color-dark;
+	background-color: $primary-color;
 }
 
 @media screen and (max-width: 910px) {

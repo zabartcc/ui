@@ -1,13 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Master from '../views/layout/Master.vue';
-import Home from '../views/page/Home.vue';
-import LoginVerify from '../views/page/LoginVerify.vue';
 
 const routes = [
 	{
 		path: '/', component: Master, children: [
-			{ path: '', component: Home },
-			{ path: 'login/verify', component: LoginVerify }
+			{
+				path: '', 
+				component: () => import('../views/page/Home.vue')
+			},
+			{ 
+				path: 'login/verify', 
+				component: () => import('../views/page/LoginVerify.vue') 
+			}
 		]
 	}
 ];
