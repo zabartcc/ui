@@ -45,7 +45,6 @@ body .page-footer {
 } 
 
 .footer_top {
-	padding: 1em 0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -59,8 +58,13 @@ body .page-footer {
 	font-weight: 700;
 }
 
-#footer_text, .footer-copyright .wrapper {
-	padding: 10px;
+.wrapper {
+	padding: 1em;
+}
+
+#footer_text, .footer-copyright {
+	padding: 0!important;
+	min-height: 20px!important;
 }
 
 </style>

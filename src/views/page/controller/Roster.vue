@@ -3,7 +3,7 @@
         <div class="card-content">
             <span class="card-title">Controller Roster</span>
         </div>
-        <table class="controller_list striped responsive-table">
+        <table class="controller_list striped">
             <thead class="controller_list_head">
                 <tr>
                     <th class="name">Controller</th>
@@ -83,10 +83,10 @@ export default {
     transition: background-color 0.3s ease;
 
     &:nth-child(odd) {
-        background-color: $gray_light!important;
+        background-color: rgba(242,242,242,0.6)!important;
     }
     &:hover {
-        background-color: $gray_light;
+        background-color: rgba(242,242,242,0.6);
     }
 }
 
