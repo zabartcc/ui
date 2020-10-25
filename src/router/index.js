@@ -15,6 +15,10 @@ const routes = [
 			{
 				path: '/controllers',
 				component: () => import('../views/page/controller/Roster.vue')
+			},
+			{
+				path: '/events',
+				component: () => import('../views/page/events/Index.vue')
 			}
 		]
 	}
