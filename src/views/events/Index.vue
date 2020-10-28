@@ -5,19 +5,16 @@
             <span style="font-style: italic;">We're sorry, but there are no upcoming events planned. Please check back later.</span>
         </div>
     </div>
-    <div class="card" v-for="event in events" :key="event.id">
+    <div class="card event-card" v-for="event in events" :key="event.id">
         <img :src="event.bannerUrl" class="event-banner" draggable="false" />
         <div class="card-content">
-            <span class="card-title" style="font-weight: 600;">{{event.name}}</span>
-            <span class="card-title" style="font-size: 1.1em; margin-top: -15px;">{{format_full(event.eventStart)}}z ✈ {{format_hour(event.eventEnd)}}z</span>
             <div class="row">
-                <div class="col s12">
-                    {{event.description}}
+                <div class="col s12 l8">
+                    <span class="card-title event-title">{{event.name}}</span>
+                    <span class="card-title event-date">{{format_full(event.eventStart)}}z ✈ {{format_hour(event.eventEnd)}}z</span>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <router-link :to="`/events/${event.url}`" class="btn waves-effect">More Info &amp; Sign Up</router-link>
+                <div class="col s12 l4">
+                    <router-link :to="`/event/${event.url}`" class="btn btn-signup waves-effect right">More Info &amp; Sign Up</router-link>
                 </div>
             </div>
         </div>
@@ -25,21 +22,22 @@
     <div class="card">
         <div class="card-content">
             <span class="card-title">Historic Events</span>
-        </div>
-        <table class="event_list striped">
-            <tbody class="event_list_row">
-                <tr v-for="event in historicEvents" :key="event.id">
-                    <td class="name">
-                        <router-link :to="`/events/${event.url}`">
-                            {{event.name}}
-                        </router-link><br />
-                    </td>
-                    <td class="date right">
-                        {{format_full(event.eventStart)}}z
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+		</div>
+		<p v-if="historicEvents.length == 0" class="no-historic">There are no historic events to display.</p>
+		<table class="event_list striped" v-else>
+			<tbody class="event_list_row">
+				<tr v-for="event in historicEvents" :key="event.id">
+					<td class="name">
+						<router-link :to="`/event/${event.url}`">
+							{{event.name}}
+						</router-link><br />
+					</td>
+					<td class="date right">
+						{{format_full(event.eventStart)}}z
+					</td>
+				</tr>
+			</tbody>
+		</table>
     </div>
 </template>
 
@@ -93,6 +91,15 @@ export default {
         }
     }
 
+    .event-title {
+        font-weight: 600!important;
+    }
+
+    .event-date {
+        font-size: 1.15em!important; 
+        margin-top: -15px!important;
+    }
+
     tr th {
         text-align: left!important;
     }
@@ -106,4 +113,17 @@ export default {
             color: $primary-color-light;
         }
     }
+    .event-card .card-content .row {
+        margin-bottom: 0!important;
+    }
+
+    .btn-signup {
+        margin-top: 8px;
+    }
+
+	.no-historic {
+		padding: 1em;
+		margin-top: -10px;
+		font-style: italic;
+	}
 </style>

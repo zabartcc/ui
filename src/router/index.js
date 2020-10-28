@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Master from '../views/layout/Master.vue';
+import Event from '../views/layout/Event.vue';
 
 const routes = [
 	{
@@ -14,11 +15,19 @@ const routes = [
 			},
 			{
 				path: '/controllers',
-				component: () => import('../views/page/controller/Roster.vue')
+				component: () => import('../views/controllers/Roster.vue')
 			},
 			{
 				path: '/events',
-				component: () => import('../views/page/events/Index.vue')
+				component: () => import('../views/events/Index.vue')
+			}
+		]
+	},
+	{
+		path: '/event/:id', component: Event, children: [
+			{
+				path: '',
+				component: () => import('../views/events/Event.vue')
 			}
 		]
 	}

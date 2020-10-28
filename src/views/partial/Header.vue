@@ -1,6 +1,6 @@
 <template>
 	<header>
-		<div id="header_hero" class="hero1">
+		<div id="header_hero" class="hero2">
 			<div class="wrapper">
 				<div>
 					<h1>ALBUQUERQUE<span>ARTCC</span></h1>
@@ -125,8 +125,6 @@ export default {
 		M.Sidenav.init(document.querySelectorAll('.sidenav'), {
 			edge: 'right'
 		});
-
-		console.log(this.user);
 	},
 	methods: {
 		...mapMutations('user', [

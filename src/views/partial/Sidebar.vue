@@ -60,7 +60,7 @@ export default {
 		},
 		getZuluTime() {
 			var epoch = new Date();
-			return epoch.toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
+			return epoch.toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		}
 	},
 	mounted() {
