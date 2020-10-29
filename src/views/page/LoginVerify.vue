@@ -20,7 +20,7 @@ export default {
 		]),
 		...mapActions('user', [
 			'getUser'
-		])
+		]),
 	},
 	async mounted () {
 		const { data } = await axios.post('/user/login', {
@@ -32,9 +32,16 @@ export default {
 		this.setToken(data);
 
 		this.getUser().then(() => {
-			this.$router.push('/');
+
+			this.$router.push(localStorage.getItem('redirect') || '/');
+
+			M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+				alignment: 'right',
+				coverTrigger: false,
+				constrainWidth: false
+			});
 		});
-	}
+	},
 };
 </script>
 
