@@ -9,9 +9,9 @@
 		<div class="card-content assignment_cta">
 			<div v-if="!event.open" class="sign_up_err">Sorry, but sign ups for this event are closed.</div>
 			<div v-else-if="!user.data" class="sign_up_err">Please log in to sign up.</div>
-			<div v-else-if="assignedPositions">You have been assigned a position. Please contact the events team if you need to cancel.</div>
+			<div v-else-if="assignedPositions">You have been assigned a position. Please contact the EC if you need to cancel.</div>
 			<div v-else-if="requestedPositions" class="sign_up_err">
-				You have already requested these positions:<br />
+				You have requested these positions:<br />
 				{{currentUserRequests}}<br />
 				<a href="#" @click.prevent="deleteRequest()" class="btn btn-small waves-effect waves-light">Delete Request</a>
 			</div>
@@ -79,7 +79,7 @@ export default {
 
 			const positions = this.event.positions.filter(pos => !pos.takenBy && this.user.data.rating >= pos.minRating).map(pos => pos.pos);
 
-			const posChipData = {'Any': null, 'Test1': null, 'Test2': null, 'Test3': null, 'Test4': null};
+			const posChipData = {'Any': null};
 
 			positions.forEach(pos => posChipData[pos] = null);
 
@@ -98,7 +98,7 @@ export default {
 			const requests = this.chips.chipsData.map(chip => chip.tag);
 			const success = await this.putSignupMixin(this.$route.params.slug, this.user.data.cid, requests).catch(() => {
 				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Could not add position request.',
+					html: '<i class="material-icons left">error_outline</i> Unable to request a position.',
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
@@ -107,7 +107,7 @@ export default {
 			});
 			if(success) {
 				M.toast({
-					html: '<i class="material-icons left">done</i> Request added successfully.',
+					html: '<i class="material-icons left">done</i> Request added successfully!',
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
@@ -118,7 +118,7 @@ export default {
 		async deleteRequest() {
 			const success = await this.deleteSignupMixin(this.$route.params.slug, this.user.data.cid).catch(() => {
 				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Could not delete request.',
+					html: '<i class="material-icons left">error_outline</i> Unable to delete request.',
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
@@ -127,7 +127,7 @@ export default {
 			});
 			if(success) {
 				M.toast({
-					html: '<i class="material-icons left">done</i> Request deleted successfully.',
+					html: '<i class="material-icons left">done</i> Request deleted successfully!',
 					displayLength: 5000,
 					classes: 'toast toast_success'
 				});

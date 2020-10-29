@@ -1,5 +1,5 @@
 <template>
-	<h5 class="position_category_heading">{{category.title}}</h5>
+	<h6 class="position_category_heading">{{category.title}}</h6>
 	<table class="assignment_list striped">
 		<tbody v-if='category.positions.length'>
 			<tr v-for="position in category.positions" :key="position.id">
@@ -34,10 +34,12 @@ export default {
 	&:first-of-type {
 		margin-top: 0;
 	}
+	font-weight: 600;
 }
 
 .assignment_list {
 	tr {
+		transition: background-color .3s ease;
 		&:hover {
 			background: $gray-mild;
 		}
