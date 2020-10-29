@@ -39,9 +39,9 @@ export default {
 		},
 		setLoggedIn (state, loggedIn) {
 			state.user.isLoggedIn = loggedIn;
-		}
+		},
 	},
 	getters: {
-		hasQueryCompleted: state => state.userQueryComplete
+		hasQueryCompleted: state => state.userQueryComplete,
 	}
 };

@@ -19,12 +19,12 @@ const routes = [
 			},
 			{
 				path: '/events',
-				component: () => import('../views/events/Index.vue')
+				component: () => import('../views/events/Index.vue'),
 			}
 		]
 	},
 	{
-		path: '/event/:id', component: Event, children: [
+		path: '/events/:slug', component: Event, children: [
 			{
 				path: '',
 				component: () => import('../views/events/Event.vue')
