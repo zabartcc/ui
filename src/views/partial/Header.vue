@@ -128,9 +128,11 @@ export default {
 	},
 	methods: {
 		...mapMutations('user', [
-			'setUser'
+			'setUser',
+			'setRedirect'
 		]),
-		processLogin: () => {
+		processLogin: function() {
+			localStorage.setItem('redirect', this.$route.path);
 			window.location.href = 'https://login.vatusa.net/uls/v2/login?fac=ZAB&url=2';
 		},
 		processLogout: function () {
