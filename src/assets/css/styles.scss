@@ -26,6 +26,8 @@ $card-padding: 15px;
 // $secondary-color: #208951;
 // $secondary-color-light: #2cba6e;
 
+// $button-background
+
 $collection-bg-color: transparent;
 
 $input-focus-color: $primary-color;
@@ -51,9 +53,24 @@ body {
 	padding: 0;
 }
 
-
 .wrapper {
 	max-width: 1200px;
 	margin: 0 auto;
 	box-sizing: border-box;
+}
+
+.toast_success {
+	background-color: $accent-color;
+}
+
+.toast_warning {
+	background-color: $secondary-color-light;
+}
+
+.toast_error {
+	background-color: $secondary-color-dark;
+}
+
+.toast_info {
+	background-color: $primary-color;
 }
