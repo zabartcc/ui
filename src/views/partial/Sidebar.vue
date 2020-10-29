@@ -70,7 +70,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .tabs-fixed-width {
 	overflow: visible;
 }
