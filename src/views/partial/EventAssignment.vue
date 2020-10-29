@@ -2,52 +2,32 @@
 	<div class="card signup-card" v-if="event">
 		<div class="card-content">
 			<span class="card-title">Position Assignments</span>
-			<div class="assignment-title title-first">Enroute</div>
-			<p class="no-pos" v-if="event[0].positions.filter(position => position.type == 'CTR').length == 0">There are no enroute positions for this event.</p>
-			<table class="assignment_list striped" v-else>
-				<tbody class="assignment_list_row">
-					<tr v-for="center in event[0].positions.filter(position => position.type == 'CTR')" :key="center.id">
-						<td class="position-name">
-							{{center.pos}}
-						</td>
-						<td class="position-taken right">
-							{{check_taken(center.taken)}}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="assignment-title">TRACON</div>
-			<p class="no-pos" v-if="event[0].positions.filter(position => position.type == 'APP').length == 0">There are no TRACON positions for this event.</p>
-			<table class="assignment_list striped" v-else>
-				<tbody class="assignment_list_row">
-					<tr v-for="approach in event[0].positions.filter(position => position.type == 'APP')" :key="approach.id">
-						<td class="position-name">
-							{{approach.pos}}
-						</td>
-						<td class="position-taken right">
-							{{check_taken(approach.taken)}}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="assignment-title">Local</div>
-			<p class="no-pos" v-if="event[0].positions.filter(position => position.type == 'TWR' || position.type == 'GND' || position.type == 'DEL').length == 0">There are no local positions for this event.</p>
-			<table class="assignment_list striped" v-else>
-				<tbody class="assignment_list_row">
-					<tr v-for="local in event[0].positions.filter(position => position.type == 'TWR' || position.type == 'GND' || position.type == 'DEL')" :key="local.id">
-						<td class="position-name">
-							{{local.pos}}
-						</td>
-						<td class="position-taken right">
-							{{check_taken(local.taken)}}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<button v-if="user.data && event[0].open == true && signedUp == false" class="btn assignment-signup modal-trigger" data-target="assignment-modal">Sign up</button>
-			<div v-else-if="user.data && event[0].open == true & signedUp == true" class="assignment-not-login">You already signed up. <a href="#" @click="cancelSignup(this.$route.params.id, user.data._id)">Cancel?</a></div>
-			<div v-else-if="!user.data && event[0].open == true" class="assignment-not-login">Please log in to sign up.</div>
-			<div v-else class="assignment-not-login">Sorry, but sign ups for this event are closed.</div>
+		</div>
+		
+		<EventAssignmentTable v-for="category in positionCategories" :category="category" :key="category" />
+
+		<div class="card-content assignment_cta">
+			<div v-if="!event.open" class="sign_up_err">Sorry, but sign ups for this event are closed.</div>
+			<div v-else-if="!user.data" class="sign_up_err">Please log in to sign up.</div>
+			<div v-else-if="assignedPositions">You have been assigned a position. Please contact the events team if you need to cancel.</div>
+			<div v-else-if="requestedPositions" class="sign_up_err">
+				You have already requested these positions:<br />
+				{{currentUserRequests}}<br />
+				<a href="#" @click.prevent="deleteRequest()" class="btn btn-small waves-effect waves-light">Delete Request</a>
+			</div>
+			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Request Position</button>
+		</div>
+	</div>
+	<div id="assignment_modal" class="modal assignment_modal">
+		<div class="modal-content">
+			<h4>Request Position</h4>
+			<div class="chips chips-autocomplete chips-placeholder"></div>
+			<p>The positions for this event will be assigned by the events team. Please indicate your top 3 preferred positions above. If you do not have a preference, enter "Any" above. If there is a specific position not listed that you would like to work, you can manually enter it.</p>
+			<p>Be advised, requests are just that - requests. The ZAB events team may place you in any position depending on a multitude of factors.</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">SIGN UP</a>
+			<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
 		</div>
 	</div>
 </template>
@@ -55,152 +35,154 @@
 <script>
 import { EventsMixin } from '@/mixins/EventsMixin.js';
 import { mapState } from 'vuex';
+import EventAssignmentTable from './EventAssignmentTable.vue';
 
 export default {
+	components: {
+		EventAssignmentTable
+	},
 	data() {
 		return {
-			event: null
+			event: null,
+			positionCategories: {
+				enroute: {
+					title: "Enroute",
+					positions: null
+				},
+				tracon: {
+					title: "TRACON",
+					positions: null
+				},
+				local: {
+					title: "Local",
+					positions: null
+				}
+			},
 		};
 	},
 	mixins: [EventsMixin],
 	mounted() {
 		this.getPositions();
 
-		M.Chips.init(document.querySelectorAll('.chips'), {
-			placeholder: 'Select a position',
-			secondaryPlaceholder: ' ',
-			limit: 3,
-			autocompleteOptions: {
-				data: {
-					'ABQ_NE_CTR': null,
-					'ABQ_NW_CTR': null,
-					'ABQ_SW_CTR': null,
-					'ABQ_SE_CTR': null
-				},
-				limit: 5
-			}
+		M.Modal.init(document.querySelectorAll('.modal'), {
+			preventScrolling: false
 		});
+
 	},
 	methods: {
 		async getPositions() {
-			this.event = await this.getPositionsMixin(this.$route.params.id);
+			this.event = await this.getPositionsMixin(this.$route.params.slug);
+
+			this.positionCategories.enroute.positions =  this.event.positions.filter(position => ['CTR'].includes(position.type));
+			this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
+			this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
+
+			const positions = this.event.positions.filter(pos => !pos.takenBy && this.user.data.rating >= pos.minRating).map(pos => pos.pos);
+
+			const posChipData = {'Any': null, 'Test1': null, 'Test2': null, 'Test3': null, 'Test4': null};
+
+			positions.forEach(pos => posChipData[pos] = null);
+
+			this.chips = M.Chips.init(document.querySelectorAll('.chips'), {
+				placeholder: 'Select a position',
+				secondaryPlaceholder: ' ',
+				limit: 3,
+				autocompleteOptions: {
+					data: posChipData,
+					minLength: 0,
+					limit: 5
+				}
+			})[0];
 		},
-		async cancelSignup(event, user) {
-			var outcome = await this.cancelSignupMixin(event, user);
-			if(outcome.signup.nModified >= 1) {
+		async addRequest() {
+			const requests = this.chips.chipsData.map(chip => chip.tag);
+			const success = await this.putSignupMixin(this.$route.params.slug, this.user.data.cid, requests).catch(() => {
 				M.toast({
-					html: '<div><i class="material-icons">check</i> You are no longer signed up for this event.</div>',
+					html: '<i class="material-icons left">error_outline</i> Could not add position request.',
 					displayLength: 5000,
-					classes: 'toast-success green'
+					classes: 'toast toast_error'
 				});
-				this.event = await this.getPositionsMixin(this.$route.params.id);
-			} else {
+
+				return false;
+			});
+			if(success) {
 				M.toast({
-					html: '<div><i class="material-icons">error</i> Something went wrong. Please try again.</div>',
+					html: '<i class="material-icons left">done</i> Request added successfully.',
 					displayLength: 5000,
-					classes: 'toast-success red'
+					classes: 'toast toast_success',
 				});
+				await this.getPositions();
+				setTimeout(() => M.Modal.getInstance(document.querySelector('#assignment_modal')).close(), 500);
 			}
 		},
-		check_taken(value) {
-			if(value) return value.fname + ' ' + value.lname;
-			else return 'Unassigned';
+		async deleteRequest() {
+			const success = await this.deleteSignupMixin(this.$route.params.slug, this.user.data.cid).catch(() => {
+				M.toast({
+					html: '<i class="material-icons left">error_outline</i> Could not delete request.',
+					displayLength: 5000,
+					classes: 'toast toast_error'
+				});
+
+				return false;
+			});
+			if(success) {
+				M.toast({
+					html: '<i class="material-icons left">done</i> Request deleted successfully.',
+					displayLength: 5000,
+					classes: 'toast toast_success'
+				});
+				await this.getPositions();
+			}
 		}
 	},
 	computed: {
 		...mapState('user', [
 			'user'
 		]),
-		signedUp() {
-			if(this.event[0].signups.some(o => o.user.cid == this.user.data.cid)) return true;
-			else return false;
+		requestedPositions() {
+			return this.event.signups.some(su => su.user.cid == this.user.data.cid);
+		},
+		assignedPositions() {
+			return this.event.positions.some(su => su.takenBy && (su.takenBy.cid == this.user.data.cid));
+		},
+		currentUserRequests() {
+			return this.event.signups.filter(su => su.user.cid == this.user.data.cid)[0].requests.join(', ');
 		}
 	}
 };
 </script>
 
 <style scoped lang="scss">
-.assignment_list_row {
-		padding: 15px!important;
-	}
 
-.assignment_list_row tr {
-	transition: background-color 0.3s ease;
-
-	&:nth-child(odd) {
-		background-color: rgba(242,242,242,0.6)!important;
-	}
-	&:hover {
-		background-color: rgba(242,242,242,0.6);
-	}
-}
-
-.signup-card .card-content {
-	padding: 0 0 15px 0!important;
-}
-
-.signup-card .card-title {
-	padding: 15px;
-}
-
-tr th {
-	text-align: left!important;
-}
-
-td {
-	padding: 5px 15px 5px 15px!important;
-}
-
-td a {
-	transition: .5s;
-	&:hover {
-		color: $primary-color-light;
-	}
-}
-
-.event-card .card-content .row {
-	margin-bottom: 0!important;
-}
-
-.assignment-title {
-	margin-left: 15px!important;
-	margin-top: 20px;
-	font-weight: bold;
-}
-
-.signup-card .card-title {
-	margin-bottom: 0!important;
-}
-
-.title-first {
-	margin-top: 0!important;
-}
-
-.assignment-not-login {
-	font-style: italic;
-	padding: 1em 0 .5em 0;
+.assignment_cta {
 	text-align: center;
+}
 
-	a {
-		color: $primary-color;
-		font-weight: 700;
+.sign_up_err {
+	line-height: 1.8;
+}
 
-		&:hover {
-			color: $primary-color-light;
-		}
+.assignment_modal {
+	min-width: 400px;
+	width: 600px;
+
+	.chips {
+		height: 30px;
+		margin-bottom: 2rem;
+	}
+
+	.dropdown-content {
+		width:auto !important;
 	}
 }
 
-.assignment-signup {
-	display: block;
-	width: 200px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 30px;
+.modal-footer {
+	padding-left: 20px;
 }
 
-.no-pos {
-	font-style: italic;
-	padding-left: 1em;
+.chips.focus {
+	border-bottom: 1px solid $primary-color-light;
+	box-shadow: 0 1px 0 0 $primary-color-light;
 }
+
 </style>
