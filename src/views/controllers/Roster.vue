@@ -77,10 +77,10 @@ export default {
 	transition: background-color 0.3s ease;
 
 	&:nth-child(odd) {
-		background-color: rgba(242,242,242,0.6)!important;
+		background-color: $gray-light;
 	}
 	&:hover {
-		background-color: rgba(242,242,242,0.6);
+		background-color: $gray-mild;
 	}
 }
 

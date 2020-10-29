@@ -19,6 +19,7 @@ a {
 	align-items: center;
 	padding: 10px;
 	position: relative;
+	transition: background-color .3s ease;
 
 	&:nth-of-type(2n) {
 		background: $gray-light
