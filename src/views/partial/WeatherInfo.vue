@@ -1,10 +1,10 @@
 <template>
-	<div v-if="numStationsLoaded === Object.keys(stations).length" class="card">
+	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Current Weather</span>
 			<p>The runways listed here are suggestions. If there is a controller online, they may be using different runways than those listed here. Please always check with the controller's ATIS prior to planning your runways.</p>
 		</div>
-		<table class="striped hover compact">
+		<table v-if="numStationsLoaded === Object.keys(stations).length" class="striped hover compact">
 			<thead>
 				<tr>
 					<th>Airport</th>
@@ -24,6 +24,12 @@
 				</tr>
 			</tbody>
 		</table>
+		<div class="card-content loading" v-else>
+			<h5>Loading Weather, Please Wait</h5>
+			<div class="progress">
+				<div class="indeterminate"></div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -256,7 +262,7 @@ export default {
 			return `${paddedWind}@${station.parsedMetar.wind.speedKt}`;
 		},
 		getConditions: function(station) {
-			return (station.parsedMetar.visibility.miles > 3) ? `<i class="material-icons">wb_sunny</i>VFR` : `<i class="material-icons">wb_cloudy</i> IFR`;
+			return (station.parsedMetar.visibility.miles > 3) ? `<i class="material-icons">wb_sunny</i>VFR` : `<i class="material-icons">wb_cloudy</i>IFR`;
 		}
 	},
 	computed: {
@@ -278,5 +284,13 @@ export default {
 	&::v-deep i {
 		margin-right: 5px;
 	}
+}
+.loading {
+	text-align: center;
+}
+
+.progress {
+	max-width: 500px;
+	margin: 0 auto;
 }
 </style>
