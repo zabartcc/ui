@@ -7,11 +7,15 @@
 			</p>
 		</div>
 	</div>
+	<WeatherInfo />
 </template>
 
 <script>
+import WeatherInfo from '../partial/WeatherInfo.vue';
 export default {
-
+	components: {
+		WeatherInfo
+	}
 };
 </script>
 
