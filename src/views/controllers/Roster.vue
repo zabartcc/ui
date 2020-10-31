@@ -91,8 +91,7 @@ td {
 }
 
 .name .rating {
-	color: gray;
-	font-weight: 300;
+	font-weight: 400;
 	margin: -10px 0 0 -15px;
 	padding-bottom: 0!important;
 }
@@ -127,5 +126,9 @@ td {
 	&.cert_minor {
 		background: $secondary-color-light;
 	}
+}
+
+.tooltipped {
+	cursor: pointer;
 }
 </style>

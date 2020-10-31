@@ -32,6 +32,7 @@ Inside of each base route folders, obeserve the following conventions:
 	- Use of nested ID selectors (`#home #home_hero`), unless you can justify why they are needed.
 - Materialize CSS class names are `kebab-case`, so use `snake_case` when defining your own to distinguish them.
 - Class names should be meaningful and semantic. Do not use names that are presentational in nature.
+- Transitions (if used) should use 'ease' and be .3s in length.
 
 ## Javascript
 - JS is transpiled during deployment, so the use of ES6/7 is encouraged.

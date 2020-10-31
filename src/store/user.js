@@ -14,8 +14,8 @@ export default {
 		getUser: async ({commit, state}) => {
 			if(state.user.token) { // we have a token already set
 				const { data } = await axios.get('/user', {
-					params: {
-						token: state.user.token,
+					headers: {
+						Authorization: `Bearer ${state.user.token}`
 					}
 				}).catch(err => console.error(err));
 				if(data) {
@@ -44,5 +44,6 @@ export default {
 	getters: {
 		hasQueryCompleted: state => state.userQueryComplete,
 		getUserData: state => state.user.data,
+		getToken: state => state.user.token
 	}
 };

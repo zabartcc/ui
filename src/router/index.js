@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Master from '../views/layout/Master.vue';
 import Admin from '../views/layout/Admin.vue';
 import Event from '../views/layout/Event.vue';
-
-import store from '../store/index.js';
+import axios from '../helpers/axios';
 
 const routes = [
 	{
@@ -57,17 +56,29 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	const user = store.getters['user/getUserData'];
-
+	/* eslint-disable no-unused-vars */
 	if(to.meta.isAdmin) { // Route is an admin route.
-		if(user && user.isStaff) {
-			next();
-		} else {
+		const token = localStorage.getItem('token');
+		console.log(token);
+		if(!token) {
 			next('/');
+		} else {
+			axios.get('/user', {
+				headers: { Authorization: `Bearer ${token}` }
+			}).catch(err => {
+				next('/');
+			}).then(user => {
+				if(user.data.isStaff == true) {
+					next();
+				} else {
+					next('/');
+				}
+			});
 		}
 	} else {
 		next();
 	}
+	/* eslint-enable no-unused-vars */
 });
 
 export default router;

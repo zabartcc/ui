@@ -25,7 +25,7 @@
 			</tbody>
 		</table>
 		<div class="card-content loading" v-else>
-			<h5>Loading Weather, Please Wait</h5>
+			<h5>Loading weather...</h5>
 			<div class="progress">
 				<div class="indeterminate"></div>
 			</div>

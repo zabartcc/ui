@@ -1,6 +1,6 @@
 <template>
 	<div class="pilot">
-		<span class="pilot_details"><strong class="text-xl block text-black">{{pilot.callsign}}</strong>{{pilot.aircraft}}</span>
+		<span class="pilot_details"><strong class="text-xl text-black">{{pilot.callsign}}</strong>{{pilot.aircraft}}</span>
 		<span>{{pilot.dep}} - {{pilot.dest}}</span>
 		<div class="flight_info">
 			<h6>Flight Details - {{pilot.callsign}}</h6>
@@ -41,12 +41,11 @@ export default {
 
 .pilot_details {
 	color: $gray-medium;
-
 	strong {
 		font-size: 1.5em;
 		color: $gray-dark;
 		font-weight: 700;
-		display: block;
+		padding-right: 5px;
 	}
 }
 
@@ -57,7 +56,7 @@ export default {
 	top: calc(100% + 10px);
 	opacity: 0;
 	pointer-events: none;
-	transition: opacity 0.5s;
+	transition: opacity 0.3s;
 	width: calc(100% - 10px);
 	z-index: 500;
 	background: #fff;
