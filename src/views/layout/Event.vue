@@ -3,12 +3,12 @@
 		<Header />
 			<main>
 				<div class="row main-content wrapper">
-					<div class="sidebar col s12 l4">
+					<div class="main_content col s12 l8 push-l4">
+						<router-view></router-view>
+					</div>
+					<div class="sidebar col s12 l4 pull-l8">
 						<EventAssignment />
 						<Sidebar />
-					</div>
-					<div class="main_content col s12 l8">
-						<router-view></router-view>
 					</div>
 				</div>
 			</main>

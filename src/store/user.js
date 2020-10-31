@@ -24,7 +24,7 @@ export default {
 				}
 			}
 			commit('setQuery', true);
-		}
+		},
 	},
 	mutations: {
 		setUser (state, user) {
@@ -43,5 +43,6 @@ export default {
 	},
 	getters: {
 		hasQueryCompleted: state => state.userQueryComplete,
+		getUserData: state => state.user.data,
 	}
 };

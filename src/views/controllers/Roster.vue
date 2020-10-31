@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<span class="card-title">Controller Roster</span>
 		</div>
-		<table class="controller_list striped">
+		<table class="controller_list striped hover">
 			<thead class="controller_list_head">
 				<tr>
 					<th class="name">Controller</th>
@@ -21,7 +21,7 @@
 						</div>
 					</td>
 					<td class="certs">
-						<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name">
+						<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
 							{{role.code.toUpperCase()}}
 						</span>
 						<span v-for="cert in controller.certifications" :class="`cert cert_${cert.class}`" :key="cert.id">
@@ -45,15 +45,16 @@ export default {
 		};
 	},
 	mixins: [ControllerMixin],
-	mounted() {
-		this.getControllers();
+	async mounted() {
+		await this.getControllers();
 		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
-
+			margin: 0
 		});
 	},
 	methods: {
 		async getControllers() {
 			this.controllers = await this.getControllersMixin();
+			console.log(this.controllers);
 		}
 	}
 };
@@ -71,17 +72,6 @@ export default {
 
 .controller_list_row div {
 	padding: 0.5rem 1rem;
-}
-
-.controller_list_row tr {
-	transition: background-color 0.3s ease;
-
-	&:nth-child(odd) {
-		background-color: $gray-light;
-	}
-	&:hover {
-		background-color: $gray-mild;
-	}
 }
 
 tr th {
@@ -137,9 +127,5 @@ td {
 	&.cert_minor {
 		background: $secondary-color-light;
 	}
-}
-
-.tooltipped {
-	cursor: pointer;
 }
 </style>

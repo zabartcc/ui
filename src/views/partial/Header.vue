@@ -138,6 +138,14 @@ export default {
 		processLogout: function () {
 			localStorage.removeItem('token');
 			this.setUser(null);
+			M.toast({
+				html: '<i class="material-icons left">done</i> Successfully logged out.',
+				displayLength: 5000,
+				classes: 'toast toast_info',
+			});
+			if(this.$route.meta.isAdmin) {
+				this.$router.push('/');
+			}
 		}
 	},
 	computed: {

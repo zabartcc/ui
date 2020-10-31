@@ -59,18 +59,39 @@ body {
 	box-sizing: border-box;
 }
 
-.toast_success {
-	background-color: $accent-color;
+.toast {
+	&.toast_success {
+		background-color: $accent-color;
+	}
+	
+	&.toast_warning {
+		background-color: $secondary-color;
+	}
+	
+	&.toast_error {
+		background-color: #e53935;
+	}
+	
+	&.toast_info {
+		background-color: $primary-color-light;
+	}
 }
 
-.toast_warning {
-	background-color: $secondary-color-light;
-}
 
-.toast_error {
-	background-color: $secondary-color-dark;
-}
-
-.toast_info {
-	background-color: $primary-color;
+table {
+	tr {
+		td, th {
+			padding: .75em 1em;
+		}
+	} 
+	&.compact {
+		tr {
+			td, th {
+				padding: .25em 1em;
+			}
+		} 
+	}
+	&.hover tr:hover {
+		background-color: $gray-mild;
+	}
 }

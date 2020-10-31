@@ -258,6 +258,7 @@ export default {
 			
 		},
 		formatWind: function(station) {
+			if(station.parsedMetar.wind.speedKt < 3) return 'Calm';
 			const paddedWind = `0${station.parsedMetar.wind.direction}`.slice(-3);
 			return `${paddedWind}@${station.parsedMetar.wind.speedKt}`;
 		},

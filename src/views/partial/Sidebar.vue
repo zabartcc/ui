@@ -13,18 +13,22 @@
 		</div>
 		<div id="atc_online">
 			<div v-if=atcOnline>
-				<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
-			</div>
-			<div v-else>
-				<h4>No Controllers Currently Online.</h4>
+				<div v-if="atcOnline.length">
+					<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
+				</div>
+				<div v-else>
+					<h4>No Controllers Currently Online.</h4>
+				</div>
 			</div>
 		</div>
 		<div id="pilots_online">
 			<div v-if=pilotsOnline>
-				<PilotOnlineItem v-for="(pilot, k) in pilotsOnline" :key=k :pilot="pilot" />
-			</div>
-			<div v-else>
-				<h4>No Departures/Arrivals Found.</h4>
+				<div v-if="pilotsOnline.length">
+					<PilotOnlineItem v-for="(pilot, k) in pilotsOnline" :key=k :pilot="pilot" />
+				</div>
+				<div v-else>
+					<h4>No Departures/Arrivals Found.</h4>
+				</div>
 			</div>
 		</div>
 		<h6 class="as_of">As Of: {{getZuluTime()}}z</h6>
