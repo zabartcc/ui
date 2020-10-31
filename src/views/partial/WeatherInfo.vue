@@ -16,7 +16,7 @@
 			</thead>
 			<tbody>
 				<tr v-for="station in stations" :key="station.icao">
-					<td>{{station.fullName}} <strong>({{station.icao}})</strong></td>
+					<td><span class="hide-on-med-and-down">{{station.fullName}} <strong>({{station.icao}})</strong></span><span class="hide-on-large-only">{{station.icao}}</span></td>
 					<td>{{formatWind(station)}}</td>
 					<td><span class="airport_conditions" v-html="getConditions(station)"></span></td>
 					<td>{{station.getLanding()}}</td>
