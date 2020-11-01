@@ -1,36 +1,40 @@
 <template>
 	<div v-if=controllers class="card">
 		<div class="card-content">
-			<span class="card-title">Find a Controller</span>
+			<div class="row">
+				<span class="card-title col s4 m6">Controllers</span>
+				<div class="input-field col s8 m6">
+					<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller...">
+					<span class="helper-text right">You can search by CID, name, or operating initials.</span>
+				</div>
+			</div>
 		</div>
-        <div class="input-field col s6">
-			<input autocomplete="off" @keyup=filterControllers v-model=filter type="text">
-			<label for="email">Search for a Controller</label>
-			<span class="helper-text">You can search by CID, First Name, Last Name or Operating Initials</span>
-        </div>
 		<table class="striped hover compact">
 			<thead class="controller_list_head">
 				<tr>
 					<th>Controller</th>
-					<th>Options</th>
+					<th>CID</th>
+					<th class="options">Options</th>
 				</tr>
 			</thead>
 			<tbody class="controller_list_row">
 				<tr v-for="controller in controllersFiltered" :key="controller.cid">
 					<td>
 						<div class="name">
-							{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-						</div>
-						<div class="cid">
-							{{controller.cid}}
+							<router-link :to="`/controllers/${controller.cid}`">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</router-link>
 						</div>
 						<div class="rating">
 							{{controller.ratingLong}}
 						</div>
 					</td>
 					<td>
+						<div class="cid">
+							{{controller.cid}}
+						</div>
+					</td>
+					<td class="options">
 						<router-link data-position="top" data-tooltip="Edit Controller" class="tooltipped" :to="`/admin/controllers/${controller.cid}`">
-							<i class="material-icons small">edit</i>
+							<i class="material-icons">edit</i>
 						</router-link>
 					</td>
 				</tr>
@@ -70,10 +74,9 @@ export default {
 	async mounted() {
 		this.controllers = await this.getControllersMixin();
 		this.controllersFiltered = await this.getControllersMixin();
-		const tooltips = M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
+		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
 			margin: 0
 		});
-		console.log(tooltips);
 	}
 };
 </script>
@@ -83,9 +86,14 @@ export default {
 		margin-top: 0;
 	}
 	.name {
-		font-size: 1.2rem;
-	}
-	.cid {
+		color: $primary-color;
 		font-weight: 700;
+	}
+	.rating {
+		font-weight: 400;
+	}
+
+	.options {
+		text-align: right;
 	}
 </style>

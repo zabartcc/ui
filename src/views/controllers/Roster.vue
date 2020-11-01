@@ -11,7 +11,7 @@
 				</tr>
 			</thead>
 			<tbody class="controller_list_row">
-				<tr v-for="controller in controllers" :key="controller.cid">
+				<tr v-for="(controller, i) in controllers" :key="controller.cid">
 					<td class="name">
 						<router-link :to="`/controllers/${controller.cid}`">
 							{{controller.fname}} {{controller.lname}} ({{controller.oi}})
@@ -24,7 +24,7 @@
 						<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
 							{{role.code.toUpperCase()}}
 						</span>
-						<span v-for="cert in controller.certifications" :class="`cert cert_${cert.class}`" :key="cert.id">
+						<span v-for="cert in controllerCerts(i)" :class="`cert cert_${cert.class}`" :key="cert.id">
 							{{cert.name}}
 						</span>
 					</td>
@@ -54,7 +54,16 @@ export default {
 	methods: {
 		async getControllers() {
 			this.controllers = await this.getControllersMixin();
-			console.log(this.controllers);
+		},
+		controllerCerts(i) {
+			console.log(this.controllers[i].certifications);
+			const res = this.controllers[i].certifications.reduce((unique, o) => {
+				if(!unique.some(obj => obj.facility === o.facility)) {
+					unique.push(o);
+				}
+				return unique;
+			});
+			return res;
 		}
 	}
 };

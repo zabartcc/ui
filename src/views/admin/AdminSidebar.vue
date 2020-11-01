@@ -2,17 +2,12 @@
 	<div class="admin_sidebar card">
 		<div class="collection">
 			<router-link to="/admin" class="collection-item">
-				Admin Home
+				Dashboard
 				<div class="secondary-content"><i class="material-icons">home</i></div>
 			</router-link>
-			<h6 class="collection-header">Controllers</h6>
 			<router-link to="/admin/controllers" class="collection-item">
-				Find a Controller
+				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
-			</router-link>
-			<router-link to="/admin/controllers/visitor" class="collection-item">
-				Add a Visitor
-				<div class="secondary-content"><i class="material-icons">person_add</i></div>
 			</router-link>
 		</div>
 	</div>

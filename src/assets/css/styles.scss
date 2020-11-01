@@ -79,6 +79,9 @@ body {
 
 
 table {
+	thead {
+		border-bottom: 1px solid #666;
+	}
 	tr {
 		td, th {
 			padding: .75em 1em;
