@@ -34,7 +34,7 @@
 						{{format_full(event.eventStart)}}z
 					</td>
 					<td class="options">
-						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/slug/${event.url}`">
+						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
 							<i class="material-icons">edit</i>
 						</router-link>
 						<router-link data-position="top" data-tooltip="Assign Positions" class="tooltipped" :to="`/admin/events/assign/${event.url}`">
