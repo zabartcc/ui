@@ -45,6 +45,10 @@ const routes = [
 			{
 				path: 'controllers/:cid',
 				component: () => import('../views/admin/controllers/Edit.vue')
+			},
+			{
+				path: 'events',
+				component: () => import('../views/admin/events/Index.vue')
 			}
 		]
 	}

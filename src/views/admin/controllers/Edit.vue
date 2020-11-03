@@ -82,8 +82,8 @@ export default {
 		async getController() {
 			this.controller = await this.getControllerMixin(this.$route.params.cid);
 			this.oi = this.controller.oi;
-			this.controller.certifications.forEach((cert) => { this.certs.push(cert.code)});
-			this.controller.roles.forEach((role) => { this.roles.push(role.code)});
+			this.controller.certifications.forEach((cert) => { this.certs.push(cert.code); });
+			this.controller.roles.forEach((role) => { this.roles.push(role.code); });
 			this.usedOi = await this.getUsedOiMixin();
 		},
 		checkOi() {

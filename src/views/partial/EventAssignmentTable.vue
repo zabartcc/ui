@@ -54,4 +54,7 @@ export default {
 	font-style: italic;
 }
 
+tbody {
+	border-top: 1px solid #666;
+}
 </style>

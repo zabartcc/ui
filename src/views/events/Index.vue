@@ -81,13 +81,14 @@ export default {
         width: 100%;
     }
     .event_list_row tr {
+		transition: background-color .3s ease;
 		&:hover {
 			background: $gray-mild;
 		}
     }
 
     .event_title {
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .card .card-content .event_date {
@@ -111,7 +112,8 @@ export default {
         padding: 1em;
     }
     td a {
-        transition: .5s;
+        transition: .3s;
+		font-weight: 600;
         &:hover {
             color: $primary-color-light;
         }

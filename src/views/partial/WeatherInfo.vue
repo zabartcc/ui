@@ -4,7 +4,7 @@
 			<span class="card-title">Current Weather</span>
 			<p>The runways listed here are suggestions. If there is a controller online, they may be using different runways than those listed here. Please always check with the controller's ATIS prior to planning your runways.</p>
 		</div>
-		<table v-if="numStationsLoaded === Object.keys(stations).length" class="striped hover compact">
+		<table v-if="numStationsLoaded === Object.keys(stations).length" class="striped compact">
 			<thead>
 				<tr>
 					<th>Airport</th>
@@ -293,5 +293,12 @@ export default {
 .progress {
 	max-width: 500px;
 	margin: 0 auto;
+}
+
+tbody tr {
+	transition: background-color .3s ease;
+	&:hover {
+		background-color: $gray-mild!important;
+	}
 }
 </style>
