@@ -11,7 +11,7 @@
 				</tr>
 			</thead>
 			<tbody class="controller_list_row">
-				<tr v-for="(controller, i) in controllers" :key="controller.cid">
+				<tr v-for="controller in controllers" :key="controller.cid">
 					<td class="name">
 						<router-link :to="`/controllers/${controller.cid}`">
 							{{controller.fname}} {{controller.lname}} ({{controller.oi}})
@@ -24,7 +24,7 @@
 						<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
 							{{role.code.toUpperCase()}}
 						</span>
-						<span v-for="cert in controllerCerts(i)" :class="`cert cert_${cert.class}`" :key="cert.id">
+						<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
 							{{cert.name}}
 						</span>
 					</td>
@@ -55,15 +55,21 @@ export default {
 		async getControllers() {
 			this.controllers = await this.getControllersMixin();
 		},
-		controllerCerts(i) {
-			console.log(this.controllers[i].certifications);
-			const res = this.controllers[i].certifications.reduce((unique, o) => {
-				if(!unique.some(obj => obj.facility === o.facility)) {
-					unique.push(o);
+		reduceControllerCerts: certs => {
+			if(!certs) return [];
+			const hasCerts = certs.map(cert => cert.code);
+			let certsToShow = [];
+			certs.forEach(cert => {
+				if(cert.class === "major" || cert.class === "center") {
+					certsToShow.push(cert);
+				} else {
+					const certPos = cert.code.slice(-3);
+					if(!hasCerts.includes(`p50${certPos}`)) {
+						certsToShow.push(cert);
+					}
 				}
-				return unique;
 			});
-			return res;
+			return certsToShow;
 		}
 	}
 };
