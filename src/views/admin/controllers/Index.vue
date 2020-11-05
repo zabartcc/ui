@@ -9,7 +9,7 @@
 				</div>
 			</div>
 		</div>
-		<table class="striped hover compact">
+		<table class="striped compact">
 			<thead class="controller_list_head">
 				<tr>
 					<th>Controller</th>
@@ -95,5 +95,14 @@ export default {
 
 	.options {
 		text-align: right;
+	}
+
+	table tbody {
+		tr {
+			transition: background-color .3s ease;
+			&:hover {
+				background: $gray-mild;
+			}
+		}
 	}
 </style>

@@ -167,7 +167,7 @@ export default {
 			}, {
 				headers: { Authorization: `Bearer ${userToken}` }
 			}).then(() => {
-				
+
 			});
 
 			

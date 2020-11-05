@@ -9,6 +9,14 @@
 				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
 			</router-link>
+			<router-link to="/admin/events" class="collection-item">
+				Events
+				<div class="secondary-content"><i class="material-icons">event</i></div>
+			</router-link>
+			<router-link to="/admin/feedback" class="collection-item">
+				Feedback
+				<div class="secondary-content"><i class="material-icons">feedback</i></div>
+			</router-link>
 		</div>
 	</div>
 </template>

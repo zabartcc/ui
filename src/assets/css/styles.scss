@@ -61,7 +61,7 @@ body {
 
 .toast {
 	&.toast_success {
-		background-color: $accent-color;
+		background-color: $accent-color-light;
 	}
 	
 	&.toast_warning {
@@ -77,6 +77,24 @@ body {
 	}
 }
 
+.toast_border_success, .toast_border_error {
+	width: 100%;
+	height: 3px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	animation-name: borderBottom;
+	animation-duration: 5s;
+	animation-timing-function: linear;
+}
+
+.toast_border_success {
+	background-color: $accent-color;
+}
+
+.toast_border_error {
+	background-color: #d32f2f;
+}
 
 table {
 	thead {
@@ -97,4 +115,14 @@ table {
 	&.hover tr:hover {
 		background-color: $gray-mild;
 	}
+}
+
+input.valid[type=text]:not(.browser-default) {
+	border-bottom: 1px solid $primary-color-light;
+	box-shadow: 0 1px 0 0 $primary-color-light;
+}
+
+@keyframes borderBottom {
+	0% { width: 100%; }
+	100% { width: 0%; }
 }
