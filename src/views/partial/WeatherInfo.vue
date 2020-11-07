@@ -43,7 +43,7 @@ export default {
 			stations: {
 				KPHX: {
 					icao: "KPHX",
-					fullName: "Phoenix-Sky Harbor International Airport",
+					fullName: "Phoenix Sky Harbor International Airport",
 					metar: null, 
 					parsedMetar: null,
 					configs: {
@@ -259,6 +259,7 @@ export default {
 		},
 		formatWind: function(station) {
 			if(station.parsedMetar.wind.speedKt < 3) return 'Calm';
+			else if(!('speedKt' in station.parsedMetar.wind)) return 'Unknown';
 			const paddedWind = `0${station.parsedMetar.wind.direction}`.slice(-3);
 			return `${paddedWind}@${station.parsedMetar.wind.speedKt}`;
 		},

@@ -23,7 +23,7 @@
 			<h4>Request Position</h4>
 			<div class="chips chips-autocomplete chips-placeholder"></div>
 			<p>The positions for this event will be assigned by the events team. Please indicate your top 3 preferred positions above. If you do not have a preference, enter "Any" above. If there is a specific position not listed that you would like to work, you can manually enter it.</p>
-			<p>Be advised, requests are just that - requests. The ZAB events team may place you in any position depending on a multitude of factors.</p>
+			<p>Be advised, requests are just that — requests. The ZAB events team may place you on any position depending on a multitude of factors.</p>
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">SIGN UP</a>

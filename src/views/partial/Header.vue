@@ -41,7 +41,7 @@
 						<router-link to="/feedback">FEEDBACK</router-link>
 					</li>
 					<li>
-						<router-link to="https://community.zabartcc.org">FORUMS</router-link>
+						<a href="https://community.zabartcc.org">FORUMS</a>
 					</li>
 				</ul>
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>

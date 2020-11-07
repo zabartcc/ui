@@ -22,11 +22,11 @@ a {
 	transition: background-color .3s ease;
 
 	&:nth-of-type(2n) {
-		background: $gray-light
+		background: $gray-mild;
 	}
 
 	&:hover {
-		background: $gray-mild;
+		background: #eaeaea;
 	}
 }
 
