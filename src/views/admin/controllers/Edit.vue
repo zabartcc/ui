@@ -13,11 +13,11 @@
 						<label for="rating" class="active">Rating</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="first_name" type="text" v-model="form.fname">
+						<input id="first_name" type="text" v-model="form.fname" required>
 						<label for="first_name" class="active">First Name</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="last_name" type="text" v-model="form.lname">
+						<input id="last_name" type="text" v-model="form.lname" required>
 						<label for="last_name" class="active">Last Name</label>
 					</div>
 					<div class="input-field col s6">
@@ -25,7 +25,7 @@
 						<label for="email" class="active">Email</label>
 					</div>
 					<div class="input-field col s6 input_oi">
-						<input id="oi" type="text" v-model="form.oi" @input="checkOi($event)" maxlength="2">
+						<input id="oi" type="text" v-model="form.oi" @input="checkOi($event)" maxlength="2" required>
 						<label for="oi" class="active">Operating Initials</label>
 						<div class="side_oi right">
 							<i v-if="this.oiAvail == true" class="material-icons green-text">check_circle</i>

@@ -98,7 +98,7 @@ export default {
 			const requests = this.chips.chipsData.map(chip => chip.tag);
 			const success = await this.putSignupMixin(this.$route.params.slug, this.user.data.cid, requests).catch(() => {
 				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to request a position. <div class="toast_border_error"></div>',
+					html: '<i class="material-icons left">error_outline</i> Unable to request a position. <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
@@ -107,7 +107,7 @@ export default {
 			});
 			if(success) {
 				M.toast({
-					html: '<i class="material-icons left">done</i> Request added successfully! <div class="toast_border_success"></div>',
+					html: '<i class="material-icons left">done</i> Request added successfully! <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
@@ -118,7 +118,7 @@ export default {
 		async deleteRequest() {
 			const success = await this.deleteSignupMixin(this.$route.params.slug, this.user.data.cid).catch(() => {
 				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to delete request. <div class="toast_border_error"></div>',
+					html: '<i class="material-icons left">error_outline</i> Unable to delete request. <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
@@ -127,7 +127,7 @@ export default {
 			});
 			if(success) {
 				M.toast({
-					html: '<i class="material-icons left">done</i> Request deleted successfully! <div class="toast_border_success"></div>',
+					html: '<i class="material-icons left">done</i> Request deleted successfully! <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_success'
 				});
