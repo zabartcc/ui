@@ -208,7 +208,7 @@ export default {
 	margin: 2px;
 	cursor: pointer;
 	transition: background-color .3s ease;
-	background: $gray_mild;
+	background: #eaeaea;
 	color: $gray_medium;
 
 	&.active {

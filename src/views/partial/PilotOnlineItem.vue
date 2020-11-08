@@ -27,11 +27,11 @@ export default {
 	transition: background-color .3s ease;
 
 	&:nth-of-type(2n) {
-		background: $gray-light
+		background: rgba(242, 242, 242, 0.5);
 	}
 
 	&:hover {
-		background: $gray-mild;
+		background:  #eaeaea;
 
 		.flight_info {
 			opacity: 1;

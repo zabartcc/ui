@@ -1,4 +1,5 @@
 import axios from '@/helpers/axios';
+import router from '@/router/index.js';
 
 export default {
 	namespaced: true,
@@ -17,7 +18,11 @@ export default {
 					headers: {
 						Authorization: `Bearer ${state.user.token}`
 					}
-				}).catch(err => console.error(err));
+				}).catch(err => {
+					console.log(err);
+					localStorage.removeItem('token'); // remove token in case an invalid token is set from a previous session
+					router.push('/');
+				});
 				if(data) {
 					commit('setUser', data);
 					commit('setLoggedIn', true);
