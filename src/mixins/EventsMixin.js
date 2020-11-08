@@ -19,6 +19,13 @@ export const EventsMixin = {
 		},
 		deleteSignupMixin(slug, user) {
 			return axios.delete(`/event/${slug}/signup/${user}`).then(response => response.data);
+		},
+		deleteEventMixin(slug, auth) {
+			return axios.delete(`/event/${slug}`, {
+				headers: {
+					Authorization: auth
+				}
+			}).then(response => response.data);
 		}
 	}
 };

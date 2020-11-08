@@ -16,7 +16,7 @@
 				</tr>
 			</thead>
 			<tbody class="event_list_row">
-				<tr v-for="event in events" :key="event.id">
+				<tr v-for="(event, i) in events" :key="event.id">
 					<td class="name">
 						<router-link :to="`/events/${event.url}`">
 							{{event.name}}
@@ -26,16 +26,26 @@
 						{{format_full(event.eventStart)}}z
 					</td>
 					<td class="options">
-						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
+						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/${event.url}`">
 							<i class="material-icons">edit</i>
 						</router-link>
 						<router-link data-position="top" data-tooltip="Assign Positions" class="tooltipped" :to="`/admin/events/assign/${event.url}`">
 							<i class="material-icons">group</i>
 						</router-link>
-						<a href="#" data-position="top" data-tooltip="Delete Event" class="tooltipped">
+						<a :href="`#modal${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
 							<i class="material-icons">delete</i>
 						</a>
 					</td>
+					<div :id="`modal${i}`" class="modal modal_delete">
+						<div class="modal-content">
+							<h4>Are you sure?</h4>
+							<p>Events shouldn't be deleted unless they contain errors or were canceled. If you're not sure, click cancel. Otherwise you may continue.</p>
+						</div>
+						<div class="modal-footer">
+							<a href="#!" class="waves-effect btn" @click="deleteEvent(event.url)">I'm sure</a>
+							<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+						</div>
+					</div>
 				</tr>
 			</tbody>
 		</table>
@@ -59,10 +69,36 @@ export default {
 		format_full(value) {
 			var d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
+		},
+		async deleteEvent(slug) {
+			const auth = `Bearer ${localStorage.getItem('token') || null}`;
+			const success = await this.deleteEventMixin(slug, auth).catch(() => {
+				M.toast({
+					html: '<i class="material-icons left">error_outline</i> Unable to delete event. <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_error'
+				});
+				return false;
+			});
+			if(success) {
+				M.toast({
+					html: '<i class="material-icons left">done</i> Event deleted successfully. <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_success',
+				});
+				await this.getUpcomingEvents();
+				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
+			}
 		}
 	},
 	async mounted() {
-		this.getUpcomingEvents();
+		await this.getUpcomingEvents();
+		M.Modal.init(document.querySelectorAll('.modal'), {
+			preventScrolling: false
+		});
+		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
+			margin: 0
+		});
 	}
 };
 </script>
@@ -96,5 +132,10 @@ export default {
 	.no_event {
 		font-style: italic;
 		padding: 0 1em 1em 1em;
+	}
+
+	.modal_delete {
+		min-width: 400px;
+		width: 30%;
 	}
 </style>
