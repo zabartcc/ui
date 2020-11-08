@@ -1,21 +1,13 @@
 <template>
-	<div class="card" v-if="!events">
-        <div class="card-content">
-			<div class="row">
-				<div class="card-title col s8"><span class="card-title">Upcoming Events</span></div>
-				<div class="card-title col s4"><router-link to="/admin/events/new"><span class="btn new_event_button right">New Event</span></router-link></div>
-			</div>
-            <span style="font-style: italic;">There are no upcoming events planned.</span>
-        </div>
-    </div>
-	<div class="card" v-else>
+	<div class="card" v-if=events>
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Upcoming Events</span></div>
 				<div class="card-title col s4"><router-link to="/admin/events/new"><span class="btn new_event_button right">New Event</span></router-link></div>
 			</div>
 		</div>
-		<table class="event_list striped" v-if=events>
+		<p class="no_event" v-if="events.length == 0">There are no upcoming events planned right now.</p>
+		<table class="event_list striped" v-else>
 			<thead class="controller_list_head">
 				<tr>
 					<th>Event</th>
@@ -99,5 +91,10 @@ export default {
 				background: $gray-mild;
 			}
 		}
+	}
+
+	.no_event {
+		font-style: italic;
+		padding: 0 1em 1em 1em;
 	}
 </style>

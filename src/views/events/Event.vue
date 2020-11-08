@@ -1,17 +1,17 @@
 <template>
 	<div class="row" v-if="event">
 		<div class="col s12">
-			<div class="card event-card">
-				<img :src="event.bannerUrl" class="event-banner" draggable="false" />
+			<div class="card event_card">
+				<img :src="require(`@/assets/uploads/events/${event.bannerUrl}`)" class="event_banner" draggable="false" />
 				<div class="card-content">
 					<div class="row">
 						<div class="col s12">
-							<span class="card-title event-title">{{event.name}}</span>
-							<span class="card-title event-date">{{formatFull(event.eventStart)}}z ✈ {{formatHour(event.eventEnd)}}z</span>
+							<span class="card-title event_title">{{event.name}}</span>
+							<span class="card-title event_date">{{formatFull(event.eventStart)}}z ✈ {{formatHour(event.eventEnd)}}z</span>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col s12">
+						<div class="col s12 event_desc">
 							{{event.description}}
 						</div>
 					</div>
@@ -71,17 +71,21 @@ export default {
 </style>
 
 <style scoped lang="scss">
-.event-banner {
+.event_banner {
 	width: 100%;
 }
 
-.event-title {
+.event_title {
 	font-weight: 600;
 }
 
-.event-date {
+.event_date {
 	font-size: 1.15em; 
 	margin-top: -15px;
+}
+
+.event_desc {
+	white-space: pre-wrap;
 }
 
 </style>
