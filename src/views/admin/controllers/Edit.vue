@@ -168,14 +168,14 @@ export default {
 				headers: { Authorization: `Bearer ${userToken}` }
 			}).then(() => {
 				M.toast({
-					html: '<i class="material-icons left">done</i> Controller successfully updated! <div class="toast_border_success"></div>',
+					html: '<i class="material-icons left">done</i> Controller successfully updated! <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
 			}).catch((err) => {
 				console.log(err);
 				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to update controller. <div class="toast_border_error"></div>',
+					html: '<i class="material-icons left">error_outline</i> Unable to update controller. <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});

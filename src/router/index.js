@@ -20,6 +20,10 @@ const routes = [
 				component: () => import('../views/controllers/Roster.vue')
 			},
 			{
+				path: '/controllers/staff',
+				component: () => import('../views/controllers/Staff.vue')
+			},
+			{
 				path: '/events',
 				component: () => import('../views/events/Index.vue'),
 			}
