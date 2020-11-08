@@ -2,7 +2,12 @@
 	<div class="card">
 		<div class="card-content">
 			<h5 class="staff_heading">{{staffItem.title}}</h5>
-			<span v-for="user in staffItem.users" :key="user.cid" class="staff_member">{{user.fname}} {{user.lname}}</span>
+			<div v-if="staffItem.users.length">
+				<span v-for="user in staffItem.users" :key="user.cid" class="staff_member">{{user.fname}} {{user.lname}}</span>
+			</div>
+			<div v-else>
+				<span class="staff_member">Vacant</span>
+			</div>
 			<a :href="`mailto:${staffItem.code}@zabartcc.org`" class="staff_email"><i class="material-icons tiny">email</i> {{staffItem.code}}@zabartcc.org</a>
 		</div>
 	</div>
