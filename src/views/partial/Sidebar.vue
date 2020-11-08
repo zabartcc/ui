@@ -17,7 +17,7 @@
 					<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
 				</div>
 				<div v-else>
-					<h4>No Controllers Currently Online.</h4>
+					<p>There are no controllers online right now.</p>
 				</div>
 			</div>
 		</div>
@@ -27,7 +27,7 @@
 					<PilotOnlineItem v-for="(pilot, k) in pilotsOnline" :key=k :pilot="pilot" />
 				</div>
 				<div v-else>
-					<h4>No Departures/Arrivals Found.</h4>
+					<h4>There are no departures/arrivals right now.</h4>
 				</div>
 			</div>
 		</div>
@@ -80,10 +80,10 @@ export default {
 }
 
 #atc_online, #pilots_online {
-	h4 {
+	p {
 		padding: 15px 10px;
-		font-size: 1.25em;
 		margin: 0;
+		font-style: italic;
 	}
 }
 .as_of {
