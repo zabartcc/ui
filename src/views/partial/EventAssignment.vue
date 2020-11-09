@@ -77,7 +77,7 @@ export default {
 			this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
 			this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
 
-			const positions = this.event.positions.filter(pos => !pos.takenBy && this.user.data.rating >= pos.minRating).map(pos => pos.pos);
+			const positions = this.event.positions.filter(pos => !pos.takenBy).map(pos => pos.pos);
 
 			const posChipData = {'Any': null};
 

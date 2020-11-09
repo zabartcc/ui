@@ -57,6 +57,10 @@ const routes = [
 			{
 				path: 'events/new',
 				component: () => import('../views/admin/events/New.vue')
+			},
+			{
+				path: 'events/assign/:slug',
+				component: () => import('../views/admin/events/Assign.vue')
 			}
 		]
 	}

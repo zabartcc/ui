@@ -37,26 +37,7 @@
 									<p class="no_pos" v-if="form.positions.center.length == 0">No positions added yet.</p>
 									<ul v-else>
 										<li v-for="(position, i) in form.positions.center" class="collection-item" :key="position.pos">
-											<div class="collapsible_header" @click="expand(i, 'ctr')">{{position.pos}} <i class="material-icons" :id="`chevron-ctr-${i}`">keyboard_arrow_down</i></div>
-											<div class="collapsible_body hidden" :id="`collapsible-ctr-${i}`">
-												<div class="input-field">
-													<label for="rating">Rating</label>
-													<select class="browser-default select_rating" v-model="form.positions.center[i].minRating" id="rating">
-														<option value=5>Controller 1</option>
-														<option value=4>Student 3</option>
-														<option value=3>Student 2</option>
-														<option value=2>Student 1</option>
-													</select>
-												</div>
-												<div class="input-field">
-													<label for="major">Major</label>
-													<select class="browser-default select_major" v-model="form.positions.center[i].major" id="major">
-														<option value=true>Yes</option>
-														<option value=false>No</option>
-													</select>
-												</div>
-												<span class="delete_pos" @click="deletePos(i, 'center')">Delete</span>
-											</div>
+											<div class="pos_header" @click="expand(i, 'ctr')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'center')">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
@@ -74,26 +55,7 @@
 									<p class="no_pos" v-if="form.positions.tracon.length == 0">No positions added yet.</p>
 									<ul v-else>
 										<li v-for="(position, i) in form.positions.tracon" class="collection-item" :key="position.pos">
-											<div class="collapsible_header" @click="expand(i, 'tracon')">{{position.pos}} <i class="material-icons" :id="`chevron-tracon-${i}`">keyboard_arrow_down</i></div>
-											<div class="collapsible_body hidden" :id="`collapsible-tracon-${i}`">
-												<div class="input-field">
-													<label for="rating">Rating</label>
-													<select class="browser-default select_rating" v-model="form.positions.tracon[i].minRating" id="rating">
-														<option value=5>Controller 1</option>
-														<option value=4>Student 3</option>
-														<option value=3>Student 2</option>
-														<option value=2>Student 1</option>
-													</select>
-												</div>
-												<div class="input-field">
-													<label for="major">Major</label>
-													<select class="browser-default select_major" v-model="form.positions.tracon[i].major" id="major">
-														<option value=true>Yes</option>
-														<option value=false>No</option>
-													</select>
-												</div>
-												<span class="delete_pos" @click="deletePos(i, 'tracon')">Delete</span>
-											</div>
+											<div class="pos_header" @click="expand(i, 'tracon')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'tracon')">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
@@ -111,26 +73,7 @@
 									<p class="no_pos" v-if="form.positions.local.length == 0">No positions added yet.</p>
 									<ul v-else>
 										<li v-for="(position, i) in form.positions.local" class="collection-item" :key="position.pos">
-											<div class="collapsible_header" @click="expand(i, 'local')">{{position.pos}} <i class="material-icons" :id="`chevron-local-${i}`">keyboard_arrow_down</i></div>
-											<div class="collapsible_body hidden" :id="`collapsible-local-${i}`">
-												<div class="input-field">
-													<label for="rating">Rating</label>
-													<select class="browser-default select_rating" v-model="form.positions.local[i].minRating" id="rating">
-														<option value=5>Controller 1</option>
-														<option value=4>Student 3</option>
-														<option value=3>Student 2</option>
-														<option value=2>Student 1</option>
-													</select>
-												</div>
-												<div class="input-field">
-													<label for="major">Major</label>
-													<select class="browser-default select_major" v-model="form.positions.local[i].major" id="major">
-														<option value=true>Yes</option>
-														<option value=false>No</option>
-													</select>
-												</div>
-												<span class="delete_pos" @click="deletePos(i, 'local')">Delete</span>
-											</div>
+											<div class="pos_header" @click="expand(i, 'local')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'local')">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
@@ -185,48 +128,40 @@ export default {
 				const obj = {
 					"pos": e.target.elements.pos.value,
 					"type": e.target.elements.type.value,
-					"major": true,
-					"minRating": 5
+					"code": "ctr"
 				};
 				this.form.positions.center.push(obj);
 				e.target.reset(); // clear input
 			} else if(e.target.elements.type.value == 'APP') {
-				let major = false;
+				let code = "app";
 				if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
-					major = true;
+					code = "p50app";
 				}
 				const obj = {
 					"pos": e.target.elements.pos.value,
 					"type": e.target.elements.type.value,
-					"major": major,
-					"minRating": 4
+					"code": code
 				};
 				this.form.positions.tracon.push(obj);
 				e.target.reset(); // clear input
 			} else {
-				let major = false;
-				let rating = 2;
-				if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
-					major = true;
-				}
-				if(e.target.elements.pos.value.slice(-3) == 'TWR') {
-					rating = 3;
-				}
+				let code = "";
+				const input = e.target.elements.pos.value.slice(0,3) + e.target.elements.pos.value.slice(-3);
+				if(input == "PHXTWR") { code = "p50twr"; }
+				else if(input == "PHXGND") { code = "p50gnd"; }
+				else if(input == "PHXDEL") { code = "p50gnd"; }
+				else if(input.slice(-3) == "TWR") { code = "twr"; }
+				else if(input.slice(-3) == "GND") { code = "gnd"; }
+				else if(input.slice(-3) == "DEL") { code = "gnd"; }
+				
 				const obj = {
 					"pos": e.target.elements.pos.value,
 					"type": e.target.elements.pos.value.slice(-3),
-					"major": major,
-					"minRating": rating
+					"code": code
 				};
 				this.form.positions.local.push(obj);
 				e.target.reset(); // clear input
 			}
-		},
-		expand(i, name) {
-			const drop = document.getElementById(`collapsible-${name}-${i}`);
-			drop.classList.toggle("hidden");
-			const chev = document.getElementById(`chevron-${name}-${i}`);
-			chev.classList.toggle("rotate_180");
 		},
 		deletePos(i, type) {
 			if(type == 'center') {
@@ -316,28 +251,9 @@ export default {
 			float: right;
 		}
 	}
-	.collapsible {
-		border: none;
-		margin: 0;
-		box-shadow: none;
-	}
 
-	.collapsible_header {
-		background-color: transparent;
+	.pos_header {
 		padding: .5em;
-		border: 0;
-		cursor: pointer;
-
-		i {
-			position: absolute;
-			right: 0;
-			transition: transform .1s linear;
-		}
-
-		.rotate_180 {
-			transform: rotate(180deg);
-		}
-
 	}
 
 	.collection-item:nth-of-type(odd) {
@@ -348,51 +264,14 @@ export default {
 		padding: .5em;
 	}
 
-	.hidden {
-		max-height: 0!important;
-		overflow: hidden;
-		transition: max-height .3s linear;
-		border: 0!important;
-	}
-
-	.collapsible_body {
-		background-color: #fff;
-		border-bottom: 1px solid $gray_light;
-		max-height: 500px;
-		transition: max-height .3s linear;
-
-		.input-field {
-			margin-top: 0;
-			margin-left: .5em;
-
-			select {
-				width: calc(100% - .5em);
-			}
-
-			label {
-				position: relative;
-				font-size: .8em;
-				left: 0;
-			}
-		}
-		.select_rating, .select_major {
-			padding: .5em;
-			height: auto;
-		}
-
-		.select_major {
-			margin-bottom: 30px;
-		}
-
-		.delete_pos {
-			color: #9e9e9e;
-			font-size: .8rem;
-			cursor: pointer;
-			text-decoration: underline;
-			margin-right: .5rem;
-			float: right;
-			margin-top: -20px;
-		}
+	
+	.delete_pos {
+		color: #9e9e9e;
+		font-size: .8rem;
+		cursor: pointer;
+		text-decoration: underline;
+		margin-right: .5rem;
+		float: right;
 	}
 }
 </style>
