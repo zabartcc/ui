@@ -7,7 +7,7 @@
 		<EventAssignmentTable v-for="category in positionCategories" :category="category" :key="category" />
 
 		<div class="card-content assignment_cta">
-			<div v-if="!event.open" class="sign_up_err">Sorry, but sign ups for this event are closed.</div>
+			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign ups for this event are now closed.</div>
 			<div v-else-if="!user.data" class="sign_up_err">Please log in to sign up.</div>
 			<div v-else-if="assignedPositions">You have been assigned a position. Please contact the EC if you need to cancel.</div>
 			<div v-else-if="requestedPositions" class="sign_up_err">

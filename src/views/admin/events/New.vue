@@ -9,11 +9,11 @@
 						<label for="name">Name</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="start_time" type="datetime-local" v-model="form.startTime">
+						<input id="start_time" type="datetime-local" v-model="form.eventStart">
 						<label for="start_time" class="active">Start Time (Zulu)</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="end_time" type="datetime-local" v-model="form.endTime">
+						<input id="end_time" type="datetime-local" v-model="form.eventEnd">
 						<label for="end_time" class="active">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
@@ -157,14 +157,15 @@
 import { EventsMixin } from '@/mixins/EventsMixin.js';
 import { mapState } from 'vuex';
 import axios from '@/helpers/axios.js';
+import router from '@/router/index.js';
 
 export default {
 	data() {
 		return {
 			form: {
 				name: '',
-				startTime: '',
-				endTime: '',
+				eventStart: '',
+				eventEnd: '',
 				description: '',
 				positions: {
 					center: [
@@ -239,8 +240,8 @@ export default {
 		async submitForm() {
 			const formData = new FormData();
 			formData.append('name', this.form.name);
-			formData.append('startTime', this.form.startTime);
-			formData.append('endTime', this.form.endTime);
+			formData.append('startTime', this.form.eventStart);
+			formData.append('endTime', this.form.eventEnd);
 			formData.append('description', this.form.description);
 			formData.append('positions', JSON.stringify(this.form.positions));
 			formData.append('banner', this.$refs.banner.files[0]);
@@ -258,6 +259,7 @@ export default {
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
+				router.push('/admin/events');
 			}).catch((err) => {
 				M.toast({
 					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
