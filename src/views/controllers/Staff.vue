@@ -1,12 +1,23 @@
 <template>
 	<div v-if=staff>
-		<div class="card">
+		<div class="card card_margin">
 			<div class="card-content">
 				<span class="card-title">ARTCC Staff</span>
 				<div class="row">
 					<div class="col s12 l4 push-l4">
 						<StaffCard :staffItem="staff.atm" />
 					</div>
+				</div>
+				<div class="row">
+					<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
+				</div>
+				<div class="row">
+					<div class="col s8 push-s2 border_top hide-on-med-and-down"></div>
+				</div>
+				<div class="row">
+					<div class="col s1 push-s2 border_left hide-on-med-and-down"></div>
+					<div class="col s5 border_right hide-on-med-and-down"></div>
+					<div class="col s4 border_right hide-on-med-and-down"></div>
 				</div>
 				<div class="row">
 					<div class="col s12 l4 push-l4">
@@ -20,6 +31,16 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="col s1 push-s5 border_right border_long hide-on-med-and-down"></div>
+				</div>
+				<div class="row">
+					<div class="col s4 push-s4 border_top hide-on-med-and-down"></div>
+				</div>
+				<div class="row">
+					<div class="col s1 push-s4 border_left hide-on-med-and-down"></div>
+					<div class="col s4 push-s3 border_right hide-on-med-and-down"></div>
+				</div>
+				<div class="row">
 					<div class="col s12 l4 push-l2">
 						<StaffCard :staffItem="staff.ec" />
 					</div>
@@ -29,13 +50,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="card">
+		<div class="card card_margin">
 			<div class="card-content">
 				<span class="card-title">Training Staff</span>
 				<div class="row">
 					<div class="col s12 l4 push-l4">
 						<StaffCard :staffItem="staff.ta" />
 					</div>
+				</div>
+				<div class="row">
+					<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
+				</div>
+				<div class="row">
+					<div class="col s6 push-s3 border_top hide-on-med-and-down"></div>
+				</div>
+				<div class="row">
+					<div class="col s1 push-s3 border_left hide-on-med-and-down"></div>
+					<div class="col s4 push-s4 border_right hide-on-med-and-down"></div>
 				</div>
 				<div class="row">
 					<div class="col s12 l6">
@@ -73,6 +104,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.row, .col {
+		padding: 0;
+		margin: 0;
+	}
+
+	.card-content .card {
+		margin: 0 .5em;
+	}
+
 	.staff_table {
 		tr {
 			border-bottom: none;
@@ -84,4 +124,34 @@ export default {
 			vertical-align: top;
 		}
 	}
+
+	.border_right {
+		border-right: 3px solid $primary-color;
+		height: 30px;
+	}
+
+	.border_left {
+		border-left: 3px solid $primary-color;
+		height: 30px;
+	}
+
+	.border_long {
+		height: 53px;
+		margin-top: -27px;
+	}
+
+	.border_top {
+		border-top: 3px solid $primary-color;
+	}
+
+	.card_margin {
+		margin: .5em 0 1em 0;
+	}
+
+	@media only screen and (max-width: 992px) {
+		.card-content .card {
+			width: 100%;
+			margin: .5em 0 1em 0;
+		}
+	} 
 </style>
