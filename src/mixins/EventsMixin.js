@@ -12,20 +12,38 @@ export const EventsMixin = {
 			return axios.get(`/event/${slug}`).then(response => response.data).catch((err) => { console.log(err); });
 		},
 		getPositionsMixin(slug) {
-			return axios.get(`/event/${slug}/positions`).then(response => response.data).catch((err) => { console.log(err); return err; });
+			return axios.get(`/event/${slug}/positions`).then(response => response.data).catch((err) => { console.log(err); });
 		},
 		putSignupMixin(slug, user, requests) {
-			return axios.put(`/event/${slug}/signup/${user}`, {requests}).then(({data}) => data);
+			return axios.put(`/event/${slug}/signup/${user}`, {requests}).then(response => response.data).catch((err) => { console.log(err); });
 		},
 		deleteSignupMixin(slug, user) {
-			return axios.delete(`/event/${slug}/signup/${user}`).then(response => response.data);
+			return axios.delete(`/event/${slug}/signup/${user}`).then(response => response.data).catch((err) => { console.log(err); });
 		},
 		deleteEventMixin(slug, auth) {
 			return axios.delete(`/event/${slug}`, {
 				headers: {
 					Authorization: auth
 				}
-			}).then(response => response.data);
+			}).then(response => response.data).catch((err) => { console.log(err); });
+		},
+		saveAssignmentsMixin(slug, positions, auth) {
+			return axios.put(`/event/${slug}/assign`, {
+				assignment: positions
+			}, {
+				headers: {
+					Authorization: auth
+				}
+			}).then(response => response.data).catch((err) => { console.log(err); });
+		},
+		finalizeAssignmentsMixin(slug, positions, auth) {
+			return axios.put(`/event/${slug}/finalize`, {
+				assignment: positions
+			}, {
+				headers: {
+					Authorization: auth
+				}
+			}).then(response => response.data).catch((err) => { console.log(err); });
 		}
 	}
 };

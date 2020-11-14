@@ -7,9 +7,9 @@
 		<EventAssignmentTable v-for="category in positionCategories" :category="category" :key="category" />
 
 		<div class="card-content assignment_cta">
-			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign ups for this event are now closed.</div>
+			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign-ups for this event are now closed.</div>
 			<div v-else-if="!user.data" class="sign_up_err">Please log in to sign up.</div>
-			<div v-else-if="assignedPositions">You have been assigned a position. Please contact the EC if you need to cancel.</div>
+			<div v-else-if="assignedPositions">You have been assigned a position. Contact the EC if you need to cancel.</div>
 			<div v-else-if="requestedPositions" class="sign_up_err">
 				You have requested these positions:<br />
 				{{currentUserRequests}}<br />
@@ -22,8 +22,8 @@
 		<div class="modal-content">
 			<h4>Request Position</h4>
 			<div class="chips chips-autocomplete chips-placeholder"></div>
-			<p>The positions for this event will be assigned by the events team. Please indicate your top 3 preferred positions above. If you do not have a preference, enter "Any" above. If there is a specific position not listed that you would like to work, you can manually enter it.</p>
-			<p>Be advised, requests are just that — requests. The ZAB events team may place you on any position depending on a multitude of factors.</p>
+			<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions above. If you do not have a preference, enter "Any". If there is a specific position not listed that you would like to work, you may manually enter it.</p>
+			<p>Be advised, requests are just that — requests. The events coordinator may place you on any position depending on a multitude of factors.</p>
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">SIGN UP</a>

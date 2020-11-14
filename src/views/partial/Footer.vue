@@ -10,8 +10,7 @@
 		</div>
 		<div class="footer-copyright">
 			<div class="wrapper">
-				<p class="small-text right">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank">GitLab</a></p>
-				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
+				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC <span class="small-text right">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank">GitLab</a></span></div>
 				<!-- Made with pride by Austin Robison. -->
 				<p>Current date and time (Zulu): <span id="time">...</span></p>
 			</div>

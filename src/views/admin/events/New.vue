@@ -37,7 +37,7 @@
 									<p class="no_pos" v-if="form.positions.center.length == 0">No positions added yet.</p>
 									<ul v-else>
 										<li v-for="(position, i) in form.positions.center" class="collection-item" :key="position.pos">
-											<div class="pos_header" @click="expand(i, 'ctr')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'center')">Delete</span></div>
+											<div class="pos_header" @click="expand(i, 'center')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'center')">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
@@ -128,7 +128,7 @@ export default {
 				const obj = {
 					"pos": e.target.elements.pos.value,
 					"type": e.target.elements.type.value,
-					"code": "ctr"
+					"code": "zab"
 				};
 				this.form.positions.center.push(obj);
 				e.target.reset(); // clear input

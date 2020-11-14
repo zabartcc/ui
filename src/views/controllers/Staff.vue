@@ -9,11 +9,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col s12 l4">
-						<StaffCard :staffItem="staff.ta" />
-					</div>
-					<div class="col s12 l4">
+					<div class="col s12 l4 push-l4">
 						<StaffCard :staffItem="staff.datm" />
+					</div>
+					<div class="col s12 l4 pull-l4">
+						<StaffCard :staffItem="staff.ta" />
 					</div>
 					<div class="col s12 l4">
 						<StaffCard :staffItem="staff.wm" />
