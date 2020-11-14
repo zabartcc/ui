@@ -31,7 +31,7 @@ export default {
 	}
 
 	&:hover {
-		background:  #eaeaea;
+		background: #eaeaea;
 
 		.flight_info {
 			opacity: 1;

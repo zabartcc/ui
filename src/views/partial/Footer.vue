@@ -10,9 +10,10 @@
 		</div>
 		<div class="footer-copyright">
 			<div class="wrapper">
-				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC <span class="small-text right">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank">GitLab</a></span></div>
+				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC <span class="small-text right">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></span></div>
 				<!-- Made with pride by Austin Robison. -->
-				<p>Current date and time (Zulu): <span id="time">...</span></p>
+				<!-- Made with less, but still some pride by Daan Janssen -->
+				<p>Current date and time (Zulu): <span id="time">(...)</span></p>
 			</div>
 		</div>
     </footer>
@@ -22,8 +23,7 @@
 export default {
 	mounted () {
 		setInterval(function () {
-			let d = new Date();
-			document.querySelector('.footer-copyright #time').innerHTML = d.toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
+			document.querySelector('.footer-copyright #time').innerHTML = new Date().toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
 		}, 1000);
 
 		document.getElementById('full_year').innerHTML = new Date().getFullYear();

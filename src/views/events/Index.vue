@@ -83,7 +83,7 @@ export default {
     .event_list_row tr {
 		transition: background-color .3s ease;
 		&:hover {
-			background: $gray-mild;
+			background: #eaeaea;
 		}
     }
 

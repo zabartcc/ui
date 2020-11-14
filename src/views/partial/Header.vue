@@ -3,14 +3,11 @@
 		<div id="header_hero" class="hero2">
 			<div class="wrapper">
 				<div>
-					<h1>ALBUQUERQUE<span>ARTCC</span></h1>
+					<router-link to="/"><h1>ALBUQUERQUE<span>ARTCC</span></h1></router-link>
 				</div>
-				<router-link to="/">
-                    <img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="">
-				</router-link>
+                <router-link to="/"><img :src="require('@/assets/images/icons/zab_icon_new.png')" alt=""></router-link>
 			</div>
 		</div>
-
 		<nav>
 			<div class="nav-wrapper wrapper">
 				<ul class="left hide-on-med-and-down">
@@ -238,10 +235,10 @@ nav {
 @media screen and (max-width: 910px) {
 	#header_hero .wrapper {
 		padding: 15px;
-		flex-direction: column;
 
 		a img {
-			height: 100px;
+			height: 80px;
+			width: auto;
 		}
 
 		h1 {

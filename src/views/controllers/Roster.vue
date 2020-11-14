@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<span class="card-title">Controller Roster</span>
 		</div>
-		<table class="controller_list striped hover">
+		<table class="controller_list striped">
 			<thead class="controller_list_head">
 				<tr>
 					<th class="name">Controller</th>
@@ -85,8 +85,17 @@ export default {
 	border-bottom: 1px solid #666;
 }
 
-.controller_list_row div {
-	padding: 0.5rem 1rem;
+.controller_list_row {
+	tr {
+		transition: background-color .3s ease;
+		&:hover {
+			background: #eaeaea;
+		}
+	}
+
+	div {
+		padding: 0.5rem 1rem;
+	}
 }
 
 tr th {
@@ -94,7 +103,7 @@ tr th {
 }
 
 td {
-	padding: .5em 5px!important;
+	padding: .25em 1em!important;
 }
 
 .name {
