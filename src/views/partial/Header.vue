@@ -26,6 +26,9 @@
 							<li>
 								<router-link to="/controllers/staff">ARTCC Staff</router-link>
 							</li>
+							<li>
+								<router-link to="/controllers/visit">Become a Visitor</router-link>
+							</li>
 						</ul>
 					</li>
 					<li>
