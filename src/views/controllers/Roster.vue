@@ -126,6 +126,7 @@ td {
 	color: #fff;
 	font-size: 0.85rem;
 	margin: 2px;
+	user-select: none;
 
 	&.cert_senior {
 		background: $cert_senior;

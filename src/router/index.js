@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Master from '../views/layout/Master.vue';
 import Admin from '../views/layout/Admin.vue';
 import Event from '../views/layout/Event.vue';
+import Dashboard from '../views/layout/ControllerDash.vue';
 import axios from '../helpers/axios';
 
 const routes = [
@@ -24,8 +25,20 @@ const routes = [
 				component: () => import('../views/controllers/Staff.vue')
 			},
 			{
+				path: '/controllers/:cid',
+				component: () => import('../views/controllers/Profile.vue')
+			},
+			{
+				path: '/controllers/visit/:step?',
+				component: () => import('../views/controllers/visit/Index.vue')
+			},
+			{
+				path: '/controllers/visit/verify',
+				component: () => import('../views/controllers/visit/VisitorVerify.vue')
+			},
+			{
 				path: '/events',
-				component: () => import('../views/events/Index.vue'),
+				component: () => import('../views/events/Index.vue')
 			}
 		]
 	},
@@ -36,7 +49,8 @@ const routes = [
 				component: () => import('../views/events/Event.vue')
 			}
 		]
-	}, {
+	},
+	{
 		path: '/admin', component: Admin, meta: { isAdmin: true }, children: [
 			{
 				path: '',
@@ -63,6 +77,14 @@ const routes = [
 				component: () => import('../views/admin/events/Assign.vue')
 			}
 		]
+	},
+	{
+		path: '/dashboard', component: Dashboard, meta: { loggedIn: true }, children: [
+			{
+				path: '',
+				component: () => import('../views/dashboard/Index.vue')
+			}
+		]
 	}
 ];
 
@@ -73,9 +95,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	/* eslint-disable no-unused-vars */
-	if(to.meta.isAdmin) { // Route is an admin route.
+	if(to.meta.loggedIn) {
+		next();
+	} else if(to.meta.isAdmin) { // Route is an admin route.
 		const token = localStorage.getItem('token');
-		console.log(token);
 		if(!token) {
 			next('/');
 		} else {
