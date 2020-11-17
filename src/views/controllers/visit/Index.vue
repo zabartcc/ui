@@ -61,7 +61,7 @@ export default {
 			'getVisit'
 		]),
 		async login() {
-		window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.ULS_VISIT_REDIRECT_URL}`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_VISIT_REDIRECT_URL}`;
 		},
 		async submitApplication() {
 			const data = {

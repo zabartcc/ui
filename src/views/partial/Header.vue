@@ -133,7 +133,7 @@ export default {
 		]),
 		processLogin: function() {
 			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.ULS_LOGIN_REDIRECT_URL}`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL}`;
 		},
 		processLogout: function () {
 			localStorage.removeItem('token');

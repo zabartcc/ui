@@ -16,7 +16,7 @@ module.exports = {
 			'^/api': {
 				target: 'https://devapi.zabartcc.org',
 				changeOrigin: true,
-				pathRewrite: { "^/devapi": "/" }
+				pathRewrite: { "^/api": "/" }
 			}
 		}
 	}
