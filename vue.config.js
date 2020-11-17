@@ -12,6 +12,11 @@ module.exports = {
 				target: 'https://metar.vatsim.net',
 				changeOrigin: true,
 				pathRewrite: { "^/metar": "/" }
+			},
+			'^/devapi': {
+				target: 'https://devapi.zabartcc.org',
+				changeOrigin: true,
+				pathRewrite: { "^/devapi": "/" }
 			}
 		}
 	}
