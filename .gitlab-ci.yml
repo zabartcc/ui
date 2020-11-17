@@ -1,0 +1,54 @@
+stages:
+  - build
+  - deploy
+
+.build_image: &build_image
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$TAG .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE:$TAG
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+.deploy_image: &deploy_image
+  stage: deploy
+  image: dtzar/helm-kubectl
+  environment:
+    name: deploy
+  script:
+    - kubectl set image deployment/$K8S_IMAGE $K8S_IMAGE=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --record -n zab-web-stack
+
+build dev image:
+  <<: *build_image
+  variables:
+    TAG: dev
+  only:
+    - development
+    - k8s_testing
+
+build prod image:
+  <<: *build_image
+  variables:
+    TAG: master
+  only:
+    - master
+
+deploy dev image:
+  <<: *deploy_image
+  variables:
+    K8S_IMAGE: devui
+  only:
+    - development
+    - k8s_testing
+
+deploy prod image:
+  <<: *deploy_image
+  variables:
+    K8S_IMAGE: ui
+  only:
+    - master

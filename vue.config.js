@@ -13,7 +13,7 @@ module.exports = {
 				changeOrigin: true,
 				pathRewrite: { "^/metar": "/" }
 			},
-			'^/devapi': {
+			'^/api': {
 				target: 'https://devapi.zabartcc.org',
 				changeOrigin: true,
 				pathRewrite: { "^/devapi": "/" }
