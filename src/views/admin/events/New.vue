@@ -22,7 +22,7 @@
 							<input type="file" ref="banner">
 						</div>
 						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Banner (.jpg .png or .gif)">
+							<input class="file-path validate" type="text" placeholder="Banner (.jpg .png or .gif, less than 6 MB)">
 						</div>
 					</div>
 					<div class="input-field col s12">

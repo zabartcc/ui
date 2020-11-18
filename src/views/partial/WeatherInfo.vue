@@ -4,26 +4,28 @@
 			<span class="card-title">Current Weather</span>
 			<p>The runways listed here are suggestions. If there is a controller online, they may be using different runways than those listed here. Please always check with the controller's ATIS prior to planning your runways.</p>
 		</div>
-		<table v-if="numStationsLoaded === Object.keys(stations).length" class="striped compact">
-			<thead>
-				<tr>
-					<th>Airport</th>
-					<th>Wind</th>
-					<th>Conditions</th>
-					<th>Landing</th>
-					<th>Departing</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="station in stations" :key="station.icao">
-					<td><span class="hide-on-med-and-down">{{station.fullName}} <strong>({{station.icao}})</strong></span><span class="hide-on-large-only">{{station.icao}}</span></td>
-					<td>{{formatWind(station)}}</td>
-					<td><span class="airport_conditions" v-html="getConditions(station)"></span></td>
-					<td>{{station.getLanding()}}</td>
-					<td>{{station.getDeparting()}}</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table_overflow_wrapper" v-if="numStationsLoaded === Object.keys(stations).length" >
+			<table class="striped compact">
+				<thead>
+					<tr>
+						<th>Airport</th>
+						<th>Wind</th>
+						<th>Conditions</th>
+						<th>Landing</th>
+						<th>Departing</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="station in stations" :key="station.icao">
+						<td><span class="hide-on-med-and-down">{{station.fullName}} <strong>({{station.icao}})</strong></span><span class="hide-on-large-only">{{station.icao}}</span></td>
+						<td>{{formatWind(station)}}</td>
+						<td><span class="airport_conditions" v-html="getConditions(station)"></span></td>
+						<td>{{station.getLanding()}}</td>
+						<td>{{station.getDeparting()}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<div class="card-content loading" v-else>
 			<h5>Loading weather...</h5>
 			<div class="progress">
@@ -296,10 +298,15 @@ export default {
 	margin: 0 auto;
 }
 
+.table_overflow_wrapper {
+	width: 100%;
+	overflow-x: auto;
+}
+
 tbody tr {
 	transition: background-color .3s ease;
 	&:hover {
-		background-color: $gray-mild!important;
+		background-color: #eaeaea!important;
 	}
 }
 </style>

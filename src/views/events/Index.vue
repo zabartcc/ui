@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="card event_card" v-for="event in events" :key="event.id">
-        <img :src="require(`@/assets/uploads/events/${event.bannerUrl}`)" class="event_banner" draggable="false" />
+        <img :src="`https://cdn.zabartcc.org/events/${event.bannerUrl}`" class="event_banner" draggable="false" />
         <div class="card-content">
             <div class="row">
                 <div class="col s12 l8">

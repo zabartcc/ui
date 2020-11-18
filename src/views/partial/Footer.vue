@@ -12,7 +12,7 @@
 			<div class="wrapper">
 				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC <span class="small-text right">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></span></div>
 				<!-- Made with pride by Austin Robison. -->
-				<!-- Made with less, but still some pride by Daan Janssen -->
+				<!-- ...and Daan Janssen -->
 				<p>Current date and time (Zulu): <span id="time">(...)</span></p>
 			</div>
 		</div>

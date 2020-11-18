@@ -55,7 +55,7 @@
 							</li>
 							<li v-if="user.data.isStaff" class="divider"></li>
 							<li v-if="user.data.isStaff">
-								<a to="http://sunport.zabartcc.org/mail" target="_blank" rel="noopener noreferrer">Webmail</a>
+								<a href="https://sunport.zabartcc.org/mail/" target="_blank" rel="noopener noreferrer">Webmail</a>
 							</li>
 							<li v-if='user.data.isIns'>
 								<router-link to='/ins'>Instructor Dashboard</router-link>
@@ -85,6 +85,9 @@
 			</li>
 			<li>
 				<router-link class="sidenav-close" to="/controllers/staff">ARTCC STAFF</router-link>
+			</li>
+			<li>
+				<router-link to="/controllers/visit">BECOME A VISITOR</router-link>
 			</li>
 			<li>
 				<router-link class="sidenav-close" to="/events">EVENTS</router-link>
