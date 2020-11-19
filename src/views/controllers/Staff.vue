@@ -109,6 +109,10 @@ export default {
 		margin: 0;
 	}
 
+	.card {
+		z-index: 1;
+	}
+
 	.card-content .card {
 		margin: 0 .5em;
 	}
@@ -136,8 +140,9 @@ export default {
 	}
 
 	.border_long {
-		height: 53px;
-		margin-top: -27px;
+		height: 110px;
+		margin-top: -85px;
+		z-index: 0;
 	}
 
 	.border_top {

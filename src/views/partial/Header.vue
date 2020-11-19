@@ -47,7 +47,7 @@
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
 				<ul class="right left-on-med-and-down">
 					<li>
-						<a v-if="user.data" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{`${user.data.lname}, ${user.data.fname}`}}</a>
+						<a v-if="user.data" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{`${user.data.fname} ${user.data.lname}`}}</a>
                         <a v-else id="login_button" @click.prevent="processLogin" href="#">Login</a>
 						<ul v-if="user.data" id="user-dropdown" class="dropdown-content">
 							<li>
