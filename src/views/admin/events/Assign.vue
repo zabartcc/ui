@@ -1,7 +1,8 @@
 <template>
 	<div class="card">
 		<div class="card-content" v-if="event">
-			<span class="card-title">Event Sign-ups</span>
+			<div class="card-title">Event Sign-ups</div>
+			<button class="btn right btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
 			<div class="no_signups" v-if="event.signups.length == 0">There have been no sign-ups for this event yet.</div>
 			<div class="signups_container" v-else>
 				<div class="signups_user card" v-for="signup in event.signups" :key="signup.id">
@@ -9,6 +10,7 @@
 					<div class="signups_rating">{{signup.user.ratingLong}}</div>
 					<div class="signups_prefs">
 						<div class="prefs_title">Preferences</div>
+						<p v-if="signup.requests.length == 0">None</p>
 						<div class="chip" v-for="(request, i) in signup.requests" :key="`${i}-${request}`">
 							{{request}}
 						</div>
@@ -38,6 +40,22 @@
 					<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
 				</div>
 			</div>
+			<div id="modal_add_signup" class="modal">
+				<div class="modal-content">
+					<h4>Manually add sign-up</h4>
+					<p>Enter a CID to manually add a controller to this page and to assign them a position. Please note that if the controller is not on our roster, they (currently) cannot be added on here due to technical limitations.</p>
+					<div class="row cid_check">
+						<div class="input-field col s12 m6">
+							<input type="text" id="cid" v-model="cid" required />
+							<label for="cid" class="active">Controller ID</label>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="waves-effect btn" @click="addSignup">Add</a>
+					<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
+				</div>
+			</div>
 		</div>
 		<div class="card-content loading" v-else>
 			<h5>Loading event sign-ups...</h5>
@@ -50,11 +68,13 @@
 
 <script>
 import { EventsMixin } from '@/mixins/EventsMixin.js';
+import axios from '@/helpers/axios.js';
 
 export default {
 	data() {
 		return {
-			event: null
+			event: null,
+			cid: null
 		};
 	},
 	mixins: [EventsMixin],
@@ -127,6 +147,29 @@ export default {
 			} else {
 				return false;
 			}
+		},
+		async addSignup() {
+			const auth = `Bearer ${localStorage.getItem('token') || null}`;
+			axios.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`, {
+				headers: {
+					Authorization: auth
+				}
+			}).then(() => {
+				M.toast({
+					html: '<i class="material-icons left">done</i> Sign-up successfully added! <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_success'
+				});
+				this.getEventData();
+				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
+			}).catch((err) => {
+				console.log(err);
+				M.toast({
+					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
+					displayLength: 5000,
+					classes: 'toast toast_error',
+				});
+			});
 		}
 	},
 	async mounted() {
@@ -157,13 +200,14 @@ export default {
 .signups_container {
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 	padding: .5em;
 }
 
 .signups_user {
-	width: 300px;
 	padding: 1em;
 	margin: .5em;
+	width: 300px;
 
 	.signups_name {
 		font-weight: 600;
@@ -210,6 +254,20 @@ export default {
 #modal_finalize {
 	min-width: 400px;
 	width: 30%;
+}
+
+.btn_add_signup {
+	margin: -40px 1em 0 1em;
+	padding: 0 .75em;
+}
+
+#modal_add_signup {
+	min-width: 400px;
+	width: 30%;
+
+	.cid_check {
+		margin-top: 20px;
+	}
 }
 
 </style>

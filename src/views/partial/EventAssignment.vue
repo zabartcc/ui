@@ -12,7 +12,7 @@
 			<div v-else-if="assignedPositions">You have been assigned a position. Contact the EC if you need to cancel.</div>
 			<div v-else-if="requestedPositions" class="sign_up_err">
 				You have requested these positions:<br />
-				{{currentUserRequests}}<br />
+				{{currentUserRequests || 'No preference'}}<br />
 				<a href="#" @click.prevent="deleteRequest()" class="btn btn-small waves-effect waves-light">Delete Request</a>
 			</div>
 			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Request Position</button>
