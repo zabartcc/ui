@@ -14,9 +14,14 @@ module.exports = {
 				pathRewrite: { "^/metar": "/" }
 			},
 			'^/api': {
-				target: 'https://devapi.zabartcc.org',
+				target: 'http://localhost:3000',
 				changeOrigin: true,
 				pathRewrite: { "^/api": "/" }
+			},
+			'/vatusa': {
+				target: 'https://api.vatusa.net/v2',
+				changeOrigin: true,
+				pathRewrite: { "^/vatusa": "/" }
 			}
 		}
 	}

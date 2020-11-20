@@ -1,4 +1,4 @@
-import axios from '@/helpers/axios';
+import {zabApi} from '@/helpers/axios.js';
 import router from '@/router/index.js';
 
 export default {
@@ -14,7 +14,7 @@ export default {
 	actions: {
 		getUser: async ({commit, state}) => {
 			if(state.user.token) { // we have a token already set
-				const { data } = await axios.get('/user', {
+				const { data } = await zabApi.get('/user', {
 					headers: {
 						Authorization: `Bearer ${state.user.token}`
 					}

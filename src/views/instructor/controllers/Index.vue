@@ -15,11 +15,11 @@
 					<tr>
 						<th>Controller</th>
 						<th>CID</th>
-						<th class="options">Options</th>
+						<th class="options">Management</th>
 					</tr>
 				</thead>
 				<tbody class="controller_list_row">
-					<tr v-for="(controller, i) in controllersFiltered" :key="controller.cid">
+					<tr v-for="controller in controllersFiltered" :key="controller.cid">
 						<td>
 							<div class="name">
 								<router-link :to="`/controllers/${controller.cid}`">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</router-link>
@@ -33,21 +33,15 @@
 								{{controller.cid}}
 							</div>
 						</td>
+						<td class="training">
+							<i class="material-icons">stars</i>
+							<i class="material-icons">assignment</i>
+							<i class="material-icons">comment</i>
+						</td>
 						<td class="options">
 							<router-link data-position="top" data-tooltip="Edit Controller" class="tooltipped" :to="`/admin/controllers/${controller.cid}`"><i class="material-icons">edit</i></router-link>
-							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
+							<i class="material-icons">delete</i>
 						</td>
-						<div :id="`modal_delete_${i}`" class="modal modal_delete">
-							<div class="modal-content">
-								<h4>Removing Controller</h4>
-								<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. Please state the reason for removal below. Please note that this will delete the controller from the VATUSA ARTCC Roster and thus from the website.</p>
-								<textarea class="materialize-textarea" placeholder="Please state a reason for removal..." v-model="deleteReason" required></textarea>
-							</div>
-							<div class="modal-footer">
-								<a href="#!" class="btn waves-effect">Remove</a>
-								<a href="#!" class="btn-flat waves-effect modal-close">Cancel</a>
-							</div>
-						</div>
 					</tr>
 				</tbody>
 			</table>
@@ -57,6 +51,7 @@
 
 <script>
 import { ControllerMixin } from '@/mixins/ControllerMixin.js';
+import { vatusaApi } from '@/helpers/axios.js';
 
 export default {
 	data() {
@@ -64,15 +59,13 @@ export default {
 			controllers: null,
 			controllersFiltered: null,
 			filter: '',
-			deleteReason: ''
+			vatusa: null
 		};
 	},
 	mixins: [ControllerMixin],
 	async mounted() {
 		await this.getControllers();
-		M.Modal.init(document.querySelectorAll('.modal'), {
-			preventScrolling: false
-		});
+		await this.testApiCall();
 		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
 			margin: 0
 		});
@@ -81,6 +74,9 @@ export default {
 		async getControllers() {
 			this.controllers = await this.getControllersMixin();
 			this.controllersFiltered = await this.getControllersMixin();
+		},
+		async testApiCall() {
+			this.vatusa = await vatusaApi.get('/user/1374893/exam/history').then(response => response.data).catch((err) => console.log(err));
 		},
 		filterControllers() {
 			const search = new RegExp(this.filter, 'ig');
@@ -118,6 +114,16 @@ export default {
 
 	.options {
 		text-align: right;
+		width: 120px;
+	}
+
+	.training {
+		text-align: center;
+		width: 20%;
+	}
+
+	table {
+		table-layout: fixed
 	}
 
 	table tbody {
@@ -127,11 +133,6 @@ export default {
 				background: #eaeaea;
 			}
 		}
-	}
-
-	.modal_delete {
-		min-width: 340px;
-		width: 30%;
 	}
 
 </style>

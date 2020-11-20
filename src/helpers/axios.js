@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-export default axios.create({
+export const zabApi =  axios.create({
 	baseURL: '/api',
-	withCredentials: true
+	withCredentials: true,
+});
+
+export const vatusaApi = axios.create({
+	baseURL: '/vatusa',
+	withCredentials: true,
+	params: {
+		test: true
+	}
 });

@@ -3,6 +3,7 @@ import Master from '../views/layout/Master.vue';
 import Admin from '../views/layout/Admin.vue';
 import Event from '../views/layout/Event.vue';
 import Dashboard from '../views/layout/ControllerDash.vue';
+import Instructor from '../views/layout/Instructor.vue';
 import axios from '../helpers/axios';
 
 const routes = [
@@ -47,6 +48,18 @@ const routes = [
 			{
 				path: '',
 				component: () => import('../views/events/Event.vue')
+			}
+		]
+	},
+	{
+		path: '/ins', component: Instructor, meta: { isIns: true }, children: [
+			{
+				path: '',
+				component: () => import('../views/instructor/Index.vue')
+			},
+			{
+				path: 'controllers',
+				component: () => import('../views/instructor/controllers/Index.vue')
 			}
 		]
 	},
