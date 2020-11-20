@@ -4,7 +4,7 @@
 			<span class="card-title">Become a Visitor</span>
 			<div v-if="visit.isLoggedIn == false">
 				<p>Thank you for your interest in visiting the Albuquerque ARTCC. To apply for visiting status, please click the button below to login and continue.</p><br />
-				<p><b class="red-text">Important</b>: please make sure that you are allowed to visit per <a href="https://www.vatsim.net/documents/transfer-and-visiting-controller-policy" target="_blank"><b>VATSIM's Transfer and Visiting Controller Policy</b></a>. Any application that doesn't meet the requirements outlined in that policy, will be rejected with or without notice.</p>
+				<p><b class="red-text">Important</b>: please make sure that you are allowed to visit per <a href="https://www.vatsim.net/documents/transfer-and-visiting-controller-policy" target="_blank"><b>VATSIM's Transfer and Visiting Controller Policy</b></a>. Any application that doesn't meet the requirements as outlined in that policy will be rejected with or without notice.</p>
 				<button class="btn btn-waves login_button" @click="login">Login with SSO</button>
 			</div>
 			<div v-else>

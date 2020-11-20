@@ -5,21 +5,21 @@
 			<div class="row">
 				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
 					<div class="input-field col s12">
-						<input id="name" type="text" v-model="form.name">
+						<input id="name" type="text" v-model="form.name" required>
 						<label for="name">Name</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="start_time" type="datetime-local" v-model="form.eventStart">
+						<input id="start_time" type="datetime-local" v-model="form.eventStart" required>
 						<label for="start_time" class="active">Start Time (Zulu)</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="end_time" type="datetime-local" v-model="form.eventEnd">
+						<input id="end_time" type="datetime-local" v-model="form.eventEnd" required>
 						<label for="end_time" class="active">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
 						<div class="btn">
 							<span>FILE</span>
-							<input type="file" ref="banner">
+							<input type="file" ref="banner" required>
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate" type="text" placeholder="Banner (.jpg .png or .gif, less than 6 MB)">
@@ -126,7 +126,7 @@ export default {
 		async addPosition(e) {
 			if(e.target.elements.type.value == 'CTR') {
 				const obj = {
-					"pos": e.target.elements.pos.value,
+					"pos": e.target.elements.pos.value.toUpperCase(),
 					"type": e.target.elements.type.value,
 					"code": "zab"
 				};
@@ -138,7 +138,7 @@ export default {
 					code = "p50app";
 				}
 				const obj = {
-					"pos": e.target.elements.pos.value,
+					"pos": e.target.elements.pos.value.toUpperCase(),
 					"type": e.target.elements.type.value,
 					"code": code
 				};
@@ -155,8 +155,8 @@ export default {
 				else if(input.slice(-3) == "DEL") { code = "gnd"; }
 				
 				const obj = {
-					"pos": e.target.elements.pos.value,
-					"type": e.target.elements.pos.value.slice(-3),
+					"pos": e.target.elements.pos.value.toUpperCase(),
+					"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
 					"code": code
 				};
 				this.form.positions.local.push(obj);
@@ -181,11 +181,10 @@ export default {
 			formData.append('positions', JSON.stringify(this.form.positions));
 			formData.append('banner', this.$refs.banner.files[0]);
 			formData.append('createdBy', this.user.data._id);
-			const userToken = localStorage.getItem('token') || null;
 
 			axios.post(`/event/new`, formData, {
 				headers: { 
-					Authorization: `Bearer ${userToken}`,
+					Authorization: `Bearer ${localStorage.getItem('token') || null}`,
 					'Content-Type': 'multipart/form-data'
 				}
 			}).then(() => {

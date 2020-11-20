@@ -36,8 +36,8 @@ export const EventsMixin = {
 				}
 			}).then(response => response.data).catch((err) => { console.log(err); });
 		},
-		finalizeAssignmentsMixin(slug, positions, auth) {
-			return axios.put(`/event/${slug}/finalize`, {
+		notifyAssignmentsMixin(slug, positions, auth) {
+			return axios.put(`/event/${slug}/notify`, {
 				assignment: positions
 			}, {
 				headers: {

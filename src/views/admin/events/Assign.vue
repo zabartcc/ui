@@ -26,17 +26,17 @@
 			</div>
 			<div class="row">
 				<div class="input-field col s12 signups_submit">
-					<button type="submit" class="btn right modal-trigger" data-target="modal_finalize" :disabled="event.signups.length == 0 || event.submitted == true">Finalize</button>
+					<button type="submit" class="btn right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Notify</button>
 					<button type="submit" class="btn right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button>
 				</div>
 			</div>
-			<div id="modal_finalize" class="modal">
+			<div id="modal_notify" class="modal">
 				<div class="modal-content">
 					<h4>Are you sure?</h4>
-					<p>By clicking finalize, you will close the event for sign-ups and send out an email to all controllers who signed up. You can still change the assignments, but you cannot undo the email. If you just want to save the assignments, click the save button instead.</p>
+					<p>By clicking notify, you will send out an email to all controllers who signed up, informing them of the position assignments. You can still make changes to the position assignments after clicking the notify button.</p>
 				</div>
 				<div class="modal-footer">
-					<a href="#!" class="waves-effect btn" @click="finalizeAssignments">Finalize</a>
+					<a href="#!" class="waves-effect btn" @click="notifyAssignments">Notify</a>
 					<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
 				</div>
 			</div>
@@ -102,21 +102,43 @@ export default {
 				});
 			});
 		},
-		async finalizeAssignments() {
+		async notifyAssignments() {
 			const positions = this.event.positions;
 			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			this.finalizeAssignmentsMixin(this.$route.params.slug, positions, auth).then(async () => {
+			this.notifyAssignmentsMixin(this.$route.params.slug, positions, auth).then(async () => {
 				M.toast({
-					html: '<i class="material-icons left">done</i> Event assignments succesfully finalized! <div class="border"></div>',
+					html: '<i class="material-icons left">done</i> All controllers were successfully notified! <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_success'
 				});
 				await this.getEventData();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_finalize')).close(), 500);
+				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_notify')).close(), 500);
 			}).catch((err) => {
 				console.log(err);
 				M.toast({
 					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_error',
+				});
+			});
+		},
+		async addSignup() {
+			axios.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`, {}, {
+				headers: { 
+					"Authorization": `Bearer ${localStorage.getItem('token') || null}`,
+				}
+			}).then(() => {
+				M.toast({
+					html: '<i class="material-icons left">done</i> Sign-up successfully added! <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_success'
+				});
+				this.getEventData();
+				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
+			}).catch((err) => {
+				console.log(err);
+				M.toast({
+					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
 					displayLength: 5000,
 					classes: 'toast toast_error',
 				});
@@ -147,29 +169,6 @@ export default {
 			} else {
 				return false;
 			}
-		},
-		async addSignup() {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			axios.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`, {
-				headers: {
-					Authorization: auth
-				}
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Sign-up successfully added! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success'
-				});
-				this.getEventData();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error',
-				});
-			});
 		}
 	},
 	async mounted() {
@@ -251,8 +250,8 @@ export default {
 	margin: 0 auto;
 }
 
-#modal_finalize {
-	min-width: 400px;
+#modal_notify {
+	min-width: 340px;
 	width: 30%;
 }
 
@@ -262,7 +261,7 @@ export default {
 }
 
 #modal_add_signup {
-	min-width: 400px;
+	min-width: 340px;
 	width: 30%;
 
 	.cid_check {

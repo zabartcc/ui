@@ -27,7 +27,7 @@
 					<PilotOnlineItem v-for="(pilot, k) in pilotsOnline" :key=k :pilot="pilot" />
 				</div>
 				<div v-else>
-					<h4>There are no departures/arrivals right now.</h4>
+					<p>There are no departures/arrivals online right now.</p>
 				</div>
 			</div>
 		</div>
