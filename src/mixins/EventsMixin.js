@@ -44,6 +44,13 @@ export const EventsMixin = {
 					Authorization: auth
 				}
 			}).then(response => response.data).catch((err) => { console.log(err); });
+		},
+		closeSignupsMixin(slug, auth) {
+			return axios.put(`/event/${slug}/close`, {}, {
+				headers: {
+					Authorization: auth
+				}
+			}).then(response => response.data).catch((err) => { console.log(err); });
 		}
 	}
 };

@@ -7,7 +7,7 @@
 					<div class="row">
 						<div class="col s12">
 							<span class="card-title event_title">{{event.name}}</span>
-							<span class="card-title event_date">{{formatFull(event.eventStart)}}z ✈ {{formatHour(event.eventEnd)}}z</span>
+							<span class="card-title event_date">{{formatFull(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{formatHour(event.eventEnd)}}z</span>
 						</div>
 					</div>
 					<div class="row">
@@ -82,6 +82,10 @@ export default {
 .event_date {
 	font-size: 1.15em; 
 	margin-top: -15px;
+
+	.rotate {
+		transform: rotate(90deg);
+	}
 }
 
 .event_desc {

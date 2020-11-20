@@ -6,6 +6,7 @@
 			<div class="no_signups" v-if="event.signups.length == 0">There have been no sign-ups for this event yet.</div>
 			<div class="signups_container" v-else>
 				<div class="signups_user card" v-for="signup in event.signups" :key="signup.id">
+					<div class="signups_delete" @click="deleteSignup(signup.user.cid)"><i class="material-icons">close</i></div>
 					<div class="signups_name">{{`${signup.user.fname} ${signup.user.lname}`}}</div>
 					<div class="signups_rating">{{signup.user.ratingLong}}</div>
 					<div class="signups_prefs">
@@ -26,6 +27,7 @@
 			</div>
 			<div class="row">
 				<div class="input-field col s12 signups_submit">
+					<button type="submit" class="btn right" @click="closeSignups" :disabled="event.open == false">Close</button>
 					<button type="submit" class="btn right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Notify</button>
 					<button type="submit" class="btn right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button>
 				</div>
@@ -45,10 +47,12 @@
 					<h4>Manually add sign-up</h4>
 					<p>Enter a CID to manually add a controller to this page and to assign them a position. Please note that if the controller is not on our roster, they (currently) cannot be added on here due to technical limitations.</p>
 					<div class="row cid_check">
-						<div class="input-field col s12 m6">
-							<input type="text" id="cid" v-model="cid" required />
-							<label for="cid" class="active">Controller ID</label>
-						</div>
+						<form @submit.prevent=addSignup>
+							<div class="input-field col s12 m6">
+								<input type="text" id="cid" v-model="cid" required />
+								<label for="cid" class="active">Controller ID</label>
+							</div>
+						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -134,11 +138,47 @@ export default {
 					classes: 'toast toast_success'
 				});
 				this.getEventData();
+				this.cid = null;
 				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
 			}).catch((err) => {
 				console.log(err);
 				M.toast({
 					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
+					displayLength: 5000,
+					classes: 'toast toast_error',
+				});
+			});
+		},
+		async deleteSignup(cid) {
+			this.deleteSignupMixin(this.$route.params.slug, cid).then(() => {
+				M.toast({
+					html: '<i class="material-icons left">done</i> Sign-up successfully deleted. <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_success'
+				});
+				this.getEventData();
+			}).catch((err) => {
+				console.log(err);
+				M.toast({
+					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_error',
+				});
+			});
+		},
+		async closeSignups() {
+			const auth = `Bearer ${localStorage.getItem('token') || null}`;
+			this.closeSignupsMixin(this.$route.params.slug, auth).then(() => {
+				M.toast({
+					html: '<i class="material-icons left">done</i> Sign-ups successfully closed! <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_success'
+				});
+				this.getEventData();
+			}).catch((err) => {
+				console.log(err);
+				M.toast({
+					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_error',
 				});
@@ -207,6 +247,13 @@ export default {
 	padding: 1em;
 	margin: .5em;
 	width: 300px;
+
+	.signups_delete {
+		position: absolute;
+		right: .3em;
+		top: .5em;
+		cursor: pointer;
+	}
 
 	.signups_name {
 		font-weight: 600;
