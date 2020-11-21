@@ -53,6 +53,7 @@
 import { ControllerMixin } from '@/mixins/ControllerMixin.js';
 import { vatusaApi } from '@/helpers/axios.js';
 
+
 export default {
 	data() {
 		return {
@@ -76,7 +77,7 @@ export default {
 			this.controllersFiltered = await this.getControllersMixin();
 		},
 		async testApiCall() {
-			this.vatusa = await vatusaApi.get('/user/1374893/exam/history').then(response => response.data).catch((err) => console.log(err));
+			this.vatusa = await vatusaApi.get('/user/999230/exam/history').catch((err) => console.log(err));
 		},
 		filterControllers() {
 			const search = new RegExp(this.filter, 'ig');
