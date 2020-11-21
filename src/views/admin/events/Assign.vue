@@ -72,7 +72,7 @@
 
 <script>
 import { EventsMixin } from '@/mixins/EventsMixin.js';
-import axios from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	data() {
@@ -127,7 +127,7 @@ export default {
 			});
 		},
 		async addSignup() {
-			axios.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`, {}, {
+			zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`, {}, {
 				headers: { 
 					"Authorization": `Bearer ${localStorage.getItem('token') || null}`,
 				}

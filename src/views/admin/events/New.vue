@@ -99,7 +99,7 @@
 <script>
 import { EventsMixin } from '@/mixins/EventsMixin.js';
 import { mapState } from 'vuex';
-import axios from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import router from '@/router/index.js';
 
 export default {
@@ -182,7 +182,7 @@ export default {
 			formData.append('banner', this.$refs.banner.files[0]);
 			formData.append('createdBy', this.user.data._id);
 
-			axios.post(`/event/new`, formData, {
+			zabApi.post(`/event/new`, formData, {
 				headers: { 
 					Authorization: `Bearer ${localStorage.getItem('token') || null}`,
 					'Content-Type': 'multipart/form-data'

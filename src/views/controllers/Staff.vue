@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import axios from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import StaffCard from './StaffCard.vue';
 
 export default {
@@ -95,7 +95,7 @@ export default {
 		};
 	},
 	mounted() {
-		axios.get('/controller/staff').then(({data}) => {
+		zabApi.get('/controller/staff').then(({data}) => {
 			this.staff = data;
 			console.log(this.staff);
 		});

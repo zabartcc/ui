@@ -4,7 +4,7 @@ import Admin from '../views/layout/Admin.vue';
 import Event from '../views/layout/Event.vue';
 import Dashboard from '../views/layout/ControllerDash.vue';
 import Instructor from '../views/layout/Instructor.vue';
-import axios from '../helpers/axios';
+import { zabApi } from '../helpers/axios';
 
 const routes = [
 	{
@@ -115,7 +115,7 @@ router.beforeEach((to, from, next) => {
 		if(!token) {
 			next('/');
 		} else {
-			axios.get('/user', {
+			zabApi.get('/user', {
 				headers: { Authorization: `Bearer ${token}` }
 			}).catch(err => {
 				next('/');

@@ -96,7 +96,7 @@
 
 <script>
 import { ControllerMixin } from '@/mixins/ControllerMixin.js';
-import axios from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	data() {
@@ -162,7 +162,7 @@ export default {
 		},
 		updateController() {
 			const userToken = localStorage.getItem('token') || null;
-			axios.post(`/controller/${this.controller.cid}`, {
+			zabApi.post(`/controller/${this.controller.cid}`, {
 				form: this.form
 			}, {
 				headers: { Authorization: `Bearer ${userToken}` }
