@@ -3,7 +3,7 @@
 		<div class="collection">
 			<router-link to="/admin" class="collection-item">
 				Dashboard
-				<div class="secondary-content"><i class="material-icons">home</i></div>
+				<div class="secondary-content"><i class="material-icons">dashboard</i></div>
 			</router-link>
 			<router-link to="/admin/controllers" class="collection-item">
 				Controllers
