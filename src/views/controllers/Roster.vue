@@ -83,7 +83,6 @@ export default {
 	mixins: [ControllerMixin],
 	async mounted() {
 		await this.getControllers();
-		await this.getVisitors();
 		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
 			margin: 0
 		});
