@@ -12,6 +12,8 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import { mapMutations, mapActions } from 'vuex';
+import route from '@/router/index.js';
+
 export default {
 	name: 'LoginVerify',
 	methods: {
@@ -26,7 +28,21 @@ export default {
 		const { data } = await zabApi.post('/user/login', {
 			token: this.$route.query.token
 		}).catch(err => {
-			console.log(err);
+			if (err.response.status === 401) {
+				M.toast({
+					html: `<i class="material-icons left">error_outline</i>403: Not a member of ZAB<div class="border"></div>`,
+					displayLength: 5000,
+					classes: 'toast toast_error'
+				});
+				route.push('/');
+			} else {
+				console.log(err);
+				M.toast({
+					html: `<i class="material-icons left">error_outline</i>Something went wrong, please try again<div class="border"></div>`,
+					displayLength: 5000,
+					classes: 'toast toast_error'
+				});
+			}
 		});
 
 		this.setToken(data);
