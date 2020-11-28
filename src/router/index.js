@@ -100,6 +100,10 @@ const routes = [
 			{
 				path: 'files/downloads/new',
 				component: () => import('../views/admin/files/downloads/New.vue')
+			},
+			{
+				path: 'files/downloads/:id',
+				component: () => import('../views/admin/files/downloads/Edit.vue')
 			}
 		]
 	},

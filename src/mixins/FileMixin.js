@@ -11,6 +11,9 @@ export const FileMixin = {
 					Authorization: auth
 				}
 			}).then(response => response.data).catch((err) => console.log(err));
+		},
+		getSingleDownloadMixin(id) {
+			return zabApi.get(`/file/downloads/${id}`).then(response => response.data).catch((err) => console.log(err));
 		}
 	}
 };

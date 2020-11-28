@@ -23,7 +23,7 @@
 						<td>{{convertCategory(file.category)}}</td>
 						<td>{{formatDate(file.updatedAt)}}z</td>
 						<td class="options">
-							<router-link data-position="top" data-tooltip="Edit Download" class="tooltipped" :to="`/admin/controllers`"><i class="material-icons">edit</i></router-link>
+							<router-link data-position="top" data-tooltip="Edit Download" class="tooltipped" :to="`/admin/files/downloads/${file._id}`"><i class="material-icons">edit</i></router-link>
 							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Download" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
 						</td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
