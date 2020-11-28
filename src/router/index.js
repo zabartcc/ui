@@ -42,6 +42,10 @@ const routes = [
 				component: () => import('../views/events/Index.vue')
 			},
 			{
+				path: '/feedback',
+				component: () => import('../views/page/Feedback.vue')
+			},
+			{
 				path: '/files/downloads',
 				component: () => import('../views/files/Downloads.vue')
 			},
