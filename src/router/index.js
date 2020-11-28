@@ -26,11 +26,7 @@ const routes = [
 				component: () => import('../views/controllers/Staff.vue')
 			},
 			{
-				path: '/controllers/:cid',
-				component: () => import('../views/controllers/Profile.vue')
-			},
-			{
-				path: '/controllers/visit/:step?',
+				path: '/controllers/visit',
 				component: () => import('../views/controllers/visit/Index.vue')
 			},
 			{
@@ -38,8 +34,16 @@ const routes = [
 				component: () => import('../views/controllers/visit/VisitorVerify.vue')
 			},
 			{
+				path: '/controllers/:cid',
+				component: () => import('../views/controllers/Profile.vue')
+			},
+			{
 				path: '/events',
 				component: () => import('../views/events/Index.vue')
+			},
+			{
+				path: '/files/downloads',
+				component: () => import('../views/files/Downloads.vue')
 			}
 		]
 	},
@@ -88,6 +92,14 @@ const routes = [
 			{
 				path: 'events/assign/:slug',
 				component: () => import('../views/admin/events/Assign.vue')
+			},
+			{
+				path: 'files/downloads',
+				component: () => import('../views/admin/files/downloads/Index.vue')
+			},
+			{
+				path: 'files/downloads/new',
+				component: () => import('../views/admin/files/downloads/New.vue')
 			}
 		]
 	},
