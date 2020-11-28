@@ -21,6 +21,10 @@
 				Downloads
 				<div class="secondary-content"><i class="material-icons">insert_drive_file</i></div>
 			</router-link>
+			<router-link to="/admin/files/documents" class="collection-item">
+				Documents
+				<div class="secondary-content"><i class="material-icons">description</i></div>
+			</router-link>
 		</div>
 	</div>
 </template>

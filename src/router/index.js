@@ -44,6 +44,14 @@ const routes = [
 			{
 				path: '/files/downloads',
 				component: () => import('../views/files/Downloads.vue')
+			},
+			{
+				path: '/files/documents',
+				component: () => import('../views/files/Documents.vue')
+			},
+			{
+				path: '/files/documents/:slug',
+				component: () => import('../views/files/ViewDocument.vue')
 			}
 		]
 	},
@@ -104,6 +112,14 @@ const routes = [
 			{
 				path: 'files/downloads/:id',
 				component: () => import('../views/admin/files/downloads/Edit.vue')
+			},
+			{
+				path: 'files/documents',
+				component: () => import('../views/admin/files/documents/Index.vue')
+			},
+			{
+				path: 'files/documents/new',
+				component: () => import('../views/admin/files/documents/New.vue')
 			}
 		]
 	},

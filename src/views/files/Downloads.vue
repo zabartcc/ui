@@ -17,7 +17,7 @@
 					<div v-if="sectorFiles.length == 0" class="no_files">No files in this category found.</div>
 					<div class="download" v-else v-for="file in sectorFiles" :key="file.id">
 						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button primary-color"><i class="material-icons">file_download</i></a>
+						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
 						<div class="desc">{{file.description}}</div>
 						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
 					</div>
@@ -26,7 +26,7 @@
 					<div v-if="trainingFiles.length == 0" class="no_files">No files in this category found.</div>
 					<div class="download" v-else v-for="file in trainingFiles" :key="file.id">
 						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button primary-color"><i class="material-icons">file_download</i></a>
+						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
 						<div class="desc">{{file.description}}</div>
 						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
 					</div>
@@ -35,7 +35,7 @@
 					<div v-if="mfrFiles.length == 0" class="no_files">No files in this category found.</div>
 					<div class="download" v-else v-for="file in mfrFiles" :key="file.id">
 						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button primary-color"><i class="material-icons">file_download</i></a>
+						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
 						<div class="desc">{{file.description}}</div>
 						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
 					</div>
@@ -44,7 +44,7 @@
 					<div v-if="miscFiles.length == 0" class="no_files">No files in this category found.</div>
 					<div class="download" v-else v-for="file in miscFiles" :key="file.id">
 						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button primary-color"><i class="material-icons">file_download</i></a>
+						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
 						<div class="desc">{{file.description}}</div>
 						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
 					</div>
@@ -110,16 +110,12 @@ export default {
 		.button {
 			float: right;
 			margin-top: -30px;
-			color: $primary-color-light;
+			background: $primary-color-light;
 
 			&.btn {
 				width: auto;
 				padding: 0 .6em;
 				color: #fff;
-
-				&.primary-color {
-					background: $primary-color-light;
-				}
 			}
 		}
 
@@ -139,9 +135,8 @@ export default {
 	}
 
 	.no_files {
-		padding: 1.5em 0;
+		padding: 1.5em 1em;
 		font-style: italic;
-		text-align: center;
 	}
 
 	.tabs {

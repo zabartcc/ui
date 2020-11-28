@@ -14,6 +14,12 @@ export const FileMixin = {
 		},
 		getSingleDownloadMixin(id) {
 			return zabApi.get(`/file/downloads/${id}`).then(response => response.data).catch((err) => console.log(err));
+		},
+		getDocumentsMixin() {
+			return zabApi.get('/file/documents').then(response => response.data).catch((err) => console.log(err));
+		},
+		getSingleDocumentMixin(slug) {
+			return zabApi.get(`/file/documents/${slug}`).then(response => response.data).catch((err) => console.log(err));
 		}
 	}
 };
