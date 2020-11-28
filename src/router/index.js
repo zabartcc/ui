@@ -102,6 +102,10 @@ const routes = [
 				component: () => import('../views/admin/events/New.vue')
 			},
 			{
+				path: 'events/edit/:slug',
+				component: () => import('../views/admin/events/Edit.vue')
+			},
+			{
 				path: 'events/assign/:slug',
 				component: () => import('../views/admin/events/Assign.vue')
 			},

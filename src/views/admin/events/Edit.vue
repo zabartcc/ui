@@ -1,43 +1,43 @@
 <template>
 	<div class="card" v-if=form>
 		<div class="card-content">
-			<span class="card-title">New Event</span>
+			<span class="card-title">Edit Event</span>
 			<div class="row">
-				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
+				<form enctype="multipart/form-data"  @submit.prevent=submitForm>
 					<div class="input-field col s12">
 						<input id="name" type="text" v-model="form.name" required>
-						<label for="name">Name</label>
+						<label for="name" class="active">Name</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="start_time" type="datetime-local" v-model="form.eventStart" required>
+						<input id="start_time" type="datetime-local" :value="form.eventStart.split('Z')[0]" @input="form.eventStart = $event.target.value" required>
 						<label for="start_time" class="active">Start Time (Zulu)</label>
 					</div>
 					<div class="input-field col s6">
-						<input id="end_time" type="datetime-local" v-model="form.eventEnd" required>
+						<input id="end_time" type="datetime-local" :value="form.eventEnd.split('Z')[0]" @input="form.eventEnd = $event.target.value" required>
 						<label for="end_time" class="active">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
 						<div class="btn">
 							<span>FILE</span>
-							<input type="file" ref="banner" required>
+							<input type="file" ref="banner">
 						</div>
 						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Banner (.jpg .png or .gif, less than 6 MB)">
+							<input class="file-path validate" type="text" :value="form.bannerUrl">
 						</div>
 					</div>
 					<div class="input-field col s12">
 						<textarea id="description" class="materialize-textarea" v-model="form.description"></textarea>
-						<label for="description">Description</label>
+						<label for="description" class="active">Description</label>
 					</div>
 					<div class="input-field col s12">
 						<div class="row">
 							<div class="col s12 l4">
 								<div class="card card_positions">
 									<p class="positions_title">Center</p>
-									<p class="no_pos" v-if="form.positions.center.length == 0">No positions added yet.</p>
+									<p class="no_pos" v-if="centerPos.length == 0">No positions added yet.</p>
 									<ul v-else>
-										<li v-for="(position, i) in form.positions.center" class="collection-item" :key="position.pos">
-											<div class="pos_header" @click="expand(i, 'center')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'center')">Delete</span></div>
+										<li v-for="position in centerPos" class="collection-item" :key="position.pos">
+											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
@@ -52,10 +52,10 @@
 							<div class="col s12 l4">
 								<div class="card card_positions">
 									<p class="positions_title">TRACON</p>
-									<p class="no_pos" v-if="form.positions.tracon.length == 0">No positions added yet.</p>
+									<p class="no_pos" v-if="traconPos.length == 0">No positions added yet.</p>
 									<ul v-else>
-										<li v-for="(position, i) in form.positions.tracon" class="collection-item" :key="position.pos">
-											<div class="pos_header" @click="expand(i, 'tracon')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'tracon')">Delete</span></div>
+										<li v-for="position in traconPos" class="collection-item" :key="position.pos">
+											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
@@ -70,10 +70,10 @@
 							<div class="col s12 l4">
 								<div class="card card_positions">
 									<p class="positions_title">Local</p>
-									<p class="no_pos" v-if="form.positions.local.length == 0">No positions added yet.</p>
+									<p class="no_pos" v-if="localPos.length == 0">No positions added yet.</p>
 									<ul v-else>
-										<li v-for="(position, i) in form.positions.local" class="collection-item" :key="position.pos">
-											<div class="pos_header" @click="expand(i, 'local')">{{position.pos}} <span class="delete_pos" @click="deletePos(i, 'local')">Delete</span></div>
+										<li v-for="position in localPos" class="collection-item" :key="position.pos">
+											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { EventsMixin } from '@/mixins/EventsMixin.js';
 import { zabApi } from '@/helpers/axios.js';
 import router from '@/router/index.js';
 
@@ -108,16 +108,48 @@ export default {
 				name: '',
 				eventStart: '',
 				eventEnd: '',
-				description: '',
-				positions: {
-					center: [],
-					tracon: [],
-					local: []
-				}
+				positions: []
 			}
 		};
 	},
+	async mounted() {
+		await this.getEvent();
+	},
+	mixins: [EventsMixin],
 	methods: {
+		async getEvent() {
+			this.form = await this.getEventMixin(this.$route.params.slug);
+		},
+		async submitForm() {
+			const formData = new FormData();
+			formData.append('name', this.form.name);
+			formData.append('startTime', this.form.eventStart);
+			formData.append('endTime', this.form.eventEnd);
+			formData.append('description', this.form.description);
+			formData.append('positions', JSON.stringify(this.form.positions));
+			formData.append('banner', this.$refs.banner.files[0]);
+
+			zabApi.put(`/event/${this.$route.params.slug}`, formData, {
+				headers: { 
+					Authorization: `Bearer ${localStorage.getItem('token') || null}`,
+					'Content-Type': 'multipart/form-data'
+				}
+			}).then(() => {
+				M.toast({
+					html: '<i class="material-icons left">done</i> Event succesfully updated! <div class="border"></div>',
+					displayLength: 5000,
+					classes: 'toast toast_success',
+				});
+				router.push('/admin/events');
+			}).catch((err) => {
+				console.log(err);
+				M.toast({
+					html: `<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>`,
+					displayLength: 5000,
+					classes: 'toast toast_error'
+				});
+			});
+		},
 		async addPosition(e) {
 			if(e.target.elements.type.value == 'CTR') {
 				const obj = {
@@ -125,7 +157,7 @@ export default {
 					"type": e.target.elements.type.value,
 					"code": "zab"
 				};
-				this.form.positions.center.push(obj);
+				this.form.positions.push(obj);
 				e.target.reset(); // clear input
 			} else if(e.target.elements.type.value == 'APP') {
 				let code = "app";
@@ -137,7 +169,7 @@ export default {
 					"type": e.target.elements.type.value,
 					"code": code
 				};
-				this.form.positions.tracon.push(obj);
+				this.form.positions.push(obj);
 				e.target.reset(); // clear input
 			} else {
 				let code = "";
@@ -154,57 +186,25 @@ export default {
 					"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
 					"code": code
 				};
-				this.form.positions.local.push(obj);
+				this.form.positions.push(obj);
 				e.target.reset(); // clear input
 			}
 		},
-		deletePos(i, type) {
-			if(type == 'center') {
-				this.form.positions.center.splice(i, 1);
-			} else if(type == 'tracon') {
-				this.form.positions.tracon.splice(i, 1);
-			} else {
-				this.form.positions.local.splice(i, 1);
-			}
-		},
-		async submitForm() {
-			const formData = new FormData();
-			formData.append('name', this.form.name);
-			formData.append('startTime', this.form.eventStart);
-			formData.append('endTime', this.form.eventEnd);
-			formData.append('description', this.form.description);
-			formData.append('positions', JSON.stringify(this.form.positions));
-			formData.append('banner', this.$refs.banner.files[0]);
-			formData.append('createdBy', this.user.data._id);
-
-			zabApi.post(`/event/new`, formData, {
-				headers: { 
-					Authorization: `Bearer ${localStorage.getItem('token') || null}`,
-					'Content-Type': 'multipart/form-data'
-				}
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Event succesfully created! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				router.push('/admin/events');
-			}).catch((err) => {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			});
+		deletePos(pos) {
+			const i = this.form.positions.findIndex(obj => obj.pos === pos);
+			this.form.positions = [...this.form.positions.slice(0, i), ...this.form.positions.slice(i + 1)];
 		}
 	},
-	mounted() {
-
-	},
 	computed: {
-		...mapState('user', [
-			'user'
-		]),
+		centerPos() {
+			return this.form.positions.filter((pos) => pos.type == "CTR");
+		},
+		traconPos() {
+			return this.form.positions.filter((pos) => pos.type == "APP");
+		},
+		localPos() {
+			return this.form.positions.filter((pos) => pos.type == "TWR" || pos.type == "GND");
+		}
 	}
 };
 </script>
