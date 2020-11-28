@@ -21,9 +21,6 @@
 								<router-link to="/controllers">Controller Roster</router-link>
 							</li>
 							<li>
-								<router-link to="/controllers/files">Controller Downloads</router-link>
-							</li>
-							<li>
 								<router-link to="/controllers/staff">ARTCC Staff</router-link>
 							</li>
 							<li>
@@ -37,11 +34,19 @@
 					<li>
 						<router-link to="/news">NEWS</router-link>
 					</li>
-					<li>
-						<router-link to="/feedback">FEEDBACK</router-link>
+					<li class="has_dropdown" data-state="hide">
+						<a class="dropdown-left" href="#!" data-target="files-dropdown">FILES</a>
+						<ul id="files-dropdown" class="dropdown-content">
+							<li>
+								<router-link to="/files/downloads">Downloads</router-link>
+							</li>
+							<li>
+								<router-link to="/files/documents">Documents</router-link>
+							</li>
+						</ul>
 					</li>
 					<li>
-						<a href="https://community.zabartcc.org">FORUMS</a>
+						<router-link to="/feedback">FEEDBACK</router-link>
 					</li>
 				</ul>
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
@@ -80,8 +85,11 @@
 			<li>
 				<router-link class="sidenav-close" to="/controllers">CONTROLLER ROSTER</router-link>
 			</li>
+						<li>
+				<router-link class="sidenav-close" to="/files/downloads">CONTROLLER DOWNLOADS</router-link>
+			</li>
 			<li>
-				<router-link class="sidenav-close" to="/controllers/files">CONTROLLER DOWNLOADS</router-link>
+				<router-link class="sidenav-close" to="/files/documents">CONTROLLER DOCUMENTS</router-link>
 			</li>
 			<li>
 				<router-link class="sidenav-close" to="/controllers/staff">ARTCC STAFF</router-link>
@@ -97,9 +105,6 @@
 			</li>
 			<li>
 				<router-link class="sidenav-close" to="/feedback">FEEDBACK</router-link>
-			</li>
-			<li>
-				<a class="sidenav-close" href="https://community.zabartcc.org">FORUMS</a>
 			</li>
 		</ul>
 
@@ -136,7 +141,7 @@ export default {
 		]),
 		processLogin: function() {
 			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL}`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 2}`;
 		},
 		processLogout: function () {
 			localStorage.removeItem('token');

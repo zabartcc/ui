@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import { EventsMixin } from '@/mixins/EventsMixin.js';
 import { mapState } from 'vuex';
 import { zabApi } from '@/helpers/axios.js';
 import router from '@/router/index.js';
@@ -121,7 +120,6 @@ export default {
 			}
 		};
 	},
-	mixins: [EventsMixin],
 	methods: {
 		async addPosition(e) {
 			if(e.target.elements.type.value == 'CTR') {
@@ -261,6 +259,7 @@ export default {
 
 	.no_pos {
 		padding: .5em;
+		font-style: italic;
 	}
 
 	

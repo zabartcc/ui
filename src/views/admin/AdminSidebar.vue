@@ -17,6 +17,10 @@
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
 			</router-link>
+			<router-link to="/admin/files/downloads" class="collection-item">
+				Downloads
+				<div class="secondary-content"><i class="material-icons">insert_drive_file</i></div>
+			</router-link>
 		</div>
 	</div>
 </template>

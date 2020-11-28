@@ -32,11 +32,11 @@
 						<router-link data-position="top" data-tooltip="Assign Positions" class="tooltipped" :to="`/admin/events/assign/${event.url}`">
 							<i class="material-icons">group</i>
 						</router-link>
-						<a :href="`#modal${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
+						<a :href="`#modal_${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
 							<i class="material-icons">delete</i>
 						</a>
 					</td>
-					<div :id="`modal${i}`" class="modal modal_delete">
+					<div :id="`modal_${i}`" class="modal modal_delete">
 						<div class="modal-content">
 							<h4>Are you sure?</h4>
 							<p>Events shouldn't be deleted unless they contain errors or were canceled. If you're not sure, click cancel. Otherwise, continue.</p>
