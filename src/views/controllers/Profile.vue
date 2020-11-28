@@ -10,6 +10,8 @@
 				<div class="col s7 m8 l9">
 					<div class="controller_name">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</div>
 					<div class="controller_rating">{{controller.ratingLong}}</div>
+				</div>
+				<div class="col s12 m8 l9">
 					<div class="controller_certs">
 						<div class="title">Roles &amp; Certifications</div>
 						<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
@@ -18,10 +20,6 @@
 						<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
 							{{cert.name}}
 						</span>
-					</div>
-					<div class="controller_bio">
-						<div class="title">Biography</div>
-						<p>{{controller.bio ?? "This controller hasn't set a bio yet."}}</p>
 					</div>
 				</div>
 			</div>
@@ -88,14 +86,13 @@ export default {
 		margin-top: -7px;
 	}
 
-	.controller_certs {
-		margin-top: 10px;
-	}
-
 	.controller_bio {
 		margin-top: 15px;
 		white-space: pre-wrap;
+	}
 
+	.controller_certs {
+		margin-top: 1em;
 	}
 
 	.cert {
