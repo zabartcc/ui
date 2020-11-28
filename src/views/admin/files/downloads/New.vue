@@ -80,8 +80,9 @@ export default {
 				});
 				router.push('/admin/files/downloads');
 			}).catch((err) => {
+				console.log(err);
 				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
+					html: `<i class="material-icons left">error_outline</i> Something went wrong, please try again <div class="border"></div>`,
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
