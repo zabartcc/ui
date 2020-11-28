@@ -203,7 +203,7 @@ export default {
 			return this.form.positions.filter((pos) => pos.type == "APP");
 		},
 		localPos() {
-			return this.form.positions.filter((pos) => pos.type == "TWR" || pos.type == "GND");
+			return this.form.positions.filter((pos) => pos.type == "TWR" || pos.type == "GND" || pos.type == "DEL");
 		}
 	}
 };
