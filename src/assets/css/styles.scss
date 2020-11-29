@@ -82,6 +82,10 @@ body {
 	
 	&.toast_info {
 		background-color: $primary-color-light;
+
+		.border {
+			background-color: $primary-color;
+		}
 	}
 
 	.border {

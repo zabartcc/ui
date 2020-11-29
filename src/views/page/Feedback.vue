@@ -7,7 +7,7 @@
 				We welcome your feedback! Please use the form below to send feedback about one of our controllers. Please note that your identitity will always be shared with the ATM, DATM, and TA, regardless of selecting the anonymous option.
 				</p>
 			</div>
-			<form class="row row_no_margin" @submit.prevent=submitFeedback>
+			<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback>
 				<div class="input-field col s6">
 					<input id="first_name" type="text" class="validate" v-model="feedback.fname" required>
 					<label for="first_name">First Name</label>
@@ -27,7 +27,7 @@
 				<div class="input-field col s6">
 					<select v-model="feedback.controller" required>
 						<option value="" disabled selected>Select a controller</option>
-						<option value="5fa72895e989a92a68c63d79">Daan Janssen</option>
+						<option v-for="controller in controllers" :value="controller._id" :key="controller._id">{{controller.fname}} {{controller.lname}}</option>
 					</select>
 					<label>Controller</label>
 				</div>
@@ -62,7 +62,7 @@
 
 <script>
 import { zabApi } from '@/helpers/axios.js';
-import router from '@/router/index.js';
+import { FeedbackMixin } from '@/mixins/FeedbackMixin.js';
 
 export default {
 	data() {
@@ -76,14 +76,20 @@ export default {
 				rating: null,
 				comments: '',
 				anon: false
-			}
+			},
+			controllers: []
 		};
 	},
+	mixins: [FeedbackMixin],
 	async mounted() {
+		await this.getControllers();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 	},
 	methods: {
+		async getControllers() {
+			this.controllers = await this.getControllersMixin();
+		},
 		async submitFeedback() {
 			zabApi.post('/feedback', this.feedback).then(() => {
 				M.toast({
@@ -91,7 +97,9 @@ export default {
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
-				router.push('/');
+				this.feedback = {};
+				document.getElementById("feedback").reset();
+				M.textareaAutoResize(document.querySelectorAll('textarea'));
 			}).catch((err) => {
 				M.toast({
 					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
@@ -121,5 +129,10 @@ export default {
 
 	.checkbox {
 		padding-left: 1em;
+	}
+
+	input.valid[type=email]:not(.browser-default) {
+		border-bottom: 1px solid $primary-color;
+		box-shadow: 0 1px 0 0 $primary-color;
 	}
 </style>

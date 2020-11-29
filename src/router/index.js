@@ -128,6 +128,10 @@ const routes = [
 			{
 				path: 'files/documents/new',
 				component: () => import('../views/admin/files/documents/New.vue')
+			},
+			{
+				path: 'feedback',
+				component: () => import('../views/admin/feedback/Index.vue')
 			}
 		]
 	},

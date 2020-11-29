@@ -147,7 +147,7 @@ export default {
 			localStorage.removeItem('token');
 			this.setUser(null);
 			M.toast({
-				html: '<i class="material-icons left">done</i> Successfully logged out.',
+				html: '<i class="material-icons left">done</i> Successfully logged out. <div class="border"></div>',
 				displayLength: 5000,
 				classes: 'toast toast_info',
 			});

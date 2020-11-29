@@ -77,11 +77,11 @@
 						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
 							<i class="material-icons">edit</i>
 						</router-link>
-						<a :href="`#modal_historic${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
+						<a :href="`#modal_historic_${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
 							<i class="material-icons">delete</i>
 						</a>
 					</td>
-					<div :id="`modal_historic${i}`" class="modal modal_delete">
+					<div :id="`modal_historic_${i}`" class="modal modal_delete">
 						<div class="modal-content">
 							<h4>Are you sure?</h4>
 							<p>Events shouldn't be deleted unless they contain errors or were canceled. If you're not sure, click cancel. Otherwise, continue.</p>
@@ -108,6 +108,16 @@ export default {
 		};
 	},
 	mixins: [EventsMixin],
+	async mounted() {
+		await this.getUpcomingEvents();
+		await this.getHistoricEvents();
+		M.Modal.init(document.querySelectorAll('.modal'), {
+			preventScrolling: false
+		});
+		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
+			margin: 0
+		});
+	},
 	methods: {
 		async getUpcomingEvents() {
 			this.events = await this.getUpcomingEventsMixin();
@@ -139,16 +149,6 @@ export default {
 				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
 			}
 		}
-	},
-	async mounted() {
-		await this.getUpcomingEvents();
-		await this.getHistoricEvents();
-		M.Modal.init(document.querySelectorAll('.modal'), {
-			preventScrolling: false
-		});
-		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
-			margin: 0
-		});
 	}
 };
 </script>
