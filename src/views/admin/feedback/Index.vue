@@ -18,7 +18,7 @@
 			<tbody class="event_list_row">
 				<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
 					<td>{{feedback.fname}} {{feedback.lname}}</td>
-					<td>{{feedback.controller.fname ?? ''}} {{feedback.controller.lname ?? 'Unknown'}}</td>
+					<td>{{feedback.controller.fname || ''}} {{feedback.controller.lname || 'Unknown'}}</td>
 					<td>{{convertRating(feedback.rating)}}</td>
 					<td class="options">
 						<a :href="`#modal_unapproved_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
@@ -27,7 +27,7 @@
 					</td>
 					<div :id="`modal_unapproved_${i}`" class="modal modal_unapproved">
 						<div class="modal-content">
-							<div class="modal_title">Unapproved Feedback for {{feedback.controller.fname ?? ''}} {{feedback.controller.lname ?? 'Unknown'}}</div>
+							<div class="modal_title">Unapproved Feedback for {{feedback.controller.fname || ''}} {{feedback.controller.lname || 'Unknown'}}</div>
 							<div class="feedback">
 								<div class="submitter">
 									<div class="feedback_title">Submitter</div>

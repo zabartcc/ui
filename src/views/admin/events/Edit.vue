@@ -114,6 +114,7 @@ export default {
 	},
 	async mounted() {
 		await this.getEvent();
+		M.textareaAutoResize(document.getElementById('description'));
 	},
 	mixins: [EventsMixin],
 	methods: {
