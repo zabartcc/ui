@@ -20,7 +20,7 @@
 				<tbody class="event_list_row">
 					<tr v-for="(feedback, i) in recentFeedback" :key="feedback._id">
 						<td>{{formatDate(feedback.createdAt)}}z</td>
-						<td>{{feedback.controller.fname || ''}} {{feedback.controller.lname || 'Unknown'}}</td>
+						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td>{{feedback.deletedAt == null ? 'Approved' : 'Rejected'}}</td>
 						<td class="options">
@@ -30,7 +30,7 @@
 						</td>
 						<div :id="`modal_feedback_${this.page}_${i}`" class="modal modal_feedback">
 							<div class="modal-content">
-								<div class="modal_title">Feedback for {{feedback.controller.fname + ' ' + feedback.controller.lname  || 'Unknown'}}</div>
+								<div class="modal_title">Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s6">
@@ -50,7 +50,7 @@
 										<label for="submission" class="active">Submission Date</label>
 									</div>
 									<div class="input-field col s6">
-										<p id="submission">{{feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
+										<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
 										<label for="submission" class="active">Controller</label>
 									</div>
 									<div class="input-field col s6">
@@ -109,7 +109,8 @@ export default {
 	},
 	methods: {
 		async getFeedback() {
-			const response = await this.getFeedbackMixin(this.page, this.limit);
+			const auth = `Bearer ${localStorage.getItem('token') || null}`;
+			const response = await this.getFeedbackMixin(this.page, this.limit, auth);
 			this.recentFeedback = response.feedback;
 			this.feedbackAmount = response.amount;
 		},

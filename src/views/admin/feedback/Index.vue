@@ -18,7 +18,7 @@
 			<tbody class="event_list_row">
 				<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
 					<td>{{feedback.fname}} {{feedback.lname}}</td>
-					<td>{{feedback.controller.fname || ''}} {{feedback.controller.lname || 'Unknown'}}</td>
+					<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 					<td>{{convertRating(feedback.rating)}}</td>
 					<td class="options">
 						<a :href="`#modal_unapproved_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
@@ -27,7 +27,7 @@
 					</td>
 					<div :id="`modal_unapproved_${i}`" class="modal modal_unapproved">
 						<div class="modal-content">
-							<div class="modal_title">Unapproved Feedback for {{feedback.controller.fname || ''}} {{feedback.controller.lname || 'Unknown'}}</div>
+							<div class="modal_title">Unapproved Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
 							<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s6">
@@ -47,7 +47,7 @@
 										<label for="submission" class="active">Submission Date</label>
 									</div>
 									<div class="input-field col s6">
-										<p id="submission">{{feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
+										<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
 										<label for="submission" class="active">Controller</label>
 									</div>
 									<div class="input-field col s6">

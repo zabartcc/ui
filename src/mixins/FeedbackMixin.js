@@ -2,11 +2,14 @@ import {zabApi} from '@/helpers/axios.js';
 
 export const FeedbackMixin = {
 	methods: {
-		getFeedbackMixin(page, limit) {
+		getFeedbackMixin(page, limit, auth) {
 			return zabApi.get('/feedback', {
 				params: {
 					page: page, 
 					limit: limit
+				},
+				headers: {
+					Authorization: auth
 				}
 			}).then(response => response.data).catch((err) => console.log(err));
 		},
