@@ -6,69 +6,71 @@
 			</div>
 		</div>
 		<p class="no_unapproved" v-if="unapproved.length == 0">There is no unapproved feedback to display.</p>
-		<table class="event_list striped" v-else>
-			<thead class="controller_list_head">
-				<tr>
-					<th>Submitter</th>
-					<th>Controller</th>
-					<th>Rating</th>
-					<th class="options">Options</th>
-				</tr>
-			</thead>
-			<tbody class="event_list_row">
-				<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
-					<td>{{feedback.fname}} {{feedback.lname}}</td>
-					<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
-					<td>{{convertRating(feedback.rating)}}</td>
-					<td class="options">
-						<a :href="`#modal_unapproved_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
-							<i class="material-icons">search</i>
-						</a>
-					</td>
-					<div :id="`modal_unapproved_${i}`" class="modal modal_unapproved">
-						<div class="modal-content">
-							<div class="modal_title">Unapproved Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
-							<div class="feedback">
-								<div class="row row_no_margin" id="feedback">
-									<div class="input-field col s6">
-										<p id="first_name">{{feedback.fname + ' ' + feedback.lname}}</p>
-										<label for="first_name" class="active">Submitter Name</label>
-									</div>
-									<div class="input-field col s6">
-										<p id="cid">{{feedback.submitter}}</p>
-										<label for="cid" class="active">Submitter CID</label>
-									</div>
-									<div class="input-field col s6">
-										<p id="email">{{feedback.email}}</p>
-										<label for="email" class="active">Submitter Email Address</label>
-									</div>
-									<div class="input-field col s6">
-										<p id="submission">{{formatDate(feedback.createdAt)}}z</p>
-										<label for="submission" class="active">Submission Date</label>
-									</div>
-									<div class="input-field col s6">
-										<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
-										<label for="submission" class="active">Controller</label>
-									</div>
-									<div class="input-field col s6">
-										<p id="rating">{{convertRating(feedback.rating)}}</p>
-										<label for="rating" class="active">Rating</label>
-									</div>
-									<div class="input-field col s12">
-										<pre id="comments">{{feedback.comments}}</pre>
-										<label for="comments" class="active">Comments</label>
+		<div class="feedback_wrapper" v-else>
+			<table class="event_list striped">
+				<thead class="controller_list_head">
+					<tr>
+						<th>Submitter</th>
+						<th>Controller</th>
+						<th>Rating</th>
+						<th class="options">Options</th>
+					</tr>
+				</thead>
+				<tbody class="event_list_row">
+					<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
+						<td>{{feedback.fname}} {{feedback.lname}}</td>
+						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
+						<td>{{convertRating(feedback.rating)}}</td>
+						<td class="options">
+							<a :href="`#modal_unapproved_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
+								<i class="material-icons">search</i>
+							</a>
+						</td>
+						<div :id="`modal_unapproved_${i}`" class="modal modal_unapproved">
+							<div class="modal-content">
+								<div class="modal_title">Unapproved Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
+								<div class="feedback">
+									<div class="row row_no_margin" id="feedback">
+										<div class="input-field col s6">
+											<p id="first_name">{{feedback.fname + ' ' + feedback.lname}}</p>
+											<label for="first_name" class="active">Submitter Name</label>
+										</div>
+										<div class="input-field col s6">
+											<p id="cid">{{feedback.submitter}}</p>
+											<label for="cid" class="active">Submitter CID</label>
+										</div>
+										<div class="input-field col s6">
+											<p id="email">{{feedback.email}}</p>
+											<label for="email" class="active">Submitter Email</label>
+										</div>
+										<div class="input-field col s6">
+											<p id="submission">{{formatDate(feedback.createdAt)}}z</p>
+											<label for="submission" class="active">Submission Date</label>
+										</div>
+										<div class="input-field col s6">
+											<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
+											<label for="submission" class="active">Controller</label>
+										</div>
+										<div class="input-field col s6">
+											<p id="rating">{{convertRating(feedback.rating)}}</p>
+											<label for="rating" class="active">Rating</label>
+										</div>
+										<div class="input-field col s12">
+											<pre id="comments">{{feedback.comments}}</pre>
+											<label for="comments" class="active">Comments</label>
+										</div>
 									</div>
 								</div>
 							</div>
+							<div class="modal-footer">
+								<a href="#!" class="waves-effect btn" @click="approveFeedback(feedback._id)">Approve</a>
+								<a href="#!" class="waves-effect btn-flat" @click="rejectFeedback(feedback._id)">Reject</a>
+							</div>
 						</div>
-						<div class="modal-footer">
-							<a href="#!" class="waves-effect btn" @click="approveFeedback(feedback._id)">Approve</a>
-							<a href="#!" class="waves-effect btn-flat" @click="rejectFeedback(feedback._id)">Reject</a>
-						</div>
-					</div>
-				</tr>
-			</tbody>
-		</table>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<RecentFeedback />
 </template>
@@ -152,7 +154,7 @@ export default {
 			else return "Unknown";
 		},
 		formatDate(date) {
-			return new Date(date).toISOString().slice(0,-8).replace('T', ' ');
+			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
 		}
 	}
 };
@@ -188,7 +190,7 @@ table tbody {
 }
 
 .modal_unapproved {
-	min-width: 400px;
+	min-width: 300px;
 	width: 35%;
 }
 
@@ -203,6 +205,7 @@ table tbody {
 	}
 	.row {
 		.input-field p, .input-field pre {
+			line-break: anywhere;
 			margin: .33em 0 0 0;
 		}
 	}
@@ -212,4 +215,10 @@ table tbody {
 	margin-top: -3px;
 	white-space: pre-wrap;
 }
+
+.feedback_wrapper {
+	width: 100%;
+	overflow: auto;
+}
+
 </style>

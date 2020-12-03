@@ -43,7 +43,7 @@
 									</div>
 									<div class="input-field col s6">
 										<p id="email">{{feedback.email}}</p>
-										<label for="email" class="active">Submitter Email Address</label>
+										<label for="email" class="active">Submitter Email</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="submission">{{formatDate(feedback.createdAt)}}z</p>
@@ -72,14 +72,18 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="page_info left">
-			Showing {{minEntries}}–{{maxEntries}} of {{this.feedbackAmount}} entries
+		<div class="row">
+			<div class="page_info col s12 l6">
+				Showing {{minEntries}}–{{maxEntries}} of {{this.feedbackAmount}} entries
+			</div>
+			<div class="col s12 l6">
+				<ul class="pagination right">
+					<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : this.page -= 1"><i class="material-icons">chevron_left</i></a></li>
+					<li v-for="page in showPages" class="waves-effect" :class="this.page == page ? 'active' : ''" :key="page" @click="this.page = page"><a>{{page}}</a></li>
+					<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : this.page += 1"><i class="material-icons">chevron_right</i></a></li>
+				</ul>
+			</div>
 		</div>
-		<ul class="pagination right">
-			<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : this.page -= 1"><i class="material-icons">chevron_left</i></a></li>
-			<li v-for="page in showPages" class="waves-effect" :class="this.page == page ? 'active' : ''" :key="page" @click="this.page = page"><a>{{page}}</a></li>
-			<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : this.page += 1"><i class="material-icons">chevron_right</i></a></li>
-		</ul>
 	</div>
 </template>
 
@@ -123,7 +127,7 @@ export default {
 			else return "Unknown";
 		},
 		formatDate(date) {
-			return new Date(date).toISOString().slice(0,-8).replace('T', ' ');
+			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
 		}
 	},
 	computed: {
@@ -186,8 +190,9 @@ export default {
 }
 
 .page_info {
-	padding-left: 1em;
-	margin-top: -40px;
+	padding-left: 1.5em;
+	font-size: 0.9rem;
+	margin-top: 1em;
 }
 
 .no_feedback {
@@ -202,8 +207,13 @@ export default {
 }
 
 .modal_feedback {
-	min-width: 400px;
+	min-width: 300px;
 	width: 35%;
+}
+
+.feedback_wrapper {
+	width: 100%;
+	overflow: auto;
 }
 
 .feedback {
@@ -213,6 +223,7 @@ export default {
 	.row {
 		.input-field p, .input-field pre {
 			margin: .33em 0 0 0;
+			line-break: anywhere;
 		}
 	}
 }
@@ -222,14 +233,6 @@ export default {
 	white-space: pre-wrap;
 }
 
-
-.pagination {
-	margin-top: -45px;
-}
-
-.feedback_wrapper {
-	padding-bottom: 60px;
-}
 
 .options {
 	text-align: right;
