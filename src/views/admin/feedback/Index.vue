@@ -152,7 +152,7 @@ export default {
 			else return "Unknown";
 		},
 		formatDate(date) {
-			return new Date(date).toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
+			return new Date(date).toISOString().slice(0,-8).replace('T', ' ');
 		}
 	}
 };
