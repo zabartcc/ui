@@ -24,11 +24,11 @@
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td>{{feedback.deletedAt == null ? 'Approved' : 'Rejected'}}</td>
 						<td class="options">
-							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
+							<a :href="`#modal_feedback_${this.page}_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
 							</a>
 						</td>
-						<div :id="`modal_feedback_${i}`" class="modal modal_feedback">
+						<div :id="`modal_feedback_${this.page}_${i}`" class="modal modal_feedback">
 							<div class="modal-content">
 								<div class="modal_title">Feedback for {{feedback.controller.fname + ' ' + feedback.controller.lname  || 'Unknown'}}</div>
 								<div class="feedback">
@@ -77,7 +77,7 @@
 		</div>
 		<ul class="pagination right">
 			<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : this.page -= 1"><i class="material-icons">chevron_left</i></a></li>
-			<li v-for="page in showPages" class="waves-effect" :class="this.page == page ? 'active' : ''" :key="page"><a>{{page}}</a></li>
+			<li v-for="page in showPages" class="waves-effect" :class="this.page == page ? 'active' : ''" :key="page" @click="this.page = page"><a>{{page}}</a></li>
 			<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : this.page += 1"><i class="material-icons">chevron_right</i></a></li>
 		</ul>
 	</div>
@@ -168,6 +168,12 @@ export default {
 	watch: {
 		page: async function() {
 			await this.getFeedback();
+			M.Modal.init(document.querySelectorAll('.modal'), {
+				preventScrolling: false
+			});
+			M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
+				margin: 0
+			});
 		}
 	}
 };

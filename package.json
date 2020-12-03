@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
-    "core-js": "^3.7.0",
+    "core-js": "^3.8.0",
     "materialize-css": "^1.0.0-rc.2",
     "metar-parser": "^1.0.0",
-    "vue": "^3.0.2",
+    "vue": "^3.0.4",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
