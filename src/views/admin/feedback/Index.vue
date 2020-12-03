@@ -29,17 +29,35 @@
 						<div class="modal-content">
 							<div class="modal_title">Unapproved Feedback for {{feedback.controller.fname || ''}} {{feedback.controller.lname || 'Unknown'}}</div>
 							<div class="feedback">
-								<div class="submitter">
-									<div class="feedback_title">Submitter</div>
-									<div class="feedback_content">
-										<div>{{feedback.fname}} {{feedback.lname}} ({{feedback.submitter}})</div>
-										<div>{{feedback.email}}</div>
-										<div v-if="feedback.anonymous === true"><b>Anonymous</b></div>
+								<div class="row row_no_margin" id="feedback">
+									<div class="input-field col s6">
+										<p id="first_name">{{feedback.fname + ' ' + feedback.lname}}</p>
+										<label for="first_name" class="active">Submitter Name</label>
 									</div>
-								</div>
-								<div class="comments">
-									<div class="feedback_title">Comments</div>
-									<div class="feedback_content">{{feedback.comments}}</div>
+									<div class="input-field col s6">
+										<p id="cid">{{feedback.submitter}}</p>
+										<label for="cid" class="active">Submitter CID</label>
+									</div>
+									<div class="input-field col s6">
+										<p id="email">{{feedback.email}}</p>
+										<label for="email" class="active">Submitter Email Address</label>
+									</div>
+									<div class="input-field col s6">
+										<p id="submission">{{formatDate(feedback.createdAt)}}z</p>
+										<label for="submission" class="active">Submission Date</label>
+									</div>
+									<div class="input-field col s6">
+										<p id="submission">{{feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
+										<label for="submission" class="active">Controller</label>
+									</div>
+									<div class="input-field col s6">
+										<p id="rating">{{convertRating(feedback.rating)}}</p>
+										<label for="rating" class="active">Rating</label>
+									</div>
+									<div class="input-field col s12">
+										<pre id="comments">{{feedback.comments}}</pre>
+										<label for="comments" class="active">Comments</label>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -52,10 +70,12 @@
 			</tbody>
 		</table>
 	</div>
+	<RecentFeedback />
 </template>
 
 <script>
 import { FeedbackMixin } from '@/mixins/FeedbackMixin.js';
+import RecentFeedback from './Recent';
 
 export default {
 	data() {
@@ -64,6 +84,9 @@ export default {
 		};
 	},
 	mixins: [FeedbackMixin],
+	components: {
+		RecentFeedback
+	},
 	async mounted() {
 		await this.getUnapproved();
 		M.Modal.init(document.querySelectorAll('.modal'), {
@@ -127,66 +150,66 @@ export default {
 			else if(rating === 2) return "Below Average";
 			else if(rating === 1) return "Poor";
 			else return "Unknown";
+		},
+		formatDate(date) {
+			return new Date(date).toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		}
 	}
 };
 </script>
 
 <style scoped lang="scss">
-	.row_no_margin {
-		margin-bottom: 0;
-	}
+.row_no_margin {
+	margin-bottom: 0;
+}
 
-	.options {
-		text-align: right;
-	}
+.options {
+	text-align: right;
+}
 
-	.modal_title {
-		font-size: 1.8em;
-		margin-bottom: .5em;
-	}
+.modal_title {
+	font-size: 1.8em;
+	margin-bottom: .5em;
+}
 
-	table tbody {
-		tr {
-			transition: background-color .3s ease;
-			&:hover {
-				background: #eaeaea;
-			}
+table tbody {
+	tr {
+		transition: background-color .3s ease;
+		&:hover {
+			background: #eaeaea;
 		}
 	}
+}
 
-	.no_unapproved {
-		padding: 1em;
-		margin-top: -10px;
-		font-style: italic;
+.no_unapproved {
+	padding: 1em;
+	margin-top: -10px;
+	font-style: italic;
+}
+
+.modal_unapproved {
+	min-width: 400px;
+	width: 35%;
+}
+
+.feedback_title {
+	color: #9e9e9e;
+	font-size: .8rem;
+}
+
+.feedback {
+	#comments {
+		font-family: inherit;
 	}
-
-	.modal_unapproved {
-		min-width: 400px;
-		width: 35%;
-	}
-
-	.feedback_title {
-		color: #9e9e9e;
-		font-size: .8rem;
-	}
-
-	.feedback {
-		.comments {
-			margin-top: 10px;
-		}
-
-		.submitter {
-			.feedback_content {
-				div {
-					line-height: 1.4em;
-				}
-			}
+	.row {
+		.input-field p, .input-field pre {
+			margin: .33em 0 0 0;
 		}
 	}
+}
 
-	.feedback_content {
-		margin-top: -3px;
-		white-space: pre-wrap;
-	}
+.feedback_content {
+	margin-top: -3px;
+	white-space: pre-wrap;
+}
 </style>

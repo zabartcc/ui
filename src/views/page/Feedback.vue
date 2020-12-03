@@ -130,7 +130,7 @@ export default {
 	.checkbox {
 		padding-left: 1em;
 	}
-
+	
 	input.valid[type=email]:not(.browser-default) {
 		border-bottom: 1px solid $primary-color;
 		box-shadow: 0 1px 0 0 $primary-color;
