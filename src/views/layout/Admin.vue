@@ -40,10 +40,4 @@ export default {
 		margin: 1em 0;
 	}
 }
-
-// .admin_content {
-// 	height: 100%;
-// 	padding: 1em 1em 1em calc(350px + 1em);
-// 	box-sizing: border-box;
-// }
 </style>

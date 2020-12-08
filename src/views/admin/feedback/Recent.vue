@@ -72,7 +72,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="row">
+		<div class="row" v-if="feedbackAmount !== 0">
 			<div class="page_info col s12 l6">
 				Showing {{minEntries}}–{{maxEntries}} of {{this.feedbackAmount}} entries
 			</div>

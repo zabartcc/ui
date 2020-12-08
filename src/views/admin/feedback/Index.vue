@@ -56,7 +56,7 @@
 											<label for="rating" class="active">Rating</label>
 										</div>
 										<div class="input-field col s12">
-											<pre id="comments">{{feedback.comments}}</pre>
+											<div id="comments">{{feedback.comments}}</div>
 											<label for="comments" class="active">Comments</label>
 										</div>
 									</div>
@@ -202,6 +202,8 @@ table tbody {
 .feedback {
 	#comments {
 		font-family: inherit;
+		white-space: pre-wrap;
+		width: 100%;
 	}
 	.row {
 		.input-field p, .input-field pre {

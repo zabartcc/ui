@@ -10,10 +10,11 @@
 		</div>
 		<div class="footer-copyright">
 			<div class="wrapper">
-				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC <span class="small-text right">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></span></div>
+				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
 				<!-- Made with pride by Austin Robison. -->
 				<!-- ...and Daan Janssen -->
 				<p>Current date and time (Zulu): <span id="time">(...)</span></p>
+				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></p>
 			</div>
 		</div>
     </footer>
@@ -67,10 +68,7 @@ body .page-footer {
 	min-height: 20px!important;
 }
 
-.small-text {
-	font-size: .7em;
-	font-weight: 200;
-	margin-top: 5px;
+.footer_notice {
 	a {
 		font-weight: 600;
 	}
