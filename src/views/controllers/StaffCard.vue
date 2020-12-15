@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<h5 class="staff_heading">{{staffItem.title}}</h5>
 			<div v-if="staffItem.users.length">
-				<span v-for="user in staffItem.users" :key="user.cid" class="staff_member"><router-link :to="`/controller/${user.cid}`">{{user.fname}} {{user.lname}}</router-link></span>
+				<span v-for="user in staffItem.users" :key="user.cid" class="staff_member"><router-link :to="`/controllers/${user.cid}`">{{user.fname}} {{user.lname}}</router-link></span>
 			</div>
 			<div v-else>
 				<span class="staff_member">Vacant</span>

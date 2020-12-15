@@ -17,6 +17,7 @@ export default {
 					if(data) {
 						commit('setUser', data);
 						commit('setLoggedIn', true);
+						return;
 					}
 				}).catch((err) => {
 					console.log(err);

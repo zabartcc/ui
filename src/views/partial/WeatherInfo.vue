@@ -42,6 +42,7 @@ import parse from 'metar-parser';
 export default {
 	data() {
 		return {
+			icao: ['kphx', 'kabq', 'ktus', 'kelp', 'kama'],
 			stations: {
 				KPHX: {
 					icao: "KPHX",
@@ -253,17 +254,13 @@ export default {
 	},
 	methods: {
 		async getWeatherForAirports() {
-			const icao = ['kphx', 'kabq', 'ktus', 'kelp', 'kama'];
-			const { data } = await axios.get(`/metar/metar.php?id=${icao.join()}`);
+			const { data } = await axios.get(`/metar/metar.php?id=${this.icao.join()}`);
 			const lines = data.split('\n');
 			lines.forEach((metar) => {
 				this.stations[metar.slice(0,4)].metar = metar;
 				this.stations[metar.slice(0,4)].parsedMetar = parse(metar);
 				this.numStationsLoaded++;
 			});
-			//this.stations[icao].metar = data;
-			//this.stations[icao].parsedMetar = parse(this.stations[icao].metar);
-			//this.numStationsLoaded++;
 			
 		},
 		formatWind: function(station) {

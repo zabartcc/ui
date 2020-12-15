@@ -12,7 +12,6 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import { mapMutations, mapActions } from 'vuex';
-import route from '@/router/index.js';
 
 export default {
 	name: 'LoginVerify',
@@ -25,17 +24,8 @@ export default {
 		]),
 	},
 	async mounted () {
-		zabApi.post('/user/login', {
+		const {data} = await zabApi.post('/user/login', {
 			token: this.$route.query.token
-		}).then(() => {
-			this.getUser().then(() => {
-				this.$router.push(localStorage.getItem('redirect') || '/');
-				M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
-					alignment: 'right',
-					coverTrigger: false,
-					constrainWidth: false
-				});
-			});
 		}).catch(err => {
 			if (err.response.status === 403) {
 				M.toast({
@@ -43,7 +33,7 @@ export default {
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
-				route.push('/');
+				this.$router.push('/');
 			} else {
 				console.log(err);
 				M.toast({
@@ -53,6 +43,10 @@ export default {
 				});
 			}
 		});
+		if(data) {
+			this.getUser();
+			window.location.href = (localStorage.getItem('redirect') || '/');
+		}
 	},
 };
 </script>

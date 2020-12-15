@@ -116,7 +116,31 @@
 import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
-	async mounted() {
+	methods: {
+		...mapMutations('user', [
+			'setUser',
+			'setRedirect'
+		]),
+		...mapActions('user', [
+			'logout'
+		]),
+		async processLogin() {
+			localStorage.setItem('redirect', this.$route.path);
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 2}`;
+		},
+		async processLogout() {
+			await this.logout();
+			M.toast({
+				html: '<i class="material-icons left">done</i> Successfully logged out. <div class="border"></div>',
+				displayLength: 5000,
+				classes: 'toast toast_info',
+			});
+			if(this.$route.meta.isAdmin) {
+				this.$router.push('/');
+			}
+		}
+	},
+	mounted() {
 		// let hero = document.querySelector('#header_hero');
 		// hero.className = '';
 		// hero.classList.add('hero' + Math.floor((Math.random() * 5) + 1));
@@ -134,35 +158,11 @@ export default {
 			edge: 'right'
 		});
 	},
-	methods: {
-		...mapMutations('user', [
-			'setUser',
-			'setRedirect'
-		]),
-		...mapActions('user', [
-			'logout'
-		]),
-		processLogin: function() {
-			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 2}`;
-		},
-		processLogout: function () {
-			this.logout();
-			M.toast({
-				html: '<i class="material-icons left">done</i> Successfully logged out. <div class="border"></div>',
-				displayLength: 5000,
-				classes: 'toast toast_info',
-			});
-			if(this.$route.meta.isAdmin) {
-				this.$router.push('/');
-			}
-		}
-	},
 	computed: {
 		...mapState('user', [
 			'user'
 		])
-	}
+	},
 };
 </script>
 
