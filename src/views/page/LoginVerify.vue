@@ -18,19 +18,28 @@ export default {
 	name: 'LoginVerify',
 	methods: {
 		...mapMutations('user', [
-			'setToken'
+			'setLoggedIn'
 		]),
 		...mapActions('user', [
 			'getUser'
 		]),
 	},
 	async mounted () {
-		const { data } = await zabApi.post('/user/login', {
+		zabApi.post('/user/login', {
 			token: this.$route.query.token
+		}).then(() => {
+			this.getUser().then(() => {
+				this.$router.push(localStorage.getItem('redirect') || '/');
+				M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+					alignment: 'right',
+					coverTrigger: false,
+					constrainWidth: false
+				});
+			});
 		}).catch(err => {
-			if (err.response.status === 401) {
+			if (err.response.status === 403) {
 				M.toast({
-					html: `<i class="material-icons left">error_outline</i>403: Not a member of ZAB<div class="border"></div>`,
+					html: `<i class="material-icons left">error_outline</i>Not a member of ZAB<div class="border"></div>`,
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
@@ -43,19 +52,6 @@ export default {
 					classes: 'toast toast_error'
 				});
 			}
-		});
-
-		this.setToken(data);
-
-		this.getUser().then(() => {
-
-			this.$router.push(localStorage.getItem('redirect') || '/');
-
-			M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
-				alignment: 'right',
-				coverTrigger: false,
-				constrainWidth: false
-			});
 		});
 	},
 };

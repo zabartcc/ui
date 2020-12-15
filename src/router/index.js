@@ -155,22 +155,15 @@ router.beforeEach((to, from, next) => {
 	if(to.meta.loggedIn) {
 		next();
 	} else if(to.meta.isAdmin) { // Route is an admin route.
-		const token = localStorage.getItem('token');
-		if(!token) {
+		zabApi.get('/user').catch(err => {
 			next('/');
-		} else {
-			zabApi.get('/user', {
-				headers: { Authorization: `Bearer ${token}` }
-			}).catch(err => {
+		}).then(user => {
+			if(user.data.isStaff === true) {
+				next();
+			} else {
 				next('/');
-			}).then(user => {
-				if(user.data.isStaff == true) {
-					next();
-				} else {
-					next('/');
-				}
-			});
-		}
+			}
+		});
 	} else {
 		next();
 	}

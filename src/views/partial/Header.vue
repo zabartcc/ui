@@ -113,7 +113,7 @@
 
 <script>
 
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
 	mounted() {
@@ -139,13 +139,15 @@ export default {
 			'setUser',
 			'setRedirect'
 		]),
+		...mapActions('user', [
+			'logout'
+		]),
 		processLogin: function() {
 			localStorage.setItem('redirect', this.$route.path);
 			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 2}`;
 		},
 		processLogout: function () {
-			localStorage.removeItem('token');
-			this.setUser(null);
+			this.logout();
 			M.toast({
 				html: '<i class="material-icons left">done</i> Successfully logged out. <div class="border"></div>',
 				displayLength: 5000,

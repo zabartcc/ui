@@ -59,7 +59,8 @@ export default {
 	mixins: [ControllerMixin],
 	methods: {
 		...mapActions('visit', [
-			'getVisit'
+			'getVisit',
+			'logout'
 		]),
 		async login() {
 			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_VISIT_REDIRECT_URL}`;
@@ -80,7 +81,7 @@ export default {
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
-				localStorage.removeItem('visit_token');
+				this.logout();
 				router.push('/');
 			}).catch((err) => {
 				console.log(err);

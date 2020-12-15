@@ -11,35 +11,30 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import { mapMutations, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 export default {
 	name: 'LoginVerify',
 	methods: {
-		...mapMutations('visit', [
-			'setVisitToken'
-		]),
 		...mapActions('visit', [
 			'getVisit'
 		]),
 	},
 	async mounted () {
-		const { data } = await zabApi.post('/user/visit/login', {
+		zabApi.post('/user/visit/login', {
 			token: this.$route.query.token
+		}).then(() => {
+			this.getVisit().then(() => {
+
+				this.$router.push('/controllers/visit');
+
+				M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+					alignment: 'right',
+					coverTrigger: false,
+					constrainWidth: false
+				});
+			});
 		}).catch(err => {
 			console.log(err);
-		});
-
-		this.setVisitToken(data);
-
-		this.getVisit().then(() => {
-
-			this.$router.push('/controllers/visit');
-
-			M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
-				alignment: 'right',
-				coverTrigger: false,
-				constrainWidth: false
-			});
 		});
 	},
 };

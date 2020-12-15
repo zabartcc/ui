@@ -7,37 +7,36 @@ export default {
 		visitQueryComplete: false,
 		visit: {
 			data: null,
-			token: localStorage.getItem('visit_token') || null,
 			isLoggedIn: false,
 		}
 	},
 	actions: {
 		getVisit: async ({commit, state}) => {
-			if(state.visit.token) { // we have a token already set
-				const { data } = await zabApi.get('/user/visit', {
-					headers: {
-						Authorization: `Bearer ${state.visit.token}`
+			if(!state.visit.isLoggedIn) { // we have a token already set
+				zabApi.get('/user/visit').then(({data}) => {
+					if(data) {
+						commit('setVisit', data);
+						commit('setVisitLoggedIn', true);
 					}
 				}).catch(err => {
 					console.log(err);
-					localStorage.removeItem('token'); // remove token in case an invalid token is set from a previous session
-					router.push('/');
+					return router.push('/');
 				});
-				if(data) {
-					commit('setVisit', data);
-					commit('setVisitLoggedIn', true);
-				}
 			}
 			commit('setVisitQuery', true);
 		},
+		logout: async ({commit}) => {
+			zabApi.get('/user/visit/logout').then(() => {
+				commit('setVisit', null);
+				commit('setVisitLoggedIn', false);
+			}).catch(err => {
+				console.log(err);
+			});
+		}
 	},
 	mutations: {
 		setVisit (state, visit) {
 			state.visit.data = visit;
-		},
-		setVisitToken (state, token) {
-			localStorage.setItem('visit_token', token);
-			state.visit.token = token;
 		},
 		setVisitQuery (state, query) {
 			state.visitQueryComplete = query;
@@ -48,7 +47,5 @@ export default {
 	},
 	getters: {
 		hasQueryCompleted: state => state.visitQueryComplete,
-		getVisitvisitData: state => state.visit.data,
-		getVisitToken: state => state.visit.token
 	}
 };
