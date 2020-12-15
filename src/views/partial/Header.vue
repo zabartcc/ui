@@ -52,9 +52,9 @@
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
 				<ul class="right left-on-med-and-down">
 					<li>
-						<a v-if="user.data" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{`${user.data.fname} ${user.data.lname}`}}</a>
+						<a v-if="user.isLoggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{`${user.data.fname} ${user.data.lname}`}}</a>
                         <a v-else id="login_button" @click.prevent="processLogin" href="#">Login</a>
-						<ul v-if="user.data" id="user-dropdown" class="dropdown-content">
+						<ul v-if="user.isLoggedIn" id="user-dropdown" class="dropdown-content">
 							<li>
 								<router-link to="/dashboard">Controller Dashboard</router-link>
 							</li>
@@ -116,7 +116,7 @@
 import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
-	mounted() {
+	async mounted() {
 		// let hero = document.querySelector('#header_hero');
 		// hero.className = '';
 		// hero.classList.add('hero' + Math.floor((Math.random() * 5) + 1));
