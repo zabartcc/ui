@@ -56,11 +56,10 @@ export default {
 	mixins: [SidebarMixin],
 	methods: {
 		async getOnline() {
-			const pilotsOnline = await this.getPilotsOnline();
-			const atcOnline = await this.getAtcOnline();
-			this.pilotsOnline = pilotsOnline;
-			this.atcOnline = atcOnline;
-			this.getZuluTime(); // update time when refreshing who's online
+			const online = await this.getClientsOnline();
+			this.pilotsOnline = online.pilots;
+			this.atcOnline = online.atc;
+			await this.getZuluTime(); // update time when refreshing who's online
 		},
 		getZuluTime() {
 			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});

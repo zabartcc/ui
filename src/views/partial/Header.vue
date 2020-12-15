@@ -116,6 +116,24 @@
 import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
+	mounted() {
+		// let hero = document.querySelector('#header_hero');
+		// hero.className = '';
+		// hero.classList.add('hero' + Math.floor((Math.random() * 5) + 1));
+
+		M.Dropdown.init(document.querySelectorAll('.dropdown-left'), {
+			coverTrigger: false,
+			constrainWidth: false
+		});
+		M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+			alignment: 'right',
+			coverTrigger: false,
+			constrainWidth: false
+		});
+		M.Sidenav.init(document.querySelectorAll('.sidenav'), {
+			edge: 'right'
+		});
+	},
 	methods: {
 		...mapMutations('user', [
 			'setUser',
@@ -139,24 +157,6 @@ export default {
 				this.$router.push('/');
 			}
 		}
-	},
-	mounted() {
-		// let hero = document.querySelector('#header_hero');
-		// hero.className = '';
-		// hero.classList.add('hero' + Math.floor((Math.random() * 5) + 1));
-
-		M.Dropdown.init(document.querySelectorAll('.dropdown-left'), {
-			coverTrigger: false,
-			constrainWidth: false
-		});
-		M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
-			alignment: 'right',
-			coverTrigger: false,
-			constrainWidth: false
-		});
-		M.Sidenav.init(document.querySelectorAll('.sidenav'), {
-			edge: 'right'
-		});
 	},
 	computed: {
 		...mapState('user', [
