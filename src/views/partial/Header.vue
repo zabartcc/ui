@@ -52,20 +52,20 @@
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
 				<ul class="right left-on-med-and-down">
 					<li>
-						<a v-if="loggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{`${user.data.fname} ${user.data.lname}`}}</a>
-                        <a v-else id="login_button" @click.prevent="processLogin" href="#">Login</a>
-						<ul v-if="loggedIn" id="user-dropdown" class="dropdown-content">
+						<a v-show="this.user.isLoggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{this.user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...'}}</a>
+                        <a v-if="!this.user.isLoggedIn" id="login_button" @click.prevent="processLogin" href="#">Login</a>
+						<ul v-show="this.user.isLoggedIn" id="user-dropdown" class="dropdown-content">
 							<li>
 								<router-link to="/dashboard">Controller Dashboard</router-link>
 							</li>
-							<li v-if="user.data.isStaff" class="divider"></li>
-							<li v-if="user.data.isStaff">
+							<li v-if="this.user.isLoggedIn && user.data.isStaff" class="divider"></li>
+							<li v-if="this.user.isLoggedIn && user.data.isStaff">
 								<a href="https://sunport.zabartcc.org/mail/" target="_blank" rel="noopener noreferrer">Webmail</a>
 							</li>
-							<li v-if='user.data.isIns'>
+							<li v-if='this.user.isLoggedIn && user.data.isIns'>
 								<router-link to='/ins'>Instructor Dashboard</router-link>
 							</li>
-							<li v-if='user.data.isMgt'>
+							<li v-if='this.user.isLoggedIn && user.data.isMgt'>
 								<router-link to='/admin'>Admin Dashboard</router-link>
 							</li>
 							<li class="divider"></li>
@@ -143,19 +143,7 @@ export default {
 	computed: {
 		...mapState('user', [
 			'user'
-		]),
-		loggedIn() {
-			if(this.user.isLoggedIn === true) {
-				M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
-					alignment: 'right',
-					coverTrigger: false,
-					constrainWidth: false
-				});
-				return true;
-			} else {
-				return false;
-			}
-		}
+		])
 	},
 	mounted() {
 		// let hero = document.querySelector('#header_hero');
