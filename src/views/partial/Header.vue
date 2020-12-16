@@ -52,9 +52,9 @@
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
 				<ul class="right left-on-med-and-down">
 					<li>
-						<a v-if="user.isLoggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{`${user.data.fname} ${user.data.lname}`}}</a>
+						<a v-if="loggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{`${user.data.fname} ${user.data.lname}`}}</a>
                         <a v-else id="login_button" @click.prevent="processLogin" href="#">Login</a>
-						<ul v-if="user.isLoggedIn" id="user-dropdown" class="dropdown-content">
+						<ul v-if="loggedIn" id="user-dropdown" class="dropdown-content">
 							<li>
 								<router-link to="/dashboard">Controller Dashboard</router-link>
 							</li>
@@ -116,24 +116,6 @@
 import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
-	mounted() {
-		// let hero = document.querySelector('#header_hero');
-		// hero.className = '';
-		// hero.classList.add('hero' + Math.floor((Math.random() * 5) + 1));
-
-		M.Dropdown.init(document.querySelectorAll('.dropdown-left'), {
-			coverTrigger: false,
-			constrainWidth: false
-		});
-		M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
-			alignment: 'right',
-			coverTrigger: false,
-			constrainWidth: false
-		});
-		M.Sidenav.init(document.querySelectorAll('.sidenav'), {
-			edge: 'right'
-		});
-	},
 	methods: {
 		...mapMutations('user', [
 			'setUser',
@@ -161,7 +143,37 @@ export default {
 	computed: {
 		...mapState('user', [
 			'user'
-		])
+		]),
+		loggedIn() {
+			if(this.user.isLoggedIn === true) {
+				M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+					alignment: 'right',
+					coverTrigger: false,
+					constrainWidth: false
+				});
+				return true;
+			} else {
+				return false;
+			}
+		}
+	},
+	mounted() {
+		// let hero = document.querySelector('#header_hero');
+		// hero.className = '';
+		// hero.classList.add('hero' + Math.floor((Math.random() * 5) + 1));
+
+		M.Dropdown.init(document.querySelectorAll('.dropdown-left'), {
+			coverTrigger: false,
+			constrainWidth: false
+		});
+		M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+			alignment: 'right',
+			coverTrigger: false,
+			constrainWidth: false
+		});
+		M.Sidenav.init(document.querySelectorAll('.sidenav'), {
+			edge: 'right'
+		});
 	},
 };
 </script>
