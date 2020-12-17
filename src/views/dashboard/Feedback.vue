@@ -5,7 +5,7 @@
 				<div class="card-title col s12"><span class="card-title">Your Feedback</span></div>
 			</div>
 		</div>
-		<p class="no_feedback" v-if="feedback.length == 0">You have not received any feedback yet.</p>
+		<p class="no_feedback" v-if="feedback.length === 0">You have not received any feedback yet.</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="event_list striped">
 				<thead class="event_list_head">

@@ -191,7 +191,7 @@ export default {
 	}
 
 	&.hero2 {
-		background-image: url('~@/assets/images/hero/camelback.jpg');
+		background-image: url('~@/assets/images/hero/scaled/camelback.jpg');
 	}
 
 	&.hero3 {

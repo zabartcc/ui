@@ -153,9 +153,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.new_event_button {
-	}
-
 	.name {
 		color: $primary-color;
 		font-weight: 700;

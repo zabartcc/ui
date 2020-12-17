@@ -76,6 +76,10 @@ const routes = [
 			{
 				path: 'controllers',
 				component: () => import('../views/instructor/controllers/Index.vue')
+			},
+			{
+				path: 'solo',
+				component: () => import('../views/instructor/SoloCerts.vue')
 			}
 		]
 	},

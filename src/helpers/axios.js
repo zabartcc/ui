@@ -8,7 +8,8 @@ export const zabApi = axios.create({
 export const vatusaApi = axios.create({
 	baseURL: 'https://api.vatusa.net/v2',
 	params: {
-		apikey: process.env.VUE_APP_VATUSA_API_KEY
+		apikey: process.env.VUE_APP_VATUSA_API_KEY,
+		test: true
 	},
 	transformResponse: [
 		(data) => JSON.parse(Buffer.from(JSON.parse(data).payload, 'base64').toString())
