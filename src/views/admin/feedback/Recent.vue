@@ -113,8 +113,7 @@ export default {
 	},
 	methods: {
 		async getFeedback() {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			const response = await this.getFeedbackMixin(this.page, this.limit, auth);
+			const response = await this.getFeedbackMixin(this.page, this.limit);
 			this.recentFeedback = response.feedback;
 			this.feedbackAmount = response.amount;
 		},

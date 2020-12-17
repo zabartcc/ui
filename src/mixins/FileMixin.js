@@ -5,12 +5,8 @@ export const FileMixin = {
 		getDownloadsMixin() {
 			return zabApi.get('/file/downloads').then(response => response.data).catch((err) => console.log(err));
 		},
-		deleteDownloadMixin(id, auth) {
-			return zabApi.delete(`/file/downloads/${id}`, {
-				headers: {
-					Authorization: auth
-				}
-			}).then(response => response.data).catch((err) => console.log(err));
+		deleteDownloadMixin(id) {
+			return zabApi.delete(`/file/downloads/${id}`).then(response => response.data).catch((err) => console.log(err));
 		},
 		getSingleDownloadMixin(id) {
 			return zabApi.get(`/file/downloads/${id}`).then(response => response.data).catch((err) => console.log(err));

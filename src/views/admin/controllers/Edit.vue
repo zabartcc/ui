@@ -133,6 +133,9 @@ export default {
 		};
 	},
 	mixins: [ControllerMixin],
+	async mounted() {
+		await this.getController();
+	},
 	methods: {
 		async getController() {
 			this.controller = await this.getControllerMixin(this.$route.params.cid);
@@ -161,11 +164,8 @@ export default {
 			this.form.roles[e.target.id] = e.target.classList.contains('active');
 		},
 		updateController() {
-			const userToken = localStorage.getItem('token') || null;
 			zabApi.post(`/controller/${this.controller.cid}`, {
 				form: this.form
-			}, {
-				headers: { Authorization: `Bearer ${userToken}` }
 			}).then(() => {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Controller successfully updated! <div class="border"></div>',
@@ -183,9 +183,6 @@ export default {
 
 			
 		}
-	},
-	mounted() {
-		this.getController();
 	}
 };
 </script>

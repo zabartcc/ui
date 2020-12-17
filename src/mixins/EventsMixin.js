@@ -20,37 +20,21 @@ export const EventsMixin = {
 		deleteSignupMixin(slug, user) {
 			return zabApi.delete(`/event/${slug}/signup/${user}`).then(response => response.data).catch((err) => { console.log(err); });
 		},
-		deleteEventMixin(slug, auth) {
-			return zabApi.delete(`/event/${slug}`, {
-				headers: {
-					Authorization: auth
-				}
-			}).then(response => response.data).catch((err) => { console.log(err); });
+		deleteEventMixin(slug) {
+			return zabApi.delete(`/event/${slug}`).then(response => response.data).catch((err) => { console.log(err); });
 		},
-		saveAssignmentsMixin(slug, positions, auth) {
+		saveAssignmentsMixin(slug, positions) {
 			return zabApi.put(`/event/${slug}/assign`, {
 				assignment: positions
-			}, {
-				headers: {
-					Authorization: auth
-				}
 			}).then(response => response.data).catch((err) => { console.log(err); });
 		},
-		notifyAssignmentsMixin(slug, positions, auth) {
+		notifyAssignmentsMixin(slug, positions) {
 			return zabApi.put(`/event/${slug}/notify`, {
 				assignment: positions
-			}, {
-				headers: {
-					Authorization: auth
-				}
 			}).then(response => response.data).catch((err) => { console.log(err); });
 		},
-		closeSignupsMixin(slug, auth) {
-			return zabApi.put(`/event/${slug}/close`, {}, {
-				headers: {
-					Authorization: auth
-				}
-			}).then(response => response.data).catch((err) => { console.log(err); });
+		closeSignupsMixin(slug) {
+			return zabApi.put(`/event/${slug}/close`).then(response => response.data).catch((err) => { console.log(err); });
 		}
 	}
 };

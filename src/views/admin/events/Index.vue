@@ -130,8 +130,7 @@ export default {
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		},
 		async deleteEvent(slug) {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			const success = await this.deleteEventMixin(slug, auth).catch(() => {
+			const success = await this.deleteEventMixin(slug).catch(() => {
 				M.toast({
 					html: '<i class="material-icons left">error_outline</i> Unable to delete event. <div class="border"></div>',
 					displayLength: 5000,

@@ -99,7 +99,6 @@
 <script>
 import { mapState } from 'vuex';
 import { zabApi } from '@/helpers/axios.js';
-import router from '@/router/index.js';
 
 export default {
 	data() {
@@ -170,7 +169,6 @@ export default {
 
 			zabApi.post(`/event/new`, formData, {
 				headers: { 
-					Authorization: `Bearer ${localStorage.getItem('token') || null}`,
 					'Content-Type': 'multipart/form-data'
 				}
 			}).then(() => {
@@ -179,7 +177,7 @@ export default {
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
-				router.push('/admin/events');
+				this.$router.push('/admin/events');
 			}).catch((err) => {
 				M.toast({
 					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,

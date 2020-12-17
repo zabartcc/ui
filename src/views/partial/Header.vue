@@ -56,7 +56,7 @@
                         <a v-if="!this.user.isLoggedIn" id="login_button" @click.prevent="processLogin" href="#">Login</a>
 						<ul v-show="this.user.isLoggedIn" id="user-dropdown" class="dropdown-content">
 							<li>
-								<router-link to="/dashboard">Controller Dashboard</router-link>
+								<router-link to="/dash">Controller Dashboard</router-link>
 							</li>
 							<li v-if="this.user.isLoggedIn && user.data.isStaff" class="divider"></li>
 							<li v-if="this.user.isLoggedIn && user.data.isStaff">

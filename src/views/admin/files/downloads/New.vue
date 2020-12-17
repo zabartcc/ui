@@ -43,7 +43,6 @@
 <script>
 import { mapState } from 'vuex';
 import { zabApi } from '@/helpers/axios.js';
-import router from '@/router/index.js';
 
 export default {
 	data() {
@@ -69,7 +68,6 @@ export default {
 
 			zabApi.post(`/file/downloads/new`, formData, {
 				headers: { 
-					Authorization: `Bearer ${localStorage.getItem('token') || null}`,
 					'Content-Type': 'multipart/form-data'
 				}
 			}).then(() => {
@@ -78,7 +76,7 @@ export default {
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
-				router.push('/admin/files/downloads');
+				this.$router.push('/admin/files/downloads');
 			}).catch((err) => {
 				console.log(err);
 				M.toast({

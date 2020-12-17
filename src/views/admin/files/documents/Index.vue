@@ -65,8 +65,7 @@ export default {
 			this.documents = await this.getDocumentsMixin();
 		},
 		async deleteDownload(id) {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			const success = await this.deleteDownloadMixin(id, auth).catch(() => {
+			const success = await this.deleteDownloadMixin(id).catch(() => {
 				M.toast({
 					html: '<i class="material-icons left">error_outline</i> Unable to delete download <div class="border"></div>',
 					displayLength: 5000,

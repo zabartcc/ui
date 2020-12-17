@@ -136,10 +136,14 @@ const routes = [
 		]
 	},
 	{
-		path: '/dashboard', component: Dashboard, meta: { loggedIn: true }, children: [
+		path: '/dash', component: Dashboard, meta: { loggedIn: true }, children: [
 			{
 				path: '',
 				component: () => import('../views/dashboard/Index.vue')
+			},
+			{
+				path: 'feedback',
+				component: () => import('../views/dashboard/Feedback.vue')
 			}
 		]
 	}

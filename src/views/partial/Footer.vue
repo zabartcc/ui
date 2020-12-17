@@ -24,10 +24,10 @@
 export default {
 	mounted () {
 		setInterval(function () {
-			document.querySelector('.footer-copyright #time').innerHTML = new Date().toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
+			document.getElementById("time").innerHTML = new Date().toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
 		}, 1000);
 
-		document.getElementById('full_year').innerHTML = new Date().getFullYear();
+		document.getElementById("full_year").innerHTML = new Date().getFullYear();
 	}
 };
 </script>

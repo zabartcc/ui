@@ -1,19 +1,19 @@
 <template>
 	<div class="admin_sidebar card">
 		<div class="collection">
-			<router-link to="/dashboard" class="collection-item">
+			<router-link to="/dash" class="collection-item">
 				Dashboard
 				<div class="secondary-content"><i class="material-icons">home</i></div>
 			</router-link>
-			<router-link to="/dashboard/profile" class="collection-item">
+			<router-link to="/dash/profile" class="collection-item">
 				My Profile
 				<div class="secondary-content"><i class="material-icons">person</i></div>
 			</router-link>
-			<router-link to="/dashboard/training" class="collection-item">
+			<router-link to="/dash/training" class="collection-item">
 				Training
 				<div class="secondary-content"><i class="material-icons">insert_invitation</i></div>
 			</router-link>
-			<router-link to="/dashboard/feedback" class="collection-item">
+			<router-link to="/dash/feedback" class="collection-item">
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
 			</router-link>

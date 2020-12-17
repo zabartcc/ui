@@ -89,8 +89,7 @@ export default {
 		},
 		async saveAssignments() {
 			const positions = this.event.positions;
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			this.saveAssignmentsMixin(this.$route.params.slug, positions, auth).then(() => {
+			this.saveAssignmentsMixin(this.$route.params.slug, positions).then(() => {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Positions succesfully assigned! <div class="border"></div>',
 					displayLength: 5000,
@@ -108,8 +107,7 @@ export default {
 		},
 		async notifyAssignments() {
 			const positions = this.event.positions;
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			this.notifyAssignmentsMixin(this.$route.params.slug, positions, auth).then(async () => {
+			this.notifyAssignmentsMixin(this.$route.params.slug, positions).then(async () => {
 				M.toast({
 					html: '<i class="material-icons left">done</i> All controllers were successfully notified! <div class="border"></div>',
 					displayLength: 5000,
@@ -127,11 +125,7 @@ export default {
 			});
 		},
 		async addSignup() {
-			zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`, {}, {
-				headers: { 
-					"Authorization": `Bearer ${localStorage.getItem('token') || null}`,
-				}
-			}).then(() => {
+			zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`).then(() => {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Sign-up successfully added! <div class="border"></div>',
 					displayLength: 5000,
@@ -167,8 +161,7 @@ export default {
 			});
 		},
 		async closeSignups() {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			this.closeSignupsMixin(this.$route.params.slug, auth).then(() => {
+			this.closeSignupsMixin(this.$route.params.slug).then(() => {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Sign-ups successfully closed! <div class="border"></div>',
 					displayLength: 5000,

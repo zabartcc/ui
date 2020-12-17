@@ -10,6 +10,7 @@
 			<table class="event_list striped">
 				<thead class="controller_list_head">
 					<tr>
+						<th>Date</th>
 						<th>Submitter</th>
 						<th>Controller</th>
 						<th>Rating</th>
@@ -18,6 +19,7 @@
 				</thead>
 				<tbody class="event_list_row">
 					<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
+						<td>{{formatDate(feedback.createdAt)}}z</td>
 						<td>{{feedback.fname}} {{feedback.lname}}</td>
 						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
@@ -100,12 +102,10 @@ export default {
 	},
 	methods: {
 		async getUnapproved() {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			this.unapproved = await this.getUnapprovedMixin(auth);
+			this.unapproved = await this.getUnapprovedMixin();
 		},
 		async approveFeedback(id) {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			const success = await this.approveFeedbackMixin(id, auth).catch((err) => {
+			const success = await this.approveFeedbackMixin(id).catch((err) => {
 				console.log(err);
 				M.toast({
 					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again <div class="border"></div>',
@@ -125,8 +125,7 @@ export default {
 			}
 		},
 		async rejectFeedback(id) {
-			const auth = `Bearer ${localStorage.getItem('token') || null}`;
-			const success = await this.rejectFeedbackMixin(id, auth).catch((err) => {
+			const success = await this.rejectFeedbackMixin(id).catch((err) => {
 				console.log(err);
 				M.toast({
 					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again <div class="border"></div>',
