@@ -157,7 +157,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	/* eslint-disable no-unused-vars */
 	if(to.meta.loggedIn) {
-		next();
+		zabApi.get('/user').catch(err => {
+			next('/');
+		}).then(user => {
+			if(user.data) {
+				next();
+			} else {
+				next('/');
+			}
+		});
 	} else if(to.meta.isAdmin) { // Route is an admin route.
 		zabApi.get('/user').catch(err => {
 			next('/');

@@ -8,7 +8,7 @@
 		<p class="no_feedback" v-if="feedbackAmount === 0">There is no recent feedback to display.</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="event_list striped">
-				<thead class="controller_list_head">
+				<thead class="event_list_head">
 					<tr>
 						<th>Date</th>
 						<th>Controller</th>
@@ -34,7 +34,7 @@
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s6">
-										<p id="first_name">{{feedback.fname + ' ' + feedback.lname}}</p>
+										<p id="first_name">{{feedback.name}} <span v-if="feedback.anonymous"><i><strong>(Anonymous)</strong></i></span></p>
 										<label for="first_name" class="active">Submitter Name</label>
 									</div>
 									<div class="input-field col s6">
@@ -52,6 +52,10 @@
 									<div class="input-field col s6">
 										<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
 										<label for="submission" class="active">Controller</label>
+									</div>
+									<div class="input-field col s6">
+										<p id="position">{{feedback.position}}</p>
+										<label for="position" class="active">Position</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="rating">{{convertRating(feedback.rating)}}</p>
@@ -72,7 +76,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="row" v-if="feedbackAmount !== 0">
+		<div class="row row_no_margin" v-if="feedbackAmount !== 0">
 			<div class="page_info col s12 l6">
 				Showing {{minEntries}}–{{maxEntries}} of {{this.feedbackAmount}} entries
 			</div>
@@ -191,7 +195,7 @@ export default {
 .page_info {
 	padding-left: 1.5em;
 	font-size: 0.9rem;
-	margin-top: 1em;
+	margin-top: 1.5em;
 }
 
 .no_feedback {
@@ -219,6 +223,9 @@ export default {
 	#comments {
 		font-family: inherit;
 	}
+	#position {
+		text-transform: capitalize;
+	}
 	.row {
 		.input-field p, .input-field pre {
 			margin: .33em 0 0 0;
@@ -236,5 +243,4 @@ export default {
 .options {
 	text-align: right;
 }
-
 </style>

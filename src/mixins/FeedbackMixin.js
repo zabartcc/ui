@@ -21,6 +21,14 @@ export const FeedbackMixin = {
 		},
 		rejectFeedbackMixin(id) {
 			return zabApi.put(`/feedback/reject/${id}`).then(response => response.data).catch((err) => console.log(err));
+		},
+		getMyFeedbackMixin(controller, page, limit) {
+			return zabApi.get(`/feedback/${controller}`, {
+				params: {
+					page: page,
+					limit: limit
+				}
+			}).then(response => response.data).catch((err) => console.log(err));
 		}
 	}
 };

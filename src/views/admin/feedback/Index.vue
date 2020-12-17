@@ -20,7 +20,7 @@
 				<tbody class="event_list_row">
 					<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
 						<td>{{formatDate(feedback.createdAt)}}z</td>
-						<td>{{feedback.fname}} {{feedback.lname}}</td>
+						<td>{{feedback.name}} <span v-if="feedback.anonymous"><i><strong>(Anonymous)</strong></i></span></td>
 						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td class="options">
@@ -34,7 +34,7 @@
 								<div class="feedback">
 									<div class="row row_no_margin" id="feedback">
 										<div class="input-field col s6">
-											<p id="first_name">{{feedback.fname + ' ' + feedback.lname}}</p>
+											<p id="first_name">{{feedback.name}} <span v-if="feedback.anonymous"><i><strong>(Anonymous)</strong></i></span></p>
 											<label for="first_name" class="active">Submitter Name</label>
 										</div>
 										<div class="input-field col s6">
@@ -52,6 +52,10 @@
 										<div class="input-field col s6">
 											<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
 											<label for="submission" class="active">Controller</label>
+										</div>
+										<div class="input-field col s6">
+											<p id="position">{{feedback.position}}</p>
+											<label for="position" class="active">Position</label>
 										</div>
 										<div class="input-field col s6">
 											<p id="rating">{{convertRating(feedback.rating)}}</p>
@@ -203,6 +207,9 @@ table tbody {
 		font-family: inherit;
 		white-space: pre-wrap;
 		width: 100%;
+	}
+	#position {
+		text-transform: capitalize;
 	}
 	.row {
 		.input-field p, .input-field pre {

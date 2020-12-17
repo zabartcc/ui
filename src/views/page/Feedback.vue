@@ -9,12 +9,8 @@
 			</div>
 			<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback>
 				<div class="input-field col s6">
-					<input id="first_name" type="text" class="validate" v-model="feedback.fname" required>
-					<label for="first_name">First Name</label>
-				</div>
-				<div class="input-field col s6">
-					<input id="last_name" type="text" class="validate" v-model="feedback.lname" required>
-					<label for="last_name">Last Name</label>
+					<input id="first_name" type="text" class="validate" v-model="feedback.name" required>
+					<label for="first_name">Your Name</label>
 				</div>
 				<div class="input-field col s6">
 					<input id="email" type="email" class="validate" v-model="feedback.email" required>
@@ -32,6 +28,17 @@
 					<label>Controller</label>
 				</div>
 				<div class="input-field col s6">
+					<select v-model="feedback.position" required>
+						<option value="" disabled selected>Select a position</option>
+						<option value="center">Center</option>
+						<option value="approach">Approach</option>
+						<option value="tower">Tower</option>
+						<option value="ground">Ground</option>
+						<option value="delivery">Delivery</option>
+					</select>
+					<label>Position</label>
+				</div>
+				<div class="input-field col s6">
 					<select v-model="feedback.rating" required>
 						<option value="" disabled selected>Select a rating</option>
 						<option value="5">Excellent</option>
@@ -46,7 +53,7 @@
 					<textarea id="comments" class="materialize-textarea" data-length="5000" v-model="feedback.comments"></textarea>
 					<label for="comments">Comments</label>
 				</div>
-				<div class="checkbox">
+				<div class="checkbox col s12">
 					<label class="form_checkbox">
 						<input type="checkbox" :value="true" v-model="feedback.anon" />
 						<span>Remain anonymous</span>
@@ -68,12 +75,12 @@ export default {
 	data() {
 		return {
 			feedback: {
-				fname: '',
-				lname: '',
+				name: '',
 				email: '',
 				cid: null,
-				controller: '',
+				controller: null,
 				rating: null,
+				position: null,
 				comments: '',
 				anon: false
 			},
