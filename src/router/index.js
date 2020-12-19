@@ -79,7 +79,11 @@ const routes = [
 			},
 			{
 				path: 'solo',
-				component: () => import('../views/instructor/SoloCerts.vue')
+				component: () => import('../views/instructor/solocerts/Index.vue')
+			},
+			{
+				path: 'solo/new',
+				component: () => import('../views/instructor/solocerts/New.vue')
 			}
 		]
 	},
