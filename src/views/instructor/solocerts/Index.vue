@@ -25,7 +25,7 @@
 				</thead>
 				<tbody class="certs_list_row">
 					<tr v-for="(cert, i) in certs" :key="cert.id">
-						<td>{{getName(cert.cid)}}</td>
+						<td><router-link :to="`/controllers/${cert.cid}`" class="controller_link">{{getName(cert.cid)}}</router-link></td>
 						<td>{{cert.position}}</td>
 						<td>{{cert.expires}}</td>
 						<td class="options"><a :href="`#modal_delete_${i}`" class="modal-trigger red-text text-darken-2"><i class="material-icons">delete</i></a></td>
@@ -135,5 +135,14 @@ export default {
 .modal_delete {
 	min-width: 400px;
 	width: 30%;
+}
+
+.controller_link {
+	font-weight: 700;
+	color: $primary-color;
+	
+	&:hover {
+		color: $primary-color-light;
+	}
 }
 </style>

@@ -58,14 +58,14 @@
 							<li>
 								<router-link to="/dash">Controller Dashboard</router-link>
 							</li>
-							<li v-if="this.user.isLoggedIn && user.data.isStaff" class="divider"></li>
+							<li v-if="this.user.isLoggedIn && user.data.isIns || user.data.isStaff" class="divider"></li>
 							<li v-if="this.user.isLoggedIn && user.data.isStaff">
 								<a href="https://sunport.zabartcc.org/mail/" target="_blank" rel="noopener noreferrer">Webmail</a>
 							</li>
 							<li v-if='this.user.isLoggedIn && user.data.isIns'>
 								<router-link to='/ins'>Instructor Dashboard</router-link>
 							</li>
-							<li v-if='this.user.isLoggedIn && user.data.isMgt'>
+							<li v-if='this.user.isLoggedIn && user.data.isStaff'>
 								<router-link to='/admin'>Admin Dashboard</router-link>
 							</li>
 							<li class="divider"></li>
