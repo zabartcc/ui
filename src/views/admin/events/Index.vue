@@ -32,11 +32,11 @@
 						<router-link data-position="top" data-tooltip="Assign Positions" class="tooltipped" :to="`/admin/events/assign/${event.url}`">
 							<i class="material-icons">group</i>
 						</router-link>
-						<a :href="`#modal_${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
+						<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
 							<i class="material-icons">delete</i>
 						</a>
 					</td>
-					<div :id="`modal_${i}`" class="modal modal_delete">
+					<div :id="`modal_delete_${i}`" class="modal modal_delete">
 						<div class="modal-content">
 							<h4>Are you sure?</h4>
 							<p>Events shouldn't be deleted unless they contain errors or were canceled. If you're not sure, click cancel. Otherwise, continue.</p>
@@ -153,36 +153,36 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.name {
-		color: $primary-color;
-		font-weight: 700;
-	}
+.name {
+	color: $primary-color;
+	font-weight: 700;
+}
 
-	.row_no_margin {
-		margin-bottom: 0;
-	}
+.row_no_margin {
+	margin-bottom: 0;
+}
 
-	.options {
-		text-align: right;
-	}
+.options {
+	text-align: right;
+}
 
-	table tbody {
-		tr {
-			transition: background-color .3s ease;
-			&:hover {
-				background: #eaeaea;
-			}
+table tbody {
+	tr {
+		transition: background-color .3s ease;
+		&:hover {
+			background: #eaeaea;
 		}
 	}
+}
 
-	.no_event {
-		padding: 1em;
-		margin-top: -10px;
-		font-style: italic;
-	}
+.no_event {
+	padding: 1em;
+	margin-top: -10px;
+	font-style: italic;
+}
 
-	.modal_delete {
-		min-width: 400px;
-		width: 30%;
-	}
+.modal_delete {
+	min-width: 400px;
+	width: 30%;
+}
 </style>
