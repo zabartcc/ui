@@ -24,7 +24,7 @@
 		<div id="pilots_online">
 			<div v-if=pilotsOnline>
 				<div v-if="pilotsOnline.length">
-					<PilotOnlineItem v-for="(pilot, k) in pilotsOnline" :key=k :pilot="pilot" />
+					<PilotOnlineItem v-for="(pilot, k) in depsArrs" :key=k :pilot="pilot" />
 				</div>
 				<div v-else>
 					<p>There are no departures/arrivals online right now.</p>
@@ -50,7 +50,8 @@ export default {
 			pilotsOnline: null,
 			updateTime: '',
 			atcOnline: null,
-			ratings: null
+			ratings: null,
+			airports: ["KPHX", "KABQ", "KTUS", "KAMA", "KROW", "KELP", "KSDL", "KCHD", "KFFZ", "KIWA", "KDVT", "KGEU", "KGYR", "KLUF", "KRYN", "KDMA", "KFLG", "KPRC", "KAEG", "KBIF", "KHMN", "KSAF", "KFHU"]
 		};
 	},
 	mixins: [SidebarMixin],
@@ -68,6 +69,13 @@ export default {
 	mounted() {
 		M.Tabs.init(document.querySelectorAll('.tabs'));
 		this.getOnline();
+	},
+	computed: {
+		depsArrs() {
+			return this.pilotsOnline.filter(flight => {
+				return this.airports.includes(flight.dep) || this.airports.includes(flight.dest);
+			});
+		}
 	}
 };
 </script>
