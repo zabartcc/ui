@@ -33,11 +33,11 @@
 						</td>
 						<div :id="`modal_feedback_${i}`" class="modal modal_feedback">
 							<div class="modal-content">
-								<div class="modal_title">Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.name}}</div>
+								<div class="modal_title">Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s6">
-										<p id="first_name">{{feedback.name}} <span v-if="feedback.anonymous"><i><strong>(Anonymous)</strong></i></span></p>
+										<p id="first_name"><span v-if="feedback.anonymous"><strong>Anonymous</strong><i> ({{feedback.name}})</i></span><span v-else>{{feedback.name}}</span></p>
 										<label for="first_name" class="active">Submitter Name</label>
 									</div>
 									<div class="input-field col s6">

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "author": "Albuquerque ARTCC",
+  "contributors": ["Austin Robison", "Daan Janssen"],
   "license": "CC-BY-NC-SA-4.0",
   "scripts": {
     "serve": "vue-cli-service serve",

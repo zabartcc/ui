@@ -36,7 +36,7 @@
 							<i class="material-icons">group</i>
 						</router-link>
 						<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
-							<i class="material-icons">delete</i>
+							<i class="material-icons red-text text-darken-2">delete</i>
 						</a>
 					</td>
 					<div :id="`modal_delete_${i}`" class="modal modal_delete">

@@ -23,7 +23,7 @@
 				<tbody class="event_list_row">
 					<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
 						<td>{{formatDate(feedback.createdAt)}}z</td>
-						<td>{{feedback.name}} <span v-if="feedback.anonymous"><i><strong>(Anonymous)</strong></i></span></td>
+						<td><span v-if="feedback.anonymous"><strong>Anonymous</strong><i> ({{feedback.name}})</i></span><span v-else>{{feedback.name}}</span></td>
 						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td class="options">

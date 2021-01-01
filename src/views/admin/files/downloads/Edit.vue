@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import { FileMixin } from '@/mixins/FileMixin.js';
-import { zabApi } from '@/helpers/axios.js';
+import {FileMixin} from '@/mixins/FileMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	data() {
