@@ -6,11 +6,8 @@
 				<div class="card-title col s4"><router-link to="/ins/solo/new"><span class="btn new_event_button right">New Solo Cert</span></router-link></div>
 			</div>
 		</div>
-		<div class="card-content loading" v-if="certs == null">
-			<h5>Loading...</h5>
-			<div class="progress">
-				<div class="indeterminate"></div>
-			</div>
+		<div class="card-content loading" v-if="certs === null">
+			<Spinner />
 		</div>
 		<p class="no_certs" v-else-if="certs.length === 0">There are no active solo certifications issued by ZAB.</p>
 		<div class="table_wrapper" v-else>
@@ -47,6 +44,7 @@
 </template>
 <script>
 import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -62,6 +60,9 @@ export default {
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
+	},
+	components: {
+		Spinner
 	},
 	methods: {
 		async getSoloCerts() {

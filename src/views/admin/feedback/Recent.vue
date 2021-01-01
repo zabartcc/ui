@@ -1,11 +1,14 @@
 <template>
-	<div class="card" v-if=recentFeedback>
+	<div class="card">
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s12"><span class="card-title">Feedback</span></div>
 			</div>
 		</div>
-		<p class="no_feedback" v-if="feedbackAmount === 0">There is no recent feedback to display.</p>
+		<div class="loading_container" v-if="!recentFeedback">
+			<Spinner />
+		</div>
+		<p class="no_feedback" v-else-if="recentFeedback && feedbackAmount === 0">There is no recent feedback to display.</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="event_list striped">
 				<thead class="event_list_head">
@@ -24,13 +27,13 @@
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td>{{feedback.deletedAt == null ? 'Approved' : 'Rejected'}}</td>
 						<td class="options">
-							<a :href="`#modal_feedback_${this.page}_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
+							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
 							</a>
 						</td>
-						<div :id="`modal_feedback_${this.page}_${i}`" class="modal modal_feedback">
+						<div :id="`modal_feedback_${i}`" class="modal modal_feedback">
 							<div class="modal-content">
-								<div class="modal_title">Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
+								<div class="modal_title">Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.name}}</div>
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s6">
@@ -76,15 +79,15 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="row row_no_margin" v-if="feedbackAmount !== 0">
+		<div class="row row_no_margin" v-if="recentFeedback && feedbackAmount > 0">
 			<div class="page_info col s12 l6">
-				Showing {{minEntries}}–{{maxEntries}} of {{this.feedbackAmount}} entries
+				Showing {{minEntries}}–{{maxEntries}} of {{feedbackAmount}} entries
 			</div>
 			<div class="col s12 l6">
 				<ul class="pagination right">
-					<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : this.page -= 1"><i class="material-icons">chevron_left</i></a></li>
-					<li v-for="page in showPages" class="waves-effect" :class="this.page == page ? 'active' : ''" :key="page" @click="this.page = page"><a>{{page}}</a></li>
-					<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : this.page += 1"><i class="material-icons">chevron_right</i></a></li>
+					<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : page -= 1"><i class="material-icons">chevron_left</i></a></li>
+					<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="page = pageNo"><a>{{pageNo}}</a></li>
+					<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : page += 1"><i class="material-icons">chevron_right</i></a></li>
 				</ul>
 			</div>
 		</div>
@@ -93,6 +96,7 @@
 
 <script>
 import { FeedbackMixin } from '@/mixins/FeedbackMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -105,6 +109,9 @@ export default {
 		};
 	},
 	mixins: [FeedbackMixin],
+	components: {
+		Spinner
+	},
 	async mounted() {
 		await this.getFeedback();
 		this.amountOfPages = Math.ceil(this.feedbackAmount / this.limit);
@@ -216,7 +223,7 @@ export default {
 
 .feedback_wrapper {
 	width: 100%;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .feedback {

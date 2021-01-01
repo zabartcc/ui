@@ -1,11 +1,14 @@
 <template>
-	<div class="card" v-if=feedback>
+	<div class="card">
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s12"><span class="card-title">Your Feedback</span></div>
 			</div>
 		</div>
-		<p class="no_feedback" v-if="feedback.length === 0">You have not received any feedback yet.</p>
+		<div class="loading_container" v-if="!feedback">
+			<Spinner />
+		</div>
+		<p class="no_feedback" v-else-if="feedback && feedback.length === 0">You have not received any feedback yet.</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="event_list striped">
 				<thead class="event_list_head">
@@ -16,7 +19,7 @@
 						<th class="options">Options</th>
 					</tr>
 				</thead>
-				<tbody class="event_list_row">
+				<tbody class="event_list_row" v-if="feedback">
 					<tr v-for="(feedback, i) in feedback" :key="feedback._id">
 						<td>{{formatDate(feedback.createdAt)}}z</td>
 						<td id="position">{{feedback.position}}</td>
@@ -61,15 +64,15 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="row row_no_margin" v-if="feedbackAmount !== 0">
+			<div class="row row_no_margin" v-if="feedback && feedbackAmount !== 0">
 				<div class="page_info col s12 l6">
-					Showing {{minEntries}}–{{maxEntries}} of {{this.feedbackAmount}} entries
+					Showing {{minEntries}}–{{maxEntries}} of {{feedbackAmount}} entries
 				</div>
 				<div class="col s12 l6">
 					<ul class="pagination right">
-						<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : this.page -= 1"><i class="material-icons">chevron_left</i></a></li>
-						<li v-for="page in showPages" class="waves-effect" :class="this.page == page ? 'active' : ''" :key="page" @click="this.page = page"><a>{{page}}</a></li>
-						<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : this.page += 1"><i class="material-icons">chevron_right</i></a></li>
+						<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : page -= 1"><i class="material-icons">chevron_left</i></a></li>
+						<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="page = pageNo"><a>{{pageNo}}</a></li>
+						<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : page += 1"><i class="material-icons">chevron_right</i></a></li>
 					</ul>
 				</div>
 			</div>
@@ -79,6 +82,7 @@
 
 <script>
 import { FeedbackMixin } from '@/mixins/FeedbackMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -89,6 +93,9 @@ export default {
 			limit: 10,
 			amountOfPages: 1
 		};
+	},
+	components: {
+		Spinner
 	},
 	mixins: [FeedbackMixin],
 	async mounted() {

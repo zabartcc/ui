@@ -4,7 +4,7 @@
 			<div class="row">
 				<span class="card-title col s5 m8">Home Controllers</span>
 				<div class="input-field col s7 m4">
-					<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller...">
+					<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller">
 					<span class="helper-text right">You can search by CID, name, or operating initials.</span>
 				</div>
 			</div>
@@ -40,8 +40,8 @@
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
 							<div class="modal-content">
 								<h4>Removing Controller</h4>
-								<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. Please state the reason for removal below. Please note that this will delete the controller from the VATUSA ARTCC Roster and thus from the website.</p>
-								<textarea class="materialize-textarea" placeholder="Please state a reason for removal..." v-model="deleteReason" required></textarea>
+								<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. Please state the reason for removal below. Please note that this will delete the controller from both the website and VATUSA's facility roster.</p>
+								<textarea class="materialize-textarea" placeholder="Please state a reason for removal" v-model="deleteReason" required></textarea>
 							</div>
 							<div class="modal-footer">
 								<a href="#!" class="btn waves-effect">Remove</a>
@@ -58,7 +58,7 @@
 			<div class="row">
 				<span class="card-title col s5 m8">Visiting Controllers</span>
 				<div class="input-field col s7 m4">
-					<input autocomplete="off" @keyup=filterVisitors v-model=filterVisit type="text" placeholder="Search for a controller...">
+					<input autocomplete="off" @keyup=filterVisitors v-model=filterVisit type="text" placeholder="Search for a controller">
 					<span class="helper-text right">You can search by CID, name, or operating initials.</span>
 				</div>
 			</div>
@@ -94,8 +94,8 @@
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
 							<div class="modal-content">
 								<h4>Removing Controller</h4>
-								<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. Please state the reason for removal below. Please note that this will delete the controller from the VATUSA ARTCC Roster and thus from the website.</p>
-								<textarea class="materialize-textarea" placeholder="Please state a reason for removal..." v-model="deleteReason" required></textarea>
+								<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC as a visitor. Please state the reason for removal below. Please note that this will delete the controller from both the website and VATUSA's visiting roster.</p>
+								<textarea class="materialize-textarea" placeholder="Please state a reason for removal" v-model="deleteReason" required></textarea>
 							</div>
 							<div class="modal-footer">
 								<a href="#!" class="btn waves-effect">Remove</a>

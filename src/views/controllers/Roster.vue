@@ -10,7 +10,7 @@
 					<th class="certs">Certifications</th>
 				</tr>
 			</thead>
-			<tbody class="controller_list_row">
+			<tbody class="controller_list_row" v-if="controllers.home">
 				<tr v-for="controller in controllers.home" :key="controller.cid">
 					<td class="name">
 						<router-link :to="`/controllers/${controller.cid}`">
@@ -31,6 +31,9 @@
 				</tr>
 			</tbody>
 		</table>
+		<div class="loading_container" v-if="!controllers.home">
+			<Spinner />
+		</div>
 	</div>
 	<div class="card">
 		<div class="card-content">
@@ -43,7 +46,7 @@
 					<th class="certs">Certifications</th>
 				</tr>
 			</thead>
-			<tbody class="controller_list_row">
+			<tbody class="controller_list_row" v-if="controllers.visiting">
 				<tr v-for="controller in controllers.visiting" :key="controller.cid">
 					<td class="name">
 						<router-link :to="`/controllers/${controller.cid}`">
@@ -64,21 +67,28 @@
 				</tr>
 			</tbody>
 		</table>
+		<div class="loading_container" v-if="!controllers.visiting">
+			<Spinner />
+		</div>
 	</div>
 </template>
 
 <script>
 import { ControllerMixin } from '@/mixins/ControllerMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Controller Roster',
 	data() {
 		return {
 			controllers: {
-				home: [],
-				visiting: []
+				home: null,
+				visiting: null
 			}
 		};
+	},
+	components: {
+		Spinner
 	},
 	mixins: [ControllerMixin],
 	async mounted() {

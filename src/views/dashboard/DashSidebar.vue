@@ -10,7 +10,7 @@
 				<div class="secondary-content"><i class="material-icons">person</i></div>
 			</router-link>
 			<router-link to="/dash/training" class="collection-item">
-				Training
+				Training Sessions
 				<div class="secondary-content"><i class="material-icons">insert_invitation</i></div>
 			</router-link>
 			<router-link to="/dash/feedback" class="collection-item">
@@ -29,13 +29,6 @@ export default {
 
 <style scoped lang="scss">
 .card.admin_sidebar {
-	// position: absolute;
-	// top: 0;
-	// left: 0;
-	// width: 350px;
-	// height: 100%;
-	// background: $primary-color;
-	// color: #fff;
 	padding: 0;
 }
 

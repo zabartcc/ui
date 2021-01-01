@@ -1,10 +1,8 @@
 <template>
     <div class="card home_intro">
 		<div class="card-content">
-			<h3>Processing Login, Please Wait</h3>
-			<div class="progress">
-				<div class="indeterminate"></div>
-			</div>
+			<h5>Processing Login, Please Wait</h5>
+			<Spinner width="300px" />
 		</div>
 	</div>
 </template>
@@ -12,6 +10,7 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import { mapMutations, mapActions } from 'vuex';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'LoginVerify',
@@ -22,6 +21,9 @@ export default {
 		...mapActions('user', [
 			'getUser'
 		]),
+	},
+	components: {
+		Spinner
 	},
 	async mounted () {
 		const {data} = await zabApi.post('/user/login', {

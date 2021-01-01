@@ -1,11 +1,14 @@
 <template>
-	<div class="card" v-if=unapproved>
+	<div class="card">
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s12"><span class="card-title">Unapproved Feedback</span></div>
 			</div>
 		</div>
-		<p class="no_unapproved" v-if="unapproved.length == 0">There is no unapproved feedback to display.</p>
+		<div class="loading_container" v-if="!unapproved">
+			<Spinner />
+		</div>
+		<p class="no_unapproved" v-else-if="unapproved && unapproved.length == 0">There is no unapproved feedback to display.</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="event_list striped">
 				<thead class="controller_list_head">
@@ -84,6 +87,7 @@
 <script>
 import { FeedbackMixin } from '@/mixins/FeedbackMixin.js';
 import RecentFeedback from './Recent';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -93,7 +97,8 @@ export default {
 	},
 	mixins: [FeedbackMixin],
 	components: {
-		RecentFeedback
+		RecentFeedback,
+		Spinner
 	},
 	async mounted() {
 		await this.getUnapproved();

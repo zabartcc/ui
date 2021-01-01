@@ -1,8 +1,8 @@
 <template>
-	<div v-if=controllers class="card">
+	<div v-if="controllers" class="card">
 		<div class="card-content">
 			<div class="row">
-				<span class="card-title col s5 m8">Controllers</span>
+				<span class="card-title col s5 m8">Home Controllers</span>
 				<div class="input-field col s7 m4">
 					<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller...">
 					<span class="helper-text right">You can search by CID, name, or operating initials.</span>
@@ -15,7 +15,7 @@
 					<tr>
 						<th>Controller</th>
 						<th>CID</th>
-						<th class="options">Management</th>
+						<th class="options">Options</th>
 					</tr>
 				</thead>
 				<tbody class="controller_list_row">
@@ -33,14 +33,50 @@
 								{{controller.cid}}
 							</div>
 						</td>
-						<td class="training">
-							<i class="material-icons">stars</i>
-							<i class="material-icons">assignment</i>
-							<i class="material-icons">comment</i>
+						<td class="options">
+							<router-link data-position="top" data-tooltip="Edit Controller" class="tooltipped" :to="`/admin/controllers/${controller.cid}`"><i class="material-icons">edit</i></router-link>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div v-if="controllers" class="card">
+		<div class="card-content">
+			<div class="row">
+				<span class="card-title col s5 m8">Visiting Controllers</span>
+				<div class="input-field col s7 m4">
+					<input autocomplete="off" @keyup=filterVisitors v-model=filterVisit type="text" placeholder="Search for a controller...">
+					<span class="helper-text right">You can search by CID, name, or operating initials.</span>
+				</div>
+			</div>
+		</div>
+		<div class="table_wrapper">
+			<table class="striped compact">
+				<thead class="controller_list_head">
+					<tr>
+						<th>Controller</th>
+						<th>CID</th>
+						<th class="options">Options</th>
+					</tr>
+				</thead>
+				<tbody class="controller_list_row">
+					<tr v-for="controller in visitorsFiltered" :key="controller.cid">
+						<td>
+							<div class="name">
+								<router-link :to="`/controllers/${controller.cid}`">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</router-link>
+							</div>
+							<div class="rating">
+								{{controller.ratingLong}}
+							</div>
+						</td>
+						<td>
+							<div class="cid">
+								{{controller.cid}}
+							</div>
 						</td>
 						<td class="options">
 							<router-link data-position="top" data-tooltip="Edit Controller" class="tooltipped" :to="`/admin/controllers/${controller.cid}`"><i class="material-icons">edit</i></router-link>
-							<i class="material-icons">delete</i>
 						</td>
 					</tr>
 				</tbody>
@@ -51,38 +87,51 @@
 
 <script>
 import { ControllerMixin } from '@/mixins/ControllerMixin.js';
-import { vatusaApi } from '@/helpers/axios.js';
-
 
 export default {
 	data() {
 		return {
 			controllers: null,
 			controllersFiltered: null,
+			visitorsFiltered: null,
 			filter: '',
-			vatusa: null
+			filterVisit: '',
+			deleteReason: ''
 		};
 	},
 	mixins: [ControllerMixin],
 	async mounted() {
 		await this.getControllers();
-		await this.testApiCall();
+		M.Modal.init(document.querySelectorAll('.modal'), {
+			preventScrolling: false
+		});
 		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
 			margin: 0
 		});
 	},
 	methods: {
 		async getControllers() {
-			this.controllers = await this.getControllersMixin();
-			this.controllersFiltered = await this.getControllersMixin();
-		},
-		async testApiCall() {
-			this.vatusa = await vatusaApi.get('/user/999230/exam/history').catch((err) => console.log(err));
+			const controllers = await this.getControllersMixin();
+			this.controllers = controllers;
+			this.controllersFiltered = controllers.home;
+			this.visitorsFiltered = controllers.visiting;
 		},
 		filterControllers() {
 			const search = new RegExp(this.filter, 'ig');
-			this.controllersFiltered = this.controllers.filter(controller => {
-				console.log(controller);
+			this.controllersFiltered = this.controllers.home.filter(controller => {
+				if(
+					controller.fname.match(search) ||
+					controller.lname.match(search) ||
+					controller.oi.match(search) ||
+					controller.cid.toString().match(search)
+				) {
+					return true;
+				}
+			});
+		},
+		filterVisitors() {
+			const search = new RegExp(this.filterVisit, 'ig');
+			this.visitorsFiltered = this.controllers.visiting.filter(controller => {
 				if(
 					controller.fname.match(search) ||
 					controller.lname.match(search) ||
@@ -115,16 +164,6 @@ export default {
 
 	.options {
 		text-align: right;
-		width: 120px;
-	}
-
-	.training {
-		text-align: center;
-		width: 20%;
-	}
-
-	table {
-		table-layout: fixed
 	}
 
 	table tbody {
@@ -134,6 +173,11 @@ export default {
 				background: #eaeaea;
 			}
 		}
+	}
+
+	.modal_delete {
+		min-width: 340px;
+		width: 30%;
 	}
 
 </style>

@@ -27,10 +27,7 @@
 			</table>
 		</div>
 		<div class="card-content loading" v-else>
-			<h5>Loading weather...</h5>
-			<div class="progress">
-				<div class="indeterminate"></div>
-			</div>
+			<Spinner />
 		</div>
 	</div>
 </template>
@@ -38,6 +35,7 @@
 <script>
 import axios from 'axios';
 import parse from 'metar-parser';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -251,6 +249,9 @@ export default {
 			},
 			numStationsLoaded: 0
 		};
+	},
+	components: {
+		Spinner
 	},
 	methods: {
 		async getWeatherForAirports() {
