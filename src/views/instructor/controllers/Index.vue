@@ -1,5 +1,5 @@
 <template>
-	<div v-if="controllers" class="card">
+	<div class="card">
 		<div class="card-content">
 			<div class="row">
 				<span class="card-title col s5 m8">Home Controllers</span>
@@ -9,7 +9,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="table_wrapper">
+		<div class="loading_container" v-if="!controllers">
+			<Spinner />
+		</div>
+		<div class="table_wrapper" v-else>
 			<table class="striped compact">
 				<thead class="controller_list_head">
 					<tr>
@@ -41,7 +44,7 @@
 			</table>
 		</div>
 	</div>
-	<div v-if="controllers" class="card">
+	<div class="card">
 		<div class="card-content">
 			<div class="row">
 				<span class="card-title col s5 m8">Visiting Controllers</span>
@@ -51,7 +54,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="table_wrapper">
+		<div class="loading_container" v-if="!controllers">
+			<Spinner />
+		</div>
+		<div class="table_wrapper" v-else>
 			<table class="striped compact">
 				<thead class="controller_list_head">
 					<tr>
@@ -86,7 +92,8 @@
 </template>
 
 <script>
-import { ControllerMixin } from '@/mixins/ControllerMixin.js';
+import {ControllerMixin} from '@/mixins/ControllerMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -100,6 +107,9 @@ export default {
 		};
 	},
 	mixins: [ControllerMixin],
+	components: {
+		Spinner
+	},
 	async mounted() {
 		await this.getControllers();
 		M.Modal.init(document.querySelectorAll('.modal'), {

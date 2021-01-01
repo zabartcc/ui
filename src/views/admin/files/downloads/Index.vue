@@ -1,14 +1,17 @@
 <template>
-	<div class="card" v-if=downloads>
+	<div class="card">
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Downloads</span></div>
 				<div class="card-title col s4"><router-link to="/admin/files/downloads/new"><span class="btn new_event_button right">New</span></router-link></div>
 			</div>
 		</div>
-		<div class="table_wrapper">
-			<div class="no_downloads" v-if="downloads.length == 0">There are no downloads to display.</div>
-			<table class="controller_list striped" v-else>
+		<div class="loading_container" v-if="!downloads">
+			<Spinner />
+		</div>
+		<div class="no_downloads" v-else-if="downloads && downloads.length == 0">There are no downloads to display.</div>
+		<div class="table_wrapper" v-else>
+			<table class="controller_list striped">
 				<thead class="controller_list_head">
 					<tr>
 						<th>Name</th>
@@ -44,7 +47,8 @@
 </template>
 
 <script>
-import { FileMixin } from '@/mixins/FileMixin.js';
+import {FileMixin} from '@/mixins/FileMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -53,6 +57,9 @@ export default {
 		};
 	},
 	mixins: [FileMixin],
+	components: {
+		Spinner
+	},
 	async mounted() {
 		await this.getDownloads();
 		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {});

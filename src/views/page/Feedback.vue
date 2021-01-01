@@ -7,7 +7,10 @@
 				We welcome your feedback! Please use the form below to send feedback about one of our controllers. Please note that your identitity will always be shared with the ATM, DATM, and TA, regardless of selecting the anonymous option.
 				</p>
 			</div>
-			<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback>
+			<div class="loading_container" v-if="!controllers">
+				<Spinner />
+			</div>
+			<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback v-else>
 				<div class="input-field col s6">
 					<input id="first_name" type="text" class="validate" v-model="feedback.name" required>
 					<label for="first_name">Your Name</label>
@@ -68,8 +71,9 @@
 </template>
 
 <script>
-import { zabApi } from '@/helpers/axios.js';
-import { FeedbackMixin } from '@/mixins/FeedbackMixin.js';
+import {zabApi} from '@/helpers/axios.js';
+import {FeedbackMixin} from '@/mixins/FeedbackMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -84,10 +88,13 @@ export default {
 				comments: '',
 				anon: false
 			},
-			controllers: []
+			controllers: null
 		};
 	},
 	mixins: [FeedbackMixin],
+	components: {
+		Spinner
+	},
 	async mounted() {
 		await this.getControllers();
 		M.FormSelect.init(document.querySelectorAll('select'), {});

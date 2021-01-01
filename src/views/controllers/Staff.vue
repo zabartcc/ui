@@ -1,8 +1,11 @@
 <template>
-	<div v-if=staff>
-		<div class="card card_margin">
-			<div class="card-content">
-				<span class="card-title">ARTCC Staff</span>
+	<div class="card card_margin">
+		<div class="card-content">
+			<span class="card-title">ARTCC Staff</span>
+			<div class="loading_container" v-if="!staff">
+				<Spinner />
+			</div>
+			<div v-else>
 				<div class="row">
 					<div class="col s12 l4 push-l4">
 						<StaffCard :staffItem="staff.atm" />
@@ -50,9 +53,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="card card_margin">
-			<div class="card-content">
-				<span class="card-title">Training Staff</span>
+	</div>
+	<div class="card card_margin">
+		<div class="card-content">
+			<span class="card-title">Training Staff</span>
+			<div class="loading_container" v-if="!staff">
+				<Spinner />
+			</div>
+			<div v-else>
 				<div class="row">
 					<div class="col s12 l4 push-l4">
 						<StaffCard :staffItem="staff.ta" />
@@ -82,22 +90,24 @@
 </template>
 
 <script>
-import { zabApi } from '@/helpers/axios.js';
+import {zabApi} from '@/helpers/axios.js';
 import StaffCard from './StaffCard.vue';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
-	components: {
-		StaffCard
-	},
+	name: 'Staff',
 	data() {
 		return {
 			staff: null
 		};
 	},
-	mounted() {
+	components: {
+		StaffCard,
+		Spinner
+	},
+	async mounted() {
 		zabApi.get('/controller/staff').then(({data}) => {
 			this.staff = data;
-			console.log(this.staff);
 		});
 	}
 };

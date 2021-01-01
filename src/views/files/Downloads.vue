@@ -1,5 +1,5 @@
 <template>
-	<div class="card card_downloads" v-if=downloads>
+	<div class="card card_downloads">
 		<div class="card-content">
 			<span class="card-title">Downloads</span>
 		</div>
@@ -12,7 +12,10 @@
 					<li class="tab col s6 l3"><a href="#misc">Miscellaneous</a></li>
 				</ul>
 			</div>
-			<div class="tabs_content">
+			<div class="loading_container" v-if="!downloads">
+				<Spinner />
+			</div>
+			<div class="tabs_content" v-else>
 				<div id="sector" class="col s12">
 					<div v-if="sectorFiles.length == 0" class="no_files">No files in this category found.</div>
 					<div class="download" v-else v-for="file in sectorFiles" :key="file.id">
@@ -55,7 +58,8 @@
 </template>
 
 <script>
-import { FileMixin } from '@/mixins/FileMixin.js';
+import {FileMixin} from '@/mixins/FileMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -64,6 +68,9 @@ export default {
 		};
 	},
 	mixins: [FileMixin],
+	components: {
+		Spinner
+	},
 	async mounted() {
 		await this.getDownloads();
 		M.Tabs.init(document.querySelectorAll('.tabs'), {});
