@@ -9,6 +9,10 @@
 				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
 			</router-link>
+			<router-link to="/admin/visit/applications" class="collection-item">
+				Visitor Applications
+				<div class="secondary-content"><i class="material-icons">group_add</i></div>
+			</router-link>
 			<router-link to="/admin/events" class="collection-item">
 				Events
 				<div class="secondary-content"><i class="material-icons">event</i></div>

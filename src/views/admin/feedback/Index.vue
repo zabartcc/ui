@@ -211,6 +211,7 @@ table tbody {
 	#comments {
 		font-family: inherit;
 		white-space: pre-wrap;
+		overflow: hidden;
 		width: 100%;
 	}
 	#position {

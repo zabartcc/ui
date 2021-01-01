@@ -140,6 +140,10 @@ const routes = [
 			{
 				path: 'feedback',
 				component: () => import('../views/admin/feedback/Index.vue')
+			},
+			{
+				path: 'visit/applications',
+				component: () => import('../views/admin/VisitApplications.vue')
 			}
 		]
 	},

@@ -229,6 +229,9 @@ export default {
 .feedback {
 	#comments {
 		font-family: inherit;
+		white-space: pre-wrap;
+		overflow: hidden;
+		width: 100%;
 	}
 	#position {
 		text-transform: capitalize;
