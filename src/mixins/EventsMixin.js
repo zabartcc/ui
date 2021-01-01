@@ -5,8 +5,13 @@ export const EventsMixin = {
 		getUpcomingEventsMixin() {
 			return zabApi.get('/event').then(response => response.data).catch((err) => { console.log(err); });
 		},
-		getHistoricEventsMixin() {
-			return zabApi.get('/event/archive').then(response => response.data).catch((err) => { console.log(err); });
+		getHistoricEventsMixin(page, limit) {
+			return zabApi.get('/event/archive', {
+				params: {
+					page: page,
+					limit: limit
+				}
+			}).then(response => response.data).catch((err) => { console.log(err); });
 		},
 		getEventMixin(slug) {
 			return zabApi.get(`/event/${slug}`).then(response => response.data).catch((err) => { console.log(err); });

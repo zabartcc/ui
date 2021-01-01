@@ -1,68 +1,55 @@
 <template>
-    <div class="card" v-if="events.length == 0">
+    <div class="card" v-if="!events || events.length === 0">
         <div class="card-content">
             <span class="card-title">Upcoming Events</span>
-            <span style="font-style: italic;">We're sorry, but there are no upcoming events planned. Please check back later.</span>
         </div>
-    </div>
-    <div class="card event_card" v-for="event in events" :key="event.id">
-        <img :src="`https://cdn.zabartcc.org/events/${event.bannerUrl}`" class="event_banner" draggable="false" />
-        <div class="card-content">
-            <div class="row">
-                <div class="col s12 l8">
-                    <span class="card-title event_title">{{event.name}}</span>
-                    <span class="card-title event_date">{{format_full(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{format_hour(event.eventEnd)}}z</span>
-                </div>
-                <div class="col s12 l4">
-                    <router-link :to="`/events/${event.url}`" class="btn btn-signup waves-effect right">More Info &amp; Sign Up</router-link>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-content">
-            <span class="card-title">Historic Events</span>
+		<div class="loading_container" v-if="!events">
+			<Spinner />
 		</div>
-		<p v-if="historicEvents.length == 0" class="no_historic">There are no historic events to display.</p>
-		<table class="event_list striped" v-else>
-			<tbody class="event_list_row">
-				<tr v-for="event in historicEvents" :key="event.id">
-					<td class="name">
-						<router-link :to="`/events/${event.url}`">
-							{{event.name}}
-						</router-link><br />
-					</td>
-					<td class="date right">
-						{{format_full(event.eventStart)}}z
-					</td>
-				</tr>
-			</tbody>
-		</table>
-    </div>
+		<p v-else-if="events && events.length === 0" class="no_event">There are no upcoming events to display.</p>
+	</div>
+	<div v-if="events && events.length > 0">
+		<div class="card event_card" v-for="event in events" :key="event.id">
+			<img :src="`https://cdn.zabartcc.org/events/${event.bannerUrl}`" class="event_banner" draggable="false" />
+			<div class="card-content">
+				<div class="row">
+					<div class="col s12 l8">
+						<span class="card-title event_title">{{event.name}}</span>
+						<span class="card-title event_date">{{format_full(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{format_hour(event.eventEnd)}}z</span>
+					</div>
+					<div class="col s12 l4">
+						<router-link :to="`/events/${event.url}`" class="btn btn-signup waves-effect right">More Info &amp; Sign Up</router-link>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<Historic />
 </template>
 
 <script>
 import { EventsMixin } from '@/mixins/EventsMixin.js';
+import Spinner from '@/components/Spinner.vue';
+import Historic from './Historic.vue';
 
 export default {
 	name: 'Events',
 	data() {
 		return {
-			events: [],
-			historicEvents: []
+			events: null
 		};
 	},
+	components: {
+		Spinner,
+		Historic
+	},
 	mixins: [EventsMixin],
-	mounted() {
-		this.getUpcomingEvents();
-		this.getHistoricEvents();
+	async mounted() {
+		await this.getUpcomingEvents();
 	},
 	methods: {
 		async getUpcomingEvents() {
 			this.events = await this.getUpcomingEventsMixin();
-		},
-		async getHistoricEvents() {
-			this.historicEvents = await this.getHistoricEventsMixin();
 		},
 		format_full(value) {
 			var d = new Date(value);
@@ -77,50 +64,50 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .event_banner {
-        width: 100%;
-    }
-    .event_list_row tr {
-		transition: background-color .3s ease;
-		&:hover {
-			background: #eaeaea;
-		}
-    }
-
-    .event_title {
-        font-weight: 700;
-    }
-
-    .card .card-content .event_date {
-		font-size: 1.15em; 
-		margin-top: -15px;
-
-		.rotate {
-			transform: rotate(90deg);
-		}
-    }
-
-    tr th {
-        text-align: left;
-    }
-
-    td {
-        padding: 1em;
-    }
-    td a {
-        transition: .3s;
-		font-weight: 600;
-        &:hover {
-            color: $primary-color-light;
-        }
-    }
-    .event_card .card-content .row {
-        margin-bottom: 0;
-    }
-
-	.no_historic {
-		padding: 1em;
-		margin-top: -10px;
-		font-style: italic;
+.event_banner {
+	width: 100%;
+}
+.event_list_row tr {
+	transition: background-color .3s ease;
+	&:hover {
+		background: #eaeaea;
 	}
+}
+
+.event_title {
+	font-weight: 700;
+}
+
+.card .card-content .event_date {
+	font-size: 1.15em; 
+	margin-top: -15px;
+
+	.rotate {
+		transform: rotate(90deg);
+	}
+}
+
+tr th {
+	text-align: left;
+}
+
+td {
+	padding: 1em;
+}
+td a {
+	transition: .3s;
+	font-weight: 600;
+	&:hover {
+		color: $primary-color-light;
+	}
+}
+.event_card .card-content .row {
+	margin-bottom: 0;
+}
+
+.no_event {
+	padding: 1em;
+	margin-top: -10px;
+	font-style: italic;
+}
 </style>

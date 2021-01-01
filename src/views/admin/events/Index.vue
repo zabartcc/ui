@@ -1,12 +1,15 @@
 <template>
-	<div class="card" v-if=events>
+	<div class="card">
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Upcoming Events</span></div>
 				<div class="card-title col s4"><router-link to="/admin/events/new"><span class="btn new_event_button right">New Event</span></router-link></div>
 			</div>
 		</div>
-		<p class="no_event" v-if="events.length == 0">There are no upcoming events planned right now.</p>
+		<div class="loading_container" v-if="!events">
+			<Spinner />
+		</div>
+		<p class="no_event" v-else-if="events && events.length == 0">There are no upcoming events planned right now.</p>
 		<table class="event_list striped" v-else>
 			<thead class="controller_list_head">
 				<tr>
@@ -50,55 +53,13 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="card" v-if=historicEvents>
-		<div class="card-content">
-            <span class="card-title">Historic Events</span>
-		</div>
-		<p v-if="historicEvents.length == 0" class="no_event">There are no historic events to display.</p>
-		<table class="event_list striped" v-else>
-			<thead class="controller_list_head">
-				<tr>
-					<th>Event</th>
-					<th>Date</th>
-					<th class="options">Options</th>
-				</tr>
-			</thead>
-			<tbody class="event_list_row">
-				<tr v-for="(event, i) in historicEvents" :key="event.id">
-					<td class="name">
-						<router-link :to="`/events/${event.url}`">
-							{{event.name}}
-						</router-link><br />
-					</td>
-					<td class="date">
-						{{format_full(event.eventStart)}}z
-					</td>
-					<td class="options">
-						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
-							<i class="material-icons">edit</i>
-						</router-link>
-						<a :href="`#modal_historic_${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
-							<i class="material-icons">delete</i>
-						</a>
-					</td>
-					<div :id="`modal_historic_${i}`" class="modal modal_delete">
-						<div class="modal-content">
-							<h4>Are you sure?</h4>
-							<p>Events shouldn't be deleted unless they contain errors or were canceled. If you're not sure, click cancel. Otherwise, continue.</p>
-						</div>
-						<div class="modal-footer">
-							<a href="#!" class="waves-effect btn" @click="deleteEvent(event.url)">I'm sure</a>
-							<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
-						</div>
-					</div>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<HistoricEvents />
 </template>
 
 <script>
 import { EventsMixin } from '@/mixins/EventsMixin.js';
+import HistoricEvents from './Historic.vue';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -108,9 +69,12 @@ export default {
 		};
 	},
 	mixins: [EventsMixin],
+	components: {
+		Spinner,
+		HistoricEvents
+	},
 	async mounted() {
 		await this.getUpcomingEvents();
-		await this.getHistoricEvents();
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
@@ -121,9 +85,6 @@ export default {
 	methods: {
 		async getUpcomingEvents() {
 			this.events = await this.getUpcomingEventsMixin();
-		},
-		async getHistoricEvents() {
-			this.historicEvents = await this.getHistoricEventsMixin();
 		},
 		format_full(value) {
 			var d = new Date(value);
