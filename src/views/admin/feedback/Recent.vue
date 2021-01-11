@@ -2,7 +2,7 @@
 	<div class="card">
 		<div class="card-content">
 			<div class="row row_no_margin">
-				<div class="card-title col s12"><span class="card-title">Feedback</span></div>
+				<div class="card-title col s12"><span class="card-title">Recent Feedback</span></div>
 			</div>
 		</div>
 		<div class="loading_container" v-if="!recentFeedback">
@@ -23,9 +23,9 @@
 				<tbody class="event_list_row">
 					<tr v-for="(feedback, i) in recentFeedback" :key="feedback._id">
 						<td>{{formatDate(feedback.createdAt)}}z</td>
-						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
+						<td>{{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
-						<td>{{feedback.deletedAt == null ? 'Approved' : 'Rejected'}}</td>
+						<td>{{feedback.deletedAt === null ? 'Approved' : 'Rejected'}}</td>
 						<td class="options">
 							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
@@ -33,7 +33,7 @@
 						</td>
 						<div :id="`modal_feedback_${i}`" class="modal modal_feedback">
 							<div class="modal-content">
-								<div class="modal_title">Feedback for {{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
+								<div class="modal_title">Feedback for {{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s6">
@@ -53,7 +53,7 @@
 										<label for="submission" class="active">Submission Date</label>
 									</div>
 									<div class="input-field col s6">
-										<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
+										<p id="submission">{{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
 										<label for="submission" class="active">Controller</label>
 									</div>
 									<div class="input-field col s6">
@@ -142,7 +142,7 @@ export default {
 	},
 	computed: {
 		isFirstPage() {
-			if(this.page == 1) return true;
+			if(this.page === 1) return true;
 			else return false;
 		},
 		isLastPage() {
@@ -150,7 +150,7 @@ export default {
 			else return false;
 		},
 		minEntries() {
-			if(this.page == 1) return 1;
+			if(this.page === 1) return 1;
 			else return (this.page - 1) * this.limit;
 		},
 		maxEntries() {
@@ -223,7 +223,7 @@ export default {
 
 .feedback_wrapper {
 	width: 100%;
-	overflow: hidden;
+	overflow: auto;
 }
 
 .feedback {

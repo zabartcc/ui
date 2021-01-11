@@ -28,7 +28,7 @@
 						<input id="oi" type="text" v-model="form.oi" @input="checkOi($event)" maxlength="2" required>
 						<label for="oi" class="active">Operating Initials</label>
 						<div class="side_oi right">
-							<i v-if="this.oiAvail == true" class="material-icons green-text">check_circle</i>
+							<i v-if="oiAvail == true" class="material-icons green-text">check_circle</i>
 							<i v-else class="material-icons red-text">remove_circle</i>
 						</div>
 					</div>
