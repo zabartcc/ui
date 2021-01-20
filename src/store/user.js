@@ -1,5 +1,5 @@
 import {zabApi} from '@/helpers/axios.js';
-import router from '@/router/index.js';
+// import router from '@/router/index.js';
 
 export default {
 	namespaced: true,
@@ -13,16 +13,15 @@ export default {
 	actions: {
 		getUser: async ({commit, state}) => {
 			if(!state.user.isLoggedIn) {
-				zabApi.get('/user').then(({data}) => {
-					if(data) {
-						commit('setUser', data);
-						commit('setLoggedIn', true);
-						return;
-					}
-				}).catch((err) => {
-					console.log(err);
-					return router.push('/');
-				});
+				const { data: user } = await zabApi.get('/user');
+				console.log(user)
+				if(user.ret_det.code === 200) {
+					commit('setUser', user.data);
+					commit('setLoggedIn', true);
+				} 
+				if(user.ret_det.code === 403) {
+					console.error(user.ret_det.message);
+				}
 			}
 			commit('setQuery', true);
 		},

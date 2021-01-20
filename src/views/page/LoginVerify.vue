@@ -28,27 +28,24 @@ export default {
 	async mounted () {
 		const {data} = await zabApi.post('/user/login', {
 			token: this.$route.query.token
-		}).catch(err => {
-			if (err.response.status === 403) {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i>Not a member of ZAB<div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-				this.$router.push('/');
-			} else {
-				console.log(err);
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i>Something went wrong, please try again<div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			}
 		});
-		if(data) {
+		if(data.ret_det.code === 200) {
 			this.getUser();
-			window.location.href = (localStorage.getItem('redirect') || '/');
+		} else if(data.ret_det.code === 403) {
+			M.toast({
+				html: `<i class="material-icons left">error_outline</i>Not a member of ZAB.<div class="border"></div>`,
+				displayLength: 5000,
+				classes: 'toast toast_error'
+			});
+		} else {
+			M.toast({
+				html: `<i class="material-icons left">error_outline</i>Something went wrong, please try again.<div class="border"></div>`,
+				displayLength: 5000,
+				classes: 'toast toast_error'
+			});
+			console.error(data.ret_det.message);
 		}
+		this.$router.push(localStorage.getItem('redirect') || '/')
 	},
 };
 </script>

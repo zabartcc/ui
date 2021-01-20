@@ -178,32 +178,33 @@ const router = createRouter({
 	routes
 });
 
-router.beforeEach((to, from, next) => {
-	/* eslint-disable no-unused-vars */
+router.beforeEach(async (to, from, next) => {
 	if(to.meta.loggedIn) {
-		zabApi.get('/user').catch(err => {
-			next('/');
-		}).then(user => {
-			if(user.data) {
-				next();
-			} else {
-				next('/');
-			}
-		});
-	} else if(to.meta.isAdmin) { // Route is an admin route.
-		zabApi.get('/user').catch(err => {
-			next('/');
-		}).then(user => {
-			if(user.data.isStaff === true) {
-				next();
-			} else {
-				next('/');
-			}
-		});
+		const {data: user} = await zabApi.get('/user');
+		if(user.ret_det.code === 200) {
+			next();
+		} else {
+			next('/')
+		}
+	} 
+	else if(to.meta.isAdmin) { // Route is an admin route.
+		const {data: user} = await zabApi.get('/user');
+		if(user.ret_det.code === 200 && user.data.isStaff === true) {
+			next();
+		} else {
+			next('/')
+		}
+	}
+	else if(to.meta.isIns) { // Route is an admin route.
+		const {data: user} = await zabApi.get('/user');
+		if(user.ret_det.code === 200 && user.data.isIns === true) {
+			next();
+		} else {
+			next('/')
+		}
 	} else {
 		next();
 	}
-	/* eslint-enable no-unused-vars */
 });
 
 export default router;
