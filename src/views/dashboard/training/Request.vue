@@ -5,28 +5,35 @@
 			<div class="loading_container" v-if="!milestones">
 				<Spinner />
 			</div>
-			<div class="request_wrapper" v-else>
-				<p><b class="red-text">Important: </b> training requests are just that—requests. There is no guarantee that your session will be picked up by a member of the training staff. If a request you've made gets picked up, you are expected to show up. Treat the times as your availability, mentors and instructors have the ability to modify these times when they pick up the session. Please also make sure that you've read through the required material, as per the Training Syllabus, before requesting a session.</p>
-				<div class="row row_no_margin request_form">
-					<div class="input-field col s12 l6">
-						<input id="start_time" type="datetime-local" v-model="request.startTime" required>
-						<label for="start_time" class="active">Start Time (Zulu)</label>
+			<div class="request_wrapper row" v-else>
+				<div class="col s12 l6 push-l6">
+					<p><b class="red-text">Important: </b> training requests are just that—requests. <br /><br />
+					There is no guarantee that your session will be picked up by a member of the training staff. If a request you've made gets picked up, you are expected to show up.
+					Treat the times as your availability, mentors and instructors have the ability to modify these times when they pick up the session. <br /><br />
+					Please also make sure that you've read through the required material, as per the Training Syllabus, before requesting a session.</p>
+				</div>
+				<div class="col s12 l6 pull-l6">
+					<div class="row row_no_margin">
+						<div class="input-field col s12">
+							<input id="start_time" type="datetime-local" v-model="request.startTime" required>
+							<label for="start_time" class="active">Start Time (Zulu)</label>
+						</div>
+						<div class="input-field col s12">
+							<input id="end_time" type="datetime-local" v-model="request.endTime" required>
+							<label for="end_time" class="active">End Time (Zulu)</label>
+						</div>
+						<div class="input-field col s12">
+							<select v-model="request.milestone" required>
+								<option value="" disabled selected>Select a milestone</option>
+								<option v-for="milestone in milestones" :key="milestone._id" :value="milestone._id">{{milestone.code + ' - ' + milestone.name}}</option>
+								
+							</select>
+							<label>Milestone</label>
+						</div>
 					</div>
-					<div class="input-field col s12 l6">
-						<input id="end_time" type="datetime-local" v-model="request.endTime" required>
-						<label for="end_time" class="active">End Time (Zulu)</label>
-					</div>
-					<div class="input-field col s12 l6">
-						<select v-model="request.milestone" required>
-							<option value="" disabled selected>Select a milestone</option>
-							<option v-for="milestone in milestones" :key="milestone._id" :value="milestone._id">{{milestone.code + ' - ' + milestone.name}}</option>
-							
-						</select>
-						<label>Milestone</label>
-					</div>
-					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="submit" @click="submitRequest" />
-					</div>
+				</div>
+				<div class="submit_request">
+					<input type="submit" class="btn right" value="submit" @click="submitRequest" />
 				</div>
 			</div>
 		</div>
@@ -93,7 +100,7 @@ export default {
 	padding-top: 1em;
 }
 
-.request_form {
-	padding-top: 2em;
+.submit_request {
+	margin-right: 1em;
 }
 </style>
