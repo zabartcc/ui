@@ -1,12 +1,12 @@
 <template>
     <div class="card">
         <div class="card-content">
-            <span class="card-title">Historic Events</span>
+            <span class="card-title">Past Events</span>
 		</div>
 		<div class="loading_container" v-if="!historicEvents">
 			<Spinner />
 		</div>
-		<p v-else-if="historicEvents && historicEvents.length == 0" class="no_event">There are no historic events to display.</p>
+		<p v-else-if="historicEvents && historicEvents.length == 0" class="no_event">There are no past events to display.</p>
 		<div v-else>
 			<table class="event_list striped">
 				<thead class="event_list_head">

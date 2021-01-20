@@ -12,23 +12,25 @@
 			</ul>
 		</div>
 		<div id="atc_online">
-			<div v-if=atcOnline>
-				<div v-if="atcOnline.length">
-					<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
-				</div>
-				<div v-else>
-					<p>There are no controllers online right now.</p>
-				</div>
+			<div v-if="!atcOnline">
+				<Spinner />
+			</div>
+			<div v-else-if="atcOnline && atcOnline.length > 0">
+				<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
+			</div>
+			<div v-else>
+				<p>There are no controllers online right now.</p>
 			</div>
 		</div>
 		<div id="pilots_online">
-			<div v-if=pilotsOnline>
-				<div v-if="pilotsOnline.length">
-					<PilotOnlineItem v-for="(pilot, k) in depsArrs" :key=k :pilot="pilot" />
-				</div>
-				<div v-else>
-					<p>There are no departures/arrivals online right now.</p>
-				</div>
+			<div v-if="!pilotsOnline">
+				<Spinner />
+			</div>
+			<div v-else-if="pilotsOnline && pilotsOnline.length > 0">
+				<PilotOnlineItem v-for="(pilot, k) in depsArrs" :key=k :pilot="pilot" />
+			</div>
+			<div v-else>
+				<p>There are no departures/arrivals online right now.</p>
 			</div>
 		</div>
 		<h6 class="as_of">As Of: {{getZuluTime()}}z</h6>
@@ -38,12 +40,14 @@
 <script>
 import AtcOnlineItem from './AtcOnlineItem';
 import PilotOnlineItem from './PilotOnlineItem';
-import { SidebarMixin } from '@/mixins/SidebarMixin.js';
+import Spinner from '@/components/Spinner.vue';
+import {SidebarMixin} from '@/mixins/SidebarMixin.js';
 
 export default {
 	components: {
 		AtcOnlineItem,
-		PilotOnlineItem
+		PilotOnlineItem,
+		Spinner
 	},
 	data() {
 		return {
@@ -66,9 +70,9 @@ export default {
 			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		}
 	},
-	mounted() {
+	async mounted() {
 		M.Tabs.init(document.querySelectorAll('.tabs'));
-		this.getOnline();
+		await this.getOnline();
 	},
 	computed: {
 		depsArrs() {

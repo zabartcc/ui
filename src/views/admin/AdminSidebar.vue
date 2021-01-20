@@ -9,9 +9,13 @@
 				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
 			</router-link>
-			<router-link to="/admin/visit/applications" class="collection-item">
-				Visitor Applications
-				<div class="secondary-content"><i class="material-icons">group_add</i></div>
+			<router-link to="/admin/files/documents" class="collection-item">
+				Documents
+				<div class="secondary-content"><i class="material-icons">description</i></div>
+			</router-link>
+			<router-link to="/admin/files/downloads" class="collection-item">
+				Downloads
+				<div class="secondary-content"><i class="material-icons">insert_drive_file</i></div>
 			</router-link>
 			<router-link to="/admin/events" class="collection-item">
 				Events
@@ -21,13 +25,9 @@
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
 			</router-link>
-			<router-link to="/admin/files/downloads" class="collection-item">
-				Downloads
-				<div class="secondary-content"><i class="material-icons">insert_drive_file</i></div>
-			</router-link>
-			<router-link to="/admin/files/documents" class="collection-item">
-				Documents
-				<div class="secondary-content"><i class="material-icons">description</i></div>
+			<router-link to="/admin/visit/applications" class="collection-item">
+				Visitor Applications
+				<div class="secondary-content"><i class="material-icons">group_add</i></div>
 			</router-link>
 		</div>
 	</div>

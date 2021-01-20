@@ -166,6 +166,10 @@ const routes = [
 				component: () => import('../views/dashboard/training/Request.vue')
 			}
 		]
+	},
+	{
+		path: '/ids',
+		component: () => import('../views/page/Ids.vue')
 	}
 ];
 

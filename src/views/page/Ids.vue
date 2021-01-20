@@ -1,0 +1,140 @@
+<template>
+	<div class="home">
+		<div class="download_wrapper">
+			<div class="download_container">
+				<div class="top_text">
+					<img alt="ZAB logo" :src="require('@/assets/images/icons/zab_icon_new.png')" class="download_logo">
+					<p class="title">Albuquerque ARTCC - Information Display System</p>
+					<p class="description">
+						The ZAB Information Display System (IDS) is a tool available to all home and visiting controllers within the Albuquerque ARTCC. It provides a platform that provides you with information useful when controlling and eases coordination with your fellow controllers. <br /><br />Please select your operating system below to download the program.<br />
+					</p>
+				</div>
+				<div class="row downloads_row">
+					<div class="col s12">
+						<button class="btn waves-effect download_button windows">DOWNLOAD FOR WINDOWS</button>
+					</div>
+					<div class="col s12">
+						<div class="other_downloads">or</div>
+					</div>
+					<div class="col s12">
+						<div class="smaller_download">Download for MacOS</div>
+					</div>
+					<div class="col s12">
+						<div class="smaller_download">Download for Linux</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+export default {
+	name: 'IDS'
+};
+</script>
+
+<style scoped lang="scss">
+.home {
+	width: 100%;
+	height: 100vh;
+	background: url('~@/assets/images/ids_background.jpg');
+	color: #fff;
+}
+
+.home::before {
+	background: rgba(33, 33, 33, 0.7);
+	width: 100%;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	content: "";
+}
+
+.download_logo {
+	height: 150px;
+	display: block;
+	width: auto;
+	margin: auto;
+}
+
+.download_wrapper {
+	padding-top: 80px;
+}
+
+.download_container {
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	width: 600px;
+	z-index: 1;
+	background-color: rgb(33, 33, 33);
+	position: absolute;
+	padding: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+
+	.other_downloads {
+		color: #6C6C6C;
+		text-align: center;
+		margin: 1em;
+	}
+
+	.smaller_download {
+		text-align: center;
+		color: #6C6C6C;
+		text-decoration: underline;
+		user-select: none;
+	}
+
+	.download_button {
+		display: block;
+		margin-top: 10px;
+		margin-left: auto;
+		margin-right: auto;
+
+		&.windows {
+			background-color: #ED5C30;
+			width: 270px;
+			height: 40px;
+			font-size: 1.15rem;
+		}
+
+		&.mac {
+			background-color: transparent;
+			width: 240px;
+			height: 35px;
+			box-shadow: none;
+		}
+
+		&.linux {
+			background-color: #D74439;
+			width: 220px;
+			line-height: 1em;
+			font-size: .9rem;
+			height: 30px;
+		}
+	}
+}
+
+.top_text {
+	.title {
+		font-size: 1.4em;
+		font-weight: 600;
+		text-align: center;
+	}
+
+	.description {
+		width: 70%;
+		word-break: break-word;
+		margin: auto;
+		line-height: 1.3rem;
+	}
+}
+
+.downloads_row {
+	margin-top: 30px;
+}
+</style>

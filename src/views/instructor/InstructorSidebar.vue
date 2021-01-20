@@ -9,10 +9,6 @@
 				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
 			</router-link>
-			<router-link to="/ins/training" class="collection-item">
-				Training
-				<div class="secondary-content"><i class="material-icons">event</i></div>
-			</router-link>
 			<router-link to="/ins/exams" class="collection-item">
 				Exams
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
@@ -20,6 +16,10 @@
 			<router-link to="/ins/solo" class="collection-item">
 				Solo Certifications
 				<div class="secondary-content"><i class="material-icons">streetview</i></div>
+			</router-link>
+			<router-link to="/ins/training" class="collection-item">
+				Training
+				<div class="secondary-content"><i class="material-icons">event</i></div>
 			</router-link>
 		</div>
 	</div>

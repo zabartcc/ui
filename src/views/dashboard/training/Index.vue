@@ -76,4 +76,13 @@ export default {
 	width: 100%;
 	overflow: auto;
 }
+
+.session_list_row {
+	tr {
+		transition: background-color .3s ease;
+		&:hover {
+			background: #eaeaea;
+		}
+	}
+}
 </style>

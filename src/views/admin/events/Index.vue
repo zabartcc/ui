@@ -53,12 +53,12 @@
 			</tbody>
 		</table>
 	</div>
-	<HistoricEvents />
+	<Past />
 </template>
 
 <script>
 import { EventsMixin } from '@/mixins/EventsMixin.js';
-import HistoricEvents from './Historic.vue';
+import Past from './Past.vue';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
@@ -71,7 +71,7 @@ export default {
 	mixins: [EventsMixin],
 	components: {
 		Spinner,
-		HistoricEvents
+		Past
 	},
 	async mounted() {
 		await this.getUpcomingEvents();
