@@ -10,8 +10,8 @@
 		</div>
 		<p class="no_feedback" v-else-if="feedback && feedback.length === 0">You have not received any feedback yet.</p>
 		<div class="feedback_wrapper" v-else>
-			<table class="event_list striped">
-				<thead class="event_list_head">
+			<table class="feedback_list striped">
+				<thead class="feedback_list_head">
 					<tr>
 						<th>Date</th>
 						<th>Position</th>
@@ -19,7 +19,7 @@
 						<th class="options">Options</th>
 					</tr>
 				</thead>
-				<tbody class="event_list_row" v-if="feedback">
+				<tbody class="feedback_list_row" v-if="feedback">
 					<tr v-for="(feedback, i) in feedback" :key="feedback._id">
 						<td>{{formatDate(feedback.createdAt)}}z</td>
 						<td id="position">{{feedback.position}}</td>

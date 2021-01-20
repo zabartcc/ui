@@ -1,7 +1,10 @@
 <template>
-	<div class="card" v-if=controller>
+	<div class="card">
 		<div class="card-content">
-			<div class="row">
+			<div class="loading_container" v-if="!controller">
+				<Spinner />
+			</div>
+			<div class="row" v-else>
 				<div class="col s5 m4 l3">
 					<div class="controller_image">
 						<img :src="controller.image ?? require('@/assets/images/blank.png')" />
@@ -29,6 +32,7 @@
 
 <script>
 import {ControllerMixin} from '@/mixins/ControllerMixin.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Controller Profile',
@@ -38,6 +42,12 @@ export default {
 		};
 	},
 	mixins: [ControllerMixin],
+	components: {
+		Spinner
+	},
+	async mounted() {
+		await this.getController();
+	},
 	methods: {
 		async getController() {
 			this.controller = await this.getControllerMixin(this.$route.params.cid);
@@ -58,9 +68,6 @@ export default {
 			});
 			return certsToShow;
 		}
-	},
-	mounted() {
-		this.getController();
 	}
 };
 </script>

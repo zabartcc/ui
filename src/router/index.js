@@ -156,6 +156,14 @@ const routes = [
 			{
 				path: 'feedback',
 				component: () => import('../views/dashboard/Feedback.vue')
+			},
+			{
+				path: 'training',
+				component: () => import('../views/dashboard/training/Index.vue')
+			},
+			{
+				path: 'training/new',
+				component: () => import('../views/dashboard/training/Request.vue')
 			}
 		]
 	}
