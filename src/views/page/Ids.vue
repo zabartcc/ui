@@ -68,7 +68,7 @@ export default {
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 	width: 600px;
 	z-index: 1;
-	background-color: rgb(33, 33, 33);
+	background-color: rgb(31, 31, 31);
 	position: absolute;
 	padding: 1em;
 	margin-left: auto;
