@@ -184,7 +184,7 @@ router.beforeEach(async (to, from, next) => {
 		if(user.ret_det.code === 200) {
 			next();
 		} else {
-			next('/')
+			next('/');
 		}
 	} 
 	else if(to.meta.isAdmin) { // Route is an admin route.
@@ -192,7 +192,7 @@ router.beforeEach(async (to, from, next) => {
 		if(user.ret_det.code === 200 && user.data.isStaff === true) {
 			next();
 		} else {
-			next('/')
+			next('/');
 		}
 	}
 	else if(to.meta.isIns) { // Route is an admin route.
@@ -200,7 +200,7 @@ router.beforeEach(async (to, from, next) => {
 		if(user.ret_det.code === 200 && user.data.isIns === true) {
 			next();
 		} else {
-			next('/')
+			next('/');
 		}
 	} else {
 		next();

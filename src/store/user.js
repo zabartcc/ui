@@ -14,7 +14,6 @@ export default {
 		getUser: async ({commit, state}) => {
 			if(!state.user.isLoggedIn) {
 				const { data: user } = await zabApi.get('/user');
-				console.log(user)
 				if(user.ret_det.code === 200) {
 					commit('setUser', user.data);
 					commit('setLoggedIn', true);

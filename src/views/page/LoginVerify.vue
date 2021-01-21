@@ -45,7 +45,7 @@ export default {
 			});
 			console.error(data.ret_det.message);
 		}
-		this.$router.push(localStorage.getItem('redirect') || '/')
+		this.$router.push(localStorage.getItem('redirect') || '/');
 	},
 };
 </script>
