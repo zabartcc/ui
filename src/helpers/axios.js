@@ -11,9 +11,6 @@ export const vatusaApi = axios.create({
 		apikey: process.env.VUE_APP_VATUSA_API_KEY,
 		test: true
 	},
-	transformResponse: [
-		(data) => JSON.parse(Buffer.from(JSON.parse(data).payload, 'base64').toString())
-	]
 });
 
 export const vatusaApiAuth = axios.create({
@@ -22,7 +19,4 @@ export const vatusaApiAuth = axios.create({
 	params: {
 		test: true
 	},
-	transformResponse: [
-		(data) => JSON.parse(Buffer.from(JSON.parse(data).payload, 'base64').toString())
-	]
 });

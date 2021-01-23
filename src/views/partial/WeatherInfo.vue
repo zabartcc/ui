@@ -33,14 +33,14 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { zabApi } from '@/helpers/axios.js';
 import parse from 'metar-parser';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
 		return {
-			icao: ['kphx', 'kabq', 'ktus', 'kelp', 'kama'],
+			icao: ['KPHX', 'KABQ', 'KTUS', 'KELP', 'KAMA'],
 			stations: {
 				KPHX: {
 					icao: "KPHX",
@@ -255,17 +255,19 @@ export default {
 	},
 	methods: {
 		async getWeatherForAirports() {
-			const { data } = await axios.get(`/metar/metar.php?id=${this.icao.join()}`);
-			const lines = data.split('\n');
-			lines.forEach((metar) => {
-				this.stations[metar.slice(0,4)].metar = metar;
-				this.stations[metar.slice(0,4)].parsedMetar = parse(metar);
+			for (const station of this.icao) {
+				console.log(station);
+				const { data } = await zabApi.get(`/ids/stations/${station}`);
+				console.log(data);
+				this.stations[station].metar = data.metar;
+				this.stations[station].parsedMetar = parse(data.metar);
 				this.numStationsLoaded++;
-			});
+
+			}
 			
 		},
 		formatWind: function(station) {
-			if(station.parsedMetar.wind.speedKt < 3) return 'Calm';
+			if(station.parsedMetar.wind.speedKt < 4) return 'Calm';
 			else if(!('speedKt' in station.parsedMetar.wind)) return 'Unknown';
 			const paddedWind = `0${station.parsedMetar.wind.direction}`.slice(-3);
 			return `${paddedWind}@${station.parsedMetar.wind.speedKt}`;
