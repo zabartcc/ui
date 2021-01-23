@@ -47,5 +47,6 @@ export default {
 	getters: {
 		hasQueryCompleted: state => state.userQueryComplete,
 		getUserData: state => state.user.data,
+		getUserId: state => state.user.data._id,
 	}
 };

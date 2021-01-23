@@ -256,9 +256,7 @@ export default {
 	methods: {
 		async getWeatherForAirports() {
 			for (const station of this.icao) {
-				console.log(station);
 				const { data } = await zabApi.get(`/ids/stations/${station}`);
-				console.log(data);
 				this.stations[station].metar = data.metar;
 				this.stations[station].parsedMetar = parse(data.metar);
 				this.numStationsLoaded++;

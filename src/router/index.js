@@ -42,6 +42,14 @@ const routes = [
 				component: () => import('../views/events/Index.vue')
 			},
 			{
+				path: '/news',
+				component: () => import('../views/news/Index.vue')
+			},
+			{
+				path: '/news/:slug',
+				component: () => import('../views/news/Item.vue')
+			},
+			{
 				path: '/feedback',
 				component: () => import('../views/page/Feedback.vue')
 			},
@@ -116,6 +124,18 @@ const routes = [
 			{
 				path: 'events/assign/:slug',
 				component: () => import('../views/admin/events/Assign.vue')
+			},
+			{
+				path: 'news',
+				component: () => import('../views/admin/news/Index.vue')
+			},
+			{
+				path: 'news/new',
+				component: () => import('../views/admin/news/New.vue')
+			},
+			{
+				path: 'news/:slug',
+				component: () => import('../views/admin/news/Edit.vue')
 			},
 			{
 				path: 'files/downloads',

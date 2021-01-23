@@ -1,74 +1,76 @@
 <template>
-	<div class="card">
-		<div class="card-content">
-			<span class="card-title">Home Controllers</span>
+	<div>
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title">Home Controllers</span>
+			</div>
+			<table class="controller_list striped">
+				<thead class="controller_list_head">
+					<tr>
+						<th class="name">Controller</th>
+						<th class="certs">Certifications</th>
+					</tr>
+				</thead>
+				<tbody class="controller_list_row" v-if="controllers.home">
+					<tr v-for="controller in controllers.home" :key="controller.cid">
+						<td class="name">
+							<router-link :to="`/controllers/${controller.cid}`">
+								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
+							</router-link><br />
+							<div class="rating">
+								{{controller.ratingLong}}
+							</div>
+						</td>
+						<td class="certs">
+							<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
+								{{role.code.toUpperCase()}}
+							</span>
+							<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
+								{{cert.name}}
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="loading_container" v-if="!controllers.home">
+				<Spinner />
+			</div>
 		</div>
-		<table class="controller_list striped">
-			<thead class="controller_list_head">
-				<tr>
-					<th class="name">Controller</th>
-					<th class="certs">Certifications</th>
-				</tr>
-			</thead>
-			<tbody class="controller_list_row" v-if="controllers.home">
-				<tr v-for="controller in controllers.home" :key="controller.cid">
-					<td class="name">
-						<router-link :to="`/controllers/${controller.cid}`">
-							{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-						</router-link><br />
-						<div class="rating">
-							{{controller.ratingLong}}
-						</div>
-					</td>
-					<td class="certs">
-						<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-							{{role.code.toUpperCase()}}
-						</span>
-						<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-							{{cert.name}}
-						</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="loading_container" v-if="!controllers.home">
-			<Spinner />
-		</div>
-	</div>
-	<div class="card">
-		<div class="card-content">
-			<span class="card-title">Visiting Controllers</span>
-		</div>
-		<table class="controller_list striped">
-			<thead class="controller_list_head">
-				<tr>
-					<th class="name">Controller</th>
-					<th class="certs">Certifications</th>
-				</tr>
-			</thead>
-			<tbody class="controller_list_row" v-if="controllers.visiting">
-				<tr v-for="controller in controllers.visiting" :key="controller.cid">
-					<td class="name">
-						<router-link :to="`/controllers/${controller.cid}`">
-							{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-						</router-link><br />
-						<div class="rating">
-							{{controller.ratingLong}}
-						</div>
-					</td>
-					<td class="certs">
-						<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-							{{role.code.toUpperCase()}}
-						</span>
-						<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-							{{cert.name}}
-						</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="loading_container" v-if="!controllers.visiting">
-			<Spinner />
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title">Visiting Controllers</span>
+			</div>
+			<table class="controller_list striped">
+				<thead class="controller_list_head">
+					<tr>
+						<th class="name">Controller</th>
+						<th class="certs">Certifications</th>
+					</tr>
+				</thead>
+				<tbody class="controller_list_row" v-if="controllers.visiting">
+					<tr v-for="controller in controllers.visiting" :key="controller.cid">
+						<td class="name">
+							<router-link :to="`/controllers/${controller.cid}`">
+								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
+							</router-link><br />
+							<div class="rating">
+								{{controller.ratingLong}}
+							</div>
+						</td>
+						<td class="certs">
+							<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
+								{{role.code.toUpperCase()}}
+							</span>
+							<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
+								{{cert.name}}
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="loading_container" v-if="!controllers.visiting">
+				<Spinner />
+			</div>
 		</div>
 	</div>
 </template>
