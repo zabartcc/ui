@@ -1,47 +1,50 @@
 <template>
-	<div v-if=loaded>
-		<div class="card">
-			<div class="card-content">
-				<span class="card-title">{{news.title}}</span>
-				<h6>Posted By: {{news.createdBy.fname}} {{news.createdBy.lname}} on {{newsPostDate(news)}}</h6>
-			</div>
-			<div class="card-content">
-				<p class="news_content">{{news.content}}</p>
-			</div>
-		</div>
-	</div>
-	<div class="card" v-else>
-		<div class="card-content loading">
+	<div class="card">
+		<div class="loading_container" v-if="!news">
 			<Spinner />
+		</div>
+		<div v-else>
+			<div class="card-content">
+				<div class="row row_no_margin">
+					<div class="card-title col s12 l8">{{news.title}}</div>
+					<div class="side-title col s12 l4">{{formatDate(news.createdAt)}}</div>
+				</div>
+				<div class="author">
+					By {{news.createdBy.fname}} {{news.createdBy.lname}}
+				</div>
+				<div class="news_content">
+					{{news.content}}
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { zabApi } from '@/helpers/axios.js';
+import {NewsMixin} from '@/mixins/NewsMixin.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	data() {
+		return {
+			news: null
+		};
+	},
 	components: {
 		Spinner
 	},
-	data() {
-		return {
-			news: [],
-			loaded: false
-		};
-	},
+	mixins: [NewsMixin],
 	async mounted() {
-		const { data } = await zabApi.get(`/news/${this.$route.params.slug}`);
-		if(data.ret_det.code === 200) {
-			this.news = data.data[0];
-			this.loaded = true;
-		}
+		await this.getArticle();
 	},
 	methods: {
-		newsPostDate(n) {
-			const date = new Date(n.createdAt);
-			return date.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
+		async getArticle() {
+			const {data} = await this.getArticleMixin(this.$route.params.slug);
+			this.news = data;
+		},
+		formatDate(date) {
+			const d = new Date(date);
+			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
 		}
 	}
 
@@ -49,7 +52,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.news_content {
-		white-space: pre;
-	}
+.card-title {
+	font-weight: bold;
+}
+
+.side-title {
+	text-align: right;
+}
+
+.author {
+	font-weight: 400;
+	margin-bottom: 1em;
+	color: #9e9e9e;
+}
+
+.news_content {
+	white-space: pre;
+}
 </style>

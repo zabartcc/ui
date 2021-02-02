@@ -8,11 +8,11 @@
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name">Name</label>
 					</div>
-					<div class="input-field col s6">
+					<div class="input-field col s12 m6">
 						<input id="start_time" type="datetime-local" v-model="form.eventStart" required>
 						<label for="start_time" class="active">Start Time (Zulu)</label>
 					</div>
-					<div class="input-field col s6">
+					<div class="input-field col s12 m6">
 						<input id="end_time" type="datetime-local" v-model="form.eventEnd" required>
 						<label for="end_time" class="active">End Time (Zulu)</label>
 					</div>
@@ -97,8 +97,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { zabApi } from '@/helpers/axios.js';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	data() {
@@ -165,7 +164,7 @@ export default {
 			formData.append('description', this.form.description);
 			formData.append('positions', JSON.stringify(this.form.positions));
 			formData.append('banner', this.$refs.banner.files[0]);
-			formData.append('createdBy', this.user.data._id);
+			formData.append('createdBy', this.$store.state.user.user.data._id);
 
 			zabApi.post(`/event/new`, formData, {
 				headers: { 
@@ -188,9 +187,6 @@ export default {
 		}
 	},
 	computed: {
-		...mapState('user', [
-			'user'
-		]),
 		centerPos() {
 			return this.form.positions.filter((pos) => pos.type == "CTR");
 		},
@@ -210,16 +206,16 @@ export default {
 
 	.positions_title {
 		font-weight: 600;
-		padding: .5em;
+		padding: 1em;
 	}
 
 	form {
-		padding: .5em;
+		padding: 1em;
 	}
 
 	.positions_input {
-		width: calc(100% - 40px);
-		margin-right: 10px;
+		width: calc(100% - 2em);
+		margin-right: 1em;
 	}
 
 	.positions_submit {
@@ -228,13 +224,14 @@ export default {
 		color: $primary-color;
 		text-align: right;
 		cursor: pointer;
-		width: 40px;
+		width: 2em;
 		float: right;
 		margin-top: -30px;
 	}
 
 	.collection-item {
 		border: 0;
+		padding-left: .5em;
 
 		.material-icons {
 			float: right;
@@ -250,7 +247,7 @@ export default {
 	}
 
 	.no_pos {
-		padding: .5em;
+		margin-left: 1em;
 		font-style: italic;
 	}
 

@@ -2,8 +2,8 @@
 	<div class="card">
 		<div class="card-content">
 			<div class="row">
-				<span class="card-title col s5 m8">Home Controllers</span>
-				<div class="input-field col s7 m4">
+				<span class="card-title col s12 m8">Home Controllers</span>
+				<div class="input-field col s12 m4">
 					<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller...">
 					<span class="helper-text right">You can search by CID, name, or operating initials.</span>
 				</div>
@@ -47,8 +47,8 @@
 	<div class="card">
 		<div class="card-content">
 			<div class="row">
-				<span class="card-title col s5 m8">Visiting Controllers</span>
-				<div class="input-field col s7 m4">
+				<span class="card-title col s12 m8">Visiting Controllers</span>
+				<div class="input-field col s12 m4">
 					<input autocomplete="off" @keyup=filterVisitors v-model=filterVisit type="text" placeholder="Search for a controller...">
 					<span class="helper-text right">You can search by CID, name, or operating initials.</span>
 				</div>

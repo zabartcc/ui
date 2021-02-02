@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { EventsMixin } from '@/mixins/EventsMixin.js';
+import {EventsMixin} from '@/mixins/EventsMixin.js';
 import Past from './Past.vue';
 import Spinner from '@/components/Spinner.vue';
 
@@ -137,7 +137,7 @@ table tbody {
 }
 
 .no_event {
-	padding: 1em;
+	padding: 0 1em 1em 1em;
 	margin-top: -10px;
 	font-style: italic;
 }

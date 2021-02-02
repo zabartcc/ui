@@ -11,26 +11,26 @@
 				<Spinner />
 			</div>
 			<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback v-else>
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6">
 					<input id="first_name" type="text" class="validate" v-model="feedback.name" required>
 					<label for="first_name">Your Name</label>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6">
 					<input id="email" type="email" class="validate" v-model="feedback.email" required>
 					<label for="email">Your Email Address</label>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6">
 					<input id="cid" type="text" minlength=6 maxlength=7 class="validate" v-model="feedback.cid" required>
 					<label for="cid">Your CID</label>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6">
 					<select v-model="feedback.controller" required>
 						<option value="" disabled selected>Select a controller</option>
 						<option v-for="controller in controllers" :value="controller._id" :key="controller._id">{{controller.fname}} {{controller.lname}}</option>
 					</select>
 					<label>Controller</label>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6">
 					<select v-model="feedback.position" required>
 						<option value="" disabled selected>Select a position</option>
 						<option value="center">Center</option>
@@ -41,7 +41,7 @@
 					</select>
 					<label>Position</label>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6">
 					<select v-model="feedback.rating" required>
 						<option value="" disabled selected>Select a rating</option>
 						<option value="5">Excellent</option>

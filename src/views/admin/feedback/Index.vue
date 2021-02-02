@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { FeedbackMixin } from '@/mixins/FeedbackMixin.js';
+import {FeedbackMixin} from '@/mixins/FeedbackMixin.js';
 import RecentFeedback from './Recent';
 import Spinner from '@/components/Spinner.vue';
 

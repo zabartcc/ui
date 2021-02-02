@@ -98,6 +98,10 @@ export default {
 <style scoped lang="scss">
 .request_wrapper {
 	padding-top: 1em;
+
+	.col {
+		margin-bottom: 1em;
+	}
 }
 
 .submit_request {

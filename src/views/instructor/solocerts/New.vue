@@ -2,34 +2,41 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Issue Solo Certification</span>
-			<div class="card_desc">
-				<p>Solo certifications may be issued to students who have demonstrated sufficient competency on the position they are receiving a solo certification for. Solo certifications must be issued in accordance with the training syllabus and are automatically submitted to VATUSA. Please note that solo certifications may not extend beyond thirty days in length.</p>
+			<div class="spinner_wrapper" v-if="!controllers">
+				<Spinner />
 			</div>
-			<form class="row row_no_margin" id="issueForm" @submit.prevent=submitCert>
-				<div class="input-field col s6">
-					<select v-model="form.cid" required>
-						<option value="" disabled selected>Select a controller</option>
-						<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
-					</select>
-					<label>Controller</label>
+			<div v-else>
+				<div class="card_desc">
+					<p>Solo certifications may be issued to students who have demonstrated sufficient competency on the position they are receiving a solo certification for. Solo certifications must be issued in accordance with the training syllabus and are automatically submitted to VATUSA. Please note that solo certifications may not extend beyond thirty days in length.</p>
 				</div>
-				<div class="input-field col s6">
-					<input id="position" type="text" minlength=7 maxlength=7 class="validate" placeholder="PHX_APP" v-model="form.position" required>
-					<label for="position" class="active">Position</label>
-				</div>
-				<div class="input-field col s12">
-					<input id="exp" type="text" class="validate datepicker" placeholder="Pick a date" v-model="form.expDate" required>
-					<label for="exp" class="active">Expiration  Date</label>
-				</div>
-				<div class="input-field col s12">
-					<input type="submit" class="btn right" value="Submit" />
-				</div>
-			</form>
+				<form class="row row_no_margin" id="issueForm" @submit.prevent=submitCert>
+					<div class="input-field col s12 m6">
+						<select v-model="form.cid" required>
+							<option value="" disabled selected>Select a controller</option>
+							<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
+						</select>
+						<label>Controller</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input id="position" type="text" minlength=7 maxlength=7 class="validate" placeholder="PHX_APP" v-model="form.position" required>
+						<label for="position" class="active">Position</label>
+					</div>
+					<div class="input-field col s12">
+						<input id="exp" type="text" class="validate datepicker" placeholder="Pick a date" v-model="form.expDate" required>
+						<label for="exp" class="active">Expiration  Date</label>
+					</div>
+					<div class="input-field col s12">
+						<input type="submit" class="btn right" value="Submit" />
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
 import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
+import Spinner from '@/components/Spinner.vue';
+
 export default {
 	data() {
 		return {
@@ -40,6 +47,9 @@ export default {
 				expDate: ''
 			}
 		};
+	},
+	components: {
+		Spinner
 	},
 	async mounted() {
 		await this.getControllers();

@@ -213,7 +213,7 @@ td a {
 }
 
 .no_event {
-	padding: 1em;
+	padding: 0 1em 1em 1em;
 	margin-top: -10px;
 	font-style: italic;
 }

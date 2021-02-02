@@ -21,13 +21,13 @@
 				Events
 				<div class="secondary-content"><i class="material-icons">event</i></div>
 			</router-link>
-			<router-link to="/admin/news" class="collection-item">
-				News
-				<div class="secondary-content"><i class="material-icons">rss_feed</i></div>
-			</router-link>
 			<router-link to="/admin/feedback" class="collection-item">
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
+			</router-link>
+			<router-link to="/admin/news" class="collection-item">
+				News
+				<div class="secondary-content"><i class="material-icons">rss_feed</i></div>
 			</router-link>
 			<router-link to="/admin/visit/applications" class="collection-item">
 				Visitor Applications

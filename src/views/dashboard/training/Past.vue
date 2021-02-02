@@ -41,8 +41,8 @@ export default {
 
 <style scoped lang="scss">
 .no_sessions {
-	padding: 1em;
-	margin-top: -10px;
+	padding: 1em 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 </style>

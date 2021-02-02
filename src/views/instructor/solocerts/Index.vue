@@ -113,7 +113,7 @@ export default {
 
 .no_certs {
 	padding: 1em;
-	margin-top: -10px;
+	margin-top: -2em;
 	font-style: italic;
 }
 
