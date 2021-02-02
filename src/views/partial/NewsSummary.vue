@@ -6,7 +6,7 @@
 				<Spinner />
 			</div>
 			<div v-else-if="newsItems && newsItems.length === 0" class="no_news">
-				There are no recent news items to display.
+				There are no recent news articles to display.
 			</div>
 			<div v-else>
 				<div class="collection">
@@ -56,31 +56,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.no_news {
-		font-style: italic;
-		margin-top: 0;
-	}
+.no_news {
+	font-style: italic;
+	margin-top: -1em;
+	padding: 1em;
+}
 
-	.news_item {
-		color: $primary-color!important;
-		font-weight: bold;
-		padding: .7em 1.2em;
+.news_item {
+	color: $primary-color!important;
+	font-weight: bold;
+	padding: .7em 1.2em;
 
-		.badge {
-			font-weight: normal;
-		}
+	.badge {
+		font-weight: normal;
 	}
+}
 
-	.collection {
-		border: none;
-		padding: 0;
-	}
+.collection {
+	border: none;
+	padding: 0;
+}
 
-	.card-title {
-		padding: 15px 15px 0 15px;
-	}
+.card-title {
+	padding: 15px 15px 0 15px;
+}
 
-	.card-content {
-		padding: 0;
-	}
+.card-content {
+	padding: 0;
+}
 </style>
