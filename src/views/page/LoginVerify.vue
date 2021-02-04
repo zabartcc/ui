@@ -43,7 +43,6 @@ export default {
 				displayLength: 5000,
 				classes: 'toast toast_error'
 			});
-			console.error(data.ret_det.message);
 		}
 		this.$router.push(localStorage.getItem('redirect') || '/');
 	},

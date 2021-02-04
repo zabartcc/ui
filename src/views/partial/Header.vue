@@ -23,9 +23,6 @@
 							<li>
 								<router-link to="/controllers/staff">ARTCC Staff</router-link>
 							</li>
-							<li>
-								<router-link to="/controllers/visit">Become a Visitor</router-link>
-							</li>
 						</ul>
 					</li>
 					<li>
@@ -55,8 +52,11 @@
 						<a v-show="user.isLoggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...'}}</a>
                         <a v-if="!user.isLoggedIn" id="login_button" @click.prevent="processLogin" href="#">Login</a>
 						<ul v-show="user.isLoggedIn" id="user-dropdown" class="dropdown-content">
-							<li>
+							<li v-if="user.isLoggedIn && user.data.isMem">
 								<router-link to="/dash">Controller Dashboard</router-link>
+							</li>
+							<li v-else>
+								<router-link to="/controllers/visit">Become a Visitor</router-link>
 							</li>
 							<li v-if="user.isLoggedIn && (user.data.isIns || user.data.isStaff)" class="divider"></li>
 							<li v-if="user.isLoggedIn && user.data.isStaff">

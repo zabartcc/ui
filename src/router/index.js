@@ -13,9 +13,25 @@ const routes = [
 				path: '', 
 				component: () => import('../views/page/Home.vue')
 			},
+			{
+				path: '/login',
+				beforeEnter() {
+					location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 2}`;
+				}
+			},
 			{ 
 				path: '/login/verify', 
 				component: () => import('../views/page/LoginVerify.vue') 
+			},
+			{
+				path: '/login/discord',
+				beforeEnter() {
+					location.href = `https://discord.com/api/oauth2/authorize?client_id=546531280842653696&redirect_uri=https%3A%2F%2Fbeta.zabartcc.org%2Fconnect%2Fdiscord&response_type=code&scope=identify`;
+				}
+			},
+			{
+				path: '/connect/discord',
+				component: () => import('../views/page/ConnectDiscord.vue')
 			},
 			{
 				path: '/controllers',
