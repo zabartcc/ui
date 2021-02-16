@@ -18,12 +18,12 @@
 					</tr>
 				</thead>
 				<tbody class="certs_list_row">
-					<tr v-for="(app, i) in applications" :key="app.id">
-						<td>{{app.fname + ' ' + app.lname}}</td>
+					<tr v-for="app in applications" :key="app.cid">
+						<td>{{app.fname}} {{app.lname}}</td>
 						<td>{{app.rating}}</td>
 						<td>{{app.home}}</td>
-						<td class="options"><a :href="`#modal_${i}`" class="modal-trigger"><i class="material-icons">search</i></a></td>
-						<div :id="`modal_${i}`" class="modal modal_visit">
+						<td class="options"><a :href="`#modal_${app.cid}`" class="modal-trigger"><i class="material-icons">search</i></a></td>
+						<div :id="`modal_${app.cid}`" class="modal modal_visit">
 							<div class="modal-content">
 								<div class="modal_title">Visiting Application</div>
 								<div class="row row_no_margin">
@@ -58,23 +58,23 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="waves-effect btn" @click="approveVisitor(app._id, app.cid)">Approve</a>
-								<a href="#!" class="waves-effect btn-flat" @click="openRejectModal(i)">Reject</a>
+								<a href="#!" class="waves-effect btn" @click="approveVisitor(app.cid)">Approve</a>
+								<a href="#!" class="waves-effect btn-flat" @click="openRejectModal(app.cid)">Reject</a>
 							</div>
 						</div>
-						<div :id="`modal_reject_${i}`" class="modal modal_visit">
+						<div :id="`modal_reject_${app.cid}`" class="modal modal_visit">
 							<div class="modal-content">
 								<div class="modal_title">Reject Visiting Application</div>
 								<p>Are you sure you want to reject the visiting application from <strong>{{app.fname + ' ' + app.lname}}</strong>?  You must provide a reason for rejection below.</p>
 								<div class="row row_no_margin">
 									<div class="input-field col s12">
-										<input id="reason" name="reason" v-model="reason" />
-										<label for="reason" class="active">Reason</label>
+										<input :id="`reason_${app.cid}`" :name="`reason_${app.cid}`" v-model="reason[app.cid]" />
+										<label :for="`reason_${app.cid}`" class="active">Reason</label>
 									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="waves-effect btn" @click="rejectVisitor(app._id, i)">Reject</a>
+								<a href="#!" class="waves-effect btn" @click="rejectVisitor(app.cid)">Reject</a>
 								<a href="#!" class="waves-effect btn-flat modal-close">Cancel</a>
 							</div>
 						</div>
@@ -94,7 +94,7 @@ export default {
 	data() {
 		return {
 			applications: null,
-			reason: ''
+			reason: {}
 		};
 	},
 	components: {
@@ -109,15 +109,15 @@ export default {
 	methods: {
 		async getNewApplications() {
 			try {
-				const {data} = await zabApi.get('/controller/visit/applications');
-				this.applications = data;
+				const {data:visitData} = await zabApi.get('/controller/visit');
+				this.applications = visitData.data;
 			} catch(e) {
 				console.log(e);
 			}
 		},
-		async approveVisitor(id, cid) {
+		async approveVisitor(cid) {
 			try {
-				await zabApi.put(`/controller/visit/applications/approve/${id}`);
+				await zabApi.put(`/controller/visit/${cid}`);
 				await vatusaApiAuth.post(`/facility/ZAB/roster/manageVisitor/${cid}`);
 				M.toast({
 					html: '<i class="material-icons left">done</i> Visitor successfully added to roster! <div class="border"></div>',
@@ -134,19 +134,19 @@ export default {
 				});
 			}
 		},
-		async rejectVisitor(id, i) {
+		async rejectVisitor(cid) {
 			try {
-				await zabApi.put(`/controller/visit/applications/reject/${id}`, {
-					reason: this.reason
-				});
-				this.reason = '';
+				console.log(this.reason[cid]);
+				await zabApi.delete(`/controller/visit/${cid}`, {data: {
+					reason: this.reason[cid]
+				}});
 				M.toast({
 					html: '<i class="material-icons left">done</i> Application successfully rejected <div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
 				this.getNewApplications();
-				M.Modal.getInstance(document.querySelector(`#modal_reject_${i}`)).close();
+				M.Modal.getInstance(document.querySelector(`#modal_reject_${cid}`)).close();
 			} catch(e) {
 				console.log(e);
 				M.toast({

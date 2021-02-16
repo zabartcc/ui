@@ -78,6 +78,7 @@
 <script>
 import { ControllerMixin } from '@/mixins/ControllerMixin.js';
 import Spinner from '@/components/Spinner.vue';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	name: 'Controller Roster',
@@ -101,7 +102,7 @@ export default {
 	},
 	methods: {
 		async getControllers() {
-			this.controllers = await this.getControllersMixin();
+			this.controllers = (await zabApi.get('/controller')).data.data;
 		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];
