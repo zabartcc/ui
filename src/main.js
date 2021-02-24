@@ -5,4 +5,19 @@ import store from './store';
 import 'materialize-css';
 import 'materialize-css/sass/materialize.scss';
 
-createApp(App).use(store).use(router).mount('#app');
+import dates from './helpers/dates.js';
+import toasts from './helpers/toasts.js';
+
+import Spinner from './components/Spinner.vue';
+
+createApp(App)
+	.use(store)
+	.use(router)
+	.mixin({
+		methods: {
+			...dates,
+			...toasts
+		}
+	})
+	.component('Spinner', Spinner)
+	.mount('#app');

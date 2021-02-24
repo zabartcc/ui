@@ -169,25 +169,16 @@ export default {
 			e.target.classList.toggle('active');
 			this.form.vis = e.target.classList.contains('active');
 		},
-		updateController() {
-			zabApi.post(`/controller/${this.controller.cid}`, {
+		async updateController() {
+			const { data: updateResponse } = await zabApi.post(`/controller/${this.controller.cid}`, {
 				form: this.form
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Controller successfully updated! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to update controller. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
 			});
 
-			
+			if(updateResponse.ret_det.code === 200) {
+				this.toastSuccess('Controller successfully updated.');
+			} else {
+				this.toastError('Something went wrong. Please try again.');
+			}
 		}
 	}
 };

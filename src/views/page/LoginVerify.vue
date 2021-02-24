@@ -31,18 +31,9 @@ export default {
 		});
 		if(data.ret_det.code === 200) {
 			this.getUser();
-		} else if(data.ret_det.code === 403) {
-			M.toast({
-				html: `<i class="material-icons left">error_outline</i>Not a member of ZAB.<div class="border"></div>`,
-				displayLength: 5000,
-				classes: 'toast toast_error'
-			});
+			this.toastSuccess('Successfully logged in.');
 		} else {
-			M.toast({
-				html: `<i class="material-icons left">error_outline</i>Something went wrong, please try again.<div class="border"></div>`,
-				displayLength: 5000,
-				classes: 'toast toast_error'
-			});
+			this.toastError('Something went wrong, please try again.');
 		}
 		this.$router.push(localStorage.getItem('redirect') || '/');
 	},

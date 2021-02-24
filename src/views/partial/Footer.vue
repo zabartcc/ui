@@ -10,11 +10,10 @@
 		</div>
 		<div class="footer-copyright">
 			<div class="wrapper">
-				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
-				<!-- Made with pride by Austin Robison. -->
-				<!-- ...and Daan Janssen -->
-				<p>Current date and time (Zulu): <span id="time">(...)</span></p>
-				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></p>
+				<div class="copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
+				<!-- Made with ♥ and (╯°□°）╯︵ ┻━┻ by Austin Robison and Daan Janssen. -->
+				<p>All times Zulu | Current date and time (Zulu): <span class="bold" ref="zulu_time">(...)</span></p>
+				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank">GitLab</a></p>
 			</div>
 		</div>
     </footer>
@@ -23,8 +22,8 @@
 <script>
 export default {
 	mounted () {
-		setInterval(function () {
-			document.getElementById("time").innerHTML = new Date().toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
+		setInterval(() => {
+			this.$refs.zulu_time.innerHTML = this.dtFull(new Date());
 		}, 1000);
 
 		document.getElementById("full_year").innerHTML = new Date().getFullYear();
@@ -36,6 +35,10 @@ export default {
 
 p {
 	margin: 0;
+
+	.bold {
+		font-weight: 700;
+	}
 }
 
 body .page-footer {
