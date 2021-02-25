@@ -17,12 +17,43 @@
 				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></p>
 			</div>
 		</div>
+		<div class="footer_pride">
+			<div class="wrapper">
+				<div class="footer_flags">
+					<img :src="require('@/assets/images/icons/lgbt_pride.png')" alt="">
+					<img :src="require('@/assets/images/icons/trans_pride.png')" alt="">
+					<img :src="require('@/assets/images/icons/bi_pride.png')" alt="">
+				</div>
+				<a href="#lgbt_modal" class="modal-trigger">
+					The Albuquerque ARTCC stands with the LGBTQIA+ community on VATSIM.
+				</a>
+			</div>
+		</div>
+		<div id="lgbt_modal" class="modal modal_delete">
+			<div class="modal-content">
+				<h5>We stand with the LGBTQIA+ community on VATSIM</h5>
+				<p>Albuquerque ARTCC displays the rainbow, transgender and bisexual flags as a show of solidarity with the LGBTQIA+ community on VATSIM. You are welcome here, and you have our support.</p>
+				<p>As an organization with LGBTQIA+ members, we recognize the importance of creating a welcoming environment to all members. Everyone is welcome here, regardless of their race, nationality, national origin, ethnicity, ethnic origin, socioeconomic status, religion, age, disability, sexual orientation, gender or gender identity.</p>
+				<p>We recognize CZQO, ZOB and ZJX for displaying similar statements on their websites.</p>
+				<div class="modal_flags">
+					<img :src="require('@/assets/images/icons/lgbt_pride.png')" alt="">
+					<img :src="require('@/assets/images/icons/trans_pride.png')" alt="">
+					<img :src="require('@/assets/images/icons/bi_pride.png')" alt="">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="btn-flat waves-effect modal-close">Close</a>
+			</div>
+		</div>
     </footer>
 </template>
 
 <script>
 export default {
 	mounted () {
+		M.Modal.init(document.querySelectorAll('.modal'), {
+			preventScrolling: false
+		});
 		setInterval(function () {
 			document.getElementById("time").innerHTML = new Date().toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
 		}, 1000);
@@ -71,6 +102,45 @@ body .page-footer {
 .footer_notice {
 	a {
 		font-weight: 600;
+	}
+}
+
+.footer_pride {
+	img {
+		height: 1em;
+
+		&+img {
+			margin-left: .25em;
+		}
+	}
+
+	a {
+		font-size: 0.75em;
+		margin-top: 0.5em;
+		color: #fff;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+#lgbt_modal {
+	max-width: 750px;
+	color: #000;
+
+	p {
+		margin-bottom: 1em;
+	}
+}
+
+.modal_flags {
+	img {
+		height: 2em;
+
+		&+img {
+			margin-left: .5em;
+		}
 	}
 }
 
