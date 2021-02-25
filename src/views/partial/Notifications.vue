@@ -91,17 +91,6 @@ export default {
 				console.log(e);
 			}
 		}
-	},
-	watcher: {
-		unread: function (oldVal, newVal) {
-			if(newVal === false) {
-				console.log('false');
-				this.$parent.unread = false;
-			} else {
-				console.log('true');
-				this.$parent.unread = true;
-			}
-		}
 	}
 };
 
