@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Past Sessions</span>
+			<span class="card-title">Completed Sessions</span>
 		</div>
 		<div class="loading_container" v-if="!pastSessions">
 			<Spinner />

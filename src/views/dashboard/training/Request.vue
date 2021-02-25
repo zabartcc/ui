@@ -16,11 +16,11 @@
 					<div class="row row_no_margin">
 						<div class="input-field col s12">
 							<input id="start_time" type="datetime-local" v-model="request.startTime" required>
-							<label for="start_time" class="active">Start Time (Zulu)</label>
+							<label for="start_time" class="active">Start Time (Zulu) <span class="red-text">*</span></label>
 						</div>
 						<div class="input-field col s12">
 							<input id="end_time" type="datetime-local" v-model="request.endTime" required>
-							<label for="end_time" class="active">End Time (Zulu)</label>
+							<label for="end_time" class="active">End Time (Zulu) <span class="red-text">*</span></label>
 						</div>
 						<div class="input-field col s12">
 							<select v-model="request.milestone" required>
@@ -28,7 +28,11 @@
 								<option v-for="milestone in milestones" :key="milestone._id" :value="milestone._id">{{milestone.code + ' - ' + milestone.name}}</option>
 								
 							</select>
-							<label>Milestone</label>
+							<label>Milestone <span class="red-text">*</span></label>
+						</div>
+						<div class="input-field col s12">
+							<textarea id="remarks" class="materialize-textarea" data-length="500" v-model="request.remarks"></textarea>
+							<label for="remarks" class="active">Remarks</label>
 						</div>
 					</div>
 				</div>
@@ -53,6 +57,7 @@ export default {
 				startTime: '',
 				endTime: '',
 				milestone: '',
+				remarks: '',
 				submitter: this.$store.state.user.user.data._id
 			},
 			milestones: null
@@ -65,6 +70,7 @@ export default {
 	async mounted() {
 		await this.getTrainingMilestones();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
+		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 	},
 	methods: {
 		async submitRequest() {
