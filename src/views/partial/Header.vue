@@ -49,7 +49,13 @@
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
 				<ul class="right left-on-med-and-down">
 					<li>
-						<a v-show="user.isLoggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">Logged In As: {{user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...'}}</a>
+						<a v-show="user.isLoggedIn" class="dropdown-notif nav_notifications" href="#!" data-target="notifications-dropdown"><i class="material-icons">notifications</i><div v-if="unread" class="new_notification"></div></a>
+						<ul v-show="user.isLoggedIn" id="notifications-dropdown" class="dropdown-content">
+							<Notifications />
+						</ul>
+					</li>
+					<li>
+						<a v-show="user.isLoggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">{{user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...'}}<i class="material-icons user_dropdown_arrow">arrow_drop_down</i></a>
                         <a v-if="!user.isLoggedIn" id="login_button" @click.prevent="processLogin" href="#">Login</a>
 						<ul v-show="user.isLoggedIn" id="user-dropdown" class="dropdown-content">
 							<li v-if="user.isLoggedIn && user.data.isMem">
@@ -113,9 +119,18 @@
 
 <script>
 
-import { mapState, mapMutations, mapActions } from 'vuex';
+import {mapState, mapMutations, mapActions} from 'vuex';
+import Notifications from './Notifications.vue';
 
 export default {
+	data() {
+		return {
+			unread: false
+		};
+	},
+	components: {
+		Notifications
+	},
 	methods: {
 		...mapMutations('user', [
 			'setUser',
@@ -145,24 +160,27 @@ export default {
 			'user'
 		])
 	},
-	mounted() {
-		// let hero = document.querySelector('#header_hero');
-		// hero.className = '';
-		// hero.classList.add('hero' + Math.floor((Math.random() * 5) + 1));
-
-		M.Dropdown.init(document.querySelectorAll('.dropdown-left'), {
+	async mounted() {
+		M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+			alignment: 'right',
 			coverTrigger: false,
 			constrainWidth: false
 		});
-		M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+		M.Dropdown.init(document.querySelectorAll('.dropdown-notif'), {
 			alignment: 'right',
+			coverTrigger: false,
+			constrainWidth: false,
+			closeOnClick: false
+		});
+		M.Dropdown.init(document.querySelectorAll('.dropdown-left'), {
+			alignment: 'left',
 			coverTrigger: false,
 			constrainWidth: false
 		});
 		M.Sidenav.init(document.querySelectorAll('.sidenav'), {
 			edge: 'right'
 		});
-	},
+	}
 };
 </script>
 
@@ -243,6 +261,47 @@ export default {
 
 nav {
 	background-color: $primary-color;
+}
+
+.user_dropdown_arrow {
+	display: inline-block;
+	display: inline-flex;
+    vertical-align: top;
+	font-size: 22px;
+	margin-top: 1px;
+	margin-left: -1px;
+}
+
+.nav_notifications {
+	padding: 1px 0 0 0;
+	transition: .3s ease;
+	position: relative;
+
+	&:hover {
+		background: transparent;
+		color: rgb(230, 230, 230);
+	}
+
+	i {
+		font-size: 20px;
+	}
+
+	.new_notification {
+		height: 7px;
+		width: 7px;
+		background-color: $secondary-color-dark;
+		border-radius: 50%;
+		position: absolute;
+		top: 25px;
+		left: 12px;
+	}
+}
+
+#notifications-dropdown {
+	color: $primary-color;
+	line-height: 1.1em;
+	padding: 1em 1em .5em 1em;
+	overflow: hidden;
 }
 
 @media screen and (max-width: 910px) {
