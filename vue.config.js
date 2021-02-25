@@ -8,11 +8,6 @@ module.exports = {
 	},
 	devServer: {
 		proxy: {
-			'^/metar': {
-				target: 'https://metar.vatsim.net',
-				changeOrigin: true,
-				pathRewrite: { "^/metar": "/" }
-			},
 			'^/api': {
 				target: 'http://localhost:3000',
 				changeOrigin: true,

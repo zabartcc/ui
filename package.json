@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "core-js": "^3.8.3",
+    "core-js": "^3.9.0",
     "materialize-css": "^1.0.0",
     "metar-parser": "^1.0.0",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.3",
+    "vue-router": "^4.0.4",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
@@ -30,8 +30,8 @@
     "@vue/cli-service": "^4.5.11",
     "@vue/compiler-sfc": "^3.0.5",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.19.0",
-    "eslint-plugin-vue": "^7.5.0",
+    "eslint": "^7.20.0",
+    "eslint-plugin-vue": "^7.6.0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1"
   }

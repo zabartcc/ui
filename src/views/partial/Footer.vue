@@ -8,15 +8,6 @@
 			</div>
 			<img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="">
 		</div>
-		<div class="footer-copyright">
-			<div class="wrapper">
-				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
-				<!-- Made with pride by Austin Robison. -->
-				<!-- ...and Daan Janssen -->
-				<p>Current date and time (Zulu): <span id="time">(...)</span></p>
-				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></p>
-			</div>
-		</div>
 		<div class="footer_pride">
 			<div class="wrapper">
 				<div class="footer_flags">
@@ -29,7 +20,18 @@
 				</a>
 			</div>
 		</div>
-		<div id="lgbt_modal" class="modal modal_delete">
+		<div class="footer-copyright">
+			<div class="wrapper">
+				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
+				<div>•</div>
+				<!-- Made with pride by Austin Robison. -->
+				<!-- ...and Daan Janssen -->
+				<div><span id="time">(...)</span></div>
+				<div>•</div>
+				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></p>
+			</div>
+		</div>
+		<div id="lgbt_modal" class="modal">
 			<div class="modal-content">
 				<h5>We stand with the LGBTQIA+ community on VATSIM</h5>
 				<p>Albuquerque ARTCC displays the rainbow, transgender and bisexual flags as a show of solidarity with the LGBTQIA+ community on VATSIM. You are welcome here, and you have our support.</p>
@@ -55,7 +57,7 @@ export default {
 			preventScrolling: false
 		});
 		setInterval(function () {
-			document.getElementById("time").innerHTML = new Date().toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
+			document.getElementById("time").innerHTML = `${new Date().toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'})}z`;
 		}, 1000);
 
 		document.getElementById("full_year").innerHTML = new Date().getFullYear();
@@ -71,10 +73,24 @@ p {
 
 body .page-footer {
 	padding: 0;
+
 	.footer-copyright {
 		display: block;
+		font-size: .8rem;
+
+		.wrapper {
+			display: flex;
+
+			div {
+				margin-right: 1em;
+			}
+		}
 	}
 } 
+
+.wrapper {
+	padding: 1em;
+}
 
 .footer_top {
 	display: flex;
@@ -84,14 +100,6 @@ body .page-footer {
 	img {
 		height: 70px;
 	}
-}
-
-#time {
-	font-weight: 700;
-}
-
-.wrapper {
-	padding: 1em;
 }
 
 #footer_text, .footer-copyright {
@@ -115,7 +123,7 @@ body .page-footer {
 	}
 
 	a {
-		font-size: 0.75em;
+		font-size: 0.8rem;
 		margin-top: 0.5em;
 		color: #fff;
 
