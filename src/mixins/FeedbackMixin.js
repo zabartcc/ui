@@ -8,19 +8,13 @@ export const FeedbackMixin = {
 					page: page, 
 					limit: limit
 				}
-			}).then(response => response.data).catch((err) => console.log(err));
+			}).then(response => response.data.data).catch((err) => console.log(err));
 		},
 		getControllersMixin() {
-			return zabApi.get('/feedback/controllers').then(response => response.data).catch((err) => console.log(err));
+			return zabApi.get('/feedback/controllers').then(response => response.data.data).catch((err) => console.log(err));
 		},
 		getUnapprovedMixin() {
-			return zabApi.get('/feedback/unapproved').then(response => response.data).catch((err) => console.log(err));
-		},
-		approveFeedbackMixin(id) {
-			return zabApi.put(`/feedback/approve/${id}`).then(response => response.data).catch((err) => console.log(err));
-		},
-		rejectFeedbackMixin(id) {
-			return zabApi.put(`/feedback/reject/${id}`).then(response => response.data).catch((err) => console.log(err));
+			return zabApi.get('/feedback/unapproved').then(response => response.data.data).catch((err) => console.log(err));
 		},
 		getMyFeedbackMixin(controller, page, limit) {
 			return zabApi.get(`/feedback/${controller}`, {

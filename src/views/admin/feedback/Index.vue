@@ -86,6 +86,7 @@
 
 <script>
 import {FeedbackMixin} from '@/mixins/FeedbackMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import RecentFeedback from './Recent';
 import Spinner from '@/components/Spinner.vue';
 
@@ -114,16 +115,8 @@ export default {
 			this.unapproved = await this.getUnapprovedMixin();
 		},
 		async approveFeedback(id) {
-			const success = await this.approveFeedbackMixin(id).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-				return false;
-			});
-			if(success) {
+			const {data} = await zabApi.put(`/feedback/approve/${id}`);
+			if(data.ret_det.code === 200) {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Feedback successfully approved <div class="border"></div>',
 					displayLength: 5000,
@@ -131,26 +124,30 @@ export default {
 				});
 				await this.getUnapproved();
 				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
-			}
-		},
-		async rejectFeedback(id) {
-			const success = await this.rejectFeedbackMixin(id).catch((err) => {
-				console.log(err);
+			} else {
 				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again <div class="border"></div>',
+					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
-				return false;
-			});
-			if(success) {
+			}
+		},
+		async rejectFeedback(id) {
+			const {data} = await zabApi.put(`/feedback/reject/${id}`);
+			if(data.ret_det.code === 200) {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Feedback successfully rejected <div class="border"></div>',
 					displayLength: 5000,
-					classes: 'toast toast_info',
+					classes: 'toast toast_success',
 				});
 				await this.getUnapproved();
 				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
+			} else {
+				M.toast({
+					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+					displayLength: 5000,
+					classes: 'toast toast_error'
+				});
 			}
 		},
 		convertRating(rating) {

@@ -4,11 +4,11 @@
 			<span class="card-title">New Document</span>
 			<div class="row">
 				<form method="post" enctype="multipart/form-data">
-					<div class="input-field col s6">
+					<div class="input-field col s12 m6">
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name">Name</label>
 					</div>
-					<div class="input-field col s6">
+					<div class="input-field col s12 m6">
 						<select id="category" v-model="form.category">
 							<option value="" disabled selected>Choose a category</option>
 							<option value="sectorFiles">Sector Files</option>

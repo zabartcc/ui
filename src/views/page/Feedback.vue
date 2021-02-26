@@ -12,8 +12,8 @@
 			</div>
 			<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback v-else>
 				<div class="input-field col s12 m6">
-					<input id="first_name" type="text" class="validate" v-model="feedback.name" required>
-					<label for="first_name">Your Name</label>
+					<input id="name" type="text" class="validate" v-model="feedback.name" required>
+					<label for="name">Your Name</label>
 				</div>
 				<div class="input-field col s12 m6">
 					<input id="email" type="email" class="validate" v-model="feedback.email" required>
@@ -105,7 +105,8 @@ export default {
 			this.controllers = await this.getControllersMixin();
 		},
 		async submitFeedback() {
-			zabApi.post('/feedback', this.feedback).then(() => {
+			const {data} = await zabApi.post('/feedback', this.feedback);
+			if(data.ret_det.code === 200) {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Feedback successfully submitted! <div class="border"></div>',
 					displayLength: 5000,
@@ -114,13 +115,13 @@ export default {
 				this.feedback = {};
 				document.getElementById("feedback").reset();
 				M.textareaAutoResize(document.querySelectorAll('textarea'));
-			}).catch((err) => {
+			} else {
 				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
+					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
-			});
+			}
 		}
 	}
 };

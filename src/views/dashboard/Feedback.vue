@@ -111,8 +111,8 @@ export default {
 	methods: {
 		async getMyFeedback() {
 			const feedback = await this.getMyFeedbackMixin(this.$store.state.user.user.data._id, this.page, this.limit);
-			this.feedback = feedback.feedback;
-			this.feedbackAmount = feedback.amount;
+			this.feedback = feedback.data.feedback;
+			this.feedbackAmount = feedback.data.amount;
 		},
 		convertRating(rating) {
 			if(rating === 5) return "Excellent";
