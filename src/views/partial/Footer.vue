@@ -11,9 +11,9 @@
 		<div class="footer_pride">
 			<div class="wrapper">
 				<div class="footer_flags">
-					<img :src="require('@/assets/images/icons/lgbt_pride.png')" alt="">
-					<img :src="require('@/assets/images/icons/trans_pride.png')" alt="">
-					<img :src="require('@/assets/images/icons/bi_pride.png')" alt="">
+					<div class="lgbt_flag"></div>
+					<div class="trans_flag"></div>
+					<div class="bi_flag"></div>
 				</div>
 				<a href="#lgbt_modal" class="modal-trigger">
 					The Albuquerque ARTCC stands with the LGBTQIA+ community on VATSIM.
@@ -38,9 +38,9 @@
 				<p>As an organization with LGBTQIA+ members, we recognize the importance of creating a welcoming environment to all members. Everyone is welcome here, regardless of their race, nationality, national origin, ethnicity, ethnic origin, socioeconomic status, religion, age, disability, sexual orientation, gender or gender identity.</p>
 				<p>We recognize CZQO, ZOB and ZJX for displaying similar statements on their websites.</p>
 				<div class="modal_flags">
-					<img :src="require('@/assets/images/icons/lgbt_pride.png')" alt="">
-					<img :src="require('@/assets/images/icons/trans_pride.png')" alt="">
-					<img :src="require('@/assets/images/icons/bi_pride.png')" alt="">
+					<div class="lgbt_flag"></div>
+					<div class="trans_flag"></div>
+					<div class="bi_flag"></div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -114,11 +114,17 @@ body .page-footer {
 }
 
 .footer_pride {
-	img {
-		height: 1em;
 
-		&+img {
-			margin-left: .25em;
+	.footer_flags {
+		display: flex;
+
+		div {
+			height: 1rem;
+			width: 1.5rem;
+
+			&+div {
+				margin-left: .25em;
+			}
 		}
 	}
 
@@ -143,13 +149,32 @@ body .page-footer {
 }
 
 .modal_flags {
-	img {
-		height: 2em;
+	display: flex;
+	div {
+		height: 2rem;
+		width: 3rem;
 
-		&+img {
+		&+div {
 			margin-left: .5em;
 		}
 	}
+}
+
+.lgbt_flag {
+	background: linear-gradient(180deg, #FE0000 16.66%,
+	#FD8C00 16.66%, 33.32%,
+	#FFE500 33.32%, 49.98%,
+	#119F0B 49.98%, 66.64%,
+	#0644B3 66.64%, 83.3%,
+	#C22EDC 83.3%);
+}
+
+.bi_flag {
+	background: linear-gradient(180deg, #D60270 40%, #9B4F96 40%, 60%, #0038A8 60%);
+}
+
+.trans_flag {
+	background: linear-gradient(180deg, #5BCEFA 20%, #F5A9B8 20%, 40%, #FFFFFF 40%, 60%, #F5A9B8 60%, 80%, #5BCEFA 80%);
 }
 
 </style>
