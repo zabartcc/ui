@@ -83,9 +83,8 @@ export default {
 				});
 				this.$router.push('/dash/training');
 			} catch(e) {
-				console.log(e);
 				M.toast({
-					html: `<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>`,
+					html: `<i class="material-icons left">error_outline</i> ${e} <div class="border"></div>`,
 					displayLength: 5000,
 					classes: 'toast toast_error'
 				});
@@ -93,8 +92,7 @@ export default {
 		},
 		async getTrainingMilestones() {
 			const response = await this.getTrainingMilestonesMixin(this.request.submitter);
-			console.log(response);
-			this.milestones = response.milestones;
+			this.milestones = response.data.milestones;
 		}
 	}
 
