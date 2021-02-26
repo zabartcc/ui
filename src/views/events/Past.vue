@@ -28,17 +28,8 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="row row_no_margin" v-if="historicEvents && eventAmount !== 0">
-				<div class="page_info col s12 l6">
-					Showing {{minEntries}}–{{maxEntries}} of {{eventAmount}} entries
-				</div>
-				<div class="col s12 l6">
-					<ul class="pagination right">
-						<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : page -= 1"><i class="material-icons">chevron_left</i></a></li>
-						<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="page = pageNo"><a>{{pageNo}}</a></li>
-						<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : page += 1"><i class="material-icons">chevron_right</i></a></li>
-					</ul>
-				</div>
+			<div v-if="historicEvents && eventAmount !== 0">
+				<Pagination :amount="eventAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
 			</div>
 		</div>
     </div>
@@ -47,6 +38,7 @@
 <script>
 import {EventsMixin} from '@/mixins/EventsMixin.js';
 import Spinner from '@/components/Spinner.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
 	name: 'HistoricEvents',
@@ -60,7 +52,8 @@ export default {
 		};
 	},
 	components: {
-		Spinner
+		Spinner,
+		Pagination
 	},
 	mixins: [EventsMixin],
 	async mounted() {
@@ -82,49 +75,8 @@ export default {
 			return d.toLocaleString('en-us', {timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		}
 	},
-	computed: {
-		isFirstPage() {
-			if(this.page == 1) return true;
-			else return false;
-		},
-		isLastPage() {
-			if(this.page * this.limit >= this.eventAmount) return true;
-			else return false;
-		},
-		minEntries() {
-			if(this.page == 1) return 1;
-			else return (this.page - 1) * this.limit;
-		},
-		maxEntries() {
-			if(Math.ceil(this.eventAmount / this.limit) == this.page) return this.eventAmount;
-			else return this.page * this.limit;
-		},
-		showPages() {
-			const ceiling = Math.ceil(this.eventAmount / this.limit);
-			if(ceiling <= 5) {
-				return (ceiling);
-			} else if (ceiling > 5 && this.page <= 3 && (this.page - 2) <= this.amountOfPages) {
-				return 5;
-			} else if (ceiling > 5 && this.page > (this.amountOfPages - 2)) {
-				if(this.page != this.amountOfPages) {
-					return [this.page - 3, this.page -2, this.page -1, this.page, this.page + 1];
-				} else {
-					return [this.page - 4, this.page -3, this.page -2, this.page -1, this.page];
-				}
-			} else {
-				let array = [];
-				let j = -1; // array starts at zero
-				for(let i = (this.page - 2); i < (this.page + 3); i++) {
-					j++;
-					array[j] = i;
-				}
-				return array;
-			}
-		}
-	},
 	watch: {
 		page: async function() {
-			this.historicEvents = null;
 			await this.getHistoricEvents();
 			M.Modal.init(document.querySelectorAll('.modal'), {
 				preventScrolling: false
@@ -138,19 +90,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.row_no_margin {
-	margin-bottom: 0;
-}
-
-.page_info {
-	padding-left: 1.5em;
-	font-size: 0.9rem;
-	margin-top: 1.5em;
-}
-
 .event_banner {
 	width: 100%;
 }
+
 .event_list_row tr {
 	transition: background-color .3s ease;
 	&:hover {
@@ -178,6 +121,7 @@ tr th {
 td {
 	padding: 1em;
 }
+
 td a {
 	transition: .3s;
 	font-weight: 600;
@@ -185,6 +129,7 @@ td a {
 		color: $primary-color-light;
 	}
 }
+
 .event_card .card-content .row {
 	margin-bottom: 0;
 }

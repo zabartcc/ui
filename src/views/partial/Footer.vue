@@ -150,6 +150,10 @@ body .page-footer {
 
 .modal_flags {
 	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2em;
+
 	div {
 		height: 2rem;
 		width: 3rem;
