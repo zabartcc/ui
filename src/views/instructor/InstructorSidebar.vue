@@ -17,9 +17,13 @@
 				Solo Certifications
 				<div class="secondary-content"><i class="material-icons">streetview</i></div>
 			</router-link>
-			<router-link to="/ins/training" class="collection-item">
-				Training
+			<router-link to="/ins/training/requests" class="collection-item">
+				Training Requests
 				<div class="secondary-content"><i class="material-icons">event</i></div>
+			</router-link>
+			<router-link to="/ins/training/sessions" class="collection-item">
+				Training Sessions
+				<div class="secondary-content"><i class="material-icons">event_note</i></div>
 			</router-link>
 		</div>
 	</div>

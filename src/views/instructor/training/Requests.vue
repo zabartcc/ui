@@ -1,0 +1,214 @@
+<template>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-title">Training Requests</div>
+			<div class="loading_container" v-if="loading === true">
+				<Spinner />
+			</div>
+			<div class="calendar_wrapper" v-else>
+				<div class="calendar z-depth-2">
+					<div class="calendar_top">
+						<div class="days z-depth-1">
+							<div>Sunday</div>
+							<div>Monday</div>
+							<div>Tuesday</div>
+							<div>Wednesday</div>
+							<div>Thursday</div>
+							<div>Friday</div>
+							<div>Saturday</div>
+						</div>
+					</div>
+					<div class="calendar-body">
+						<div class="week">
+							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date" @click="viewRequests(date)">
+								<div class="week_date">
+									<span v-if="new Date(Date.now()).getDay() === new Date(date.date).getDay()" class="current_date">
+										{{date.date.slice(3, 10)}}
+									</span>
+									<span v-else-if="(new Date(date.date).getTime()) - (new Date().getTime()) < 0" class="past_date">
+										{{date.date.slice(3, 10)}}
+									</span>
+									<span v-else>
+										{{date.date.slice(3, 10)}}
+									</span>
+								</div>
+								<div :class="`date_requests ${(new Date(Date.UTC(date.date)).getTime()) - (new Date().getTime()) < 0 ? 'past' : ''}`" v-if="date.requests.length > 0">
+									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
+								</div>
+							</div>
+						</div>
+						<div class="week">
+							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date" @click="viewRequests(date)">
+								<div class="week_date">
+									{{date.date.slice(3, 10)}}
+								</div>
+								<div class="date_requests" v-if="date.requests.length > 0">
+									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
+								</div>
+							</div>
+						</div>
+						<div class="week">
+							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date" @click="viewRequests(date)">
+								<div class="week_date">
+									{{date.date.slice(3, 10)}}
+								</div>
+								<div class="date_requests" v-if="date.requests.length > 0">
+									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+import {zabApi} from '@/helpers/axios.js';
+import Spinner from '@/components/Spinner.vue';
+
+export default {
+	data() {
+		return {
+			dates: [],
+			days: 21,
+			loading: true
+		};
+	},
+	components: {
+		Spinner
+	},
+	async mounted() {
+		await this.calculateDates();
+		await this.getRequests();
+	},
+	methods: {
+		async getRequests() {
+			try {
+				const {data} = await zabApi.get('/training/open', {
+					params: {
+						period: 21 // 21 days from start of week
+					}
+				});
+
+				for(const request of data.data) {
+					console.log(request);
+					for(const date of this.dates) {
+						if(date.date === new Date(request.startTime).toDateString()) {
+							date.requests.push(request);
+						}
+					}
+				}
+				this.loading = false; // work around because the requests are being added to dates that are already there.
+			} catch(e) {
+				console.log(e);
+			}
+		},
+		viewRequests(date) {
+			if(date.requests.length > 0) {
+				const d = new Date(date.date + ' UTC'),
+					newDate = d.toISOString().slice(0,10).replaceAll('-', '');
+
+				console.log(d);
+				this.$router.push(`/ins/training/requests/${newDate}`);
+			}
+		},
+		calculateDates() {
+			const d = new Date(Date.now()),
+				currentDay = d.getDay(),
+				diff = d.getDate() - currentDay,
+				startOfWeek = d.setDate(diff);
+			
+			for(let i = 0; i < this.days; i++) {
+				this.dates.push({
+					"date": new Date(startOfWeek + (i * 1000 * 60 * 60 * 24)).toDateString(),
+					"requests": []
+				});
+			}
+		}
+	}
+};
+</script>
+
+<style scoped lang="scss">
+.calendar_title {
+	font-size: 1.8rem;
+	font-weight: 300;
+	text-align: center;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+
+.calendar_wrapper {
+	margin-top: 1em;
+}
+
+.calendar {
+	display: flex;
+	overflow: auto;
+	flex-direction: column;
+	
+	.week {
+		display: flex;
+
+		.day {
+			width: 14.285%;
+			min-width: 90px;
+			height: 5em;
+			padding: .4em;
+			text-align: right;
+			border-bottom: 1px solid $gray_light;
+			transition: .3s ease;
+
+			&.has_request {
+				cursor: pointer;
+			}
+
+			&+.day {
+				border-left: 1px solid $gray_light;
+			}
+
+			&:hover {
+				box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .20);
+			}
+
+			.current_date {
+				background-color: $primary-color-light;
+				color: #fff;
+				padding: .2em .5em;
+				border-radius: 1em;
+			}
+
+			.past_date {
+				color: #9e9e9e;
+			}
+
+			.date_requests {
+				text-align: center;
+				font-size: .9rem;
+				color: $secondary-color-dark;
+				margin-top: .5em;
+
+				&.past {
+					color: $secondary-color-light;
+				}
+			}
+		}
+	}
+
+	.days {
+		display: flex;
+		
+		div {
+			background: $primary-color-light;
+			color: #fff;
+			width: 14.285%;
+			min-width: 90px;
+			padding: .4em;
+			text-align: center;
+		}
+	}
+}
+
+</style>

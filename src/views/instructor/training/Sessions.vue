@@ -1,7 +1,12 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="card-title">Training Requests</div>
+			<div class="card-title">Your Training Sessions</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-title">Completed Training Sessions</div>
 		</div>
 	</div>
 </template>
