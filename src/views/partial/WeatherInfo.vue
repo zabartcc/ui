@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { zabApi } from '@/helpers/axios.js';
+import {zabApi} from '@/helpers/axios.js';
 import parse from 'metar-parser';
 import Spinner from '@/components/Spinner.vue';
 

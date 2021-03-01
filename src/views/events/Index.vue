@@ -15,7 +15,7 @@
 				<div class="row">
 					<div class="col s12 l8">
 						<span class="card-title event_title">{{event.name}}</span>
-						<span class="card-title event_date">{{format_full(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{format_hour(event.eventEnd)}}z</span>
+						<span class="card-title event_date">{{formatDate(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
 					</div>
 					<div class="col s12 l4">
 						<router-link :to="`/events/${event.url}`" class="btn btn-signup waves-effect right">More Info &amp; Sign Up</router-link>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { EventsMixin } from '@/mixins/EventsMixin.js';
+import {EventsMixin} from '@/mixins/EventsMixin.js';
 import Spinner from '@/components/Spinner.vue';
 import Past from './Past.vue';
 
@@ -51,11 +51,11 @@ export default {
 		async getUpcomingEvents() {
 			this.events = await this.getUpcomingEventsMixin();
 		},
-		format_full(value) {
+		formatDate(value) {
 			var d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		},
-		format_hour(value) {
+		formatTime(value) {
 			var d = new Date(value);
 			return d.toLocaleString('en-us', {timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		}
@@ -67,6 +67,7 @@ export default {
 .event_banner {
 	width: 100%;
 }
+
 .event_list_row tr {
 	transition: background-color .3s ease;
 	&:hover {
@@ -94,6 +95,7 @@ tr th {
 td {
 	padding: 1em;
 }
+
 td a {
 	transition: .3s;
 	font-weight: 600;
@@ -101,6 +103,7 @@ td a {
 		color: $primary-color-light;
 	}
 }
+
 .event_card .card-content .row {
 	margin-bottom: 0;
 }

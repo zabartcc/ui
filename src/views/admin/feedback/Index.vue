@@ -11,7 +11,7 @@
 		<p class="no_unapproved" v-else-if="unapproved && unapproved.length == 0">There is no unapproved feedback to display.</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="event_list striped">
-				<thead class="controller_list_head">
+				<thead class="feedback_list_head">
 					<tr>
 						<th>Date</th>
 						<th>Submitter</th>
@@ -215,7 +215,7 @@ table tbody {
 		text-transform: capitalize;
 	}
 	.row {
-		.input-field p, .input-field pre {
+		.input-field p {
 			line-break: anywhere;
 			margin: .33em 0 0 0;
 		}

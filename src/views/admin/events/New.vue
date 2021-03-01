@@ -32,7 +32,7 @@
 					<div class="input-field col s12">
 						<div class="row">
 							<div class="col s12 l4">
-								<div class="card card_positions">
+								<div class="card card_positions z-depth-2">
 									<p class="positions_title">Center</p>
 									<p class="no_pos" v-if="centerPos.length == 0">No positions added yet.</p>
 									<ul v-else>
@@ -50,7 +50,7 @@
 								</div>
 							</div>
 							<div class="col s12 l4">
-								<div class="card card_positions">
+								<div class="card card_positions z-depth-2">
 									<p class="positions_title">TRACON</p>
 									<p class="no_pos" v-if="traconPos.length == 0">No positions added yet.</p>
 									<ul v-else>
@@ -68,7 +68,7 @@
 								</div>
 							</div>
 							<div class="col s12 l4">
-								<div class="card card_positions">
+								<div class="card card_positions z-depth-2">
 									<p class="positions_title">Local</p>
 									<p class="no_pos" v-if="localPos.length == 0">No positions added yet.</p>
 									<ul v-else>

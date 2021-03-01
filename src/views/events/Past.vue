@@ -23,7 +23,7 @@
 							</router-link><br />
 						</td>
 						<td class="date right">
-							{{format_full(event.eventStart)}}z
+							{{formatDate(event.eventStart)}}z
 						</td>
 					</tr>
 				</tbody>
@@ -66,13 +66,9 @@ export default {
 			this.historicEvents = response.events;
 			this.eventAmount = response.amount;
 		},
-		format_full(value) {
+		formatDate(value) {
 			var d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
-		},
-		format_hour(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-us', {timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		}
 	},
 	watch: {

@@ -2,7 +2,7 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Recent News</span>
-			<div v-if="!newsItems" class="">
+			<div v-if="!newsItems" class="loading_container">
 				<Spinner />
 			</div>
 			<div v-else-if="newsItems && newsItems.length === 0" class="no_news">

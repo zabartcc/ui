@@ -5,7 +5,7 @@
 			<button class="btn right btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
 			<div class="no_signups" v-if="event.signups.length == 0">There have been no sign-ups for this event yet.</div>
 			<div class="signups_container" v-else>
-				<div class="signups_user card" v-for="signup in event.signups" :key="signup.id">
+				<div class="signups_user card z-depth-2" v-for="signup in event.signups" :key="signup.id">
 					<div class="signups_delete" @click="deleteSignup(signup.user.cid)"><i class="material-icons">close</i></div>
 					<div class="signups_name">{{`${signup.user.fname} ${signup.user.lname}`}}</div>
 					<div class="signups_rating">{{signup.user.ratingLong}}</div>

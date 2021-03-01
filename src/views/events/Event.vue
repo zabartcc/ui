@@ -7,7 +7,7 @@
 					<div class="row">
 						<div class="col s12">
 							<span class="card-title event_title">{{event.name}}</span>
-							<span class="card-title event_date">{{formatFull(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{formatHour(event.eventEnd)}}z</span>
+							<span class="card-title event_date">{{formatDate(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
 						</div>
 					</div>
 					<div class="row">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { EventsMixin } from '@/mixins/EventsMixin.js';
+import {EventsMixin} from '@/mixins/EventsMixin.js';
 
 export default {
 	name: 'Events',
@@ -39,21 +39,21 @@ export default {
 		};
 	},
 	mixins: [EventsMixin],
-	mounted() {
+	async mounted() {
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
-		this.getEvent();
+		await this.getEvent();
 	},
 	methods: {
 		async getEvent() {
 			this.event = await this.getEventMixin(this.$route.params.slug);
 		},
-		formatFull(value) {
+		formatDate(value) {
 			var d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		},
-		formatHour(value) {
+		formatTime(value) {
 			var d = new Date(value);
 			return d.toLocaleString('en-us', {timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		},
