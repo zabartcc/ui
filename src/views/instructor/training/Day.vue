@@ -112,14 +112,14 @@ export default {
 	methods: {
 		async getRequests() {
 			try {
-				const {data} = await zabApi.get(`/training/${this.$route.params.date}`);
+				const {data} = await zabApi.get(`/training/request/${this.$route.params.date}`);
 				this.requests = data.data;
 			} catch(e) {
 				console.log(e);
 			}
 		},
 		async takeSession(i, id) {
-			const {data} = await zabApi.post(`/training/take/${id}`, {
+			const {data} = await zabApi.post(`/training/request/take/${id}`, {
 				startTime: this.requests[i].startTime,
 				endTime: this.requests[i].endTime,
 				instructor: this.$store.state.user.user.data._id

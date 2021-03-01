@@ -86,7 +86,7 @@ export default {
 	methods: {
 		async getRequests() {
 			try {
-				const {data} = await zabApi.get('/training/open', {
+				const {data} = await zabApi.get('/training/request/open', {
 					params: {
 						period: 21 // 21 days from start of week
 					}
