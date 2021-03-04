@@ -48,12 +48,12 @@
 											<label for="cid" class="active">Milestone</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{formatDateTime(session.endTime)}}</p>
-											<label for="cid" class="active">Milestone</label>
+											<p id="cid">{{formatDateTime(session.startTime)}}z</p>
+											<label for="cid" class="active">Start Time</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{formatDateTime(session.endTime)}}</p>
-											<label for="cid" class="active">Milestone</label>
+											<p id="cid">{{formatDateTime(session.endTime)}}z</p>
+											<label for="cid" class="active">End Time</label>
 										</div>
 									</div>
 								</div>

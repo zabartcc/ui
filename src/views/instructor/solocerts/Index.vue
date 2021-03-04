@@ -6,10 +6,10 @@
 				<div class="card-title col s4"><router-link to="/ins/solo/new"><span class="btn new_event_button right">New Solo Cert</span></router-link></div>
 			</div>
 		</div>
-		<div class="card-content loading" v-if="certs === null">
+		<div class="card-content loading_container" v-if="loading">
 			<Spinner />
 		</div>
-		<p class="no_certs" v-else-if="certs.length === 0">There are no active solo certifications issued by ZAB.</p>
+		<p class="no_certs" v-else-if="loading === false && certs.length === 0">There are no active solo certifications issued by ZAB.</p>
 		<div class="table_wrapper" v-else>
 			<table class="striped">
 				<thead class="certs_list_head">
@@ -43,15 +43,16 @@
 	</div>
 </template>
 <script>
-import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
+import {vatusaApiAuth, vatusaApi, zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
 		return {
 			positions: ['ABQ', 'PHX', 'TUS', 'ELP', 'AMA'],
-			certs: null,
-			controllers: null
+			certs: [],
+			controllers: null,
+			loading: true
 		};
 	},
 	async mounted() {
@@ -66,17 +67,23 @@ export default {
 	},
 	methods: {
 		async getSoloCerts() {
-			const {data} = await vatusaApiAuth.get('/solo');
-			this.certs = [];
-			data[0].forEach((object) => {
-				if(this.positions.includes(object.position.slice(0,3))) {
-					this.certs.push(object);
-				}
-			});
+			try {
+				const {data} = await vatusaApi.get('/solo');
+				data.data.forEach((cert) => {
+					if(this.positions.includes(cert.position.slice(0,3))) this.certs.push(cert);
+				});
+				this.loading = false;
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		async getControllers() {
-			const {data} = await zabApi.get('/feedback/controllers');
-			this.controllers = data;
+			try {
+				const {data} = await zabApi.get('/feedback/controllers');
+				this.controllers = data.data;
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		async deleteCert(cid, pos) {
 			const formData = new FormData();
@@ -100,6 +107,7 @@ export default {
 		},
 		getName(cid2) {
 			const controller = this.controllers.filter(i => { return i.cid === cid2; });
+			console.log(controller);
 			return controller[0].fname + ' ' + controller[0].lname;
 		}
 	}
