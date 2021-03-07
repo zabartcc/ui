@@ -25,7 +25,7 @@
 				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
 				<div>•</div>
 				<!-- Made with ♥ and (╯°□°）╯︵ ┻━┻ by Alexandra Robison and Daan Janssen. -->
-				<div><span id="time">(...)</span></div>
+				<div><span ref="zulu_time">(...)</span></div>
 				<div>•</div>
 				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></p>
 			</div>
@@ -57,7 +57,7 @@ export default {
 		});
 		
 		setInterval(() => {
-			this.$refs.zulu_time.innerHTML = this.dtFull(new Date());
+			this.$refs.zulu_time.innerHTML = `${this.dtFull(new Date())}z`;
 		}, 1000);
 
 		document.getElementById("full_year").innerHTML = new Date().getFullYear();
