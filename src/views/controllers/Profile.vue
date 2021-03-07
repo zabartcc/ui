@@ -7,7 +7,7 @@
 			<div class="row" v-else>
 				<div class="col s5 m4 l3">
 					<div class="controller_image">
-						<img :src="controller.image ?? require('@/assets/images/blank.png')" />
+						<img :src="`https://cdn.zabartcc.org/avatars/${controller.image.filename}`" />
 					</div>
 				</div>
 				<div class="col s7 m8 l9">
@@ -16,10 +16,11 @@
 				</div>
 				<div class="col s12 m8 l9">
 					<div class="controller_certs">
-						<div class="title">Roles &amp; Certifications</div>
+						<div v-if="controller.roles.length" class="title">Staff Positions</div>
 						<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
 							{{role.name}}
 						</span>
+						<div v-if="controller.certifications.length" class="title">Certifications</div>
 						<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
 							{{cert.name}}
 						</span>
@@ -33,6 +34,7 @@
 <script>
 import {ControllerMixin} from '@/mixins/ControllerMixin.js';
 import Spinner from '@/components/Spinner.vue';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	name: 'Controller Profile',
@@ -50,7 +52,7 @@ export default {
 	},
 	methods: {
 		async getController() {
-			this.controller = await this.getControllerMixin(this.$route.params.cid);
+			this.controller = (await zabApi.get(`/controller/${this.$route.params.cid}`)).data.data;
 		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];
@@ -109,6 +111,10 @@ export default {
 		font-size: 0.85rem;
 		margin: 2px;
 		user-select: none;
+
+		&+.title {
+			margin-top: 1.5em;
+		}
 
 		&.cert_senior {
 			background: $cert_senior;

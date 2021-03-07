@@ -4,9 +4,7 @@
 		<div id="loading_box" class="z-depth-3">
 			<img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="">
 			<h3>Please Wait...</h3>
-			<div class="preloader-wrapper big active">
-				<Spinner />
-			</div>
+			<Spinner/>
 		</div>
 	</div>
 </template>

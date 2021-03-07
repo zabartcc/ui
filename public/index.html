@@ -12,6 +12,16 @@
 			<strong>We're sorry but the Albuquerque ARTCC website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     	</noscript>
 		<div id="app"></div>
+		<div id="ie_warn" style="font-size: 24px; font-weight: 700;"></div>
     	<!-- built files will be auto injected -->
 	</body>
 </html>
+
+<script>
+	var ieWarn = document.querySelector('#ie_warn')
+	if(navigator.userAgent.indexOf('MSIE')!==-1 || navigator.appVersion.indexOf('Trident/') > -1){
+		ieWarn.innerHTML = 'Internet Explorer is not supported by this site. Please use Chrome, Edge, Firefox or Safari.';
+	} else {
+		ieWarn.parentElement.removeChild(ieWarn)
+	}
+</script>

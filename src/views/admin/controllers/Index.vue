@@ -23,8 +23,9 @@
 						</tr>
 					</thead>
 					<tbody class="controller_list_row">
-						<tr v-for="(controller, i) in controllersFiltered" :key="controller.cid">
+						<tr v-for="controller in controllersFiltered" :key="controller.cid">
 							<td>
+								<i class="material-icons right">{{controller.vis?'work':'home'}}</i>
 								<div class="name">
 									<router-link :to="`/controllers/${controller.cid}`">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</router-link>
 								</div>
@@ -39,16 +40,16 @@
 							</td>
 							<td class="options">
 								<router-link data-position="top" data-tooltip="Edit Controller" class="tooltipped" :to="`/admin/controllers/${controller.cid}`"><i class="material-icons">edit</i></router-link>
-								<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
+								<a :href="`#modal_delete_${controller.cid}`" data-position="top" data-tooltip="Delete Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
 							</td>
-							<div :id="`modal_delete_${i}`" class="modal modal_delete">
+							<div :id="`modal_delete_${controller.cid}`" class="modal modal_delete">
 								<div class="modal-content">
 									<h4>Removing Controller</h4>
 									<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. Please state the reason for removal below. Please note that this will delete the controller from both the website and VATUSA's facility roster.</p>
-									<textarea class="materialize-textarea" placeholder="Please state a reason for removal" v-model="deleteReason" required></textarea>
+									<textarea class="materialize-textarea" placeholder="Please state a reason for removal" v-model="deleteReason[controller.cid]" required></textarea>
 								</div>
 								<div class="modal-footer">
-									<a href="#!" class="btn waves-effect">Remove</a>
+									<a href="#!" @click="deleteController(cid)" class="btn waves-effect">Remove</a>
 									<a href="#!" class="btn-flat waves-effect modal-close">Cancel</a>
 								</div>
 							</div>
@@ -57,7 +58,7 @@
 				</table>
 			</div>
 		</div>
-		<div class="card">
+		<!-- <div class="card">
 			<div class="card-content">
 				<div class="row">
 					<span class="card-title col s12 m8">Visiting Controllers</span>
@@ -96,9 +97,9 @@
 							</td>
 							<td class="options">
 								<router-link data-position="top" data-tooltip="Edit Controller" class="tooltipped" :to="`/admin/controllers/${controller.cid}`"><i class="material-icons">edit</i></router-link>
-								<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
+								<a :href="`#modal_delete_${controller.cid}`" data-position="top" data-tooltip="Delete Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
 							</td>
-							<div :id="`modal_delete_${i}`" class="modal modal_delete">
+							<div :id="`modal_delete_${controller.cid}`" class="modal modal_delete">
 								<div class="modal-content">
 									<h4>Removing Controller</h4>
 									<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC as a visitor. Please state the reason for removal below. Please note that this will delete the controller from both the website and VATUSA's visiting roster.</p>
@@ -113,26 +114,24 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </template>
 
 <script>
-import {ControllerMixin} from '@/mixins/ControllerMixin.js';
+// import {ControllerMixin} from '@/mixins/ControllerMixin.js';
 import Spinner from '@/components/Spinner.vue';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	data() {
 		return {
 			controllers: null,
 			controllersFiltered: null,
-			visitorsFiltered: null,
 			filter: '',
-			filterVisit: '',
-			deleteReason: ''
+			deleteReason: {}
 		};
 	},
-	mixins: [ControllerMixin],
 	components: {
 		Spinner
 	},
@@ -147,27 +146,13 @@ export default {
 	},
 	methods: {
 		async getControllers() {
-			const controllers = await this.getControllersMixin();
-			this.controllers = controllers;
-			this.controllersFiltered = controllers.home;
-			this.visitorsFiltered = controllers.visiting;
+			const controllers = (await zabApi.get('/controller')).data.data;
+			this.controllers = controllers.home.concat(controllers.visiting);
+			this.controllersFiltered = this.controllers;
 		},
 		filterControllers() {
 			const search = new RegExp(this.filter, 'ig');
-			this.controllersFiltered = this.controllers.home.filter(controller => {
-				if(
-					controller.fname.match(search) ||
-					controller.lname.match(search) ||
-					controller.oi.match(search) ||
-					controller.cid.toString().match(search)
-				) {
-					return true;
-				}
-			});
-		},
-		filterVisitors() {
-			const search = new RegExp(this.filterVisit, 'ig');
-			this.visitorsFiltered = this.controllers.visiting.filter(controller => {
+			this.controllersFiltered = this.controllers.filter(controller => {
 				if(
 					controller.fname.match(search) ||
 					controller.lname.match(search) ||

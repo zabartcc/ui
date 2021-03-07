@@ -83,6 +83,7 @@
 							<span id="wm" class="cert cert_junior" :class="{active: form.roles.wm}" @click="toggleRole">WM</span>
 							<span id="ins" class="cert cert_training" :class="{active: form.roles.ins}"  @click="toggleRole">INS</span>
 							<span id="mtr" class="cert cert_training" :class="{active: form.roles.mtr}"  @click="toggleRole">MTR</span>
+							<span id="vis" class="cert cert_training" :class="{active: form.vis}"  @click="toggleVis">VIS</span>
 						</div>
 					</div>
 					<div class="input-field col s12">
@@ -110,6 +111,7 @@ export default {
 				lname: '',
 				email: '',
 				oi: '',
+				vis: false,
 				certs: {
 					zab: false,
 					p50app: false,
@@ -138,19 +140,19 @@ export default {
 	},
 	methods: {
 		async getController() {
-			this.controller = await this.getControllerMixin(this.$route.params.cid);
+			this.controller = (await zabApi.get(`/controller/${this.$route.params.cid}`)).data.data;
 			this.form = {
 				...this.form,
 				fname: this.controller.fname,
 				lname: this.controller.lname,
 				email: this.controller.email,
 				oi: this.controller.oi,
+				vis: this.controller.vis,
 			};
 			
 			this.controller.certifications.forEach(cert => this.form.certs[cert.code] = true);
 			this.controller.roles.forEach(role => this.form.roles[role.code] = true);
-			const oiObject = await this.getUsedOiMixin();
-			this.usedOi = oiObject.map(oi => oi.oi);
+			this.usedOi = (await zabApi.get(`/controller/oi`)).data.data;
 		},
 		checkOi() {
 			this.oiAvail = (this.form.oi != this.controller.oi && (this.usedOi.includes(this.form.oi) || this.form.oi.length != 2)) ? false : true;
@@ -163,25 +165,20 @@ export default {
 			e.target.classList.toggle('active');
 			this.form.roles[e.target.id] = e.target.classList.contains('active');
 		},
-		updateController() {
-			zabApi.post(`/controller/${this.controller.cid}`, {
+		toggleVis: function(e) {
+			e.target.classList.toggle('active');
+			this.form.vis = e.target.classList.contains('active');
+		},
+		async updateController() {
+			const { data: updateResponse } = await zabApi.post(`/controller/${this.controller.cid}`, {
 				form: this.form
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Controller successfully updated! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to update controller. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
 			});
 
-			
+			if(updateResponse.ret_det.code === 200) {
+				this.toastSuccess('Controller successfully updated.');
+			} else {
+				this.toastError('Something went wrong. Please try again.');
+			}
 		}
 	}
 };

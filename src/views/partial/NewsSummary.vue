@@ -12,7 +12,7 @@
 				<div class="collection">
 					<router-link class="collection-item news_item" v-for='news in newsItems' :key="news.id" :to="`/news/${news.uriSlug}`">
 						{{news.title}}
-						<span class="badge">{{formatDate(news.createdAt)}}z</span>
+						<span class="badge">{{dtLong(news.createdAt)}}</span>
 					</router-link>
 				</div>
 			</div>
@@ -47,10 +47,6 @@ export default {
 				this.newsItems = data.data.slice(0,3);
 			}
 		},
-		formatDate(date) {
-			const d = new Date(date);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
-		}
 	}
 };
 </script>

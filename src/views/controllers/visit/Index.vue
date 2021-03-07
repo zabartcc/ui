@@ -39,7 +39,7 @@
 							<textarea id="reason" class="materialize-textarea validate" ref="reason" required></textarea>
 						</div>
 						<div class="input-field col s12">
-							<button type="submit" class="btn right" @click.prevent="submitApplication">Submit</button>
+							<button type="submit" class="btn right" @click.prevent="submitApplication" ref="submitButton">Submit</button>
 						</div>
 					</div>
 				</div>
@@ -84,6 +84,7 @@ export default {
 				home: this.$refs.home.value,
 				reason: this.$refs.reason.value
 			};
+			this.$refs.submitButton.classList.add('disabled');
 			this.submitApplicationMixin(data).then(() => {
 				M.toast({
 					html: '<i class="material-icons left">done</i> Visitor application submitted! <div class="border"></div>',
