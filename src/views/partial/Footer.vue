@@ -27,7 +27,7 @@
 				<!-- Made with ♥ and (╯°□°）╯︵ ┻━┻ by Alexandra Robison and Daan Janssen. -->
 				<div><span ref="zulu_time">(...)</span></div>
 				<div>•</div>
-				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/ui" class="white-text" target="_blank">GitLab</a></p>
+				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank">GitLab</a></p>
 			</div>
 		</div>
 		<div id="lgbt_modal" class="modal">

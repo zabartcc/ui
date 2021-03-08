@@ -7,10 +7,10 @@
 			<div class="card-content">
 				<div class="row row_no_margin">
 					<div class="card-title col s12 l8">{{news.title}}</div>
-					<div class="side-title col s12 l4">{{formatDate(news.createdAt)}}</div>
+					<div class="side-title col s12 l4">{{dLong(news.createdAt)}}</div>
 				</div>
 				<div class="author">
-					By {{news.createdBy.fname}} {{news.createdBy.lname}}
+					By {{news.user.fname}} {{news.user.lname}}
 				</div>
 				<div class="news_content">
 					{{news.content}}
@@ -42,10 +42,6 @@ export default {
 			const {data} = await this.getArticleMixin(this.$route.params.slug);
 			this.news = data;
 		},
-		formatDate(date) {
-			const d = new Date(date);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
-		}
 	}
 
 };

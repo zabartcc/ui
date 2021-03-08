@@ -30,7 +30,7 @@ export default {
 		return {
 			newsItems: null,
 			page: 1,
-			limit: 1
+			limit: 5
 		};
 	},
 	components: {

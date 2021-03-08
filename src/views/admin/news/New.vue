@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
@@ -33,12 +34,17 @@ export default {
 			}
 		};
 	},
+	computed: {
+		...mapState('user', [
+			'user'
+		])
+	},
 	methods: {
 		async createNews() {
 			const {data} = await zabApi.post('/news', {
 				title: this.form.title,
 				content: this.form.content,
-				createdBy: this.$store.state.user.user.data._id
+				createdBy: this.user.data.cid
 			});
 
 			if(data.ret_det.code !== 200) {

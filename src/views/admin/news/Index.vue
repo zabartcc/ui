@@ -23,8 +23,8 @@
 				<tbody class="news_list_row">
 					<tr v-for="(news, i) in newsItems" :key="news._id">
 						<td>{{news.title}}</td>
-						<td>{{news.createdBy.fname + ' ' + news.createdBy.lname}}</td>
-						<td>{{formatDate(news.createdAt)}}</td>
+						<td>{{news.user.fname + ' ' + news.user.lname}}</td>
+						<td>{{dLong(news.createdAt)}}</td>
 						<td class="options">
 							<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/news/${news.uriSlug}`">
 								<i class="material-icons">edit</i>
@@ -65,7 +65,6 @@
 <script>
 import {NewsMixin} from '@/mixins/NewsMixin.js';
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -76,9 +75,6 @@ export default {
 			limit: 10,
 			amountOfPages: 1
 		};
-	},
-	components: {
-		Spinner
 	},
 	mixins: [NewsMixin],
 	async mounted() {
@@ -98,10 +94,6 @@ export default {
 				this.newsItems = data.data.slice(0,3);
 				this.newsAmount = data.amount;
 			}
-		},
-		formatDate(date) {
-			const d = new Date(date);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
 		},
 		async deleteNews(slug) {
 			const { data: resp } = await zabApi.delete(`/news/${slug}`);

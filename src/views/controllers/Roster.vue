@@ -103,6 +103,8 @@ export default {
 	methods: {
 		async getControllers() {
 			this.controllers = (await zabApi.get('/controller')).data.data;
+			this.controllers.home = this.controllers.home.filter(c => c.member);
+			this.controllers.visiting = this.controllers.visiting.filter(c => c.member);
 		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];

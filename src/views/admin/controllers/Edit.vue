@@ -170,9 +170,11 @@ export default {
 			this.form.vis = e.target.classList.contains('active');
 		},
 		async updateController() {
-			const { data: updateResponse } = await zabApi.post(`/controller/${this.controller.cid}`, {
+			const { data: updateResponse } = await zabApi.put(`/controller/${this.controller.cid}`, {
 				form: this.form
 			});
+
+			console.log(updateResponse);
 
 			if(updateResponse.ret_det.code === 200) {
 				this.toastSuccess('Controller successfully updated.');

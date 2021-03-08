@@ -1,87 +1,89 @@
 <template>
-	<div class="card card_margin">
-		<div class="card-content">
-			<span class="card-title">ARTCC Staff</span>
-			<div class="loading_container" v-if="!staff">
-				<Spinner />
-			</div>
-			<div v-else>
-				<div class="row">
-					<div class="col s12 l4 push-l4">
-						<StaffCard :staffItem="staff.atm" />
+	<div>
+		<div class="card card_margin">
+			<div class="card-content">
+				<span class="card-title">ARTCC Staff</span>
+				<div class="loading_container" v-if="!staff">
+					<Spinner />
+				</div>
+				<div v-else>
+					<div class="row">
+						<div class="col s12 l4 push-l4">
+							<StaffCard :staffItem="staff.atm" />
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s8 push-s2 border_top hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s1 push-s2 border_left hide-on-med-and-down"></div>
-					<div class="col s5 border_right hide-on-med-and-down"></div>
-					<div class="col s4 border_right hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s12 l4 push-l4">
-						<StaffCard :staffItem="staff.datm" />
+					<div class="row">
+						<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
 					</div>
-					<div class="col s12 l4 pull-l4">
-						<StaffCard :staffItem="staff.ta" />
+					<div class="row">
+						<div class="col s8 push-s2 border_top hide-on-med-and-down"></div>
 					</div>
-					<div class="col s12 l4">
-						<StaffCard :staffItem="staff.wm" />
+					<div class="row">
+						<div class="col s1 push-s2 border_left hide-on-med-and-down"></div>
+						<div class="col s5 border_right hide-on-med-and-down"></div>
+						<div class="col s4 border_right hide-on-med-and-down"></div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col s1 push-s5 border_right border_long hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s4 push-s4 border_top hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s1 push-s4 border_left hide-on-med-and-down"></div>
-					<div class="col s4 push-s3 border_right hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s12 l4 push-l2">
-						<StaffCard :staffItem="staff.ec" />
+					<div class="row">
+						<div class="col s12 l4 push-l4">
+							<StaffCard :staffItem="staff.datm" />
+						</div>
+						<div class="col s12 l4 pull-l4">
+							<StaffCard :staffItem="staff.ta" />
+						</div>
+						<div class="col s12 l4">
+							<StaffCard :staffItem="staff.wm" />
+						</div>
 					</div>
-					<div class="col s12 l4 push-l2">
-						<StaffCard :staffItem="staff.fe" />
+					<div class="row">
+						<div class="col s1 push-s5 border_right border_long hide-on-med-and-down"></div>
+					</div>
+					<div class="row">
+						<div class="col s4 push-s4 border_top hide-on-med-and-down"></div>
+					</div>
+					<div class="row">
+						<div class="col s1 push-s4 border_left hide-on-med-and-down"></div>
+						<div class="col s4 push-s3 border_right hide-on-med-and-down"></div>
+					</div>
+					<div class="row">
+						<div class="col s12 l4 push-l2">
+							<StaffCard :staffItem="staff.ec" />
+						</div>
+						<div class="col s12 l4 push-l2">
+							<StaffCard :staffItem="staff.fe" />
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="card card_margin">
-		<div class="card-content">
-			<span class="card-title">Training Staff</span>
-			<div class="loading_container" v-if="!staff">
-				<Spinner />
-			</div>
-			<div v-else>
-				<div class="row">
-					<div class="col s12 l4 push-l4">
-						<StaffCard :staffItem="staff.ta" />
+		<div class="card card_margin">
+			<div class="card-content">
+				<span class="card-title">Training Staff</span>
+				<div class="loading_container" v-if="!staff">
+					<Spinner />
+				</div>
+				<div v-else>
+					<div class="row">
+						<div class="col s12 l4 push-l4">
+							<StaffCard :staffItem="staff.ta" />
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s6 push-s3 border_top hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s1 push-s3 border_left hide-on-med-and-down"></div>
-					<div class="col s4 push-s4 border_right hide-on-med-and-down"></div>
-				</div>
-				<div class="row">
-					<div class="col s12 l6">
-						<StaffCard :staffItem="staff.ins" />
+					<div class="row">
+						<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
 					</div>
-					<div class="col s12 l6">
-						<StaffCard :staffItem="staff.mtr" />
+					<div class="row">
+						<div class="col s6 push-s3 border_top hide-on-med-and-down"></div>
+					</div>
+					<div class="row">
+						<div class="col s1 push-s3 border_left hide-on-med-and-down"></div>
+						<div class="col s4 push-s4 border_right hide-on-med-and-down"></div>
+					</div>
+					<div class="row">
+						<div class="col s12 l6">
+							<StaffCard :staffItem="staff.ins" />
+						</div>
+						<div class="col s12 l6">
+							<StaffCard :staffItem="staff.mtr" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -106,9 +108,7 @@ export default {
 		Spinner
 	},
 	async mounted() {
-		zabApi.get('/controller/staff').then(({data}) => {
-			this.staff = data;
-		});
+		this.staff =  (await zabApi.get('/controller/staff')).data.data;
 	}
 };
 </script>

@@ -9,7 +9,8 @@
 		<span class="load_more" v-if="amount > (page * limit)" @click="getMoreNotifications">Load More</span>
 	</div>
 	<div class="controls">
-		<div class="left" @click="deleteAll">Delete All</div><div class="right" @click="readAll">Mark All as Read</div>
+		<button class="left btn-flat waves-effect" @click="deleteAll">Delete All</button>
+		<button class="right btn-flat waves-effect" @click="readAll">Mark All as Read</button>
 	</div>
 </template>
 
@@ -181,9 +182,12 @@ export default {
 		border-top: 1px solid #EEEEEE;
 		padding-top: .5em;
 		font-size: .8rem;
-
-		div {
-			cursor: pointer;
+		
+		button {
+			font-size: 12px;
+			height: 2.25em;
+			line-height: 2.25;
+			padding: 0 0.5em;
 		}
 	}
 </style>

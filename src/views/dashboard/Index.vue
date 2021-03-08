@@ -33,17 +33,9 @@ export default {
 		generateToken: async function() {
 			const { data: tokenRet } = await zabApi.post('/user/idsToken');
 			if(tokenRet.ret_det.code !== 200) {
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+				this.toastError('Something went wrong, please try again.');
 			} else {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Token Generated! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
+				this.toastSuccess('Token successfully generated!');
 				this.token = tokenRet.data;
 			}
 		}

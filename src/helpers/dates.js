@@ -29,5 +29,14 @@ export default {
 			minute: '2-digit', 
 			second: '2-digit', 
 			hourCycle: 'h23'});
+	},
+	dLong(isoDate) {
+		const d =  new Date(isoDate);
+		return d.toLocaleString('en-US', {
+			month: 'long', 
+			day: 'numeric',
+			year: 'numeric', 
+			timeZone: 'UTC',
+		});
 	}
 };

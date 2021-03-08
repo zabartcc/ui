@@ -7,7 +7,7 @@
 			<div class="row" v-else>
 				<div class="col s5 m4 l3">
 					<div class="controller_image">
-						<img :src="`https://cdn.zabartcc.org/avatars/${controller.image.filename}`" />
+						<img :src="require('@/assets/images/blank.png')" alt="">
 					</div>
 				</div>
 				<div class="col s7 m8 l9">
@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import {ControllerMixin} from '@/mixins/ControllerMixin.js';
-import Spinner from '@/components/Spinner.vue';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
@@ -42,10 +40,6 @@ export default {
 		return {
 			controller: null
 		};
-	},
-	mixins: [ControllerMixin],
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getController();
