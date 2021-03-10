@@ -82,6 +82,7 @@ import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	name: 'Controller Roster',
+	title: 'Controller Roster',
 	data() {
 		return {
 			controllers: {

@@ -19,5 +19,18 @@ createApp(App)
 			...toasts
 		}
 	})
+	.mixin({
+		created() {
+			const {title} = this.$options;
+			if(title) {
+				document.title = `${(typeof title === 'function') ? title.call(this) : title} | Albuquerque ARTCC`;
+			}
+		},
+		methods: {
+			setTitle(title) {
+				document.title = `${(typeof title === 'function') ? title.call(this) : title} | Albuquerque ARTCC`;
+			}
+		}
+	})
 	.component('Spinner', Spinner)
 	.mount('#app');

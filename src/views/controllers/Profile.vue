@@ -47,6 +47,7 @@ export default {
 	methods: {
 		async getController() {
 			this.controller = (await zabApi.get(`/controller/${this.$route.params.cid}`)).data.data;
+			this.setTitle(`${this.controller.fname} ${this.controller.lname} | Controller Profile`);
 		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];

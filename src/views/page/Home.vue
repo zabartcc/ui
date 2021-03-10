@@ -24,6 +24,7 @@ import { mapState } from 'vuex';
 import WeatherInfo from '../partial/WeatherInfo.vue';
 import NewsSummary from '../partial/NewsSummary.vue';
 export default {
+	title: "Home",
 	components: {
 		NewsSummary,
 		WeatherInfo
