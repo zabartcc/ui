@@ -51,6 +51,8 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'Downloads',
+	title: 'Downloads',
 	data() {
 		return {
 			downloads: null

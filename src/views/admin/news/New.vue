@@ -26,6 +26,8 @@ import { mapState } from 'vuex';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
+	name: 'NewNews',
+	title: 'Create News Article',
 	data() {
 		return {
 			form: {

@@ -56,6 +56,8 @@ import {mapState} from 'vuex';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
+	name: 'VisitorApply',
+	title: 'Become A Visitor',
 	data() {
 		return {
 		};

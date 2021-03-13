@@ -40,6 +40,8 @@ import Spinner from '@/components/Spinner.vue';
 import PastSessions from './Past.vue';
 
 export default {
+	name: 'TrainingDash',
+	title: 'Training',
 	data() {
 		return {
 			upcomingSessions: null

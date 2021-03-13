@@ -47,6 +47,8 @@ import {vatusaApiAuth, vatusaApi, zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'SoloCerts',
+	title: 'Solo Certifications',
 	data() {
 		return {
 			positions: ['ABQ', 'PHX', 'TUS', 'ELP', 'AMA'],

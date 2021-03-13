@@ -62,6 +62,8 @@ import Past from './Past.vue';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'Events',
+	title: 'Events',
 	data() {
 		return {
 			events: null,

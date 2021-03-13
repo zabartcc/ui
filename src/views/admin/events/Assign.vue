@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Event Sign-ups</span>
+			<span class="card-title">Position Assignments {{event !== null ? `- ${event.name}` : ''}}</span>
 			<button class="btn right btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
 		</div>
 		<div class="loading_container" v-if="event === null">
@@ -85,6 +85,7 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'EventAssignments',
 	data() {
 		return {
 			event: null,
@@ -96,6 +97,7 @@ export default {
 	},
 	async mounted() {
 		await this.getEventData();
+		this.setTitle(`Position Assignments - ${this.event.name}`);
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false

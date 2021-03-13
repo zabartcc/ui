@@ -40,6 +40,8 @@ import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'NewSoloCert',
+	title: 'New Solo Certification',
 	data() {
 		return {
 			controllers: null,

@@ -10,6 +10,8 @@
 </template>
 <script>
 export default {
+	name: 'AdminDash',
+	title: 'Admin Dashboard',
 	data() {
 		return {
 

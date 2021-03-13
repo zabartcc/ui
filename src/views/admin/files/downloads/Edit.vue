@@ -44,6 +44,7 @@
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
+	name: 'EditDownload',
 	data() {
 		return {
 			form: {
@@ -56,6 +57,7 @@ export default {
 	},
 	async mounted() {
 		await this.getDownload();
+		this.setTitle(`Edit ${this.form.name}`);
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 	},

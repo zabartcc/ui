@@ -35,6 +35,8 @@
 
 <script>
 export default {
+	name: 'NewDoc',
+	title: 'New Document',
 	data() {
 		return {
 			form: {

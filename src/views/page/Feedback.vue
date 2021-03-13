@@ -75,6 +75,8 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'Feedback',
+	title: 'Leave Feedback',
 	data() {
 		return {
 			feedback: {

@@ -100,6 +100,8 @@
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
+	name: 'NewEvent',
+	title: 'New Event',
 	data() {
 		return {
 			form: {

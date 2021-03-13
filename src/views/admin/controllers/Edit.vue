@@ -142,6 +142,7 @@ export default {
 	},
 	async mounted() {
 		await this.getController();
+		this.setTitle(`Edit ${this.controller.fname + ' ' + this.controller.lname}`);
 	},
 	methods: {
 		async getController() {

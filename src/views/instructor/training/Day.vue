@@ -88,6 +88,7 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'TrainingRequestsDay',
 	data() {
 		return {
 			date: '',
@@ -101,7 +102,7 @@ export default {
 	async mounted() {
 		await this.verifyRoute();
 		await this.getRequests();
-
+		this.setTitle(`Training Requests for ${this.formatDate(this.date)}`);
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});

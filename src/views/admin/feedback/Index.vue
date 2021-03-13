@@ -88,6 +88,8 @@ import RecentFeedback from './Recent';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'Feedback',
+	title: 'Feedback',
 	data() {
 		return {
 			unapproved: null

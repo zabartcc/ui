@@ -114,6 +114,7 @@ export default {
 	},
 	async mounted() {
 		await this.getEvent();
+		this.setTitle(`Edit ${this.form.name}`);
 		M.textareaAutoResize(document.getElementById('description'));
 	},
 	methods: {

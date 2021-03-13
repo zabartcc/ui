@@ -91,6 +91,7 @@ import {zabApi, vatusaApiAuth} from '@/helpers/axios.js';
 
 export default {
 	name: 'VisitorApplications',
+	title: 'Visitor Applications',
 	data() {
 		return {
 			applications: null,

@@ -10,6 +10,8 @@
 </template>
 <script>
 export default {
+	name: 'InsDash',
+	title: 'Instructor Dashboard',
 	data() {
 		return {
 

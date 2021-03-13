@@ -50,7 +50,8 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
-	name: 'PastSessions',
+	name: 'RequestTraining',
+	title: 'Request Training',
 	data() {
 		return {
 			request: {

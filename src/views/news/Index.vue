@@ -35,6 +35,8 @@ import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
+	name: 'News',
+	title: 'News',
 	data() {
 		return {
 			newsItems: null,

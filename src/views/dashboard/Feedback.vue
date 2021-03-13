@@ -75,6 +75,8 @@ import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
+	name: 'UserFeedback',
+	title: 'Your Feedback',
 	data() {
 		return {
 			feedback: null,

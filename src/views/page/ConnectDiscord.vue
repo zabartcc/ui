@@ -14,6 +14,8 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 import { mapState } from 'vuex';
 export default {
+	name: 'ConnectDiscord',
+	title: 'Linking Discord...',
 	components: {
 		Spinner
 	},

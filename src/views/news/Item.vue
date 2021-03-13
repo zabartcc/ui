@@ -35,6 +35,7 @@ export default {
 	},
 	async mounted() {
 		await this.getArticle();
+		this.setTitle(this.news.title);
 	},
 	methods: {
 		async getArticle() {

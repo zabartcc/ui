@@ -76,6 +76,8 @@ import Spinner from '@/components/Spinner.vue';
 import Completed from './Completed.vue';
 
 export default {
+	name: 'UpcomingSessions',
+	title: 'Training Sessions',
 	data() {
 		return {
 			sessions: null

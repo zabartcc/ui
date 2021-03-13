@@ -18,6 +18,7 @@
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'CompletedSessions',
 	data() {
 		return {
 			sessions: null

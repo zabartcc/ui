@@ -45,6 +45,8 @@ import { mapState } from 'vuex';
 import { zabApi } from '@/helpers/axios.js';
 
 export default {
+	name: 'NewDownload',
+	title:'New Download',
 	data() {
 		return {
 			form: {

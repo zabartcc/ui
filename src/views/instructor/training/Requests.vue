@@ -69,6 +69,8 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'TrainingRequests',
+	title: 'Training Requests',
 	data() {
 		return {
 			dates: [],

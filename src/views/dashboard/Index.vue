@@ -16,6 +16,8 @@
 import { mapState } from 'vuex';
 import {zabApi} from '@/helpers/axios.js';
 export default {
+	name: 'UserDash',
+	title: 'Dashboard',
 	data() {
 		return {
 			token: '',

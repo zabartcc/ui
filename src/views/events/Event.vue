@@ -38,10 +38,11 @@ export default {
 		Spinner
 	},
 	async mounted() {
+		await this.getEvent();
+		this.setTitle(this.event.name);
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
-		await this.getEvent();
 	},
 	methods: {
 		async getEvent() {

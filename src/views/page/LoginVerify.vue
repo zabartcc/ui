@@ -14,6 +14,7 @@ import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'LoginVerify',
+	title: 'Verifying Login...',
 	methods: {
 		...mapMutations('user', [
 			'setLoggedIn'

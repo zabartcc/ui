@@ -30,7 +30,8 @@
 
 <script>
 export default {
-	name: 'IDS'
+	name: 'IDS',
+	title: 'IDS'
 };
 </script>
 

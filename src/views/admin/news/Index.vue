@@ -58,6 +58,8 @@ import {zabApi} from '@/helpers/axios.js';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
+	name: 'News',
+	title: 'News',
 	data() {
 		return {
 			newsItems: null,

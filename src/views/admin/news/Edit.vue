@@ -29,6 +29,7 @@ import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+	name: 'EditNews',
 	data() {
 		return {
 			news: null
@@ -36,6 +37,7 @@ export default {
 	},
 	async mounted() {
 		await this.getArticle();
+		this.setTitle(`Edit ${this.news.title}`);
 		M.updateTextFields();
 		M.textareaAutoResize(document.querySelector('#content'));
 	},
