@@ -1,9 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="row row_no_margin">
-				<div class="card-title col s12"><span class="card-title">Your Feedback</span></div>
-			</div>
+			<span class="card-title">Your Feedback</span>
 		</div>
 		<div class="loading_container" v-if="!feedback">
 			<Spinner />
@@ -72,7 +70,7 @@
 </template>
 
 <script>
-import {FeedbackMixin} from '@/mixins/FeedbackMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
@@ -90,7 +88,6 @@ export default {
 		Spinner,
 		Pagination
 	},
-	mixins: [FeedbackMixin],
 	async mounted() {
 		await this.getMyFeedback();
 		this.amountOfPages = Math.ceil(this.feedbackAmount / this.limit);
@@ -103,23 +100,18 @@ export default {
 	},
 	methods: {
 		async getMyFeedback() {
-			const feedback = await this.getMyFeedbackMixin(this.$store.state.user.user.data._id, this.page, this.limit);
-			this.feedback = feedback.data.feedback;
-			this.feedbackAmount = feedback.data.amount;
-		},
-		nextPage() {
-			this.page += 1;
-		},
-		previousPage() {
-			this.page -= 1;
+			const {data} = await zabApi.get(`/feedback/${this.$store.state.user.user.data._id}`, {
+				params: {
+					page: this.page,
+					limit: this.limit
+				}
+			});
+			this.feedback = data.data.feedback;
+			this.feedbackAmount = data.data.amount;
 		},
 		convertRating(rating) {
-			if(rating === 5) return "Excellent";
-			else if(rating === 4) return "Above Average";
-			else if(rating === 3) return "Average";
-			else if(rating === 2) return "Below Average";
-			else if(rating === 1) return "Poor";
-			else return "Unknown";
+			const ratings = ['Poor', 'Below Average', 'Average', 'Above Average', 'Excellent'];
+			return ratings[rating];
 		},
 		formatDate(date) {
 			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
@@ -141,8 +133,8 @@ export default {
 
 <style scoped lang="scss">
 .no_feedback {
-	padding: 1em;
-	margin-top: -10px;
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 
@@ -180,10 +172,5 @@ export default {
 .feedback_content {
 	margin-top: -3px;
 	white-space: pre-wrap;
-}
-
-
-.options {
-	text-align: right;
 }
 </style>

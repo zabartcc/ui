@@ -2,13 +2,13 @@
 	<div class="card home_intro">
 		<div class="card-content">
 			<span class="card-title">Controller Dashboard</span>
-			<h6>IDS Token:</h6>
-			<p class="token_wrap">
-				<code>{{token}}</code>
-			</p>
-			<button class="btn waves-effect btn-small" @click.prevent=generateToken>Generate New</button>
-			<p>
-			</p>
+			<div class="ids">
+				<span class="title">IDS Token: </span>
+				<span class="token_wrap">
+					<code>{{token}}</code>
+					<span class="generate" @click=generateToken><i class="material-icons">refresh</i></span>
+				</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -33,9 +33,9 @@ export default {
 		generateToken: async function() {
 			const { data: tokenRet } = await zabApi.post('/user/idsToken');
 			if(tokenRet.ret_det.code !== 200) {
-				this.toastError('Something went wrong, please try again.');
+				this.toastError(`${tokenRet.ret_det.message}`);
 			} else {
-				this.toastSuccess('Token successfully generated!');
+				this.toastSuccess('Token successfully generated');
 				this.token = tokenRet.data;
 			}
 		}
@@ -44,11 +44,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.token_wrap {
-	padding-bottom: 0.75em;
-}
-code {
-	padding: 0.25em 0.5em;
-	background: $gray_light;
+.ids {
+	.token_wrap {
+		padding-bottom: 0.75em;
+		background: $gray_light;
+		padding: 0.25em 0.5em 0.35em 0.5em;
+		border-radius: 5px;
+		margin-left: .5em;
+	}
+	code {
+		display: inline-block;
+		border-radius: 0;
+		width: 300px;
+	}
+
+	.generate {
+		border-radius: 0;
+		i {
+			font-size: 18px;
+			margin-left: .25em;
+			margin-top: .20em;
+			vertical-align: top;
+			user-select: none;
+			cursor: pointer;
+		}
+	}
+
+	.title {
+		user-select: none;
+	}
 }
 </style>

@@ -72,7 +72,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import {FeedbackMixin} from '@/mixins/FeedbackMixin.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
@@ -91,7 +90,6 @@ export default {
 			controllers: null
 		};
 	},
-	mixins: [FeedbackMixin],
 	components: {
 		Spinner
 	},
@@ -102,7 +100,8 @@ export default {
 	},
 	methods: {
 		async getControllers() {
-			this.controllers = await this.getControllersMixin();
+			const {data} = await zabApi.get('/feedback/controllers');
+			this.controllers = data.data;
 		},
 		async submitFeedback() {
 			const {data} = await zabApi.post('/feedback', this.feedback);
