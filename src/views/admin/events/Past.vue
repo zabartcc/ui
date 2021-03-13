@@ -24,7 +24,7 @@
 							</router-link><br />
 						</td>
 						<td class="date">
-							{{format_full(event.eventStart)}}z
+							{{formatDate(event.eventStart)}}z
 						</td>
 						<td class="options">
 							<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {EventsMixin} from '@/mixins/EventsMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
@@ -74,24 +74,24 @@ export default {
 		Spinner,
 		Pagination
 	},
-	mixins: [EventsMixin],
 	async mounted() {
 		await this.getHistoricEvents();
 		this.amountOfPages = Math.ceil(this.eventAmount / this.limit);
 	},
 	methods: {
 		async getHistoricEvents() {
-			const response = await this.getHistoricEventsMixin(this.page, this.limit);
-			this.historicEvents = response.events;
-			this.eventAmount = response.amount;
+			const {data} = await zabApi.get('/event/archive', {
+				params: {
+					page: this.page,
+					limit: this.limit
+				}
+			});
+			this.historicEvents = data.data.events;
+			this.eventAmount = data.data.amount;
 		},
-		format_full(value) {
+		formatDate(value) {
 			var d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
-		},
-		format_hour(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-us', {timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		}
 	},
 	watch: {
@@ -122,10 +122,6 @@ export default {
 
 .event_title {
 	font-weight: 700;
-}
-
-.options {
-	text-align: right;
 }
 
 .card .card-content .event_date {
@@ -159,7 +155,7 @@ td a {
 
 .no_event {
 	padding: 0 1em 1em 1em;
-	margin-top: -10px;
+	margin-top: -1em;
 	font-style: italic;
 }
 </style>

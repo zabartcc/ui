@@ -11,8 +11,8 @@
 			<div v-else-if="!user.data" class="sign_up_err">Please log in to sign up.</div>
 			<div v-else-if="assignedPositions">You have been assigned a position. Contact the EC if you need to cancel.</div>
 			<div v-else-if="requestedPositions" class="sign_up_err">
-				You have requested these positions:<br />
-				{{currentUserRequests || 'No preference'}}<br />
+				You have requested<br />
+				{{currentUserRequests || 'No preference'}}<br /><br />
 				<a href="#" @click.prevent="deleteRequest()" class="btn btn-small waves-effect waves-light">Delete Request</a>
 			</div>
 			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Request Position</button>
@@ -21,9 +21,9 @@
 	<div id="assignment_modal" class="modal assignment_modal">
 		<div class="modal-content">
 			<h4>Request Position</h4>
+			<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, enter "Any". If there is a specific position not listed that you would like to work, you may manually enter it.</p>
+			<p>Please be advised that requests are just that — requests.&nbsp; The events coordinator may place you on any position depending on multiple factors.</p>
 			<div class="chips chips-autocomplete chips-placeholder"></div>
-			<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions above. If you do not have a preference, enter "Any". If there is a specific position not listed that you would like to work, you may manually enter it.</p>
-			<p>Be advised, requests are just that — requests. The events coordinator may place you on any position depending on a multitude of factors.</p>
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">SIGN UP</a>
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import { EventsMixin } from '@/mixins/EventsMixin.js';
-import { mapState } from 'vuex';
+import {zabApi} from '@/helpers/axios.js';
+import {mapState} from 'vuex';
 import EventAssignmentTable from './EventAssignmentTable.vue';
 
 export default {
@@ -60,78 +60,84 @@ export default {
 			},
 		};
 	},
-	mixins: [EventsMixin],
-	mounted() {
-		this.getPositions();
-
+	async mounted() {
+		await this.getPositions();
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
-
 	},
 	methods: {
 		async getPositions() {
-			this.event = await this.getPositionsMixin(this.$route.params.slug);
+			try {
+				const {data} = await zabApi.get(`/event/${this.$route.params.slug}/positions`);
+				this.event = data.data;
 
-			this.positionCategories.enroute.positions =  this.event.positions.filter(position => ['CTR'].includes(position.type));
-			this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
-			this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
+				this.positionCategories.enroute.positions =  this.event.positions.filter(position => ['CTR'].includes(position.type));
+				this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
+				this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
 
-			const positions = this.event.positions.filter(pos => !pos.takenBy).map(pos => pos.pos);
+				const positions = this.event.positions.filter(pos => !pos.takenBy).map(pos => pos.pos);
+				const posChipData = {'Any': null};
 
-			const posChipData = {'Any': null};
+				positions.forEach(pos => posChipData[pos] = null);
 
-			positions.forEach(pos => posChipData[pos] = null);
-
-			this.chips = M.Chips.init(document.querySelectorAll('.chips'), {
-				placeholder: 'Select a position',
-				secondaryPlaceholder: ' ',
-				limit: 3,
-				autocompleteOptions: {
-					data: posChipData,
-					minLength: 0,
-					limit: 5
-				}
-			})[0];
+				this.chips = M.Chips.init(document.querySelectorAll('.chips'), {
+					placeholder: 'Select a position',
+					secondaryPlaceholder: ' ',
+					limit: 3,
+					autocompleteOptions: {
+						data: posChipData,
+						minLength: 0,
+						limit: 5
+					}
+				})[0];
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		async addRequest() {
-			const requests = this.chips.chipsData.map(chip => chip.tag);
-			const success = await this.putSignupMixin(this.$route.params.slug, this.user.data.cid, requests).catch(() => {
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to request a position. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-
-				return false;
-			});
-			if(success) {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Request added successfully! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				await this.getPositions();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('#assignment_modal')).close(), 500);
+			try {
+				const requests = this.chips.chipsData.map(chip => chip.tag);
+				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/signup`, {requests});
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Request successfully submitted <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+					await this.getPositions();
+					setTimeout(() => M.Modal.getInstance(document.querySelector('#assignment_modal')).close(), 500);
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
+				}
+			} catch(e) {
+				console.log(e);
 			}
 		},
 		async deleteRequest() {
-			const success = await this.deleteSignupMixin(this.$route.params.slug, this.user.data.cid).catch(() => {
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to delete request. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+			try {
+				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/signup`);
 
-				return false;
-			});
-			if(success) {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Request deleted successfully! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success'
-				});
-				await this.getPositions();
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Request successfully deleted <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success'
+					});
+					await this.getPositions();
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
+				}
+			} catch(e) {
+				console.log(e);
 			}
 		}
 	},

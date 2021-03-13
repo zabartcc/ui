@@ -1,18 +1,21 @@
 <template>
-	<div class="card" v-if=form>
+	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Edit Event</span>
-			<div class="row">
+			<div class="loading_container" v-if="form === null">
+				<Spinner />
+			</div>
+			<div class="row row_no_margin" v-else>
 				<form enctype="multipart/form-data"  @submit.prevent=submitForm>
 					<div class="input-field col s12">
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name" class="active">Name</label>
 					</div>
-					<div class="input-field col s6">
+					<div class="input-field col s12 l6">
 						<input id="start_time" type="datetime-local" :value="form.eventStart.split('Z')[0]" @input="form.eventStart = $event.target.value" required>
 						<label for="start_time" class="active">Start Time (Zulu)</label>
 					</div>
-					<div class="input-field col s6">
+					<div class="input-field col s12 l6">
 						<input id="end_time" type="datetime-local" :value="form.eventEnd.split('Z')[0]" @input="form.eventEnd = $event.target.value" required>
 						<label for="end_time" class="active">End Time (Zulu)</label>
 					</div>
@@ -32,7 +35,7 @@
 					<div class="input-field col s12">
 						<div class="row">
 							<div class="col s12 l4">
-								<div class="card card_positions">
+								<div class="card card_positions z-depth-2">
 									<p class="positions_title">Center</p>
 									<p class="no_pos" v-if="centerPos.length == 0">No positions added yet.</p>
 									<ul v-else>
@@ -50,7 +53,7 @@
 								</div>
 							</div>
 							<div class="col s12 l4">
-								<div class="card card_positions">
+								<div class="card card_positions z-depth-2">
 									<p class="positions_title">TRACON</p>
 									<p class="no_pos" v-if="traconPos.length == 0">No positions added yet.</p>
 									<ul v-else>
@@ -68,7 +71,7 @@
 								</div>
 							</div>
 							<div class="col s12 l4">
-								<div class="card card_positions">
+								<div class="card card_positions z-depth-2">
 									<p class="positions_title">Local</p>
 									<p class="no_pos" v-if="localPos.length == 0">No positions added yet.</p>
 									<ul v-else>
@@ -97,59 +100,62 @@
 </template>
 
 <script>
-import { EventsMixin } from '@/mixins/EventsMixin.js';
-import { zabApi } from '@/helpers/axios.js';
+import {zabApi} from '@/helpers/axios.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
 		return {
-			form: {
-				name: '',
-				eventStart: '',
-				eventEnd: '',
-				positions: []
-			}
+			form: null
 		};
+	},
+	components: {
+		Spinner
 	},
 	async mounted() {
 		await this.getEvent();
 		M.textareaAutoResize(document.getElementById('description'));
 	},
-	mixins: [EventsMixin],
 	methods: {
 		async getEvent() {
-			this.form = await this.getEventMixin(this.$route.params.slug);
+			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
+			this.form = data.data;
 		},
 		async submitForm() {
-			const formData = new FormData();
-			formData.append('name', this.form.name);
-			formData.append('startTime', this.form.eventStart);
-			formData.append('endTime', this.form.eventEnd);
-			formData.append('description', this.form.description);
-			formData.append('positions', JSON.stringify(this.form.positions));
-			formData.append('banner', this.$refs.banner.files[0]);
+			try {
+				const formData = new FormData();
+				formData.append('name', this.form.name);
+				formData.append('startTime', this.form.eventStart);
+				formData.append('endTime', this.form.eventEnd);
+				formData.append('description', this.form.description);
+				formData.append('positions', JSON.stringify(this.form.positions));
+				formData.append('banner', this.$refs.banner.files[0]);
 
-			zabApi.put(`/event/${this.$route.params.slug}`, formData, {
-				headers: { 
-					'Content-Type': 'multipart/form-data'
+				const {data} = await zabApi.put(`/event/${this.$route.params.slug}`, formData, {
+					headers: { 
+						'Content-Type': 'multipart/form-data'
+					}
+				});
+
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Event succesfully updated <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
 				}
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Event succesfully updated! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			});
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		async addPosition(e) {
-			if(e.target.elements.type.value == 'CTR') {
+			if(e.target.elements.type.value === "CTR") {
 				const obj = {
 					"pos": e.target.elements.pos.value.toUpperCase(),
 					"type": e.target.elements.type.value,
@@ -157,9 +163,9 @@ export default {
 				};
 				this.form.positions.push(obj);
 				e.target.reset(); // clear input
-			} else if(e.target.elements.type.value == 'APP') {
+			} else if(e.target.elements.type.value === "APP") {
 				let code = "app";
-				if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
+				if(e.target.elements.pos.value.slice(0,3) === "PHX") {
 					code = "p50app";
 				}
 				const obj = {
@@ -213,11 +219,11 @@ export default {
 
 	.positions_title {
 		font-weight: 600;
-		padding: .5em;
+		padding: .5em 1em;
 	}
 
 	form {
-		padding: .5em;
+		padding: .5em 1em;
 	}
 
 	.positions_input {
@@ -245,7 +251,7 @@ export default {
 	}
 
 	.pos_header {
-		padding: .5em;
+		padding: .5em 1em;
 	}
 
 	.collection-item:nth-of-type(odd) {
@@ -253,7 +259,7 @@ export default {
 	}
 
 	.no_pos {
-		padding: .5em;
+		padding: .5em 1em;
 		font-style: italic;
 	}
 

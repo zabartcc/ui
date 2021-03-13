@@ -1,78 +1,88 @@
 <template>
 	<div class="card">
-		<div class="card-content" v-if="event">
-			<div class="card-title">Event Sign-ups</div>
+		<div class="card-content">
+			<span class="card-title">Event Sign-ups</span>
 			<button class="btn right btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
-			<div class="no_signups" v-if="event.signups.length == 0">There have been no sign-ups for this event yet.</div>
-			<div class="signups_container" v-else>
-				<div class="signups_user card z-depth-2" v-for="signup in event.signups" :key="signup.id">
-					<div class="signups_delete" @click="deleteSignup(signup.user.cid)"><i class="material-icons">close</i></div>
-					<div class="signups_name">{{`${signup.user.fname} ${signup.user.lname}`}}</div>
-					<div class="signups_rating">{{signup.user.ratingLong}}</div>
-					<div class="signups_prefs">
-						<div class="prefs_title">Preferences</div>
-						<p v-if="signup.requests.length == 0">None</p>
-						<div class="chip" v-for="(request, i) in signup.requests" :key="`${i}-${request}`">
-							{{request}}
-						</div>
-					</div>
-					<div class="signups_assignment">
-						<label>Assignment</label>
-						<select class="browser-default" @change="assignPos($event, signup.user.id)">
-							<option :selected="checkAssigned(signup.user.id) == false">No assignment</option>
-							<option v-for="position in filterPos(signup.user.certifications)" :key="position.id" :value="position.pos" :selected="checkAssigned(signup.user.id) == position.pos">{{position.pos}}</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="row">
+		</div>
+		<div class="loading_container" v-if="event === null">
+			<Spinner />
+		</div>
+		<div class="no_signups" v-else-if="event && event.signups.length == 0">
+			There have been no sign-ups for this event yet.
+		</div>
+		<div class="signups_wrapper" v-else>
+			<table class="signups_list striped">
+				<thead class="signups_list_head">
+					<tr>
+						<th>Controller</th>
+						<th>Preferences</th>
+						<th>Position</th>
+						<th class="options">Options</th>
+					</tr>
+				</thead>
+				<tbody class="signups_list_row">
+					<tr v-for="signup in event.signups" :key="signup._id">
+						<td>
+							<span class="signup_name">{{signup.user.fname}} {{signup.user.lname}}</span> <br />
+							<span class="signup_rating">{{convertRating(signup.user.rating)}}</span>
+						</td>
+						<td>
+							{{signup.requests.join(',  ')}}
+						</td>
+						<td>
+							<select @change="assignPos($event, signup.user.id)">
+								<option :selected="checkAssigned(signup.user.id) == false">No assignment</option>
+								<option v-for="position in filterPos(signup.user.certifications)" :key="position.id" :value="position.pos" :selected="checkAssigned(signup.user.id) == position.pos">{{position.pos}}</option>
+							</select>
+						</td>
+						<td class="options">
+							<i class="material-icons red-text text-darken-2" @click="deleteSignup(signup.user.cid)">delete</i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="row row_no_margin">
 				<div class="input-field col s12 signups_submit">
 					<button type="submit" class="btn right" @click="closeSignups" :disabled="event.open == false">Close</button>
 					<button type="submit" class="btn right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Notify</button>
-					<button type="submit" class="btn right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button>
-				</div>
-			</div>
-			<div id="modal_notify" class="modal">
-				<div class="modal-content">
-					<h4>Are you sure?</h4>
-					<p>By clicking notify, you will send out an email to all controllers who signed up, informing them of the position assignments. You can still make changes to the position assignments after clicking the notify button.</p>
-				</div>
-				<div class="modal-footer">
-					<a href="#!" class="waves-effect btn" @click="notifyAssignments">Notify</a>
-					<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
-				</div>
-			</div>
-			<div id="modal_add_signup" class="modal">
-				<div class="modal-content">
-					<h4>Manually add sign-up</h4>
-					<p>Enter a CID to manually add a controller to this page and to assign them a position. Please note that if the controller is not on our roster, they (currently) cannot be added on here due to technical limitations.</p>
-					<div class="row cid_check">
-						<form @submit.prevent=addSignup>
-							<div class="input-field col s12 m6">
-								<input type="text" id="cid" v-model="cid" required />
-								<label for="cid" class="active">Controller ID</label>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<a href="#!" class="waves-effect btn" @click="addSignup">Add</a>
-					<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
+					<button type="submit" class="btn-flat right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button>
 				</div>
 			</div>
 		</div>
-		<div class="card-content loading" v-else>
-			<h5>Loading event sign-ups...</h5>
-			<div class="progress">
-				<div class="indeterminate"></div>
+		<div id="modal_add_signup" class="modal">
+			<div class="modal-content">
+				<h4>Manually add sign-up</h4>
+				<p>Enter a CID to manually sign a controller up for this event. Please note that the controller is not a home or visiting controller, they cannot be added.</p>
+				<div class="row row_no_margin">
+					<form @submit.prevent=addSignup>
+						<div class="input-field col s12">
+							<input type="text" id="cid" v-model="cid" required />
+							<label for="cid">Controller ID</label>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="waves-effect btn" @click="addSignup">Add</a>
+				<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
+			</div>
+		</div>
+		<div id="modal_notify" class="modal">
+			<div class="modal-content">
+				<h4>Are you sure?</h4>
+				<p>By clicking notify, an email will be send out to all controllers that signed up with the position assignments.  You can still make changes to the assignments after clicking notify.  You cannot undo the email.</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="waves-effect btn" @click="notifyAssignments">Notify</a>
+				<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { EventsMixin } from '@/mixins/EventsMixin.js';
-import { zabApi } from '@/helpers/axios.js';
+import {zabApi} from '@/helpers/axios.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -81,101 +91,139 @@ export default {
 			cid: null
 		};
 	},
-	mixins: [EventsMixin],
+	components: {
+		Spinner
+	},
+	async mounted() {
+		await this.getEventData();
+		M.FormSelect.init(document.querySelectorAll('select'), {});
+		M.Modal.init(document.querySelectorAll('.modal'), {
+			preventScrolling: false
+		});
+	},
 	methods: {
 		async getEventData() {
-			const data = await this.getPositionsMixin(this.$route.params.slug);
-			this.event = data;
+			const {data} = await zabApi.get(`/event/${this.$route.params.slug}/positions`);
+			this.event = data.data;
 		},
 		async saveAssignments() {
-			const positions = this.event.positions;
-			this.saveAssignmentsMixin(this.$route.params.slug, positions).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Positions succesfully assigned! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success'
+			try {
+				const positions = this.event.positions;
+				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/assign`, {
+					assignment: positions
 				});
-				this.getEventData();
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error',
-				});
-			});
+
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Position assignments successfully saved <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success'
+					});
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error',
+					});
+				}
+			} catch(e) {
+				console.log(e);
+			}
+			
 		},
 		async notifyAssignments() {
-			const positions = this.event.positions;
-			this.notifyAssignmentsMixin(this.$route.params.slug, positions).then(async () => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> All controllers were successfully notified! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success'
+			try {
+				const {data} = zabApi.put(`/event/${this.$route.params.lsug}/notify`, {
+					assignment: this.event.positions
 				});
-				await this.getEventData();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_notify')).close(), 500);
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error',
-				});
-			});
+
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Controllers successfully notified <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success'
+					});
+					await this.getEventData();
+					setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_notify')).close(), 500);
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error',
+					});
+				}
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		async addSignup() {
-			zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Sign-up successfully added! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success'
-				});
-				this.getEventData();
-				this.cid = null;
-				setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error',
-				});
-			});
+			try {
+				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`);
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Sign-up successfully added <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success'
+					});
+
+					await this.getEventData();
+
+					this.cid = null;
+					M.FormSelect.init(document.querySelectorAll('select'), {});
+					setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error',
+					});
+					this.cid = null;
+				}
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		async deleteSignup(cid) {
-			this.deleteSignupMixin(this.$route.params.slug, cid).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Sign-up successfully deleted. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success'
-				});
-				this.getEventData();
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error',
-				});
-			});
+			try {
+				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/mandelete/${cid}`);
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Sign-up successfully deleted <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success'
+					});
+					await this.getEventData();
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error',
+					});
+				}
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		async closeSignups() {
-			this.closeSignupsMixin(this.$route.params.slug).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Sign-ups successfully closed! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success'
-				});
-				this.getEventData();
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error',
-				});
-			});
+			try {
+				const {data} = zabApi.put(`/event/${this.$route.params.slug}/close`);
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Sign-ups successfully closed <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success'
+					});
+					await this.getEventData();
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error',
+					});
+				}
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		assignPos(e, user) {
 			const alreadyAssigned = this.event.positions.filter((pos) => { return typeof pos.takenBy === 'object' && pos.takenBy !== null && pos.takenBy.id == user;});
@@ -192,8 +240,6 @@ export default {
 			let certsArray = [];
 			userCerts.forEach(cert => certsArray.push(cert.code));
 			return this.event.positions.filter((pos) => { return certsArray.includes(pos.code); });
-			// This can probably be done better. Help.
-			// I need this to return the positions where position.code === (one of the) userCerts.code (userCerts is an array)
 		},
 		checkAssigned(user) {
 			const taken = this.event.positions.filter((pos => { return typeof pos.takenBy === 'object' && pos.takenBy !== null && pos.takenBy.id == user;}));
@@ -202,74 +248,30 @@ export default {
 			} else {
 				return false;
 			}
+		},
+		convertRating(rating) {
+			const ratings = ['Unknown', 'Observer', 'Student 1', 'Student 2', 'Student 3', 'Controller 1', 'Controller 2', 'Controller 3', 'Instructor 1', 'Instructor 2', 'Instructor 3', 'Supervisor', 'Administrator'];
+			return ratings[rating];
 		}
-	},
-	async mounted() {
-		await this.getEventData();
-		M.Modal.init(document.querySelectorAll('.modal'), {
-			preventScrolling: false
-		});
 	}
 };
 </script>
 
 <style scoped lang="scss">
-
-.card-content{ 
-	padding: 0;
-}
-
 .no_signups {
 	font-style: italic;
-	padding: 1em;
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 }
 
-.card-title {
-	padding-left: .5em;
-	padding-top: .5em;
+.signup_name {
+	font-weight: 700;
+	color: $primary-color-light;
 }
 
-.signups_container {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	padding: .5em;
-}
-
-.signups_user {
-	padding: 1em;
-	margin: .5em;
-	width: 300px;
-
-	.signups_delete {
-		position: absolute;
-		right: .3em;
-		top: .5em;
-		cursor: pointer;
-	}
-
-	.signups_name {
-		font-weight: 600;
-		font-size: 1.1rem;
-	}
-
-	.signups_rating {
-		font-weight: 300;
-		margin-top: -3px;
-	}
-
-	.prefs_title {
-		margin-top: 10px;
-		color: #9e9e9e;
-		font-size: .8rem;
-	}
-	.signups_prefs {
-		min-height: 92px;
-
-		.chip {
-			user-select: none;
-		}
-	}
+.signup_rating {
+	display: block;
+	margin-top: -4px;
 }
 
 .signups_submit {
@@ -278,16 +280,6 @@ export default {
 	button {
 		margin: .25em;
 	}
-}
-
-.loading {
-	text-align: center;
-	padding: 1em;
-}
-
-.progress {
-	max-width: 500px;
-	margin: 0 auto;
 }
 
 #modal_notify {
@@ -303,9 +295,26 @@ export default {
 #modal_add_signup {
 	min-width: 340px;
 	width: 30%;
+}
 
-	.cid_check {
-		margin-top: 20px;
+.options {
+	i {
+		cursor: pointer;
+		user-select: none;
+	}
+}
+
+.signups_list {
+	td, th {
+		&:not(.options) {
+			min-width: 180px;
+		}
+	}
+}
+
+@media only screen and (max-width: 620px) {
+	.signups_wrapper {
+		overflow: auto;
 	}
 }
 

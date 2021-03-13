@@ -1,34 +1,30 @@
 <template>
-	<div class="row" v-if="event">
-		<div class="col s12">
-			<div class="card event_card">
-				<img :src="`https://cdn.zabartcc.org/events/${event.bannerUrl}`" class="event_banner" draggable="false" />
-				<div class="card-content">
-					<div class="row">
-						<div class="col s12">
-							<span class="card-title event_title">{{event.name}}</span>
-							<span class="card-title event_date">{{formatDate(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
-						</div>
+	<div class="card event_card">
+		<div class="loading_container" v-if="event === null">
+			<Spinner />
+		</div>
+		<div class="event" v-else>
+			<img :src="`https://cdn.zabartcc.org/events/${event.bannerUrl}`" class="event_banner" draggable="false" />
+			<div class="card-content">
+				<div class="row">
+					<div class="col s12">
+						<span class="card-title event_title">{{event.name}}</span>
+						<span class="card-title event_date">{{formatDate(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
 					</div>
-					<div class="row">
-						<div class="col s12 event_desc">
-							{{event.description}}
-						</div>
+				</div>
+				<div class="row">
+					<div class="col s12 event_desc">
+						{{event.description}}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="card" v-else>
-		<div class="card-content">
-			<span class="card-title">Oops!</span>
-			We couldn't find that event.
-		</div>
-	</div>
 </template>
 
 <script>
-import {EventsMixin} from '@/mixins/EventsMixin.js';
+import {zabApi} from '@/helpers/axios.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Events',
@@ -38,7 +34,9 @@ export default {
 			chips: null
 		};
 	},
-	mixins: [EventsMixin],
+	components: {
+		Spinner
+	},
 	async mounted() {
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
@@ -47,7 +45,12 @@ export default {
 	},
 	methods: {
 		async getEvent() {
-			this.event = await this.getEventMixin(this.$route.params.slug);
+			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
+			if(data.data === null) {
+				this.$router.push('/events');
+			} else {
+				this.event = data.data;
+			}
 		},
 		formatDate(value) {
 			var d = new Date(value);
@@ -60,15 +63,6 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss">
-.assignment_modal {
-
-	.dropdown-content {
-		width:auto !important;
-	}
-}
-</style>
 
 <style scoped lang="scss">
 .event_banner {

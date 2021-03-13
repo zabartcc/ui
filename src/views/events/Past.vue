@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {EventsMixin} from '@/mixins/EventsMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
@@ -55,16 +55,20 @@ export default {
 		Spinner,
 		Pagination
 	},
-	mixins: [EventsMixin],
 	async mounted() {
 		await this.getHistoricEvents();
 		this.amountOfPages = Math.ceil(this.eventAmount / this.limit);
 	},
 	methods: {
 		async getHistoricEvents() {
-			const response = await this.getHistoricEventsMixin(this.page, this.limit);
-			this.historicEvents = response.events;
-			this.eventAmount = response.amount;
+			const {data} = await zabApi.get('/event/archive', {
+				params: {
+					page: this.page,
+					limit: this.limit
+				}
+			});
+			this.historicEvents = data.data.events;
+			this.eventAmount = data.data.amount;
 		},
 		formatDate(value) {
 			var d = new Date(value);
@@ -110,10 +114,6 @@ export default {
 	}
 }
 
-tr th {
-	text-align: left;
-}
-
 td {
 	padding: 1em;
 }
@@ -131,8 +131,8 @@ td a {
 }
 
 .no_event {
-	padding: 1em;
-	margin-top: -10px;
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 </style>

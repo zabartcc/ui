@@ -45,7 +45,7 @@ $cert_junior: #e84393;
 $cert_training: #0fbcf9;
 
 html {
-	font-family: "Lato", sans-serif!important;
+	font-family: "Lato", "Helvetica", sans-serif!important;
 }
 
 body {
@@ -122,7 +122,7 @@ table {
 }
 
 input.valid[type=text]:not(.browser-default) {
-	border-bottom: 1px solid $primary-color-light;
+	border: 1px solid $primary-color-light;
 	box-shadow: 0 1px 0 0 $primary-color-light;
 }
 
@@ -141,4 +141,8 @@ strong {
 
 .row_no_margin {
 	margin-bottom: 0!important;
+}
+
+.options {
+	text-align: right;
 }

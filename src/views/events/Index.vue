@@ -2,11 +2,11 @@
     <div class="card" v-if="!events || events.length === 0">
         <div class="card-content">
             <span class="card-title">Upcoming Events</span>
-        </div>
-		<div class="loading_container" v-if="!events">
+			<div class="loading_container" v-if="!events">
 			<Spinner />
 		</div>
 		<p v-else-if="events && events.length === 0" class="no_event">There are no upcoming events to display.</p>
+        </div>
 	</div>
 	<div v-if="events && events.length > 0">
 		<div class="card event_card" v-for="event in events" :key="event.id">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {EventsMixin} from '@/mixins/EventsMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 import Past from './Past.vue';
 
@@ -43,13 +43,13 @@ export default {
 		Spinner,
 		Past
 	},
-	mixins: [EventsMixin],
 	async mounted() {
 		await this.getUpcomingEvents();
 	},
 	methods: {
 		async getUpcomingEvents() {
-			this.events = await this.getUpcomingEventsMixin();
+			const {data} = await zabApi.get('/event');
+			this.events = data.data;
 		},
 		formatDate(value) {
 			var d = new Date(value);
@@ -109,8 +109,7 @@ td a {
 }
 
 .no_event {
-	padding: 1em;
-	margin-top: -10px;
+	margin-top: -1em;
 	font-style: italic;
 }
 </style>

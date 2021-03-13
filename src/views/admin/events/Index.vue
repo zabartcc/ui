@@ -26,7 +26,7 @@
 						</router-link><br />
 					</td>
 					<td class="date">
-						{{format_full(event.eventStart)}}z
+						{{formatDate(event.eventStart)}}z
 					</td>
 					<td class="options">
 						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import {EventsMixin} from '@/mixins/EventsMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Past from './Past.vue';
 import Spinner from '@/components/Spinner.vue';
 
@@ -68,7 +68,6 @@ export default {
 			historicEvents: null
 		};
 	},
-	mixins: [EventsMixin],
 	components: {
 		Spinner,
 		Past
@@ -84,30 +83,32 @@ export default {
 	},
 	methods: {
 		async getUpcomingEvents() {
-			this.events = await this.getUpcomingEventsMixin();
-		},
-		format_full(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
+			const {data} = await zabApi.get('/event');
+			this.events = data.data;
 		},
 		async deleteEvent(slug) {
-			const success = await this.deleteEventMixin(slug).catch(() => {
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to delete event. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-				return false;
-			});
-			if(success) {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Event deleted successfully. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				await this.getUpcomingEvents();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
+			try {
+				const {data} = await zabApi.delete(`/event/${slug}`);
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Event successfully deleted <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success'
+					});
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error',
+					});
+				}
+			} catch(e) {
+				console.log(e);
 			}
+		},
+		formatDate(value) {
+			var d = new Date(value);
+			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		}
 	}
 };
@@ -117,14 +118,6 @@ export default {
 .name {
 	color: $primary-color;
 	font-weight: 700;
-}
-
-.row_no_margin {
-	margin-bottom: 0;
-}
-
-.options {
-	text-align: right;
 }
 
 table tbody {
@@ -138,7 +131,7 @@ table tbody {
 
 .no_event {
 	padding: 0 1em 1em 1em;
-	margin-top: -10px;
+	margin-top: -1em;
 	font-style: italic;
 }
 
