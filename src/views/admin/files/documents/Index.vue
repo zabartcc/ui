@@ -6,10 +6,10 @@
 				<div class="card-title col s4"><router-link to="/admin/files/documents/new"><span class="btn new_event_button right">New</span></router-link></div>
 			</div>
 		</div>
-		<div class="loading_container" v-if="!documents">
+		<div class="loading_container" v-if="documents === null">
 			<Spinner />
 		</div>
-		<div class="no_downloads" v-else-if="documents && documents.length === 0">There are no documents to display.</div>
+		<div class="no_documents" v-else-if="documents && documents.length === 0">There are no documents to display.</div>
 		<div class="table_wrapper" v-else>
 			<table class="controller_list striped">
 				<thead class="controller_list_head">
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import {FileMixin} from '@/mixins/FileMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
@@ -56,7 +56,6 @@ export default {
 			documents: null
 		};
 	},
-	mixins: [FileMixin],
 	components: {
 		Spinner
 	},
@@ -69,25 +68,29 @@ export default {
 	},
 	methods: {
 		async getDocuments() {
-			this.documents = await this.getDocumentsMixin();
+			const {data} = await zabApi.get('/file/documents');
+			this.documents = data.data;
 		},
 		async deleteDownload(id) {
-			const success = await this.deleteDownloadMixin(id).catch(() => {
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Unable to delete download <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-				return false;
-			});
-			if(success) {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Download deleted successfully <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				await this.getDownloads();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
+			try {
+				const {data} = await zabApi.delete(`/file/documents/${id}`);
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Document successfully deleted <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+					await this.getDocuments();
+					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
+				}
+			} catch(e) {
+				console.log(e);
 			}
 		},
 		convertCategory(cat) {
@@ -104,7 +107,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .controller_list {
 	padding: 10px;
 }
@@ -112,10 +114,6 @@ export default {
 .table_wrapper {
 	width: 100%;
 	overflow: auto;
-}
-
-.row_no_margin {
-	margin-bottom: 0;
 }
 
 .controller_list_head {
@@ -141,12 +139,9 @@ export default {
 	}
 }
 
-.options {
-	text-align: right;
-}
-
-.no_downloads {
-	padding: 0 0 1em 1em;
+.no_documents {
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 

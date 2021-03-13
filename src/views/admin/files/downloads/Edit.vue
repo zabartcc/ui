@@ -4,11 +4,11 @@
 			<span class="card-title">Edit Download</span>
 			<div class="row">
 				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
-					<div class="input-field col s6">
+					<div class="input-field col s12 l6">
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name" class="active">Name</label>
 					</div>
-					<div class="input-field col s6">
+					<div class="input-field col s12 l6">
 						<select id="category" v-model="form.category">
 							<option value="" disabled selected>Choose a category</option>
 							<option value="sectorFiles">Sector Files</option>
@@ -19,7 +19,7 @@
 						<label>Category</label>
 					</div>
 					<div class="input-field col s12">
-						<input id="description" type="text" v-model="form.description">
+						<textarea id="description" class="materialize-textarea" data-length="400" v-model="form.description"></textarea>
 						<label for="description" class="active">Description (optional)</label>
 					</div>
 					<div class="file-field input-field col s12">
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import {FileMixin} from '@/mixins/FileMixin.js';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
@@ -58,42 +57,44 @@ export default {
 	async mounted() {
 		await this.getDownload();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
+		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 	},
-	mixins: [FileMixin],
 	methods: {
 		async getDownload() {
-			this.form = await this.getSingleDownloadMixin(this.$route.params.id);
+			const {data} = await zabApi.get(`/file/downloads/${this.$route.params.id}`);
+			this.form = data.data;
 		},
 		async submitForm() {
-			const formData = new FormData();
-			formData.append('name', this.form.name);
-			formData.append('category', this.form.category);
-			formData.append('description', this.form.description);
-			formData.append('download', this.$refs.download.files[0]);
+			try {
+				const formData = new FormData();
+				formData.append('name', this.form.name);
+				formData.append('category', this.form.category);
+				formData.append('description', this.form.description);
+				formData.append('download', this.$refs.download.files[0]);
 
-			zabApi.put(`/file/downloads/${this.$route.params.id}`, formData, {
-				headers: { 
-					'Content-Type': 'multipart/form-data'
+				const {data} = await zabApi.put(`/file/downloads/${this.$route.params.id}`, formData, {
+					headers: { 
+						'Content-Type': 'multipart/form-data'
+					}
+				});
+
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Download succesfully updated <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
 				}
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Download succesfully updated! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			});
+			} catch(e) {
+				console.log(e);
+			}
 		}
 	}
 };
 </script>
-
-<style scoped lang="scss">
-
-</style>

@@ -2,13 +2,13 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">New Download</span>
-			<div class="row">
+			<div class="row row_no_margin">
 				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
-					<div class="input-field col s6">
+					<div class="input-field col s12 l6">
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name">Name</label>
 					</div>
-					<div class="input-field col s6">
+					<div class="input-field col s12 l6">
 						<select id="category" v-model="form.category">
 							<option value="" disabled selected>Choose a category</option>
 							<option value="sectorFiles">Sector Files</option>
@@ -19,7 +19,7 @@
 						<label>Category</label>
 					</div>
 					<div class="input-field col s12">
-						<input id="description" type="text" v-model="form.description">
+						<textarea id="description" class="materialize-textarea" data-length="400" v-model="form.description"></textarea>
 						<label for="description">Description (optional)</label>
 					</div>
 					<div class="file-field input-field col s12">
@@ -28,7 +28,7 @@
 							<input type="file" ref="download" required>
 						</div>
 						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Upload file">
+							<input class="file-path validate" type="text" placeholder="Upload a file">
 						</div>
 					</div>
 					<div class="input-field col s12">
@@ -56,35 +56,41 @@ export default {
 	},
 	async mounted() {
 		M.FormSelect.init(document.querySelectorAll('select'), {});
+		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 	},
 	methods: {
 		async submitForm() {
-			const formData = new FormData();
-			formData.append('name', this.form.name);
-			formData.append('category', this.form.category);
-			formData.append('description', this.form.description);
-			formData.append('download', this.$refs.download.files[0]);
-			formData.append('author', this.user.data._id);
+			try {
+				const formData = new FormData();
+				formData.append('name', this.form.name);
+				formData.append('category', this.form.category);
+				formData.append('description', this.form.description);
+				formData.append('download', this.$refs.download.files[0]);
+				formData.append('author', this.user.data._id);
 
-			zabApi.post(`/file/downloads/new`, formData, {
-				headers: { 
-					'Content-Type': 'multipart/form-data'
+				const {data} = await zabApi.post(`/file/downloads/new`, formData, {
+					headers: { 
+						'Content-Type': 'multipart/form-data'
+					}
+				});
+
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Download succesfully uploaded <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+					this.$router.push('/admin/files/downloads');
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
 				}
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Download succesfully created! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.$router.push('/admin/files/downloads');
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> Something went wrong, please try again <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			});
+			} catch(e) {
+				console.log(e);
+			}
 		}
 	},
 	computed: {
@@ -94,7 +100,3 @@ export default {
 	}
 };
 </script>
-
-<style scoped lang="scss">
-
-</style>

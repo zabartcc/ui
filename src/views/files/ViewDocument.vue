@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { FileMixin } from '@/mixins/FileMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	data() {
@@ -24,13 +24,13 @@ export default {
 			document: null
 		};
 	},
-	mixins: [FileMixin],
 	async mounted() {
 		await this.getDocument();
 	},
 	methods: {
 		async getDocument() {
-			this.document = await this.getSingleDocumentMixin(this.$route.params.slug);
+			const {data} = await zabApi.get(`/file/documents/${this.$route.params.slug}`);
+			this.document = data.data;
 		},
 		formatDate(date) {
 			return new Date(date).toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});

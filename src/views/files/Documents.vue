@@ -12,7 +12,7 @@
 					<li class="tab col s6 l4"><a href="#misc">Miscellaneous</a></li>
 				</ul>
 			</div>
-			<div class="loading_container" v-if="!documents">
+			<div class="loading_container loading_files" v-if="documents === null">
 				<Spinner />
 			</div>
 			<div class="tabs_content" v-else>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import {FileMixin} from '@/mixins/FileMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
@@ -67,7 +67,6 @@ export default {
 			documents: null
 		};
 	},
-	mixins: [FileMixin],
 	components: {
 		Spinner
 	},
@@ -77,7 +76,8 @@ export default {
 	},
 	methods: {
 		async getDocuments() {
-			this.documents = await this.getDocumentsMixin();
+			const {data} = await zabApi.get('/file/documents');
+			this.documents = data.data;
 		},
 		formatDate(date) {
 			return new Date(date).toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
@@ -101,64 +101,68 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.document {
-		padding: 1em 1em .5em 1em;
-		transition: background-color .3s ease;
+.document {
+	padding: 1em 1em .5em 1em;
+	transition: background-color .3s ease;
 
-		.title {
-			font-weight: 700;
-			font-size: 1.3rem;
-		}
+	.title {
+		font-weight: 700;
+		font-size: 1.3rem;
+	}
 
-		.desc {
-			font-size: .9rem;
-		}
+	.desc {
+		font-size: .9rem;
+	}
 
-		.button {
-			float: right;
-			margin-top: -30px;
-			background: $primary-color-light;
+	.button {
+		float: right;
+		margin-top: -30px;
+		background: $primary-color-light;
 
-			&.btn {
-				width: auto;
-				padding: 0 .6em;
-				color: #fff;
-			}
-		}
-
-		.info {
-			font-size: .8rem;
-			margin-top: 5px;
-			color: #9e9e9e;
-		}
-
-		&:nth-of-type(odd) {
-			background: hsla(0,0%,94.9%,.5);
-		}
-
-		&:hover {
-			background: #eaeaea;
+		&.btn {
+			width: auto;
+			padding: 0 .6em;
+			color: #fff;
 		}
 	}
 
-	.no_files {
-		padding: 1.5em 1em;
-		font-style: italic;
+	.info {
+		font-size: .8rem;
+		margin-top: 5px;
+		color: #9e9e9e;
 	}
 
-	.tabs {
-		overflow-x: auto;
-
-		&::-webkit-scrollbar {
-			height: 3px;
-		}
-
-		&::-webkit-scrollbar-track {
-			background-color: #fff;
-		}
-
-		&::-webkit-scrollbar-thumb:horizontal {
-			background-color: $gray_light;
-		}
+	&:nth-of-type(odd) {
+		background: hsla(0,0%,94.9%,.5);
 	}
+
+	&:hover {
+		background: #eaeaea;
+	}
+}
+
+.no_files {
+	padding: 1.5em 1em;
+	font-style: italic;
+}
+
+.tabs {
+	overflow-x: auto;
+
+	&::-webkit-scrollbar {
+		height: 3px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: #fff;
+	}
+
+	&::-webkit-scrollbar-thumb:horizontal {
+		background-color: $gray_light;
+	}
+}
+
+.loading_files {
+	padding-top: 5em;
+}
 </style>

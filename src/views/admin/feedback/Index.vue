@@ -1,11 +1,9 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="row row_no_margin">
-				<div class="card-title col s12"><span class="card-title">Unapproved Feedback</span></div>
-			</div>
+			<span class="card-title">Unapproved Feedback</span>
 		</div>
-		<div class="loading_container" v-if="!unapproved">
+		<div class="loading_container" v-if="unapproved === null">
 			<Spinner />
 		</div>
 		<p class="no_unapproved" v-else-if="unapproved && unapproved.length == 0">There is no unapproved feedback to display.</p>
@@ -85,7 +83,6 @@
 </template>
 
 <script>
-import {FeedbackMixin} from '@/mixins/FeedbackMixin.js';
 import {zabApi} from '@/helpers/axios.js';
 import RecentFeedback from './Recent';
 import Spinner from '@/components/Spinner.vue';
@@ -96,7 +93,6 @@ export default {
 			unapproved: null
 		};
 	},
-	mixins: [FeedbackMixin],
 	components: {
 		RecentFeedback,
 		Spinner
@@ -112,51 +108,56 @@ export default {
 	},
 	methods: {
 		async getUnapproved() {
-			this.unapproved = await this.getUnapprovedMixin();
+			const {data} = await zabApi.get('/feedback/unapproved');
+			this.unapproved = data.data;
 		},
 		async approveFeedback(id) {
-			const {data} = await zabApi.put(`/feedback/approve/${id}`);
-			if(data.ret_det.code === 200) {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Feedback successfully approved <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				await this.getUnapproved();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
-			} else {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+			try {
+				const {data} = await zabApi.put(`/feedback/approve/${id}`);
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Feedback successfully approved <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+					await this.getUnapproved();
+					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
+				}
+			} catch(e) {
+				console.log(e);
 			}
 		},
 		async rejectFeedback(id) {
-			const {data} = await zabApi.put(`/feedback/reject/${id}`);
-			if(data.ret_det.code === 200) {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Feedback successfully rejected <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				await this.getUnapproved();
-				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
-			} else {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+			try {
+				const {data} = await zabApi.put(`/feedback/reject/${id}`);
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Feedback successfully rejected <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+					await this.getUnapproved();
+					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
+				}
+			} catch(e) {
+				console.log(e);
 			}
 		},
 		convertRating(rating) {
-			if(rating === 5) return "Excellent";
-			else if(rating === 4) return "Above Average";
-			else if(rating === 3) return "Average";
-			else if(rating === 2) return "Below Average";
-			else if(rating === 1) return "Poor";
-			else return "Unknown";
+			const ratings = ['Poor', 'Below Average', 'Average', 'Above Average', 'Excellent'];
+			return ratings[rating];
 		},
 		formatDate(date) {
 			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
@@ -166,14 +167,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.row_no_margin {
-	margin-bottom: 0;
-}
-
-.options {
-	text-align: right;
-}
-
 .modal_title {
 	font-size: 1.8em;
 	margin-bottom: .5em;
@@ -189,8 +182,8 @@ table tbody {
 }
 
 .no_unapproved {
-	padding: 1em;
-	margin-top: -10px;
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 
