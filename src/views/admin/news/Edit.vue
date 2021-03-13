@@ -26,7 +26,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import {NewsMixin} from '@/mixins/NewsMixin.js';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
@@ -40,14 +39,13 @@ export default {
 		M.updateTextFields();
 		M.textareaAutoResize(document.querySelector('#content'));
 	},
-	mixins: [NewsMixin],
 	components: {
 		Spinner
 	},
 	methods: {
 		async getArticle() {
-			const {data} = await this.getArticleMixin(this.$route.params.slug);
-			this.news = data;
+			const {data} = await zabApi.get(`/news/${this.$route.params.slug}`);
+			this.news = data.data;
 		},
 		async updateNews() {
 			const {data: resp} = await zabApi.put(`/news/${this.$route.params.slug}`, this.news);

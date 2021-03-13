@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {NewsMixin} from '@/mixins/NewsMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
 
@@ -30,21 +30,26 @@ export default {
 		return {
 			newsItems: null,
 			page: 1,
-			limit: 5
+			limit: 3
 		};
 	},
 	components: {
 		Spinner
 	},
-	mixins: [NewsMixin],
 	async mounted() {
 		await this.getNews();
 	},
 	methods: {
 		async getNews() {
-			const data = await this.getNewsMixin(this.page, this.limit);
+			const {data} = await zabApi.get('/news', {
+				params: {
+					page: this.page, 
+					limit: this.limit
+				}
+			});
 			if(data.ret_det.code === 200) {
 				this.newsItems = data.data.slice(0,3);
+				this.newsAmount = data.amount;
 			}
 		},
 	}
