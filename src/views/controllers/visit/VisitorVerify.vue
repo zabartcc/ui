@@ -2,14 +2,14 @@
     <div class="card home_intro">
 		<div class="card-content">
 			<h5>Processing Login, Please Wait</h5>
-			<Spinner width="300px" />
+			<Spinner />
 		</div>
 	</div>
 </template>
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import { mapActions } from 'vuex';
+import {mapActions} from 'vuex';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
@@ -22,23 +22,22 @@ export default {
 	components: {
 		Spinner
 	},
-	async mounted () {
-		zabApi.post('/user/visit/login', {
-			token: this.$route.query.token
-		}).then(() => {
-			this.getVisit().then(() => {
-
-				this.$router.push('/controllers/visit');
-
-				M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
-					alignment: 'right',
-					coverTrigger: false,
-					constrainWidth: false
-				});
+	async mounted() {
+		try {
+			await zabApi.post('/user/visit/login', {
+				token: this.$route.query.token
 			});
-		}).catch(err => {
-			console.log(err);
-		});
+			await this.getVisit();
+			this.$router.push('/controllers/visit');
+
+			M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
+				alignment: 'right',
+				coverTrigger: false,
+				constrainWidth: false
+			});
+		} catch(e) {
+			console.log(e);
+		}
 	},
 };
 </script>
@@ -46,10 +45,5 @@ export default {
 <style scoped>
 .card-content {
 	text-align: center;
-}
-
-.progress {
-	max-width: 500px;
-	margin: 50px auto;
 }
 </style>

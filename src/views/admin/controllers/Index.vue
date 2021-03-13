@@ -3,7 +3,7 @@
 		<div class="card">
 			<div class="card-content">
 				<div class="row">
-					<span class="card-title col s12 m8">Home Controllers</span>
+					<span class="card-title col s12 m8">Controllers</span>
 					<div class="input-field col s12 m4">
 						<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller">
 						<span class="helper-text right">You can search by CID, name, or operating initials.</span>
@@ -65,6 +65,8 @@
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
+	name: 'Controllers',
+	title: 'Controllers',
 	data() {
 		return {
 			controllers: null,
@@ -84,8 +86,8 @@ export default {
 	},
 	methods: {
 		async getControllers() {
-			const controllers = (await zabApi.get('/controller')).data.data;
-			this.controllers = controllers.home.concat(controllers.visiting);
+			const {data} = await zabApi.get('/controller');
+			this.controllers = data.data.home.concat(data.data.visiting);
 			this.controllers = this.controllers.filter(c => c.member);
 			this.controllersFiltered = this.controllers;
 		},
@@ -107,37 +109,32 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.table_wrapper {
-		width: 100%;
-		overflow: auto;
-	}
-	.input-field {
-		margin-top: 0;
-	}
-	.name {
-		color: $primary-color;
-		font-weight: 700;
-	}
-	.rating {
-		font-weight: 400;
-	}
+.table_wrapper {
+	width: 100%;
+	overflow: auto;
+}
+.input-field {
+	margin-top: 0;
+}
+.name {
+	color: $primary-color;
+	font-weight: 700;
+}
+.rating {
+	font-weight: 400;
+}
 
-	.options {
-		text-align: right;
-	}
-
-	table tbody {
-		tr {
-			transition: background-color .3s ease;
-			&:hover {
-				background: #eaeaea;
-			}
+table tbody {
+	tr {
+		transition: background-color .3s ease;
+		&:hover {
+			background: #eaeaea;
 		}
 	}
+}
 
-	.modal_delete {
-		min-width: 340px;
-		width: 30%;
-	}
-
+.modal_delete {
+	min-width: 340px;
+	width: 30%;
+}
 </style>

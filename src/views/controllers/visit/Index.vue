@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div v-else>
-					<p>You are already a home or visiting controller.</p>
+					<p>You already are a home or visiting controller.</p>
 				</div>
 			</div>
 		</div>
@@ -52,54 +52,49 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { ControllerMixin } from '@/mixins/ControllerMixin.js';
+import {mapState} from 'vuex';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	data() {
 		return {
 		};
 	},
-	mixins: [ControllerMixin],
 	methods: {
 		async login() {
 			localStorage.setItem('redirect', this.$route.path);
 			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 2}`;
 		},
 		async submitApplication() {
-			if(!this.$refs.email.value || !this.$refs.home.value || !this.$refs.reason.value) {
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Please fill out all form fields.<div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
+			try {
+				this.$refs.submitButton.classList.add('disabled');
+				const {data} = await zabApi.post('/controller/visit', {
+					fname: this.$refs.fname.value,
+					lname: this.$refs.lname.value,
+					cid: this.$refs.cid.value,
+					rating: this.$refs.rating.value,
+					email: this.$refs.email.value,
+					home: this.$refs.home.value,
+					reason: this.$refs.reason.value
 				});
-				return false;
+
+				if(data.ret_det.code === 200) {
+					M.toast({
+						html: '<i class="material-icons left">done</i> Visitor application successfully submitted <div class="border"></div>',
+						displayLength: 5000,
+						classes: 'toast toast_success',
+					});
+					this.$router.push('/');
+				} else {
+					M.toast({
+						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
+						displayLength: 5000,
+						classes: 'toast toast_error'
+					});
+				}
+			} catch(e) {
+				console.log(e);
 			}
-			const data = {
-				fname: this.$refs.fname.value,
-				lname: this.$refs.lname.value,
-				cid: this.$refs.cid.value,
-				rating: this.$refs.rating.value,
-				email: this.$refs.email.value,
-				home: this.$refs.home.value,
-				reason: this.$refs.reason.value
-			};
-			this.$refs.submitButton.classList.add('disabled');
-			this.submitApplicationMixin(data).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Visitor application submitted! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.$router.push('/');
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			});
 		}
 	},
 	computed: {

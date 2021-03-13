@@ -76,7 +76,6 @@
 </template>
 
 <script>
-import { ControllerMixin } from '@/mixins/ControllerMixin.js';
 import Spinner from '@/components/Spinner.vue';
 import {zabApi} from '@/helpers/axios.js';
 
@@ -94,7 +93,6 @@ export default {
 	components: {
 		Spinner
 	},
-	mixins: [ControllerMixin],
 	async mounted() {
 		await this.getControllers();
 		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
@@ -103,7 +101,8 @@ export default {
 	},
 	methods: {
 		async getControllers() {
-			this.controllers = (await zabApi.get('/controller')).data.data;
+			const {data} = await zabApi.get('/controller');
+			this.controllers = data.data;
 			this.controllers.home = this.controllers.home.filter(c => c.member);
 			this.controllers.visiting = this.controllers.visiting.filter(c => c.member);
 		},

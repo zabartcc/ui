@@ -98,6 +98,7 @@ import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Staff',
+	title: 'Staff',
 	data() {
 		return {
 			staff: null
@@ -108,65 +109,66 @@ export default {
 		Spinner
 	},
 	async mounted() {
-		this.staff =  (await zabApi.get('/controller/staff')).data.data;
+		const {data} = await zabApi.get('/controller/staff');
+		this.staff =  data.data;
 	}
 };
 </script>
 
 <style scoped lang="scss">
-	.row, .col {
-		padding: 0;
-		margin: 0;
-	}
+.row, .col {
+	padding: 0;
+	margin: 0;
+}
 
-	.card {
-		z-index: 1;
-	}
+.card {
+	z-index: 1;
+}
 
+.card-content .card {
+	margin: 0 .5em;
+}
+
+.staff_table {
+	tr {
+		border-bottom: none;
+	}
+	td {
+		width: 8.333333333333333%;
+		box-sizing: border-box;
+		padding: .25em 1em;
+		vertical-align: top;
+	}
+}
+
+.border_right {
+	border-right: 3px solid $primary-color;
+	height: 30px;
+}
+
+.border_left {
+	border-left: 3px solid $primary-color;
+	height: 30px;
+}
+
+.border_long {
+	height: 110px;
+	margin-top: -85px;
+	z-index: 0;
+}
+
+.border_top {
+	border-top: 3px solid $primary-color;
+}
+
+.card_margin {
+	margin: .5em 0 1em 0;
+}
+
+@media only screen and (max-width: 992px) {
 	.card-content .card {
-		margin: 0 .5em;
-	}
-
-	.staff_table {
-		tr {
-			border-bottom: none;
-		}
-		td {
-			width: 8.333333333333333%;
-			box-sizing: border-box;
-			padding: .25em 1em;
-			vertical-align: top;
-		}
-	}
-
-	.border_right {
-		border-right: 3px solid $primary-color;
-		height: 30px;
-	}
-
-	.border_left {
-		border-left: 3px solid $primary-color;
-		height: 30px;
-	}
-
-	.border_long {
-		height: 110px;
-		margin-top: -85px;
-		z-index: 0;
-	}
-
-	.border_top {
-		border-top: 3px solid $primary-color;
-	}
-
-	.card_margin {
+		width: 100%;
 		margin: .5em 0 1em 0;
 	}
-
-	@media only screen and (max-width: 992px) {
-		.card-content .card {
-			width: 100%;
-			margin: .5em 0 1em 0;
-		}
-	} 
+} 
 </style>

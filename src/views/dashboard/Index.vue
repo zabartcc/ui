@@ -32,18 +32,18 @@ export default {
 	methods: {
 		generateToken: async function() {
 			const { data: tokenRet } = await zabApi.post('/user/idsToken');
-			if(tokenRet.ret_det.code !== 200) {
-				this.toastError(`${tokenRet.ret_det.message}`);
-			} else {
+			if(tokenRet.ret_det.code === 200) {
 				this.toastSuccess('Token successfully generated');
 				this.token = tokenRet.data;
+			} else {
+				this.toastError(`${tokenRet.ret_det.message}`);
 			}
 		}
 	}
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .ids {
 	.token_wrap {
 		padding-bottom: 0.75em;

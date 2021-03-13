@@ -1,8 +1,11 @@
 <template>
-	<div v-if=controller class="card">
+	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Edit Controller - {{controller.fname}} {{controller.lname}}</span>
-			<form id="update_controller" @submit.prevent=updateController>
+			<span class="card-title">Edit Controller {{controller !== null ? ` - ${controller.fname} ${controller.lname}` : ''}}</span>
+			<div class="loading_container" v-if="controller === null">
+				<Spinner />
+			</div>
+			<form id="update_controller" @submit.prevent=updateController v-else>
 				<div class="row">
 					<div class="input-field col s6">
 						<input id="cid" type="text" :value="controller.cid" disabled>
@@ -96,8 +99,8 @@
 </template>
 
 <script>
-import { ControllerMixin } from '@/mixins/ControllerMixin.js';
-import { zabApi } from '@/helpers/axios.js';
+import {zabApi} from '@/helpers/axios.js';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -134,13 +137,16 @@ export default {
 			}
 		};
 	},
-	mixins: [ControllerMixin],
+	components: {
+		Spinner
+	},
 	async mounted() {
 		await this.getController();
 	},
 	methods: {
 		async getController() {
-			this.controller = (await zabApi.get(`/controller/${this.$route.params.cid}`)).data.data;
+			const {data} = await zabApi.get(`/controller/${this.$route.params.cid}`);
+			this.controller = data.data;
 			this.form = {
 				...this.form,
 				fname: this.controller.fname,
@@ -170,16 +176,18 @@ export default {
 			this.form.vis = e.target.classList.contains('active');
 		},
 		async updateController() {
-			const { data: updateResponse } = await zabApi.put(`/controller/${this.controller.cid}`, {
-				form: this.form
-			});
+			try {
+				const {data} = await zabApi.put(`/controller/${this.controller.cid}`, {
+					form: this.form
+				});
 
-			console.log(updateResponse);
-
-			if(updateResponse.ret_det.code === 200) {
-				this.toastSuccess('Controller successfully updated.');
-			} else {
-				this.toastError('Something went wrong. Please try again.');
+				if(data.ret_det.code === 200) {
+					this.toastSuccess('Controller successfully updated');
+				} else {
+					this.toastError(data.ret_det.message);
+				}
+			} catch(e) {
+				console.log(e);
 			}
 		}
 	}
