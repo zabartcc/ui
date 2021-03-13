@@ -41,7 +41,7 @@
 import AtcOnlineItem from './AtcOnlineItem';
 import PilotOnlineItem from './PilotOnlineItem';
 import Spinner from '@/components/Spinner.vue';
-import {SidebarMixin} from '@/mixins/SidebarMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	components: {
@@ -58,21 +58,20 @@ export default {
 			airports: ["KPHX", "KABQ", "KTUS", "KAMA", "KROW", "KELP", "KSDL", "KCHD", "KFFZ", "KIWA", "KDVT", "KGEU", "KGYR", "KLUF", "KRYN", "KDMA", "KFLG", "KPRC", "KAEG", "KBIF", "KHMN", "KSAF", "KFHU"]
 		};
 	},
-	mixins: [SidebarMixin],
+	async mounted() {
+		M.Tabs.init(document.querySelectorAll('.tabs'));
+		await this.getOnline();
+	},
 	methods: {
 		async getOnline() {
-			const online = await this.getClientsOnline();
-			this.pilotsOnline = online.pilots;
-			this.atcOnline = online.atc;
+			const {data} = await zabApi.get('/online');
+			this.pilotsOnline = data.data.pilots;
+			this.atcOnline = data.data.atc;
 			await this.getZuluTime(); // update time when refreshing who's online
 		},
 		getZuluTime() {
 			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		}
-	},
-	async mounted() {
-		M.Tabs.init(document.querySelectorAll('.tabs'));
-		await this.getOnline();
 	},
 	computed: {
 		depsArrs() {
