@@ -142,6 +142,7 @@ export default {
 
 .calendar_wrapper {
 	margin-top: 1em;
+	padding: .25em;
 }
 
 .calendar {

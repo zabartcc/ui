@@ -33,7 +33,7 @@
 				<p>There are no departures/arrivals online right now.</p>
 			</div>
 		</div>
-		<h6 class="as_of">As Of: {{getZuluTime()}}z</h6>
+		<p class="as_of">As Of: {{getZuluTime()}}z</p>
 	</div>
 </template>
 

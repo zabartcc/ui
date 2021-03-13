@@ -4,7 +4,7 @@
 			<span class="card-title">Submit Feedback</span>
 			<div class="card_desc">
 				<p>
-				We welcome your feedback! Please use the form below to send feedback about one of our controllers. Please note that your identity will always be shared with the ATM, DATM, and TA, regardless of selecting the 'remain anonymous' option.
+					We welcome your feedback! Please use the form below to send feedback about one of our controllers. Please note that your identity will always be shared with the ATM, DATM, and TA, regardless of selecting the 'remain anonymous' option.
 				</p>
 			</div>
 			<div class="loading_container" v-if="!controllers">
