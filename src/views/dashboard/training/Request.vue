@@ -76,24 +76,20 @@ export default {
 	methods: {
 		async submitRequest() {
 			try {
-				await zabApi.post('/training/request/new', this.request);
-				M.toast({
-					html: '<i class="material-icons left">done</i> Training request submitted <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.$router.push('/dash/training');
+				const {data} = await zabApi.post('/training/request/new', this.request);
+				if(data.ret_det.code === 200) {
+					this.toastSuccess('Training Request successfully submitted');
+					this.$router.push('/dash/training');
+				} else {
+					this.toastError(data.ret_det.message);
+				}
 			} catch(e) {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${e} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+				console.log(e);
 			}
 		},
 		async getTrainingMilestones() {
-			const response = await this.getTrainingMilestonesMixin(this.request.submitter);
-			this.milestones = response.data.milestones;
+			const {data} = await zabApi.get(`/training/milestones`);
+			this.milestones = data.data.milestones;
 		}
 	}
 

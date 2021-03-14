@@ -8,8 +8,8 @@
 		</div>
 		<p class="no_feedback" v-else-if="recentFeedback && feedbackAmount === 0">There is no recent feedback to display.</p>
 		<div class="feedback_wrapper" v-else>
-			<table class="event_list striped">
-				<thead class="event_list_head">
+			<table class="feedback_list striped">
+				<thead class="feedback_list_head">
 					<tr>
 						<th>Date</th>
 						<th>Controller</th>
@@ -18,7 +18,7 @@
 						<th class="options">Options</th>
 					</tr>
 				</thead>
-				<tbody class="event_list_row">
+				<tbody class="feedback_list_row">
 					<tr v-for="(feedback, i) in recentFeedback" :key="feedback._id">
 						<td>{{formatDate(feedback.createdAt)}}z</td>
 						<td>{{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>

@@ -65,7 +65,7 @@
 											<label for="end_time" class="active">End Time</label>
 										</div>
 										<div class="input-field remarks_wrapper col s12">
-											<p id="remarks">{{request.remarks}}</p>
+											<p id="remarks">{{request.remarks ? request.remarks : '—'}}</p>
 											<label for="remarks" class="active">Remarks</label>
 										</div>
 									</div>
@@ -120,24 +120,20 @@ export default {
 			}
 		},
 		async takeSession(i, id) {
-			const {data} = await zabApi.post(`/training/request/take/${id}`, {
-				startTime: this.requests[i].startTime,
-				endTime: this.requests[i].endTime,
-				instructor: this.$store.state.user.user.data._id
-			});
-			if(data.ret_det.code !== 200) {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
+			try {
+				const {data} = await zabApi.post(`/training/request/take/${id}`, {
+					startTime: this.requests[i].startTime,
+					endTime: this.requests[i].endTime,
+					instructor: this.$store.state.user.user.data._id
 				});
-			} else {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Request successfully taken!<div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.$router.push('/ins/training/requests');
+				if(data.ret_det.code === 200) {
+					this.toastSuccess('Training Request successfully taken');
+					this.$router.push('/ins/training/requests');
+				} else {
+					this.toastError(data.ret_det.message);
+				}
+			} catch(e) {
+				console.log(e);
 			}
 			
 		},
@@ -195,6 +191,7 @@ export default {
 <style scoped lang="scss">
 .no_requests {
 	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 
@@ -206,10 +203,6 @@ export default {
 .modal_title {
 	font-size: 1.8em;
 	margin-bottom: .5em;
-}
-
-.options {
-	text-align: right;
 }
 
 .modal_request {

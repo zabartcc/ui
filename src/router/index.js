@@ -120,6 +120,14 @@ const routes = [
 			{
 				path: 'training/sessions',
 				component: () => import('../views/instructor/training/Sessions.vue')
+			},
+			{
+				path: 'training/sessions/edit/:id',
+				component: () => import('../views/instructor/training/EditSession.vue')
+			},
+			{
+				path: 'training/sessions/:id',
+				component: () => import('../views/instructor/training/ViewSession.vue')
 			}
 		]
 	},
@@ -212,6 +220,10 @@ const routes = [
 			{
 				path: 'training/new',
 				component: () => import('../views/dashboard/training/Request.vue')
+			},
+			{
+				path: 'training/session/:id',
+				component: () => import('../views/dashboard/training/ViewSession.vue')
 			}
 		]
 	},

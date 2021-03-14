@@ -107,7 +107,7 @@ export default {
 			}
 		},
 		formatDateTime(value) {
-			var d = new Date(value);
+			const d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC', hour12: false});
 		},
 	}
@@ -118,11 +118,7 @@ export default {
 .no_sessions {
 	font-style: italic;
 	margin-top: -1em;
-	padding: 1em;
-}
-
-.options {
-	text-align: right;
+	padding: 0 1em 1em 1em;
 }
 
 .modal_title {

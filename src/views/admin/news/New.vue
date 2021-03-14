@@ -57,7 +57,7 @@ export default {
 				});
 			} else {
 				M.toast({
-					html: '<i class="material-icons left">done</i> News article succesfully created<div class="border"></div>',
+					html: '<i class="material-icons left">done</i> News article successfully created<div class="border"></div>',
 					displayLength: 5000,
 					classes: 'toast toast_success',
 				});
