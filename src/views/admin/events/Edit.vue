@@ -34,54 +34,17 @@
 					</div>
 					<div class="input-field col s12">
 						<div class="row">
-							<div class="col s12 l4">
+							<div class="col s12 l6">
 								<div class="card card_positions z-depth-2">
-									<p class="positions_title">Center</p>
-									<p class="no_pos" v-if="centerPos.length == 0">No positions added yet.</p>
+									<p class="positions_title">Event Positions</p>
+									<p class="no_pos" v-if="form.positions.length == 0">No positions added yet.</p>
 									<ul v-else>
-										<li v-for="position in centerPos" class="collection-item" :key="position.pos">
-											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
+										<li v-for="position in form.positions" class="collection-item" :key="position">
+											<div class="pos_header">{{position}} <span class="delete_pos" @click="deletePos(position)">Delete</span></div>
 										</li>
 									</ul>
 									<form @submit.prevent=addPosition>
-										<input type="hidden" value="CTR" name="type" />
-										<input type="text" class="positions_input" placeholder="ABQ_CTR" name="pos" required />
-										<button class="positions_submit" type="submit" name="action">
-											<i class="material-icons">add</i>
-										</button>
-									</form>
-								</div>
-							</div>
-							<div class="col s12 l4">
-								<div class="card card_positions z-depth-2">
-									<p class="positions_title">TRACON</p>
-									<p class="no_pos" v-if="traconPos.length == 0">No positions added yet.</p>
-									<ul v-else>
-										<li v-for="position in traconPos" class="collection-item" :key="position.pos">
-											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
-										</li>
-									</ul>
-									<form @submit.prevent=addPosition>
-										<input type="hidden" value="APP" name="type" />
-										<input type="text" class="positions_input" placeholder="PHX_APP" name="pos" required />
-										<button class="positions_submit" type="submit" name="action">
-											<i class="material-icons">add</i>
-										</button>
-									</form>
-								</div>
-							</div>
-							<div class="col s12 l4">
-								<div class="card card_positions z-depth-2">
-									<p class="positions_title">Local</p>
-									<p class="no_pos" v-if="localPos.length == 0">No positions added yet.</p>
-									<ul v-else>
-										<li v-for="position in localPos" class="collection-item" :key="position.pos">
-											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
-										</li>
-									</ul>
-									<form @submit.prevent=addPosition>
-										<input type="hidden" value="TWR" name="type" />
-										<input type="text" class="positions_input" placeholder="TUS_TWR" name="pos" required />
+										<input type="text" class="positions_input" placeholder="ABQ_CTR" name="pos" ref="pos" required />
 										<button class="positions_submit" type="submit" name="action">
 											<i class="material-icons">add</i>
 										</button>
@@ -101,16 +64,12 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
 		return {
 			form: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getEvent();
@@ -121,6 +80,7 @@ export default {
 		async getEvent() {
 			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
 			this.form = data.data;
+			this.form.positions = this.form.positions.map(p => p.pos);
 		},
 		async submitForm() {
 			try {
@@ -139,78 +99,26 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Event succesfully updated <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Event succesfully updated');
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
 			}
 		},
 		async addPosition(e) {
-			if(e.target.elements.type.value === "CTR") {
-				const obj = {
-					"pos": e.target.elements.pos.value.toUpperCase(),
-					"type": e.target.elements.type.value,
-					"code": "zab"
-				};
-				this.form.positions.push(obj);
-				e.target.reset(); // clear input
-			} else if(e.target.elements.type.value === "APP") {
-				let code = "app";
-				if(e.target.elements.pos.value.slice(0,3) === "PHX") {
-					code = "p50app";
-				}
-				const obj = {
-					"pos": e.target.elements.pos.value.toUpperCase(),
-					"type": e.target.elements.type.value,
-					"code": code
-				};
-				this.form.positions.push(obj);
-				e.target.reset(); // clear input
+			if(!this.form.positions.includes(this.$refs.pos.value.toUpperCase())) {
+				this.form.positions.push(this.$refs.pos.value.toUpperCase());
 			} else {
-				let code = "";
-				const input = e.target.elements.pos.value.slice(0,3) + e.target.elements.pos.value.slice(-3);
-				if(input == "PHXTWR") { code = "p50twr"; }
-				else if(input == "PHXGND") { code = "p50gnd"; }
-				else if(input == "PHXDEL") { code = "p50gnd"; }
-				else if(input.slice(-3) == "TWR") { code = "twr"; }
-				else if(input.slice(-3) == "GND") { code = "gnd"; }
-				else if(input.slice(-3) == "DEL") { code = "gnd"; }
-				
-				const obj = {
-					"pos": e.target.elements.pos.value.toUpperCase(),
-					"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
-					"code": code
-				};
-				this.form.positions.push(obj);
-				e.target.reset(); // clear input
+				this.toastError('Position already exists.');
 			}
+			e.target.reset();
 		},
 		deletePos(pos) {
-			const i = this.form.positions.findIndex(obj => obj.pos === pos);
-			this.form.positions = [...this.form.positions.slice(0, i), ...this.form.positions.slice(i + 1)];
+			this.form.positions = this.form.positions.filter(p => p != pos);
 		}
 	},
-	computed: {
-		centerPos() {
-			return this.form.positions.filter((pos) => pos.type == "CTR");
-		},
-		traconPos() {
-			return this.form.positions.filter((pos) => pos.type == "APP");
-		},
-		localPos() {
-			return this.form.positions.filter((pos) => pos.type == "TWR" || pos.type == "GND" || pos.type == "DEL");
-		}
-	}
 };
 </script>
 

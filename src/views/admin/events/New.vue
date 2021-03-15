@@ -29,7 +29,7 @@
 						<textarea id="description" class="materialize-textarea" v-model="form.description"></textarea>
 						<label for="description">Description</label>
 					</div>
-					<div class="input-field col s12">
+					<!-- <div class="input-field col s12">
 						<div class="row">
 							<div class="col s12 l4">
 								<div class="card card_positions z-depth-2">
@@ -86,7 +86,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="input-field col s12">
 						<input type="submit" class="btn right" value="submit" />
 					</div>
@@ -114,78 +114,72 @@ export default {
 		};
 	},
 	methods: {
-		async addPosition(e) {
-			if(e.target.elements.type.value == 'CTR') {
-				const obj = {
-					"pos": e.target.elements.pos.value.toUpperCase(),
-					"type": e.target.elements.type.value,
-					"code": "zab"
-				};
-				this.form.positions.push(obj);
-				e.target.reset(); // clear input
-			} else if(e.target.elements.type.value == 'APP') {
-				let code = "app";
-				if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
-					code = "p50app";
-				}
-				const obj = {
-					"pos": e.target.elements.pos.value.toUpperCase(),
-					"type": e.target.elements.type.value,
-					"code": code
-				};
-				this.form.positions.push(obj);
-				e.target.reset(); // clear input
-			} else {
-				let code = "";
-				const input = e.target.elements.pos.value.slice(0,3) + e.target.elements.pos.value.slice(-3);
-				if(input == "PHXTWR") { code = "p50twr"; }
-				else if(input == "PHXGND") { code = "p50gnd"; }
-				else if(input == "PHXDEL") { code = "p50gnd"; }
-				else if(input.slice(-3) == "TWR") { code = "twr"; }
-				else if(input.slice(-3) == "GND") { code = "gnd"; }
-				else if(input.slice(-3) == "DEL") { code = "gnd"; }
+		// async addPosition(e) {
+		// 	if(e.target.elements.type.value == 'CTR') {
+		// 		const obj = {
+		// 			"pos": e.target.elements.pos.value.toUpperCase(),
+		// 			"type": e.target.elements.type.value,
+		// 			"code": "zab"
+		// 		};
+		// 		this.form.positions.push(obj);
+		// 		e.target.reset(); // clear input
+		// 	} else if(e.target.elements.type.value == 'APP') {
+		// 		let code = "app";
+		// 		if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
+		// 			code = "p50app";
+		// 		}
+		// 		const obj = {
+		// 			"pos": e.target.elements.pos.value.toUpperCase(),
+		// 			"type": e.target.elements.type.value,
+		// 			"code": code
+		// 		};
+		// 		this.form.positions.push(obj);
+		// 		e.target.reset(); // clear input
+		// 	} else {
+		// 		let code = "";
+		// 		const input = e.target.elements.pos.value.slice(0,3) + e.target.elements.pos.value.slice(-3);
+		// 		if(input == "PHXTWR") { code = "p50twr"; }
+		// 		else if(input == "PHXGND") { code = "p50gnd"; }
+		// 		else if(input == "PHXDEL") { code = "p50gnd"; }
+		// 		else if(input.slice(-3) == "TWR") { code = "twr"; }
+		// 		else if(input.slice(-3) == "GND") { code = "gnd"; }
+		// 		else if(input.slice(-3) == "DEL") { code = "gnd"; }
 				
-				const obj = {
-					"pos": e.target.elements.pos.value.toUpperCase(),
-					"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
-					"code": code
-				};
-				this.form.positions.push(obj);
-				e.target.reset(); // clear input
-			}
-		},
+		// 		const obj = {
+		// 			"pos": e.target.elements.pos.value.toUpperCase(),
+		// 			"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
+		// 			"code": code
+		// 		};
+		// 		this.form.positions.push(obj);
+		// 		e.target.reset(); // clear input
+		// 	}
+		// },
 		deletePos(pos) {
 			const i = this.form.positions.findIndex(obj => obj.pos === pos);
 			this.form.positions = [...this.form.positions.slice(0, i), ...this.form.positions.slice(i + 1)];
 		},
 		async submitForm() {
 			const formData = new FormData();
+			formData.append('banner', this.$refs.banner.files[0]);
 			formData.append('name', this.form.name);
 			formData.append('startTime', this.form.eventStart);
 			formData.append('endTime', this.form.eventEnd);
 			formData.append('description', this.form.description);
-			formData.append('positions', JSON.stringify(this.form.positions));
-			formData.append('banner', this.$refs.banner.files[0]);
-			formData.append('createdBy', this.$store.state.user.user.data._id);
+			// formData.append('positions', JSON.stringify(this.form.positions));
+			// formData.append('createdBy', this.$store.state.user.user.data._id);
 
-			zabApi.post(`/event/new`, formData, {
+			const {data: eventCreate} = await zabApi.post('/event', formData, {
 				headers: { 
 					'Content-Type': 'multipart/form-data'
 				}
-			}).then(() => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Event succesfully created! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.$router.push('/admin/events');
-			}).catch((err) => {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${err.response.data} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
 			});
+
+			if(eventCreate.ret_det.code != 200) {
+				this.toastError(eventCreate.ret_det.message);
+			} else {
+				this.toastSuccess('Event successfully created!');
+				this.$router.push('/admin/events');
+			}
 		}
 	},
 	computed: {

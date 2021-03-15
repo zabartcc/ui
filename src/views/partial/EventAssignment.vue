@@ -17,17 +17,17 @@
 			</div>
 			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Request Position</button>
 		</div>
-	</div>
-	<div id="assignment_modal" class="modal assignment_modal">
-		<div class="modal-content">
-			<h4>Request Position</h4>
-			<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, enter "Any". If there is a specific position not listed that you would like to work, you may manually enter it.</p>
-			<p>Please be advised that requests are just that — requests.&nbsp; The events coordinator may place you on any position depending on multiple factors.</p>
-			<div class="chips chips-autocomplete chips-placeholder"></div>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">SIGN UP</a>
-			<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+		<div id="assignment_modal" class="modal assignment_modal">
+			<div class="modal-content">
+				<h4>Request Position</h4>
+				<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, enter "Any". If there is a specific position not listed that you would like to work, you may manually enter it.</p>
+				<p>Please be advised that requests are just that — requests. The events coordinator may place you on any position depending on multiple factors.</p>
+				<div class="chips chips-placeholder"></div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">SIGN UP</a>
+				<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+			</div>
 		</div>
 	</div>
 </template>
@@ -65,6 +65,11 @@ export default {
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
+		this.chips = M.Chips.init(document.querySelector('.chips'), {
+			placeholder: 'Select a position',
+			secondaryPlaceholder: ' ',
+			limit: 3
+		});
 	},
 	methods: {
 		async getPositions() {
@@ -76,21 +81,7 @@ export default {
 				this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
 				this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
 
-				const positions = this.event.positions.filter(pos => !pos.takenBy).map(pos => pos.pos);
-				const posChipData = {'Any': null};
-
-				positions.forEach(pos => posChipData[pos] = null);
-
-				this.chips = M.Chips.init(document.querySelectorAll('.chips'), {
-					placeholder: 'Select a position',
-					secondaryPlaceholder: ' ',
-					limit: 3,
-					autocompleteOptions: {
-						data: posChipData,
-						minLength: 0,
-						limit: 5
-					}
-				})[0];
+				
 			} catch(e) {
 				console.log(e);
 			}
@@ -120,21 +111,16 @@ export default {
 		},
 		async deleteRequest() {
 			try {
+				while(this.chips.chipsData.length) {
+					this.chips.deleteChip(0);
+				}
 				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/signup`);
 
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Request successfully deleted <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success'
-					});
+					this.toastSuccess('Request successfully deleted');
 					await this.getPositions();
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -146,13 +132,13 @@ export default {
 			'user'
 		]),
 		requestedPositions() {
-			return this.event.signups.some(su => su.user.cid == this.user.data.cid);
+			return this.event.signups.some(su => su.cid == this.user.data.cid);
 		},
 		assignedPositions() {
 			return this.event.positions.some(su => su.takenBy && (su.takenBy.cid == this.user.data.cid));
 		},
 		currentUserRequests() {
-			return this.event.signups.filter(su => su.user.cid == this.user.data.cid)[0].requests.join(', ');
+			return this.event.signups.filter(su => su.cid == this.user.data.cid)[0].requests.join(', ');
 		}
 	}
 };
