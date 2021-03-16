@@ -70,25 +70,17 @@ export default {
 				formData.append('download', this.$refs.download.files[0]);
 				formData.append('author', this.user.data._id);
 
-				const {data} = await zabApi.post(`/file/downloads/new`, formData, {
+				const {data} = await zabApi.post(`/file/downloads`, formData, {
 					headers: { 
 						'Content-Type': 'multipart/form-data'
 					}
 				});
 
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Download succesfully uploaded <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('File created.');
 					this.$router.push('/admin/files/downloads');
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);

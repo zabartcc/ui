@@ -16,42 +16,7 @@
 				<Spinner />
 			</div>
 			<div class="tabs_content" v-else>
-				<div id="sector" class="col s12">
-					<div v-if="sectorFiles.length == 0" class="no_files">No files in this category found.</div>
-					<div class="download" v-else v-for="file in sectorFiles" :key="file.id">
-						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
-						<div class="desc">{{file.description}}</div>
-						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
-					</div>
-				</div>
-				<div id="training" class="col s12">
-					<div v-if="trainingFiles.length == 0" class="no_files">No files in this category found.</div>
-					<div class="download" v-else v-for="file in trainingFiles" :key="file.id">
-						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
-						<div class="desc">{{file.description}}</div>
-						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
-					</div>
-				</div>
-				<div id="mfr" class="col s12">
-					<div v-if="mfrFiles.length == 0" class="no_files">No files in this category found.</div>
-					<div class="download" v-else v-for="file in mfrFiles" :key="file.id">
-						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
-						<div class="desc">{{file.description}}</div>
-						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
-					</div>
-				</div>
-				<div id="misc" class="col s12">
-					<div v-if="miscFiles.length == 0" class="no_files">No files in this category found.</div>
-					<div class="download" v-else v-for="file in miscFiles" :key="file.id">
-						<div class="title">{{file.name}}</div>
-						<a :href="`https://cdn.zabartcc.org/downloads/${file.fileName}`" class="btn button"><i class="material-icons">file_download</i></a>
-						<div class="desc">{{file.description}}</div>
-						<div class="info">Updated at {{formatDate(file.updatedAt)}}z</div>
-					</div>
-				</div>
+				<DownloadCategory v-for="(files, cat) in downloads" :key="cat" :cat="cat" :files="files" />
 			</div>
 		</div>
 	</div>
@@ -59,7 +24,7 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
+import DownloadCategory from './DownloadCategory';
 
 export default {
 	name: 'Downloads',
@@ -70,35 +35,23 @@ export default {
 		};
 	},
 	components: {
-		Spinner
+		DownloadCategory
 	},
 	async mounted() {
 		await this.getDownloads();
-		M.Tabs.init(document.querySelectorAll('.tabs'), {});
+		M.Tabs.init(document.querySelectorAll('.tabs'));
 	},
 	methods: {
 		async getDownloads() {
-			const {data} = await zabApi.get('/file/downloads');
-			this.downloads = data.data;
+			const {data: fileData} = await zabApi.get('/file/downloads');
+			this.downloads = {
+				sector: fileData.data.filter(file => file.category === 'sectorFiles'),
+				training: fileData.data.filter(file => file.category === 'training'),
+				mfr: fileData.data.filter(file => file.category === 'mfr'),
+				misc: fileData.data.filter(file => file.category === 'misc'),
+			};
 		},
-		formatDate(date) {
-			return new Date(date).toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
-		}
 	},
-	computed: {
-		sectorFiles() {
-			return this.downloads.filter(file => file.category == "sectorFiles"); 
-		},
-		trainingFiles() {
-			return this.downloads.filter(file => file.category == "training");
-		},
-		mfrFiles() {
-			return this.downloads.filter(file => file.category == "mfr");
-		},
-		miscFiles() {
-			return this.downloads.filter(file => file.category == "misc");
-		}
-	}
 };
 </script>
 
