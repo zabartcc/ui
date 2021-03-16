@@ -1,22 +1,24 @@
 <template>
-	<h6 class="position_category_heading">{{category.title}}</h6>
-	<table class="assignment_list striped">
-		<tbody v-if='category.positions.length'>
-			<tr v-for="position in category.positions" :key="position.id">
-				<td>
-					{{position.pos}}
-				</td>
-				<td class="right">
-					{{getName(position.takenBy)}}
-				</td>
-			</tr>
-		</tbody>
-		<tbody v-else>
-			<tr class="no_positions">
-				<td colspan="2">There are no {{category.title}} positions for this event.</td>
-			</tr>
-		</tbody>
-	</table>
+	<div>
+		<h6 class="position_category_heading">{{category.title}}</h6>
+		<table class="assignment_list striped">
+			<tbody v-if='category.positions.length'>
+				<tr v-for="position in category.positions" :key="position.id">
+					<td>
+						{{position.pos}}
+					</td>
+					<td class="right">
+						{{getName(position.user)}}
+					</td>
+				</tr>
+			</tbody>
+			<tbody v-else>
+				<tr class="no_positions">
+					<td colspan="2">There are no {{category.title}} positions for this event.</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </template>
 
 <script>

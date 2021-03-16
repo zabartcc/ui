@@ -91,13 +91,11 @@ export default {
 				const requests = this.chips.chipsData.map(chip => chip.tag);
 				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/signup`, {requests});
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Request successfully submitted <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Request successfully submitted.');
 					await this.getPositions();
-					setTimeout(() => M.Modal.getInstance(document.querySelector('#assignment_modal')).close(), 500);
+					this.$nextTick(() => {
+						M.Modal.getInstance(document.querySelector('#assignment_modal')).close();
+					});
 				} else {
 					M.toast({
 						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
@@ -135,7 +133,7 @@ export default {
 			return this.event.signups.some(su => su.cid == this.user.data.cid);
 		},
 		assignedPositions() {
-			return this.event.positions.some(su => su.takenBy && (su.takenBy.cid == this.user.data.cid));
+			return this.event.positions.some(su => su.user && (su.user.cid == this.user.data.cid));
 		},
 		currentUserRequests() {
 			return this.event.signups.filter(su => su.cid == this.user.data.cid)[0].requests.join(', ');

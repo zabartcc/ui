@@ -24,15 +24,15 @@
 					<tr v-for="signup in event.signups" :key="signup._id">
 						<td>
 							<span class="signup_name">{{signup.user.fname}} {{signup.user.lname}}</span> <br />
-							<span class="signup_rating">{{convertRating(signup.user.rating)}}</span>
+							<span class="signup_rating">{{signup.user.ratingLong}}</span>
 						</td>
 						<td>
 							{{signup.requests.join(',  ')}}
 						</td>
 						<td>
-							<select @change="assignPos($event, signup.user.id)">
+							<select @change="assignPos($event, signup.user.cid)">
 								<option :selected="checkAssigned(signup.user.id) == false">No assignment</option>
-								<option v-for="position in filterPos(signup.user.certifications)" :key="position.id" :value="position.pos" :selected="checkAssigned(signup.user.id) == position.pos">{{position.pos}}</option>
+								<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="checkAssigned(signup.user.id) == position.pos">{{position.pos}}</option>
 							</select>
 						</td>
 						<td class="options">
@@ -251,10 +251,10 @@ export default {
 				return false;
 			}
 		},
-		convertRating(rating) {
-			const ratings = ['Unknown', 'Observer', 'Student 1', 'Student 2', 'Student 3', 'Controller 1', 'Controller 2', 'Controller 3', 'Instructor 1', 'Instructor 2', 'Instructor 3', 'Supervisor', 'Administrator'];
-			return ratings[rating];
-		}
+		// convertRating(rating) {
+		// 	const ratings = ['Unknown', 'Observer', 'Student 1', 'Student 2', 'Student 3', 'Controller 1', 'Controller 2', 'Controller 3', 'Instructor 1', 'Instructor 2', 'Instructor 3', 'Supervisor', 'Administrator'];
+		// 	return ratings[rating];
+		// }
 	}
 };
 </script>
