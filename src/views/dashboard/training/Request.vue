@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import {TrainingMixin} from '@/mixins/TrainingMixin.js';
 import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 
@@ -67,7 +66,6 @@ export default {
 	components: {
 		Spinner
 	},
-	mixins: [TrainingMixin],
 	async mounted() {
 		await this.getTrainingMilestones();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
