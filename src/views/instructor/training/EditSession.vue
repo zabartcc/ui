@@ -143,7 +143,17 @@ export default {
 		},
 		async saveForm() {
 			try {
-				const {data} = await zabApi.put(`/training/session/save/${this.$route.params.id}`, this.session);
+				const {data} = await zabApi.put(`/training/session/save/${this.$route.params.id}`, {
+					position: this.session.position,
+					movements: this.session.movements,
+					progress: this.session.progress,
+					ots: this.session.progress,
+					location: this.session.location,
+					startTime: this.session.startTime,
+					endTime: this.session.endTime,
+					studentNotes: this.session.studentNotes,
+					insNotes: this.session.insNotes
+				});
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Session Notes successfully saved');
 					this.$router.push('/ins/training/sessions');

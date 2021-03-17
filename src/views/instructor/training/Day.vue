@@ -52,7 +52,7 @@
 													<div><i class="material-icons" @click="decreaseTime('start', i)">arrow_drop_down</i></div>
 												</div>
 											</div>
-											<label for="start_time" class="active">Start Time</label>
+											<label for="start_time" class="active">Start Time (Zulu)</label>
 										</div>
 										<div class="input-field col s6">
 											<div id="end_time">
@@ -62,7 +62,7 @@
 													<div><i class="material-icons" @click="decreaseTime('end', i)">arrow_drop_down</i></div>
 												</div>
 											</div>
-											<label for="end_time" class="active">End Time</label>
+											<label for="end_time" class="active">End Time (Zulu) </label>
 										</div>
 										<div class="input-field remarks_wrapper col s12">
 											<p id="remarks">{{request.remarks ? request.remarks : '—'}}</p>

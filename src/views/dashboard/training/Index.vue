@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {TrainingMixin} from '@/mixins/TrainingMixin.js';
+import {zabApi} from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 import PastSessions from './Past.vue';
 
@@ -51,13 +51,13 @@ export default {
 		Spinner,
 		PastSessions
 	},
-	mixins: [TrainingMixin],
 	async mounted() {
 		await this.getUpcomingSessions();
 	},
 	methods: {
 		async getUpcomingSessions() {
-			this.upcomingSessions = await this.getUpcomingSessionsMixin(this.$store.state.user.user.data._id); 
+			const {data} = await zabApi.get(`/training/request/upcoming`);
+			this.upcomingSessions = data.data;
 		},
 		formatDate(date) {
 			return new Date(date).toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});

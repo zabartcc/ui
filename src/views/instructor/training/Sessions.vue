@@ -100,7 +100,7 @@ export default {
 	methods: {
 		async getSessions() {
 			try {
-				const {data} = await zabApi.get(`/training/session/open/${this.$store.state.user.user.data._id}`);
+				const {data} = await zabApi.get(`/training/session/open`);
 				this.sessions = data.data;
 			} catch(e) {
 				console.log(e);
