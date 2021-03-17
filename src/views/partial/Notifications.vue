@@ -88,6 +88,7 @@ export default {
 			try {
 				await zabApi.delete(`/user/notifications`);
 				this.notifications = [];
+				this.$parent.unread = false;
 			} catch(e) {
 				console.log(e);
 			}
