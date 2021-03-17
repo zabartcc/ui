@@ -135,7 +135,7 @@ export default {
 		},
 		async notifyAssignments() {
 			try {
-				const {data} = zabApi.put(`/event/${this.$route.params.lsug}/notify`, {
+				const {data} = zabApi.put(`/event/${this.$route.params.slug}/notify`, {
 					assignment: this.event.positions
 				});
 
@@ -250,11 +250,7 @@ export default {
 			} else {
 				return false;
 			}
-		},
-		// convertRating(rating) {
-		// 	const ratings = ['Unknown', 'Observer', 'Student 1', 'Student 2', 'Student 3', 'Controller 1', 'Controller 2', 'Controller 3', 'Instructor 1', 'Instructor 2', 'Instructor 3', 'Supervisor', 'Administrator'];
-		// 	return ratings[rating];
-		// }
+		}
 	}
 };
 </script>

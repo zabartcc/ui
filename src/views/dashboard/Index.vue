@@ -3,11 +3,12 @@
 		<div class="card-content">
 			<span class="card-title">Controller Dashboard</span>
 			<div class="ids">
-				<span class="title">IDS Token: </span>
-				<span class="token_wrap">
+				<span class="title">IDS Token</span>
+				<div class="token_wrap hidden" id="token_wrap" @mouseleave="hideToken">
 					<code>{{token}}</code>
-					<span class="generate" @click=generateToken><i class="material-icons">refresh</i></span>
-				</span>
+					<span class="generate right" @click=generateToken><i class="material-icons">refresh</i></span>
+				</div>
+				<div id="click_to_see" @click="showToken">Click to view</div>
 			</div>
 		</div>
 	</div>
@@ -28,11 +29,11 @@ export default {
 			'user'
 		])
 	},
-	mounted() {
+	async mounted() {
 		this.token = this.user.data.idsToken || 'None Set';
 	},
 	methods: {
-		generateToken: async function() {
+		async generateToken() {
 			const { data: tokenRet } = await zabApi.post('/user/idsToken');
 			if(tokenRet.ret_det.code === 200) {
 				this.toastSuccess('Token successfully generated');
@@ -40,6 +41,14 @@ export default {
 			} else {
 				this.toastError(`${tokenRet.ret_det.message}`);
 			}
+		},
+		showToken() {
+			document.getElementById('token_wrap').classList.remove('hidden');
+			document.getElementById('click_to_see').classList.add('hidden');
+		},
+		hideToken() {
+			document.getElementById('token_wrap').classList.add('hidden');
+			document.getElementById('click_to_see').classList.remove('hidden');
 		}
 	}
 };
@@ -47,21 +56,40 @@ export default {
 
 <style scoped lang="scss">
 .ids {
+	width: 100%;
+	max-width: 360px;
 	.token_wrap {
 		padding-bottom: 0.75em;
 		background: $gray_light;
 		padding: 0.25em 0.5em 0.35em 0.5em;
 		border-radius: 5px;
-		margin-left: .5em;
+		z-index: -1;
+		height: 32px;
+
+		&.hidden {
+			code, .generate {
+				display: none;
+
+				i {
+					display: none;
+				}
+			}
+		}
 	}
 	code {
 		display: inline-block;
 		border-radius: 0;
-		width: 300px;
+		padding-top: .1em;
+		white-space: nowrap;
+		overflow: auto;
+		width: 90%;
 	}
 
 	.generate {
 		border-radius: 0;
+		width: 10%;
+		text-align: right;
+
 		i {
 			font-size: 18px;
 			margin-left: .25em;
@@ -74,6 +102,21 @@ export default {
 
 	.title {
 		user-select: none;
+		color: #9E9E9E;
+		font-size: .9rem;
+	}
+
+	#click_to_see {
+		margin-top: -1.85em;
+		padding-bottom: .40em;
+		z-index: 2;
+		text-align: center;
+		cursor: pointer;
+		user-select: none;
+
+		&.hidden {
+			display: none;
+		}
 	}
 }
 </style>

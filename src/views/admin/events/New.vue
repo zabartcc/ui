@@ -114,46 +114,45 @@ export default {
 		};
 	},
 	methods: {
-		// async addPosition(e) {
-		// 	if(e.target.elements.type.value == 'CTR') {
-		// 		const obj = {
-		// 			"pos": e.target.elements.pos.value.toUpperCase(),
-		// 			"type": e.target.elements.type.value,
-		// 			"code": "zab"
-		// 		};
-		// 		this.form.positions.push(obj);
-		// 		e.target.reset(); // clear input
-		// 	} else if(e.target.elements.type.value == 'APP') {
-		// 		let code = "app";
-		// 		if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
-		// 			code = "p50app";
-		// 		}
-		// 		const obj = {
-		// 			"pos": e.target.elements.pos.value.toUpperCase(),
-		// 			"type": e.target.elements.type.value,
-		// 			"code": code
-		// 		};
-		// 		this.form.positions.push(obj);
-		// 		e.target.reset(); // clear input
-		// 	} else {
-		// 		let code = "";
-		// 		const input = e.target.elements.pos.value.slice(0,3) + e.target.elements.pos.value.slice(-3);
-		// 		if(input == "PHXTWR") { code = "p50twr"; }
-		// 		else if(input == "PHXGND") { code = "p50gnd"; }
-		// 		else if(input == "PHXDEL") { code = "p50gnd"; }
-		// 		else if(input.slice(-3) == "TWR") { code = "twr"; }
-		// 		else if(input.slice(-3) == "GND") { code = "gnd"; }
-		// 		else if(input.slice(-3) == "DEL") { code = "gnd"; }
+		/* async addPosition(e) {
+		 	if(e.target.elements.type.value == 'CTR') {
+		 		const obj = {
+		 			"pos": e.target.elements.pos.value.toUpperCase(),
+		 			"type": e.target.elements.type.value,
+		 			"code": "zab"
+		 		};
+		 		this.form.positions.push(obj);
+		 		e.target.reset(); // clear input
+		 	} else if(e.target.elements.type.value == 'APP') {
+		 		let code = "app";
+		 		if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
+					code = "p50app";
+		 		}
+				const obj = {
+		 			"pos": e.target.elements.pos.value.toUpperCase(),
+		 			"type": e.target.elements.type.value,
+					"code": code
+				};
+		 		this.form.positions.push(obj);
+		 		e.target.reset(); // clear input
+		 	} else {
+		 		let code = "";
+		 		const input = e.target.elements.pos.value.slice(0,3) + e.target.elements.pos.value.slice(-3);
+		 		if(input == "PHXTWR") { code = "p50twr"; }
+		 		else if(input == "PHXGND") { code = "p50gnd"; }
+		 		else if(input == "PHXDEL") { code = "p50gnd"; }
+		 		else if(input.slice(-3) == "TWR") { code = "twr"; }
+		 		else if(input.slice(-3) == "GND") { code = "gnd"; }
+		 		else if(input.slice(-3) == "DEL") { code = "gnd"; }
 				
-		// 		const obj = {
-		// 			"pos": e.target.elements.pos.value.toUpperCase(),
-		// 			"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
-		// 			"code": code
-		// 		};
-		// 		this.form.positions.push(obj);
-		// 		e.target.reset(); // clear input
-		// 	}
-		// },
+		 		const obj = {
+		 			"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
+		 			"code": code
+		 		};
+		 		this.form.positions.push(obj);
+		 		e.target.reset(); // clear input
+		 	}
+		},*/
 		deletePos(pos) {
 			const i = this.form.positions.findIndex(obj => obj.pos === pos);
 			this.form.positions = [...this.form.positions.slice(0, i), ...this.form.positions.slice(i + 1)];
