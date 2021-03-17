@@ -16,6 +16,7 @@
 						<td class="name">
 							<router-link :to="`/controllers/${controller.cid}`">
 								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
+								<span v-if="controller.absence.length > 0" class="controller_loa tooltipped" data-tooltip="Leave of Absence" data-position="top">LOA</span>
 							</router-link><br />
 							<div class="rating">
 								{{controller.ratingLong}}
@@ -206,5 +207,14 @@ td {
 
 .tooltipped {
 	cursor: pointer;
+}
+
+.controller_loa {
+	background: $secondary-color-dark;
+	color: #fff;
+	font-weight: 400;
+	padding: 0.2rem 0.4rem;
+	font-size: .9rem;
+	margin-left: .25em;
 }
 </style>
