@@ -34,7 +34,7 @@ export default {
 	methods: {
 		async getNotifications() {
 			try {
-				const {data} = await zabApi.get(`/user/notifications/${this.$store.state.user.user.data._id}`, {
+				const {data} = await zabApi.get(`/user/notifications`, {
 					params: {
 						page: this.page, 
 						limit: this.limit
@@ -54,7 +54,7 @@ export default {
 		async getMoreNotifications() {
 			this.page += 1;
 
-			const {data} = await zabApi.get(`/user/notifications/${this.$store.state.user.user.data._id}`, {
+			const {data} = await zabApi.get(`/user/notifications`, {
 				params: {
 					page: this.page, 
 					limit: this.limit
@@ -73,7 +73,7 @@ export default {
 		},
 		async readAll() {
 			try {
-				await zabApi.put(`/user/notifications/read/all/${this.$store.state.user.user.data._id}`);
+				await zabApi.put(`/user/notifications/read/all`);
 				this.notifications.forEach((notif) => {
 					if(notif.read === false) {
 						notif.read = true;
@@ -86,7 +86,7 @@ export default {
 		},
 		async deleteAll() {
 			try {
-				await zabApi.delete(`/user/notifications/${this.$store.state.user.user.data._id}`);
+				await zabApi.delete(`/user/notifications`);
 				this.notifications = [];
 			} catch(e) {
 				console.log(e);
