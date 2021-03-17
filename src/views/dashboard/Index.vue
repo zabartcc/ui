@@ -58,12 +58,11 @@ export default {
 .ids {
 	width: 100%;
 	max-width: 360px;
+
 	.token_wrap {
-		padding-bottom: 0.75em;
 		background: $gray_light;
 		padding: 0.25em 0.5em 0.35em 0.5em;
-		border-radius: 5px;
-		z-index: -1;
+		border-radius: 2px;
 		height: 32px;
 
 		&.hidden {
@@ -109,7 +108,6 @@ export default {
 	#click_to_see {
 		margin-top: -1.85em;
 		padding-bottom: .40em;
-		z-index: 2;
 		text-align: center;
 		cursor: pointer;
 		user-select: none;
