@@ -125,7 +125,7 @@ export default {
 		},
 		convertRating(rating) {
 			const ratings = ['Poor', 'Below Average', 'Average', 'Above Average', 'Excellent'];
-			return ratings[rating];
+			return ratings[rating - 1];
 		},
 		formatDate(date) {
 			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
