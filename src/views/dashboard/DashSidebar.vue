@@ -6,8 +6,8 @@
 				<div class="secondary-content"><i class="material-icons">home</i></div>
 			</router-link>
 			<router-link to="/dash/profile" class="collection-item">
-				My Profile
-				<div class="secondary-content"><i class="material-icons">person</i></div>
+				Edit Profile
+				<div class="secondary-content"><i class="material-icons">edit</i></div>
 			</router-link>
 			<router-link to="/dash/training" class="collection-item">
 				Training Sessions

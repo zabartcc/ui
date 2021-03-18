@@ -4,27 +4,89 @@
 			<div class="loading_container" v-if="!controller">
 				<Spinner />
 			</div>
-			<div class="row" v-else>
-				<div class="col s5 m4 l3">
-					<div class="controller_image">
-						<img :src="require('@/assets/images/blank.png')" alt="">
+			<div v-else>
+				<div class="row">
+					<div class="col s5 m4 l3">
+						<div class="controller_image">
+							<img :src="require('@/assets/images/blank.png')" alt="">
+						</div>
+					</div>
+					<div class="col s7 m8 l9">
+						<div class="controller_name">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</div>
+						<div class="controller_rating">{{controller.ratingLong}}</div>
+					</div>
+					<div class="col s12 m8 l9">
+						<div class="controller_certs">
+							<div v-if="controller.roles.length" class="title">Staff Positions</div>
+							<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
+								{{role.name}}
+							</span>
+							<div v-if="controller.certifications.length" class="title">Certifications</div>
+							<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
+								{{cert.name}}
+							</span>
+						</div>
 					</div>
 				</div>
-				<div class="col s7 m8 l9">
-					<div class="controller_name">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</div>
-					<div class="controller_rating">{{controller.ratingLong}}</div>
-				</div>
-				<div class="col s12 m8 l9">
-					<div class="controller_certs">
-						<div v-if="controller.roles.length" class="title">Staff Positions</div>
-						<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-							{{role.name}}
-						</span>
-						<div v-if="controller.certifications.length" class="title">Certifications</div>
-						<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-							{{cert.name}}
-						</span>
+				<div class="card z-depth-2"  v-if=controller.bio>
+					<div class="card-content">
+						<p class="bio">{{controller.bio}}</p>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="loading_container" v-if="!stats">
+			<Spinner />
+		</div>
+		<div class="session_table_wrap" v-else>
+			<table class="striped responsive-table centered">
+				<thead>
+					<tr>
+						<th></th>
+						<th>DEL</th>
+						<th>GND</th>
+						<th>TWR</th>
+						<th>APP</th>
+						<th>CTR</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="month in stats.months" :key=month>
+						<td>{{month}}</td>
+						<td>{{sec2hm(stats[month].del)}}</td>
+						<td>{{sec2hm(stats[month].gnd)}}</td>
+						<td>{{sec2hm(stats[month].twr)}}</td>
+						<td>{{sec2hm(stats[month].app)}}</td>
+						<td>{{sec2hm(stats[month].ctr)}}</td>
+						<td>{{sec2hm(totalTime(stats[month]))}}</td>
+					</tr>
+					<tr>
+						<td>>1 Year</td>
+						<td>{{sec2hm(stats.gtyear.del)}}</td>
+						<td>{{sec2hm(stats.gtyear.gnd)}}</td>
+						<td>{{sec2hm(stats.gtyear.twr)}}</td>
+						<td>{{sec2hm(stats.gtyear.app)}}</td>
+						<td>{{sec2hm(stats.gtyear.ctr)}}</td>
+						<td>{{sec2hm(totalTime(stats.gtyear))}}</td>
+					</tr>
+					<tr>
+						<td>Total</td>
+						<td>{{sec2hm(stats.total.del)}}</td>
+						<td>{{sec2hm(stats.total.gnd)}}</td>
+						<td>{{sec2hm(stats.total.twr)}}</td>
+						<td>{{sec2hm(stats.total.app)}}</td>
+						<td>{{sec2hm(stats.total.ctr)}}</td>
+						<td>{{sec2hm(totalTime(stats.total))}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="card-content">
+				<div>
+					<strong>Total Sessions:</strong> {{stats.sessionCount}}
+				</div>
+				<div>
+					<strong>Average Session Time:</strong> {{sec2hm(stats.sessionAvg)}}
 				</div>
 			</div>
 		</div>
@@ -38,7 +100,8 @@ export default {
 	name: 'Controller Profile',
 	data() {
 		return {
-			controller: null
+			controller: null,
+			stats: null
 		};
 	},
 	async mounted() {
@@ -49,6 +112,8 @@ export default {
 		async getController() {
 			const {data} = await zabApi.get(`/controller/${this.$route.params.cid}`);
 			this.controller = data.data;
+			const {data: statsData} = await zabApi.get(`/controller/stats/${this.$route.params.cid}`);
+			this.stats = statsData.data;
 		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];
@@ -65,6 +130,17 @@ export default {
 				}
 			});
 			return certsToShow;
+		},
+		sec2hm(secs) {
+			if(!secs) {
+				return '';
+			}
+			const hours = Math.floor(secs/3600);
+			const minutes = `0${Math.round((secs/60)%60)}`.slice(-2);
+			return `${hours}:${minutes}`;
+		},
+		totalTime(month) {
+			return Object.values(month).reduce((acc, cv) => acc + cv);
 		}
 	}
 };
@@ -140,6 +216,26 @@ export default {
 	.title {
 		color: #9e9e9e;
 		font-size: .8rem;
+	}
+
+	.bio {
+		white-space: pre-wrap;
+	}
+
+		
+
+	.session_table_wrap {
+		@media screen and (min-width: 993px) {
+			th:last-of-type, td:last-of-type {
+				border-left: 1px solid #000;
+			}
+			tbody tr:last-of-type {
+				border-top: 1px solid #000;
+			}
+		}
+		tbody td:first-of-type {
+			font-weight: 700;
+		}
 	}
 
 </style>

@@ -210,6 +210,10 @@ const routes = [
 				component: () => import('../views/dashboard/Index.vue')
 			},
 			{
+				path: 'profile',
+				component: () => import('../views/dashboard/Edit.vue')
+			},
+			{
 				path: 'feedback',
 				component: () => import('../views/dashboard/Feedback.vue')
 			},

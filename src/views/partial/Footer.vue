@@ -55,12 +55,15 @@ export default {
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
-		
-		setInterval(() => {
-			this.$refs.zulu_time.innerHTML = `${this.dtFull(new Date())}z`;
-		}, 1000);
 
-		document.getElementById("full_year").innerHTML = new Date().getFullYear();
+		this.$nextTick(() => {
+			setInterval(() => {
+				this.$refs.zulu_time.innerHTML = `${this.dtFull(new Date())}z`;
+			}, 1000);
+			
+			document.getElementById("full_year").innerHTML = new Date().getFullYear();
+		});
+
 	}
 };
 </script>
