@@ -46,7 +46,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'RequestTraining',
@@ -62,9 +61,6 @@ export default {
 			},
 			milestones: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getTrainingMilestones();
@@ -105,6 +101,5 @@ export default {
 
 .submit_request {
 	margin-left: .75em;
-
 }
 </style>

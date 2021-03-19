@@ -23,8 +23,8 @@
 				<tbody class="session_list_row" v-if="upcomingSessions">
 					<tr v-for="session in upcomingSessions" :key="session._id">
 						<td>{{session.milestone.code + ' - ' + session.milestone.name}}</td>
-						<td>{{dtLong(session.startTime)}}z</td>
-						<td>{{dtLong(session.endTime)}}z</td>
+						<td>{{dtLong(session.startTime)}}</td>
+						<td>{{dtLong(session.endTime)}}</td>
 						<td>{{session.instructor ? (session.instructor.fname + ' ' + session.instructor.lname) : 'Unfulfilled'}}</td>
 					</tr>
 				</tbody>

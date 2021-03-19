@@ -91,7 +91,6 @@ export default {
 				});
 
 				for(const request of data.data) {
-					console.log(request);
 					for(const date of this.dates) {
 						if(date.date === new Date(request.startTime).toDateString()) {
 							date.requests.push(request);
@@ -108,7 +107,6 @@ export default {
 				const d = new Date(date.date + ' UTC'),
 					newDate = d.toISOString().slice(0,10).replaceAll('-', '');
 
-				console.log(d);
 				this.$router.push(`/ins/training/requests/${newDate}`);
 			}
 		},

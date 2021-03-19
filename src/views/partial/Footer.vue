@@ -88,7 +88,7 @@ body .page-footer {
 			display: flex;
 
 			div {
-				margin-right: 1em;
+				margin-right: .8em;
 			}
 		}
 	}
