@@ -19,7 +19,7 @@
 				</thead>
 				<tbody class="feedback_list_row" v-if="feedback">
 					<tr v-for="(feedback, i) in feedback" :key="feedback._id">
-						<td>{{formatDate(feedback.createdAt)}}z</td>
+						<td>{{dtLong(feedback.createdAt)}}</td>
 						<td id="position">{{feedback.position}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td class="options">
@@ -37,7 +37,7 @@
 											<label for="first_name" class="active">Submitter</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="submission">{{formatDate(feedback.createdAt)}}z</p>
+											<p id="submission">{{dtLong(feedback.createdAt)}}</p>
 											<label for="submission" class="active">Submission Date</label>
 										</div>
 										<div class="input-field col s6">
@@ -71,7 +71,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
@@ -87,7 +86,6 @@ export default {
 		};
 	},
 	components: {
-		Spinner,
 		Pagination
 	},
 	async mounted() {
@@ -114,9 +112,6 @@ export default {
 		convertRating(rating) {
 			const ratings = ['Poor', 'Below Average', 'Average', 'Above Average', 'Excellent'];
 			return ratings[rating - 1];
-		},
-		formatDate(date) {
-			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
 		}
 	},
 	watch: {

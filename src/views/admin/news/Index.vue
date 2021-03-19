@@ -97,22 +97,14 @@ export default {
 		},
 		async deleteNews(slug) {
 			const {data} = await zabApi.delete(`/news/${slug}`);
-			if(data.ret_det.code !== 200) {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+			if(data.ret_det.code === 200) {
+				this.toastSuccess('News article successfully deleted');
+
+				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
+				await this.getNews();
+
 			} else {
-				M.toast({
-					html: '<i class="material-icons left">done</i> News succesfully deleted! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.$nextTick(async () => {
-					M.Modal.getInstance(document.querySelector('.modal_delete')).close();
-					await this.getNews();
-				});
+				this.toastError(data.ret_det.message);
 			}
 		}
 	},
@@ -131,19 +123,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.options {
-	text-align: right;
-}
 .no_news {
 	font-style: italic;
 	margin-top: -1em;
 	padding: 0 1em 1em 1em;
 }
+
 .page_info {
 	padding-left: 1.5em;
 	font-size: 0.9rem;
 	margin-top: 1.5em;
 }
+
 .modal_delete {
 	min-width: 400px;
 	width: 30%;

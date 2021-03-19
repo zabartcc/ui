@@ -77,7 +77,6 @@
 </template>
 
 <script>
-import Spinner from '@/components/Spinner.vue';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
@@ -90,9 +89,6 @@ export default {
 				visiting: null
 			}
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getControllers();

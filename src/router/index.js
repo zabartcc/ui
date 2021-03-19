@@ -43,11 +43,7 @@ const routes = [
 			},
 			{
 				path: '/controllers/visit',
-				component: () => import('../views/controllers/visit/Index.vue')
-			},
-			{
-				path: '/controllers/visit/verify',
-				component: () => import('../views/controllers/visit/VisitorVerify.vue')
+				component: () => import('../views/controllers/Visit.vue')
 			},
 			{
 				path: '/controllers/:cid',

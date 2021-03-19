@@ -23,8 +23,8 @@
 				<tbody class="session_list_row" v-if="upcomingSessions">
 					<tr v-for="session in upcomingSessions" :key="session._id">
 						<td>{{session.milestone.code + ' - ' + session.milestone.name}}</td>
-						<td>{{formatDate(session.startTime)}}z</td>
-						<td>{{formatDate(session.endTime)}}z</td>
+						<td>{{dtLong(session.startTime)}}z</td>
+						<td>{{dtLong(session.endTime)}}z</td>
 						<td>{{session.instructor ? (session.instructor.fname + ' ' + session.instructor.lname) : 'Unfulfilled'}}</td>
 					</tr>
 				</tbody>
@@ -36,7 +36,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 import PastSessions from './Past.vue';
 
 export default {
@@ -48,7 +47,6 @@ export default {
 		};
 	},
 	components: {
-		Spinner,
 		PastSessions
 	},
 	async mounted() {
@@ -58,9 +56,6 @@ export default {
 		async getUpcomingSessions() {
 			const {data} = await zabApi.get(`/training/request/upcoming`);
 			this.upcomingSessions = data.data;
-		},
-		formatDate(date) {
-			return new Date(date).toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		}
 	}
 

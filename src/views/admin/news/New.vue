@@ -4,7 +4,7 @@
 			<span class="card-title">Create News Article</span>
 			<div class="row">
 				<form method="post" @submit.prevent=createNews>
-					<div class="input-field col s12 l6">
+					<div class="input-field col s12">
 						<input id="title" type="text" v-model="form.title" required>
 						<label for="title">Title</label>
 					</div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import {mapState} from 'vuex';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
@@ -49,25 +49,14 @@ export default {
 				createdBy: this.user.data.cid
 			});
 
-			if(data.ret_det.code !== 200) {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			} else {
-				M.toast({
-					html: '<i class="material-icons left">done</i> News article successfully created<div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
+			if(data.ret_det.code === 200) {
+				this.toastSuccess('News article successfully created');
+
 				this.$router.push('/admin/news');
+			} else {
+				this.toastError(data.ret_det.message);
 			}
 		}
 	},
 };
 </script>
-
-<style>
-
-</style>

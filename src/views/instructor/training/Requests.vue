@@ -66,7 +66,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'TrainingRequests',
@@ -77,9 +76,6 @@ export default {
 			days: 21,
 			loading: true
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.calculateDates();

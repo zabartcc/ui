@@ -69,7 +69,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 p {
 	margin: 0;
 
@@ -121,7 +120,6 @@ body .page-footer {
 }
 
 .footer_pride {
-
 	.footer_flags {
 		display: flex;
 

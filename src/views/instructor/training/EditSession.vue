@@ -30,11 +30,11 @@
 							<label for="instructor" class="active">Instructor Name</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="startTime" type="text" :value="formatDateTime(session.startTime)" required disabled>
+							<input id="startTime" type="text" :value="dtLong(session.startTime)" required disabled>
 							<label for="startTime" class="active">Start Time</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="endTime" type="text" :value="formatDateTime(session.endTime)" required disabled>
+							<input id="endTime" type="text" :value="dtLong(session.endTime)" required disabled>
 							<label for="endTime" class="active">End Time</label>
 						</div>
 						<div class="input-field col s12 m6 milestone">
@@ -110,8 +110,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
-
 export default {
 	name: 'EditSessionNotes',
 	title: 'Enter Session Notes',
@@ -120,9 +118,6 @@ export default {
 			session: null,
 			step: 1
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getSessionDetails();
@@ -155,7 +150,7 @@ export default {
 					insNotes: this.session.insNotes
 				});
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Session Notes successfully saved');
+					this.toastSuccess('Session notes successfully saved');
 					this.$router.push('/ins/training/sessions');
 				} else {
 					this.toastError(data.ret_det.message);
@@ -168,7 +163,7 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/training/session/submit/${this.$route.params.id}`, this.session);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Session Notes successfully subbmitted');
+					this.toastSuccess('Session notes successfully submitted');
 					this.$router.push('/ins/training/sessions');
 				} else {
 					this.toastError(data.ret_det.message);
@@ -176,10 +171,6 @@ export default {
 			} catch(e) {
 				console.log(e);
 			}
-		},
-		formatDateTime(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC', hour12: false});
 		},
 		ratingHelper(rating) {
 			const ratings = ['', '1 - No Progress', '2 - Little Progress', '3 - Average Progress' , '4 - Great Progress', '5 - Exceptional Progress'];

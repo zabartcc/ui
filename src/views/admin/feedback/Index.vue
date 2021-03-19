@@ -20,7 +20,7 @@
 				</thead>
 				<tbody class="event_list_row">
 					<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
-						<td>{{formatDate(feedback.createdAt)}}z</td>
+						<td>{{dtLong(feedback.createdAt)}}</td>
 						<td><span v-if="feedback.anonymous"><strong>Anonymous</strong><i> ({{feedback.name}})</i></span><span v-else>{{feedback.name}}</span></td>
 						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
@@ -47,7 +47,7 @@
 											<label for="email" class="active">Submitter Email</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="submission">{{formatDate(feedback.createdAt)}}z</p>
+											<p id="submission">{{dtLong(feedback.createdAt)}}</p>
 											<label for="submission" class="active">Submission Date</label>
 										</div>
 										<div class="input-field col s6">
@@ -85,7 +85,6 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import RecentFeedback from './Recent';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Feedback',
@@ -96,8 +95,7 @@ export default {
 		};
 	},
 	components: {
-		RecentFeedback,
-		Spinner
+		RecentFeedback
 	},
 	async mounted() {
 		await this.getUnapproved();
@@ -117,19 +115,11 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/feedback/approve/${id}`);
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Feedback successfully approved <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Feedback successfully approved');
 					await this.getUnapproved();
 					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -139,19 +129,11 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/feedback/reject/${id}`);
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Feedback successfully rejected <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Feedback successfully rejected');
 					await this.getUnapproved();
 					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -160,9 +142,6 @@ export default {
 		convertRating(rating) {
 			const ratings = ['Poor', 'Below Average', 'Average', 'Above Average', 'Excellent'];
 			return ratings[rating - 1];
-		},
-		formatDate(date) {
-			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
 		}
 	}
 };

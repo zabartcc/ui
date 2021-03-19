@@ -24,7 +24,7 @@
 					<tr v-for="(file, i) in downloads" :key="file.id">
 						<td class="name">{{file.name}}</td>
 						<td>{{convertCategory(file.category)}}</td>
-						<td>{{formatDate(file.updatedAt)}}z</td>
+						<td>{{dtLong(file.updatedAt)}}z</td>
 						<td class="options">
 							<router-link data-position="top" data-tooltip="Edit Download" class="tooltipped" :to="`/admin/files/downloads/${file._id}`"><i class="material-icons">edit</i></router-link>
 							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Download" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
@@ -48,7 +48,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Downloads',
@@ -57,9 +56,6 @@ export default {
 		return {
 			downloads: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getDownloads();
@@ -76,21 +72,13 @@ export default {
 		async deleteDownload(id) {
 			try {
 				const {data} = await zabApi.delete(`/file/downloads/${id}`);
-
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Download successfully deleted <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Download successfully deleted');
+
 					await this.getDownloads();
 					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -101,9 +89,6 @@ export default {
 			else if(cat == "training") return "Training";
 			else if(cat == "mfr") return "MFR";
 			else return "Miscellaneous";
-		},
-		formatDate(date) {
-			return new Date(date).toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		}
 	},
 };

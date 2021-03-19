@@ -35,7 +35,6 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import parse from 'metar-parser';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
@@ -250,8 +249,8 @@ export default {
 			numStationsLoaded: 0
 		};
 	},
-	components: {
-		Spinner
+	async mounted() {
+		await this.getWeatherForAirports();
 	},
 	methods: {
 		async getWeatherForAirports() {
@@ -273,13 +272,7 @@ export default {
 		getConditions: function(station) {
 			return (station.parsedMetar.visibility.miles > 3) ? `<i class="material-icons">wb_sunny</i>VFR` : `<i class="material-icons">wb_cloudy</i>IFR`;
 		}
-	},
-	computed: {
-	},
-	async mounted() {
-		await this.getWeatherForAirports();
 	}
-
 };
 </script>
 

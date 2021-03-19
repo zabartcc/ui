@@ -48,7 +48,7 @@
 										<label for="home" class="active">Applicant Home ARTCC</label>
 									</div>
 									<div class="input-field col s6">
-										<p id="submission_date">{{formatDate(app.createdAt)}}</p>
+										<p id="submission_date">{{dtLong(app.createdAt)}}</p>
 										<label for="submission_date" class="active">Submission Date</label>
 									</div>
 									<div class="input-field col s12">
@@ -86,7 +86,6 @@
 </template>
 
 <script>
-import Spinner from '@/components/Spinner.vue';
 import {zabApi, vatusaApiAuth} from '@/helpers/axios.js';
 
 export default {
@@ -98,9 +97,6 @@ export default {
 			reason: {}
 		};
 	},
-	components: {
-		Spinner
-	},
 	async mounted() {
 		await this.getNewApplications();
 		M.Modal.init(document.querySelectorAll('.modal'), {
@@ -110,8 +106,8 @@ export default {
 	methods: {
 		async getNewApplications() {
 			try {
-				const {data:visitData} = await zabApi.get('/controller/visit');
-				this.applications = visitData.data;
+				const {data} = await zabApi.get('/controller/visit');
+				this.applications = data.data;
 			} catch(e) {
 				console.log(e);
 			}
@@ -120,19 +116,11 @@ export default {
 			try {
 				await zabApi.put(`/controller/visit/${cid}`);
 				await vatusaApiAuth.post(`/facility/ZAB/roster/manageVisitor/${cid}`);
-				M.toast({
-					html: '<i class="material-icons left">done</i> Visitor successfully added to roster! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.getNewApplications();
+				this.toastSuccess('Visitor successfully added to roster');
+				await this.getNewApplications();
 			} catch(e) {
 				console.log(e);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+				this.toastError('Something went wrong, please try again');
 			}
 		},
 		async rejectVisitor(cid) {
@@ -141,42 +129,25 @@ export default {
 				await zabApi.delete(`/controller/visit/${cid}`, {data: {
 					reason: this.reason[cid]
 				}});
-				M.toast({
-					html: '<i class="material-icons left">done</i> Application successfully rejected <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
-				this.getNewApplications();
+
+				this.toastSuccess('Application successfully rejected');
+
+				await this.getNewApplications();
 				M.Modal.getInstance(document.querySelector(`#modal_reject_${cid}`)).close();
 			} catch(e) {
 				console.log(e);
-				M.toast({
-					html: '<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+				this.toastError('Something went wrong, please try again');
 			}
 		},
 		openRejectModal(i) {
 			M.Modal.getInstance(document.querySelector(`#modal_${i}`)).close();
 			M.Modal.getInstance(document.querySelector(`#modal_reject_${i}`)).open();
-		},
-		formatDate(date) {
-			return new Date(date).toISOString().slice(0,-8).replace('T', ', ');
 		}
 	}
 };
 </script>
 
 <style scoped lang="scss">
-.options {
-	text-align: right;
-}
-
-.row_no_margin {
-	margin-bottom: 0;
-}
-
 .modal {
 	min-width: 340px;
 	width: 30%;
@@ -193,8 +164,8 @@ export default {
 }
 
 .no_visit {
-	padding: 1em;
-	margin-top: -10px;
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 

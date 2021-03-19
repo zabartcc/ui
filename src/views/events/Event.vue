@@ -9,7 +9,7 @@
 				<div class="row">
 					<div class="col s12">
 						<span class="card-title event_title">{{event.name}}</span>
-						<span class="card-title event_date">{{formatDate(event.eventStart)}}z <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
+						<span class="card-title event_date">{{dtLong(event.eventStart)}} <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
 					</div>
 				</div>
 				<div class="row">
@@ -24,7 +24,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Events',
@@ -33,9 +32,6 @@ export default {
 			event: null,
 			chips: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getEvent();
@@ -52,10 +48,6 @@ export default {
 			} else {
 				this.event = data.data;
 			}
-		},
-		formatDate(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		},
 		formatTime(value) {
 			var d = new Date(value);
@@ -86,5 +78,4 @@ export default {
 .event_desc {
 	white-space: pre-wrap;
 }
-
 </style>

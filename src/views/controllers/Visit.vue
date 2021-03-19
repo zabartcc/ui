@@ -10,27 +10,27 @@
 			<div v-else>
 				<div v-if="!user.data.isMem">
 					<div class="row" v-if="user.data">
-						<div class="input-field col s6">
+						<div class="input-field col s12 m6">
 							<input id="fname" type="text" v-model="user.data.fname" ref="fname" disabled required>
 							<label for="fname" class="active">First Name</label>
 						</div>
-						<div class="input-field col s6">
+						<div class="input-field col s12 m6">
 							<input id="lname" type="text" :value="user.data.lname" ref="lname" disabled required>
 							<label for="lname" class="active">Last Name</label>
 						</div>
-						<div class="input-field col s6">
+						<div class="input-field col s12 m6">
 							<input id="cid" type="text" :value="user.data.cid" ref="cid" disabled required>
 							<label for="cid" class="active">Controller ID</label>
 						</div>
-						<div class="input-field col s6">
+						<div class="input-field col s12 m6">
 							<input id="rating" type="text" :value="user.data.ratingLong" ref="rating" disabled required>
 							<label for="rating" class="active">Rating</label>
 						</div>
-						<div class="input-field col s6">
+						<div class="input-field col s12 m6">
 							<input id="email" type="email" :value="user.data.email" class="validate" ref="email" required>
 							<label for="email">Email</label>
 						</div>
-						<div class="input-field col s6">
+						<div class="input-field col s12 m6">
 							<input id="home" type="text" :value="user.data.facility" class="validate" ref="home" required>
 							<label for="home">Home ARTCC/FIR</label>
 						</div>
@@ -81,18 +81,10 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Visitor application successfully submitted <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Visitor application successfully submitted');
 					this.$router.push('/');
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -113,5 +105,4 @@ export default {
 	display: block;
 	width: 200px;
 }
-
 </style>

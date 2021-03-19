@@ -40,14 +40,12 @@
 <script>
 import AtcOnlineItem from './AtcOnlineItem';
 import PilotOnlineItem from './PilotOnlineItem';
-import Spinner from '@/components/Spinner.vue';
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	components: {
 		AtcOnlineItem,
-		PilotOnlineItem,
-		Spinner
+		PilotOnlineItem
 	},
 	data() {
 		return {

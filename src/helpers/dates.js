@@ -30,7 +30,7 @@ export default {
 			second: '2-digit', 
 			hourCycle: 'h23'});
 	},
-	dLong(isoDate) {
+	dLong(isoDate) { // January 2, 2006
 		const d =  new Date(isoDate);
 		return d.toLocaleString('en-US', {
 			month: 'long', 
@@ -38,5 +38,14 @@ export default {
 			year: 'numeric', 
 			timeZone: 'UTC',
 		});
+	},
+	dtStandard(isoDate) { // 2006-01-02, 15:04
+		const d = new Date(isoDate);
+		return d.toISOString().slice(0, -8).replace('T', ', ');
+	},
+	dtRegionalUS(isoDate) { // 1/2/2006, 15:04
+		const d = new Date(isoDate);
+		return d.toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 	}
+
 };

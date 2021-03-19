@@ -25,7 +25,7 @@
 					<tbody class="controller_list_row">
 						<tr v-for="controller in controllersFiltered" :key="controller.cid">
 							<td>
-								<i class="material-icons right">{{controller.vis?'work':'home'}}</i>
+								<i class="type_controller material-icons right">{{controller.vis?'work':'home'}}</i>
 								<div class="name">
 									<router-link :to="`/controllers/${controller.cid}`">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</router-link>
 								</div>
@@ -131,6 +131,11 @@ table tbody {
 			background: #eaeaea;
 		}
 	}
+}
+
+.type_controller {
+	vertical-align: top;
+	margin-top: .4em;
 }
 
 .modal_delete {

@@ -37,7 +37,6 @@
 </template>
 <script>
 import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'NewSoloCert',
@@ -51,9 +50,6 @@ export default {
 				expDate: ''
 			}
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getControllers();
@@ -86,18 +82,12 @@ export default {
 				formData.append('position', this.form.position);
 				formData.append('expDate', this.form.expDate);
 				await vatusaApiAuth.post('/solo', formData);
-				M.toast({
-					html: '<i class="material-icons left">done</i> Solo cert succesfully issued! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
+
+				this.toastSuccess('Solo cert successfully added');
+
 				this.$router.push('/ins/solo');
 			} catch(e) {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${e} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+				this.toastError(e);
 			}
 		}
 	}

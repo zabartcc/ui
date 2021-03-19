@@ -17,11 +17,11 @@
 							<label for="ins" class="active">Instructor</label>
 						</div>
 						<div class="input-field">
-							<input type="text" :value="formatDateTime(session.startTime)" disabled id="startTime" />
+							<input type="text" :value="dtLong(session.startTime)" disabled id="startTime" />
 							<label for="startTime" class="active">Start Time</label>
 						</div>
 						<div class="input-field">
-							<input type="text" :value="formatDateTime(session.endTime)" disabled id="endTime" />
+							<input type="text" :value="dtLong(session.endTime)" disabled id="endTime" />
 							<label for="endTime" class="active">End Time</label>
 						</div>
 						<div class="input-field">
@@ -69,7 +69,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'ViewSession',
@@ -79,9 +78,6 @@ export default {
 		return {
 			session: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getSessionDetails();
@@ -93,10 +89,6 @@ export default {
 		async getSessionDetails() {
 			const {data} = await zabApi.get(`/training/session/${this.$route.params.id}`);
 			this.session = data.data;
-		},
-		formatDateTime(value) {
-			const d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC', hour12: false});
 		},
 		formatLocation(location) {
 			const locations = ['Classroom', 'Live Network', 'Sweatbox'];

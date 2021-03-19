@@ -24,7 +24,7 @@
 							</router-link><br />
 						</td>
 						<td class="date">
-							{{formatDate(event.eventStart)}}z
+							{{dtLong(event.eventStart)}}
 						</td>
 						<td class="options">
 							<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
@@ -56,7 +56,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
@@ -71,7 +70,6 @@ export default {
 		};
 	},
 	components: {
-		Spinner,
 		Pagination
 	},
 	async mounted() {
@@ -88,10 +86,6 @@ export default {
 			});
 			this.historicEvents = data.data.events;
 			this.eventAmount = data.data.amount;
-		},
-		formatDate(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		}
 	},
 	watch: {

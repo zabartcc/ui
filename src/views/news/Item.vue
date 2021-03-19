@@ -5,10 +5,8 @@
 		</div>
 		<div v-else>
 			<div class="card-content">
-				<div class="row row_no_margin">
-					<div class="card-title col s12 l8">{{news.title}}</div>
-					<div class="side-title col s12 l4">{{dLong(news.createdAt)}}</div>
-				</div>
+				<div class="card-title">{{news.title}}</div>
+				<div class="side-title">{{dLong(news.createdAt)}}</div>
 				<div class="author">
 					By {{news.user.fname}} {{news.user.lname}}
 				</div>
@@ -50,14 +48,17 @@ export default {
 <style lang="scss" scoped>
 .card-title {
 	font-weight: bold;
+	float: left;
+	margin-bottom: 0!important;
 }
 
 .side-title {
-	text-align: right;
+	float: right;
 }
 
 .author {
 	font-weight: 400;
+	margin-top: 2.2em;
 	margin-bottom: 1em;
 	color: #9e9e9e;
 }

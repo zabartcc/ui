@@ -72,7 +72,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Feedback',
@@ -92,9 +91,6 @@ export default {
 			controllers: null
 		};
 	},
-	components: {
-		Spinner
-	},
 	async mounted() {
 		await this.getControllers();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
@@ -108,20 +104,13 @@ export default {
 		async submitFeedback() {
 			const {data} = await zabApi.post('/feedback', this.feedback);
 			if(data.ret_det.code === 200) {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Feedback successfully submitted! <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
+				this.toastSuccess('Feedback successfully submitted');
+
 				this.feedback = {};
 				document.getElementById("feedback").reset();
 				M.textareaAutoResize(document.querySelectorAll('textarea'));
 			} else {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
+				this.toastError(data.ret_det.message);
 			}
 		}
 	}
@@ -129,26 +118,22 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.card_desc {
-		margin-bottom: 1em;
-	}
+.card_desc {
+	margin-bottom: 1em;
+}
 
-	.row_no_margin {
-		margin-bottom: 0;
+.form_checkbox {
+	span {
+		color: black;
 	}
+}
 
-	.form_checkbox {
-		span {
-			color: black;
-		}
-	}
+.checkbox {
+	padding-left: 1em;
+}
 
-	.checkbox {
-		padding-left: 1em;
-	}
-	
-	input.valid[type=email]:not(.browser-default) {
-		border-bottom: 1px solid $primary-color;
-		box-shadow: 0 1px 0 0 $primary-color;
-	}
+input.valid[type=email]:not(.browser-default) {
+	border-bottom: 1px solid $primary-color;
+	box-shadow: 0 1px 0 0 $primary-color;
+}
 </style>

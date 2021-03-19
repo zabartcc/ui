@@ -24,8 +24,8 @@
 					<tr v-for="(session, i) in sessions" :key="session._id">
 						<td>{{session.student.fname + ' ' + session.student.lname}} <span v-if="session.student.vis === true">(VC)</span></td>
 						<td>{{session.milestone.name}}</td>
-						<td>{{formatDateTime(session.startTime)}}z</td>
-						<td>{{formatDateTime(session.endTime)}}z</td>
+						<td>{{dtLong(session.startTime)}}</td>
+						<td>{{dtLong(session.endTime)}}</td>
 						<td class="options">
 							<a :href="`#modal_session_${i}`" data-position="top" data-tooltip="View Session Details" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
@@ -48,11 +48,11 @@
 											<label for="cid" class="active">Milestone</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{formatDateTime(session.startTime)}}z</p>
+											<p id="cid">{{dtLong(session.startTime)}}</p>
 											<label for="cid" class="active">Start Time</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{formatDateTime(session.endTime)}}z</p>
+											<p id="cid">{{dtLong(session.endTime)}}</p>
 											<label for="cid" class="active">End Time</label>
 										</div>
 									</div>
@@ -72,7 +72,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 import Completed from './Completed.vue';
 
 export default {
@@ -84,7 +83,6 @@ export default {
 		};
 	},
 	components: {
-		Spinner,
 		Completed
 	},
 	async mounted() {

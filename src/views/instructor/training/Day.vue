@@ -24,8 +24,8 @@
 					<tr v-for="(request, i) in requests" :key="request._id">
 						<td>{{request.student.fname + ' ' + request.student.lname}} <span v-if="request.student.vis === true">(VC)</span></td>
 						<td>{{request.milestone.name}}</td>
-						<td>{{formatDateTime(request.startTime)}}z</td>
-						<td>{{formatDateTime(request.endTime)}}z</td>
+						<td>{{dtLong(request.startTime)}}</td>
+						<td>{{dtLong(request.endTime)}}</td>
 						<td class="options">
 							<a :href="`#modal_request_${i}`" data-position="top" data-tooltip="View Request" class="tooltipped modal-trigger">
 								<i class="material-icons" @click="changeTimes(i)">search</i>
@@ -85,7 +85,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'TrainingRequestsDay',
@@ -95,9 +94,6 @@ export default {
 			times: {},
 			requests: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.verifyRoute();
@@ -127,7 +123,7 @@ export default {
 					instructor: this.$store.state.user.user.data._id
 				});
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Training Request successfully taken');
+					this.toastSuccess('Training request successfully taken');
 					this.$router.push('/ins/training/requests');
 				} else {
 					this.toastError(data.ret_det.message);
@@ -146,15 +142,12 @@ export default {
 			}
 		},
 		formatDate(value) {
-			var d = new Date(value);
+			const d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',});
 		},
-		formatDateTime(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC', hour12: false});
-		},
 		formatHtmlDate(value) {
-			return value.replace('T', ' ').slice(0,16);
+			const d = new Date(value).toISOString();
+			return d.replace('T', ' ').slice(0,16);
 		},
 		changeTimes(i) {
 			this.times = {

@@ -86,9 +86,14 @@ export default {
 		},
 		async deleteAll() {
 			try {
-				await zabApi.delete(`/user/notifications`);
-				this.notifications = [];
-				this.$parent.unread = false;
+				if(this.notifications.length > 0) {
+					await zabApi.delete(`/user/notifications`);
+					this.notifications = [];
+					this.$parent.unread = false;
+					this.toastSuccess('Deleted all notifications successfully');
+				} else {
+					this.toastInfo('You have no notifications');
+				}
 			} catch(e) {
 				console.log(e);
 			}
@@ -99,96 +104,96 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.notif_container {
-		min-width: 230px;
-		font-size: 1rem;
-		max-width: 300px;
-		max-height: 330px;
-		overflow: auto;
-		display: flex;
-		flex-direction: column;
+.notif_container {
+	min-width: 230px;
+	font-size: 1rem;
+	max-width: 300px;
+	max-height: 330px;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
 
-		.no_notif {
-			font-style: italic;
-			padding: 0 1em 1em 0;
-		}
+	.no_notif {
+		font-style: italic;
+		padding: 0 1em 1em 0;
+	}
 
-		&::-webkit-scrollbar {
-			width: 10px;
-		}
+	&::-webkit-scrollbar {
+		width: 10px;
+	}
 
-		&::-webkit-scrollbar-thumb {
-			background: $primary-color-light;
-			border-radius: 5px;
-			border: 4px solid rgba(0, 0, 0, 0);
-			-webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
-			background-clip: padding-box;
-		}
+	&::-webkit-scrollbar-thumb {
+		background: $primary-color-light;
+		border-radius: 5px;
+		border: 4px solid rgba(0, 0, 0, 0);
+		-webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+		background-clip: padding-box;
+	}
 
-		.load_more {
-			padding: .8em 0 .8em 0;
-			text-align: center;
-			cursor: pointer;
+	.load_more {
+		padding: .8em 0 .8em 0;
+		text-align: center;
+		cursor: pointer;
 
-			&:hover {
-				color: $primary-color-light;
-			}
-		}
-
-		.notif {
-			padding: .8em 0 .8em 0;
-			border-bottom: 1px solid #EEEEEE;
-			position: relative;
-			cursor: pointer;
-
-			&:first-child {
-				padding-top: 0;
-			}
-
-			&:last-child {
-				border-bottom: none;
-			}
-
-			.notif_title {
-				font-size: 1rem;
-				padding-left: 1.1em;
-				
-				&.unread {
-					font-weight: 600;
-				}
-			}
-
-			.notif_text {
-				font-size: .95rem;
-				margin-top: .5em;
-				font-weight: 400;
-				padding-left: 1.1em;
-				padding-right: .25em;
-			}
-
-			.notif_unread {
-				height: 7px;
-				width: 7px;
-				background-color: $primary-color-light;
-				border-radius: 50%;
-				display: inline-block;
-				position: absolute;
-				top: 50%;
-				transform: translateY(-50%);
-			}
+		&:hover {
+			color: $primary-color-light;
 		}
 	}
 
-	.controls {
-		border-top: 1px solid #EEEEEE;
-		padding-top: .5em;
-		font-size: .8rem;
-		
-		button {
-			font-size: 12px;
-			height: 2.25em;
-			line-height: 2.25;
-			padding: 0 0.5em;
+	.notif {
+		padding: .8em 0 .8em 0;
+		border-bottom: 1px solid #EEEEEE;
+		position: relative;
+		cursor: pointer;
+
+		&:first-child {
+			padding-top: 0;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		.notif_title {
+			font-size: 1rem;
+			padding-left: 1.1em;
+			
+			&.unread {
+				font-weight: 600;
+			}
+		}
+
+		.notif_text {
+			font-size: .95rem;
+			margin-top: .5em;
+			font-weight: 400;
+			padding-left: 1.1em;
+			padding-right: .25em;
+		}
+
+		.notif_unread {
+			height: 7px;
+			width: 7px;
+			background-color: $primary-color-light;
+			border-radius: 50%;
+			display: inline-block;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
 		}
 	}
+}
+
+.controls {
+	border-top: 1px solid #EEEEEE;
+	padding-top: .5em;
+	font-size: .8rem;
+	
+	button {
+		font-size: 12px;
+		height: 2.25em;
+		line-height: 2.25;
+		padding: 0 0.5em;
+	}
+}
 </style>

@@ -25,7 +25,7 @@
 					<tbody class="controller_list_row">
 						<tr v-for="controller in controllersFiltered" :key="controller.cid">
 							<td>
-								<i class="material-icons right">{{controller.vis?'work':'home'}}</i>
+								<i class="material-icons right type_controller">{{controller.vis?'work':'home'}}</i>
 								<div class="name">
 									<router-link :to="`/controllers/${controller.cid}`">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</router-link>
 								</div>
@@ -59,8 +59,7 @@ export default {
 		return {
 			controllers: null,
 			controllersFiltered: null,
-			filter: '',
-			deleteReason: {}
+			filter: ''
 		};
 	},
 	async mounted() {
@@ -101,15 +100,23 @@ export default {
 	width: 100%;
 	overflow: auto;
 }
+
 .input-field {
 	margin-top: 0;
 }
+
 .name {
 	color: $primary-color;
 	font-weight: 700;
 }
+
 .rating {
 	font-weight: 400;
+}
+
+.type_controller {
+	vertical-align: top;
+	margin-top: .4em;
 }
 
 table tbody {

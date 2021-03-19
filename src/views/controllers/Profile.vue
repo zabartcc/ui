@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="loading_container" v-if="!controller">
+			<div class="loading_container" v-if="!controller || !stats">
 				<Spinner />
 			</div>
 			<div v-else>
@@ -33,60 +33,57 @@
 						<p class="bio">{{controller.bio}}</p>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="loading_container" v-if="!stats">
-			<Spinner />
-		</div>
-		<div class="session_table_wrap" v-else>
-			<table class="striped responsive-table centered">
-				<thead>
-					<tr>
-						<th></th>
-						<th>DEL</th>
-						<th>GND</th>
-						<th>TWR</th>
-						<th>APP</th>
-						<th>CTR</th>
-						<th>Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="month in stats.months" :key=month>
-						<td>{{month}}</td>
-						<td>{{sec2hm(stats[month].del)}}</td>
-						<td>{{sec2hm(stats[month].gnd)}}</td>
-						<td>{{sec2hm(stats[month].twr)}}</td>
-						<td>{{sec2hm(stats[month].app)}}</td>
-						<td>{{sec2hm(stats[month].ctr)}}</td>
-						<td>{{sec2hm(totalTime(stats[month]))}}</td>
-					</tr>
-					<tr>
-						<td>>1 Year</td>
-						<td>{{sec2hm(stats.gtyear.del)}}</td>
-						<td>{{sec2hm(stats.gtyear.gnd)}}</td>
-						<td>{{sec2hm(stats.gtyear.twr)}}</td>
-						<td>{{sec2hm(stats.gtyear.app)}}</td>
-						<td>{{sec2hm(stats.gtyear.ctr)}}</td>
-						<td>{{sec2hm(totalTime(stats.gtyear))}}</td>
-					</tr>
-					<tr>
-						<td>Total</td>
-						<td>{{sec2hm(stats.total.del)}}</td>
-						<td>{{sec2hm(stats.total.gnd)}}</td>
-						<td>{{sec2hm(stats.total.twr)}}</td>
-						<td>{{sec2hm(stats.total.app)}}</td>
-						<td>{{sec2hm(stats.total.ctr)}}</td>
-						<td>{{sec2hm(totalTime(stats.total))}}</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="card-content">
-				<div>
-					<strong>Total Sessions:</strong> {{stats.sessionCount}}
+				<div class="session_table_wrap">
+					<table class="striped responsive-table centered">
+						<thead>
+							<tr>
+								<th></th>
+								<th>DEL</th>
+								<th>GND</th>
+								<th>TWR</th>
+								<th>APP</th>
+								<th>CTR</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="month in stats.months" :key=month>
+								<td>{{month}}</td>
+								<td>{{sec2hm(stats[month].del)}}</td>
+								<td>{{sec2hm(stats[month].gnd)}}</td>
+								<td>{{sec2hm(stats[month].twr)}}</td>
+								<td>{{sec2hm(stats[month].app)}}</td>
+								<td>{{sec2hm(stats[month].ctr)}}</td>
+								<td>{{sec2hm(totalTime(stats[month]))}}</td>
+							</tr>
+							<tr>
+								<td>>1 Year</td>
+								<td>{{sec2hm(stats.gtyear.del)}}</td>
+								<td>{{sec2hm(stats.gtyear.gnd)}}</td>
+								<td>{{sec2hm(stats.gtyear.twr)}}</td>
+								<td>{{sec2hm(stats.gtyear.app)}}</td>
+								<td>{{sec2hm(stats.gtyear.ctr)}}</td>
+								<td>{{sec2hm(totalTime(stats.gtyear))}}</td>
+							</tr>
+							<tr>
+								<td>Total</td>
+								<td>{{sec2hm(stats.total.del)}}</td>
+								<td>{{sec2hm(stats.total.gnd)}}</td>
+								<td>{{sec2hm(stats.total.twr)}}</td>
+								<td>{{sec2hm(stats.total.app)}}</td>
+								<td>{{sec2hm(stats.total.ctr)}}</td>
+								<td>{{sec2hm(totalTime(stats.total))}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div>
-					<strong>Average Session Time:</strong> {{sec2hm(stats.sessionAvg)}}
+				<div class="card-content">
+					<div>
+						<strong>Total Sessions:</strong> {{stats.sessionCount}}
+					</div>
+					<div>
+						<strong>Average Session Time:</strong> {{sec2hm(stats.sessionAvg)}}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -147,95 +144,94 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.controller_image {
-		img {
-			width: 100%;
-			height: auto;
-			padding: .25rem;
-			border: 1px solid lightgray;
-		}
+.controller_image {
+	img {
+		width: 100%;
+		height: auto;
+		padding: .25rem;
+		border: 1px solid lightgray;
+	}
+}
+
+.controller_name {
+	font-weight: 600;
+	font-size: 1.5rem;
+}
+
+.controller_rating {
+	font-weight: 300;
+	font-size: 1.2rem;
+	margin-top: -7px;
+}
+
+.controller_bio {
+	margin-top: 15px;
+	white-space: pre-wrap;
+}
+
+.controller_certs {
+	margin-top: 1em;
+}
+
+.cert {
+	display: inline-block;
+	padding: 0.25rem 0.4rem;
+	color: #fff;
+	font-size: 0.85rem;
+	margin: 2px;
+	user-select: none;
+
+	&+.title {
+		margin-top: 1.5em;
 	}
 
-	.controller_name {
-		font-weight: 600;
-		font-size: 1.5rem;
+	&.cert_senior {
+		background: $cert_senior;
 	}
 
-	.controller_rating {
-		font-weight: 300;
-		font-size: 1.2rem;
-		margin-top: -7px;
+	&.cert_junior {
+		background: $cert_junior;
 	}
 
-	.controller_bio {
-		margin-top: 15px;
-		white-space: pre-wrap;
+	&.cert_training {
+		background: $cert_training;
+	}
+	
+	&.cert_center {
+		background-color: $secondary-color-dark;
 	}
 
-	.controller_certs {
-		margin-top: 1em;
+	&.cert_major {
+		background: $secondary-color;
 	}
 
-	.cert {
-		display: inline-block;
-		padding: 0.25rem 0.4rem;
-		color: #fff;
-		font-size: 0.85rem;
-		margin: 2px;
-		user-select: none;
+	&.cert_minor {
+		background: $secondary-color-light;
+	}
+}
 
-		&+.title {
-			margin-top: 1.5em;
-		}
+.title {
+	color: #9e9e9e;
+	font-size: .8rem;
+}
 
-		&.cert_senior {
-			background: $cert_senior;
-		}
+.bio {
+	white-space: pre-wrap;
+}
 
-		&.cert_junior {
-			background: $cert_junior;
-		}
+	
 
-		&.cert_training {
-			background: $cert_training;
+.session_table_wrap {
+	@media screen and (min-width: 993px) {
+		th:last-of-type, td:last-of-type {
+			border-left: 1px solid #000;
 		}
-		
-		&.cert_center {
-			background-color: $secondary-color-dark;
-		}
-
-		&.cert_major {
-			background: $secondary-color;
-		}
-
-		&.cert_minor {
-			background: $secondary-color-light;
+		tbody tr:last-of-type {
+			border-top: 1px solid #000;
 		}
 	}
-
-	.title {
-		color: #9e9e9e;
-		font-size: .8rem;
+	tbody td:first-of-type {
+		font-weight: 700;
 	}
-
-	.bio {
-		white-space: pre-wrap;
-	}
-
-		
-
-	.session_table_wrap {
-		@media screen and (min-width: 993px) {
-			th:last-of-type, td:last-of-type {
-				border-left: 1px solid #000;
-			}
-			tbody tr:last-of-type {
-				border-top: 1px solid #000;
-			}
-		}
-		tbody td:first-of-type {
-			font-weight: 700;
-		}
-	}
-
+}
 </style>

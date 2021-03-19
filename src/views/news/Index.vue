@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<span class="card-title">News Articles</span>
 		</div>
-		<div class="loading_container" v-if="!newsItems">
+		<div class="loading_container" v-if="newsItems === null">
 			<Spinner />
 		</div>
 		<p class="no_news" v-else-if="newsItems && newsItems.length === 0">There are no news articles to display.</p>
@@ -18,7 +18,7 @@
 				<tbody class="news_list_row">
 					<tr v-for="news in newsItems" :key="news._id" @click="goToArticle(news.uriSlug)">
 						<td class="title">{{news.title}}</td>
-						<td class="right">{{formatDate(news.createdAt)}}</td>
+						<td class="right">{{dLong(news.createdAt)}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -72,10 +72,6 @@ export default {
 				this.newsItems = data.data.slice(0,3);
 				this.newsAmount = data.amount;
 			}
-		},
-		formatDate(date) {
-			const d = new Date(date);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
 		},
 		async goToArticle(slug) {
 			this.$router.push(`/news/${slug}`);

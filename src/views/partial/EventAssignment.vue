@@ -91,17 +91,14 @@ export default {
 				const requests = this.chips.chipsData.map(chip => chip.tag);
 				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/signup`, {requests});
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Request successfully submitted.');
+					this.toastSuccess('Request successfully submitted');
+
 					await this.getPositions();
 					this.$nextTick(() => {
 						M.Modal.getInstance(document.querySelector('#assignment_modal')).close();
 					});
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -143,7 +140,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .assignment_cta {
 	text-align: center;
 }
@@ -174,5 +170,4 @@ export default {
 	border-bottom: 1px solid $primary-color-light;
 	box-shadow: 0 1px 0 0 $primary-color-light;
 }
-
 </style>

@@ -94,7 +94,6 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import StaffCard from './StaffCard.vue';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Staff',
@@ -105,8 +104,7 @@ export default {
 		};
 	},
 	components: {
-		StaffCard,
-		Spinner
+		StaffCard
 	},
 	async mounted() {
 		const {data} = await zabApi.get('/controller/staff');

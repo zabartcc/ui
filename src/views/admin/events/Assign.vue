@@ -82,7 +82,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'EventAssignments',
@@ -91,9 +90,6 @@ export default {
 			event: null,
 			cid: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getEventData();
@@ -116,17 +112,9 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Position assignments successfully saved <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success'
-					});
+					this.toastSuccess('Position assignments successfully saved');
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error',
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -140,19 +128,12 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Controllers successfully notified <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success'
-					});
+					this.toastSuccess('Controllers successfully notified');
+
 					await this.getEventData();
 					setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_notify')).close(), 500);
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error',
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -162,23 +143,15 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`);
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Sign-up successfully added <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success'
-					});
+					this.toastSuccess('Sign-up successfully added');
 
 					await this.getEventData();
-
 					this.cid = null;
 					M.FormSelect.init(document.querySelectorAll('select'), {});
 					setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error',
-					});
+					this.toastError(data.ret_det.message);
+
 					this.cid = null;
 				}
 			} catch(e) {
@@ -189,18 +162,11 @@ export default {
 			try {
 				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/mandelete/${cid}`);
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Sign-up successfully deleted <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success'
-					});
+					this.toastSuccess('Sign-up successfully deleted');
+
 					await this.getEventData();
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error',
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -210,18 +176,11 @@ export default {
 			try {
 				const {data} = zabApi.put(`/event/${this.$route.params.slug}/close`);
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Sign-ups successfully closed <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success'
-					});
+					this.toastSuccess('Sign-ups successfully closed');
+
 					await this.getEventData();
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error',
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);

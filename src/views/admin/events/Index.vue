@@ -26,7 +26,7 @@
 						</router-link><br />
 					</td>
 					<td class="date">
-						{{formatDate(event.eventStart)}}z
+						{{dtLong(event.eventStart)}}
 					</td>
 					<td class="options">
 						<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/events/edit/${event.url}`">
@@ -59,7 +59,6 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import Past from './Past.vue';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Events',
@@ -71,7 +70,6 @@ export default {
 		};
 	},
 	components: {
-		Spinner,
 		Past
 	},
 	async mounted() {
@@ -92,25 +90,13 @@ export default {
 			try {
 				const {data} = await zabApi.delete(`/event/${slug}`);
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Event successfully deleted <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success'
-					});
+					this.toastSuccess('Event successfully deleted');
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error',
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
 			}
-		},
-		formatDate(value) {
-			var d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false});
 		}
 	}
 };

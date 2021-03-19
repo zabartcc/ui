@@ -23,8 +23,8 @@
 				<tbody class="session_list_row">
 					<tr v-for="session in sessions" :key="session._id">
 						<td>{{session.student.fname}} {{session.student.lname}}</td>
-						<td>{{formatDateTime(session.startTime)}}z</td>
-						<td>{{formatDateTime(session.endTime)}}z</td>
+						<td>{{dtLong(session.startTime)}}</td>
+						<td>{{dtLong(session.endTime)}}</td>
 						<td>{{session.instructor.fname}} {{session.instructor.lname}}</td>
 						<td class="options">
 							<router-link :to="`/ins/training/sessions/${session._id}`" data-position="top" data-tooltip="View Session Details" class="tooltipped modal-trigger">
@@ -43,7 +43,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
@@ -58,7 +57,6 @@ export default {
 		};
 	},
 	components: {
-		Spinner,
 		Pagination
 	},
 	async mounted() {
@@ -79,10 +77,6 @@ export default {
 
 			this.sessions = data.data.sessions;
 			this.amountOfSessions = data.data.count;
-		},
-		formatDateTime(value) {
-			const d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC', hour12: false});
 		}
 	}
 };

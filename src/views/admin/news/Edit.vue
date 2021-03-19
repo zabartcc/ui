@@ -5,9 +5,9 @@
 			<div class="loading_container" v-if="!news">
 				<Spinner />
 			</div>
-			<div class="row" v-else>
+			<div class="row row_no_margin" v-else>
 				<form method="post" @submit.prevent=updateNews>
-					<div class="input-field col s12 l6">
+					<div class="input-field col s12">
 						<input id="title" type="text" v-model="news.title" required>
 						<label for="title">Title</label>
 					</div>
@@ -26,7 +26,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'EditNews',
@@ -41,30 +40,20 @@ export default {
 		M.updateTextFields();
 		M.textareaAutoResize(document.querySelector('#content'));
 	},
-	components: {
-		Spinner
-	},
 	methods: {
 		async getArticle() {
 			const {data} = await zabApi.get(`/news/${this.$route.params.slug}`);
 			this.news = data.data;
 		},
 		async updateNews() {
-			const {data: resp} = await zabApi.put(`/news/${this.$route.params.slug}`, this.news);
+			const {data} = await zabApi.put(`/news/${this.$route.params.slug}`, this.news);
 
-			if(resp.ret_det.code !== 200) {
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> ${resp.ret_det.message} <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			} else {
-				M.toast({
-					html: '<i class="material-icons left">done</i> News article successfully updated <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
+			if(data.ret_det.code === 200) {
+				this.toastSuccess('News article successfully updated');
+
 				this.$router.push('/admin/news');
+			} else {
+				this.toastError(data.ret_det.message);
 			}
 		},
 	},

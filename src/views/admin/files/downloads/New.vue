@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { zabApi } from '@/helpers/axios.js';
+import {mapState} from 'vuex';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	name: 'NewDownload',
@@ -77,7 +77,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('File created.');
+					this.toastSuccess('File successfully added');
 					this.$router.push('/admin/files/downloads');
 				} else {
 					this.toastError(data.ret_det.message);

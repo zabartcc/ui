@@ -8,21 +8,28 @@
 			<div v-else-if="newsItems && newsItems.length === 0" class="no_news">
 				There are no recent news articles to display.
 			</div>
-			<div v-else>
-				<div class="collection">
-					<router-link class="collection-item news_item" v-for='news in newsItems' :key="news.id" :to="`/news/${news.uriSlug}`">
-						{{news.title}}
-						<span class="badge">{{dtLong(news.createdAt)}}</span>
-					</router-link>
-				</div>
-			</div>
+		</div>
+		<div class="table_overflow_wrapper" v-if="newsItems && newsItems.length > 0">
+			<table class="striped">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th class="options">Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="news in newsItems" :key="news.id">
+						<td><router-link :to="`/news/${news.uriSlug}`">{{news.title}}</router-link></td>
+						<td class="options">{{dtLong(news.createdAt)}}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </template>
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 
 export default {
@@ -32,9 +39,6 @@ export default {
 			page: 1,
 			limit: 3
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getNews();
@@ -63,26 +67,25 @@ export default {
 	padding: 1em;
 }
 
-.news_item {
-	color: $primary-color!important;
-	font-weight: bold;
-	padding: .7em 1.2em;
+tbody {
+	tr {
+		td {
+			transition: .3s ease;
+		}
 
-	.badge {
-		font-weight: normal;
+		&:hover {
+			td {
+				background: #EAEAEA;
+			}
+		}
+
+		a {
+			font-weight: 600;
+		}
 	}
 }
 
-.collection {
-	border: none;
-	padding: 0;
-}
-
-.card-title {
-	padding: 15px 15px 0 15px;
-}
-
 .card-content {
-	padding: 0;
+	padding-bottom: 0;
 }
 </style>

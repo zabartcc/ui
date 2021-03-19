@@ -2,7 +2,10 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Edit Download</span>
-			<div class="row">
+			<div class="loading_container" v-if="loading === true">
+				<Spinner />
+			</div>
+			<div class="row" v-else>
 				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
 					<div class="input-field col s12 l6">
 						<input id="name" type="text" v-model="form.name" required>
@@ -52,7 +55,8 @@ export default {
 				category: '',
 				description: '',
 				fileName: ''
-			}
+			},
+			loading: true
 		};
 	},
 	async mounted() {
@@ -63,8 +67,10 @@ export default {
 	},
 	methods: {
 		async getDownload() {
+			this.loading = true;
 			const {data} = await zabApi.get(`/file/downloads/${this.$route.params.id}`);
 			this.form = data.data;
+			this.loading = false;
 		},
 		async submitForm() {
 			try {
@@ -81,17 +87,9 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Download succesfully updated <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Download successfully updated');
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);

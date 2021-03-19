@@ -9,8 +9,7 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import { mapMutations, mapActions } from 'vuex';
-import Spinner from '@/components/Spinner.vue';
+import {mapMutations, mapActions} from 'vuex';
 
 export default {
 	name: 'LoginVerify',
@@ -23,18 +22,15 @@ export default {
 			'getUser'
 		]),
 	},
-	components: {
-		Spinner
-	},
 	async mounted () {
 		const {data} = await zabApi.post('/user/login', {
 			token: this.$route.query.token
 		});
 		if(data.ret_det.code === 200) {
 			this.getUser();
-			this.toastSuccess('Successfully logged in.');
+			this.toastInfo('Successfully logged in');
 		} else {
-			this.toastError('Something went wrong, please try again.');
+			this.toastError('Something went wrong, please try again');
 		}
 		this.$router.push(localStorage.getItem('redirect') || '/');
 	},

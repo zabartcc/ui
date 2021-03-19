@@ -44,7 +44,6 @@
 </template>
 <script>
 import {vatusaApiAuth, vatusaApi, zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'SoloCerts',
@@ -63,9 +62,6 @@ export default {
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
-	},
-	components: {
-		Spinner
 	},
 	methods: {
 		async getSoloCerts() {
@@ -88,24 +84,19 @@ export default {
 			}
 		},
 		async deleteCert(cid, pos) {
-			const formData = new FormData();
-			formData.append('cid', cid);
-			formData.append('position', pos);
-			vatusaApiAuth.delete('/solo', formData).then(async () => {
-				M.toast({
-					html: '<i class="material-icons left">done</i> Solo cert succesfully revoked <div class="border"></div>',
-					displayLength: 5000,
-					classes: 'toast toast_success',
-				});
+			try {
+				const formData = new FormData();
+				formData.append('cid', cid);
+				formData.append('position', pos);
+				await vatusaApiAuth.delete('/solo', formData);
+
+				this.toastSuccess('Solo cert successfully deleted');
+
 				await this.getSoloCerts();
-			}).catch((err) => {
-				console.log(err);
-				M.toast({
-					html: `<i class="material-icons left">error_outline</i> Something went wrong, please try again. <div class="border"></div>`,
-					displayLength: 5000,
-					classes: 'toast toast_error'
-				});
-			});
+				
+			} catch(e) {
+				this.toastError('Something went wrong, please try again');
+			}
 		},
 		getName(cid2) {
 			const controller = this.controllers.filter(i => { return i.cid === cid2; });
@@ -117,24 +108,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.row_no_margin {
-	margin-bottom: 0;
-}
-
 .no_certs {
-	padding: 1em;
-	margin-top: -2em;
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
 	font-style: italic;
 }
 
 .table_wrapper {
 	width: 100%;
 	overflow: hidden;
-}
-
-.options {
-	text-align: right;
-	width: 120px;
 }
 
 .loading {

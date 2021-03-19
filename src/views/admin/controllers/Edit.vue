@@ -100,14 +100,13 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
 		return {
 			controller: null,
 			usedOi: [],
-			oi: "",
+			oi: '',
 			oiAvail: true,
 			form: {
 				fname: '',
@@ -137,9 +136,6 @@ export default {
 			}
 		};
 	},
-	components: {
-		Spinner
-	},
 	async mounted() {
 		await this.getController();
 		this.setTitle(`Edit ${this.controller.fname + ' ' + this.controller.lname}`);
@@ -162,7 +158,7 @@ export default {
 			this.usedOi = (await zabApi.get(`/controller/oi`)).data.data;
 		},
 		checkOi() {
-			this.oiAvail = (this.form.oi != this.controller.oi && (this.usedOi.includes(this.form.oi) || this.form.oi.length != 2)) ? false : true;
+			this.oiAvail = (this.form.oi !== this.controller.oi && (this.usedOi.includes(this.form.oi) || this.form.oi.length != 2)) ? false : true;
 		},
 		toggleCert: function(e) {
 			e.target.classList.toggle('active');

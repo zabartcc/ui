@@ -25,6 +25,18 @@
 							</li>
 						</ul>
 					</li>
+					<li class="has_dropdown" data-state="hide">
+						<a class="dropdown-left" href="#!" data-target="pilots-dropdown">PILOTS</a>
+						<ul id="pilots-dropdown" class="dropdown-content">
+							<li>
+								<router-link to="/briefing">Pilot Briefing</router-link>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<router-link to="/feedback">Feedback</router-link>
+							</li>
+						</ul>
+					</li>
 					<li>
 						<router-link to="/events">EVENTS</router-link>
 					</li>
@@ -42,9 +54,6 @@
 							</li>
 						</ul>
 					</li>
-					<li>
-						<router-link to="/feedback">FEEDBACK</router-link>
-					</li>
 				</ul>
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
 				<ul class="right left-on-med-and-down">
@@ -54,8 +63,8 @@
 							<Notifications />
 						</ul>
 					</li>
-					<li>
-						<a v-show="user.isLoggedIn" class="dropdown-right" href="#!" data-target="user-dropdown">{{user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...'}}<i class="material-icons user_dropdown_arrow">arrow_drop_down</i></a>
+					<li class="user">
+						<a v-show="user.isLoggedIn" class="dropdown-right user_name" href="#!" data-target="user-dropdown">{{user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...'}}<i class="material-icons user_dropdown_arrow">arrow_drop_down</i></a>
                         <a v-if="!user.isLoggedIn" id="login_button" @click.prevent="processLogin" href="#">Login</a>
 						<ul v-show="user.isLoggedIn" id="user-dropdown" class="dropdown-content">
 							<li v-if="user.isLoggedIn && user.data.isMem">
@@ -145,11 +154,7 @@ export default {
 		},
 		async processLogout() {
 			await this.logout();
-			M.toast({
-				html: '<i class="material-icons left">done</i> Successfully logged out. <div class="border"></div>',
-				displayLength: 5000,
-				classes: 'toast toast_info',
-			});
+			this.toastInfo('Successfully logged out');
 			if(this.$route.meta.isAdmin) {
 				this.$router.push('/');
 			}
@@ -279,7 +284,7 @@ nav {
 
 	&:hover {
 		background: transparent;
-		color: rgb(230, 230, 230);
+		color: rgb(220, 220, 220);
 	}
 
 	i {
@@ -302,6 +307,15 @@ nav {
 	line-height: 1.1em;
 	padding: 1em 1em .5em 1em;
 	overflow: hidden;
+}
+
+.user_name {
+	transition: .3s ease;
+
+	&:hover {
+		background: transparent;
+		color: rgb(220, 220, 220);
+	}
 }
 
 @media screen and (max-width: 910px) {

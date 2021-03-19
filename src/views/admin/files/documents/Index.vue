@@ -24,7 +24,7 @@
 					<tr v-for="(doc, i) in documents" :key="doc.id">
 						<td class="name">{{doc.name}}</td>
 						<td>{{convertCategory(doc.category)}}</td>
-						<td>{{formatDate(doc.updatedAt)}}z</td>
+						<td>{{dtLong(doc.updatedAt)}}</td>
 						<td class="options">
 							<router-link data-position="top" data-tooltip="Edit Document" class="tooltipped" :to="`/admin/files/documents/${doc._id}`"><i class="material-icons">edit</i></router-link>
 							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Document" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
@@ -48,7 +48,6 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	name: 'Documents',
@@ -57,9 +56,6 @@ export default {
 		return {
 			documents: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getDocuments();
@@ -77,19 +73,12 @@ export default {
 			try {
 				const {data} = await zabApi.delete(`/file/documents/${id}`);
 				if(data.ret_det.code === 200) {
-					M.toast({
-						html: '<i class="material-icons left">done</i> Document successfully deleted <div class="border"></div>',
-						displayLength: 5000,
-						classes: 'toast toast_success',
-					});
+					this.toastSuccess('Document successfully deleted');
+
 					await this.getDocuments();
 					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
 				} else {
-					M.toast({
-						html: `<i class="material-icons left">error_outline</i> ${data.ret_det.message} <div class="border"></div>`,
-						displayLength: 5000,
-						classes: 'toast toast_error'
-					});
+					this.toastError(data.ret_det.message);
 				}
 			} catch(e) {
 				console.log(e);
@@ -100,9 +89,6 @@ export default {
 			else if(cat == "sop") return "Standard Operating Procedures";
 			else if(cat == "policy") return "Policies";
 			else return "Miscellaneous";
-		},
-		formatDate(date) {
-			return new Date(date).toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		}
 	},
 };
