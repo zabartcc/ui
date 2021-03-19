@@ -5,11 +5,10 @@
 			<div class="loading_container" v-if="form.bio === null">
 				<Spinner />
 			</div>
-			<form class="row" v-else @submit.prevent=updateProfile>
+			<form class="row row_no_margin user_info" v-else @submit.prevent=updateProfile>
 				<div class="input-field col s12">
-					<textarea id="bio" class="materialize-textarea" data-length="5000" v-model="form.bio"></textarea>
+					<textarea id="bio" class="materialize-textarea" data-length="2000" v-model="form.bio"></textarea>
 					<label for="bio" class="active">Biography</label>
-					
 				</div>
 				<div class="input-field col s12">
 					<input type="submit" class="btn right" value="submit" />
@@ -27,15 +26,15 @@ export default {
 	data() {
 		return {
 			form: {
-				bio: null
+				bio: ''
 			}
 		};
 	},
 	async mounted() {
-		this.form.bio = this.user.data.bio || null;
-		M.CharacterCounter.init(document.querySelectorAll('textarea'));
+		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+		this.form.bio = this.user.data.bio || '';
+		M.textareaAutoResize(document.querySelectorAll('textarea'));
 		M.updateTextFields();
-		M.textareaAutoResize(document.querySelector('#bio'));
 	},
 	methods: {
 		async updateProfile() {
@@ -55,3 +54,9 @@ export default {
 	},
 };
 </script>
+
+<style scoped lang="scss">
+.user_info {
+	margin-top: 1em;
+}
+</style>

@@ -63,8 +63,6 @@ export default {
 <style lang="scss" scoped>
 .no_news {
 	font-style: italic;
-	margin-top: -1em;
-	padding: 1em;
 }
 
 tbody {
@@ -85,7 +83,4 @@ tbody {
 	}
 }
 
-.card-content {
-	padding-bottom: 0;
-}
 </style>
