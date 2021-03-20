@@ -10,7 +10,7 @@
 	</div>
 	<div v-if="events && events.length > 0">
 		<div class="card event_card" v-for="event in events" :key="event.id">
-			<img :src="`https://zabartcc.sfo3.digitaloceanspaces.com/events/${event.bannerUrl}`" class="event_banner" draggable="false" />
+			<img :src="`https://zabartcc.sfo3.digitaloceanspaces.com/events/${event.bannerUrl}`" class="event_banner" draggable="false" alt="Event Banner" />
 			<div class="card-content">
 				<div class="row">
 					<div class="col s12 l8">

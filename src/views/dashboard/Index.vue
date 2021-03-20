@@ -4,7 +4,7 @@
 			<span class="card-title">Controller Dashboard</span>
 			<div class="ids">
 				<span class="title">IDS Token</span>
-				<div class="token_wrap hidden" id="token_wrap" @mouseleave="hideToken">
+				<div class="hidden" id="token_wrap" @mouseleave="hideToken">
 					<code>{{token}}</code>
 					<span class="generate right" @click=generateToken><i class="material-icons">refresh</i></span>
 				</div>
@@ -57,9 +57,9 @@ export default {
 <style scoped lang="scss">
 .ids {
 	width: 100%;
-	max-width: 360px;
+	max-width: 400px;
 
-	.token_wrap {
+	#token_wrap {
 		background: $gray_light;
 		padding: 0.25em 0.5em 0.35em 0.5em;
 		border-radius: 2px;

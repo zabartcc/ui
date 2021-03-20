@@ -17,7 +17,7 @@
 					</div>
 					<div class="col s12 m8 l9">
 						<div class="controller_certs">
-							<div v-if="controller.roles.length" class="title">Staff Positions</div>
+							<div v-if="controller.roles.length" class="title">Roles</div>
 							<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
 								{{role.name}}
 							</span>
@@ -33,57 +33,59 @@
 						<p class="bio">{{controller.bio}}</p>
 					</div>
 				</div>
-				<div class="session_table_wrap">
-					<table class="striped responsive-table centered">
-						<thead>
-							<tr>
-								<th></th>
-								<th>DEL</th>
-								<th>GND</th>
-								<th>TWR</th>
-								<th>APP</th>
-								<th>CTR</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="month in stats.months" :key=month>
-								<td>{{month}}</td>
-								<td>{{sec2hm(stats[month].del)}}</td>
-								<td>{{sec2hm(stats[month].gnd)}}</td>
-								<td>{{sec2hm(stats[month].twr)}}</td>
-								<td>{{sec2hm(stats[month].app)}}</td>
-								<td>{{sec2hm(stats[month].ctr)}}</td>
-								<td>{{sec2hm(totalTime(stats[month]))}}</td>
-							</tr>
-							<tr>
-								<td>>1 Year</td>
-								<td>{{sec2hm(stats.gtyear.del)}}</td>
-								<td>{{sec2hm(stats.gtyear.gnd)}}</td>
-								<td>{{sec2hm(stats.gtyear.twr)}}</td>
-								<td>{{sec2hm(stats.gtyear.app)}}</td>
-								<td>{{sec2hm(stats.gtyear.ctr)}}</td>
-								<td>{{sec2hm(totalTime(stats.gtyear))}}</td>
-							</tr>
-							<tr>
-								<td>Total</td>
-								<td>{{sec2hm(stats.total.del)}}</td>
-								<td>{{sec2hm(stats.total.gnd)}}</td>
-								<td>{{sec2hm(stats.total.twr)}}</td>
-								<td>{{sec2hm(stats.total.app)}}</td>
-								<td>{{sec2hm(stats.total.ctr)}}</td>
-								<td>{{sec2hm(totalTime(stats.total))}}</td>
-							</tr>
-						</tbody>
-					</table>
+			</div>
+		</div>
+		<div v-if="controller && stats">
+			<div class="session_table_wrap">
+				<table class="striped responsive-table centered">
+					<thead>
+						<tr>
+							<th></th>
+							<th>DEL</th>
+							<th>GND</th>
+							<th>TWR</th>
+							<th>APP</th>
+							<th>CTR</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="month in stats.months" :key=month>
+							<td>{{month}}</td>
+							<td>{{sec2hm(stats[month].del)}}</td>
+							<td>{{sec2hm(stats[month].gnd)}}</td>
+							<td>{{sec2hm(stats[month].twr)}}</td>
+							<td>{{sec2hm(stats[month].app)}}</td>
+							<td>{{sec2hm(stats[month].ctr)}}</td>
+							<td>{{sec2hm(totalTime(stats[month]))}}</td>
+						</tr>
+						<tr>
+							<td>>1 Year</td>
+							<td>{{sec2hm(stats.gtyear.del)}}</td>
+							<td>{{sec2hm(stats.gtyear.gnd)}}</td>
+							<td>{{sec2hm(stats.gtyear.twr)}}</td>
+							<td>{{sec2hm(stats.gtyear.app)}}</td>
+							<td>{{sec2hm(stats.gtyear.ctr)}}</td>
+							<td>{{sec2hm(totalTime(stats.gtyear))}}</td>
+						</tr>
+						<tr>
+							<td>Total</td>
+							<td>{{sec2hm(stats.total.del)}}</td>
+							<td>{{sec2hm(stats.total.gnd)}}</td>
+							<td>{{sec2hm(stats.total.twr)}}</td>
+							<td>{{sec2hm(stats.total.app)}}</td>
+							<td>{{sec2hm(stats.total.ctr)}}</td>
+							<td>{{sec2hm(totalTime(stats.total))}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="card-content">
+				<div>
+					<strong>Total Sessions:</strong> {{stats.sessionCount}}
 				</div>
-				<div class="card-content">
-					<div>
-						<strong>Total Sessions:</strong> {{stats.sessionCount}}
-					</div>
-					<div>
-						<strong>Average Session Time:</strong> {{sec2hm(stats.sessionAvg)}}
-					</div>
+				<div>
+					<strong>Average Session Time:</strong> {{sec2hm(stats.sessionAvg)}}
 				</div>
 			</div>
 		</div>

@@ -1,8 +1,10 @@
 <template>
     <div class="card home_intro">
 		<div class="card-content">
-			<h5>Processing Login, Please Wait</h5>
-			<Spinner width="300px" />
+			<span class="processing_login">Processing Login, Please Wait</span>
+			<div class="loading_container">
+				<Spinner />
+			</div>
 		</div>
 	</div>
 </template>
@@ -40,6 +42,11 @@ export default {
 <style scoped>
 .card-content {
 	text-align: center;
+}
+
+.processing_login {
+	font-weight: 600;
+	font-size: 2rem;
 }
 
 .progress {

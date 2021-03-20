@@ -19,7 +19,7 @@
 					<tr v-for="station in stations" :key="station.icao">
 						<td><span class="hide-on-med-and-down">{{station.fullName}} <strong>({{station.icao}})</strong></span><span class="hide-on-large-only">{{station.icao}}</span></td>
 						<td>{{formatWind(station)}}</td>
-						<td><span class="airport_conditions" v-html="getConditions(station)"></span></td>
+						<td><div class="airport_conditions" v-html="getConditions(station)"></div></td>
 						<td>{{station.getLanding()}}</td>
 						<td>{{station.getDeparting()}}</td>
 					</tr>
@@ -270,7 +270,7 @@ export default {
 			return `${paddedWind}@${station.parsedMetar.wind.speedKt}`;
 		},
 		getConditions: function(station) {
-			return (station.parsedMetar.visibility.miles > 3) ? `<i class="material-icons">wb_sunny</i>VFR` : `<i class="material-icons">wb_cloudy</i>IFR`;
+			return (station.parsedMetar.visibility.miles > 3) ? `<i class="material-icons weather_icon">wb_sunny</i>VFR` : `<i class="material-icons weather_icon">wb_cloudy</i>IFR`;
 		}
 	}
 };
@@ -280,8 +280,9 @@ export default {
 .airport_conditions {
 	display: inline-flex;
 	align-items: center;
+	height: 33px;
 
-	&::v-deep i {
+	&::v-deep(i) {
 		margin-right: 5px;
 	}
 }
@@ -297,6 +298,10 @@ export default {
 .table_overflow_wrapper {
 	width: 100%;
 	overflow-x: auto;
+}
+
+.weather_icon {
+	padding-top: 1em;
 }
 
 tbody tr {

@@ -23,7 +23,7 @@
 							</router-link><br />
 						</td>
 						<td class="date right">
-							{{dtLong(event.eventStart)}}z
+							{{dtLong(event.eventStart)}}
 						</td>
 					</tr>
 				</tbody>
