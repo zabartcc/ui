@@ -28,6 +28,7 @@ export default {
 
 	.desc {
 		font-size: .9rem;
+		width: calc(100% - 45px);
 	}
 
 	.button {
