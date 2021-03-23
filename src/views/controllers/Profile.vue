@@ -8,7 +8,7 @@
 				<div class="row">
 					<div class="col s5 m4 l3">
 						<div class="controller_image">
-							<img :src="require('@/assets/images/blank.png')" alt="">
+							<img :src="`https://zabartcc.sfo3.digitaloceanspaces.com/avatars/${controller.avatar}`" alt="">
 						</div>
 					</div>
 					<div class="col s7 m8 l9">
@@ -17,7 +17,6 @@
 					</div>
 					<div class="col s12 m8 l9">
 						<div class="controller_certs">
-							<div v-if="controller.roles.length" class="title">Roles</div>
 							<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
 								{{role.name}}
 							</span>
