@@ -25,7 +25,7 @@
 					<div class="file-field input-field col s12">
 						<div class="btn">
 							<span>FILE</span>
-							<input type="file" ref="download" required>
+							<input type="file" ref="download" id="fileInput" required>
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate" type="text" placeholder="Upload a file">
@@ -78,6 +78,8 @@ export default {
 
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('File successfully added');
+
+					document.getElementById("fileInput").value = "";
 					this.$router.push('/admin/files/downloads');
 				} else {
 					this.toastError(data.ret_det.message);

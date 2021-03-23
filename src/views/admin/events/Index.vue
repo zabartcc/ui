@@ -13,7 +13,7 @@
 		<table class="event_list striped" v-else>
 			<thead class="controller_list_head">
 				<tr>
-					<th>Event</th>
+					<th>Name</th>
 					<th>Date</th>
 					<th class="options">Options</th>
 				</tr>
