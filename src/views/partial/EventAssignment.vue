@@ -3,9 +3,7 @@
 		<div class="card-content">
 			<span class="card-title">Position Assignments</span>
 		</div>
-		
 		<EventAssignmentTable v-for="category in positionCategories" :category="category" :key="category" />
-
 		<div class="card-content assignment_cta">
 			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign-ups for this event are now closed.</div>
 			<div v-else-if="!user.data" class="sign_up_err">Please log in to sign up.</div>
@@ -20,7 +18,7 @@
 		<div id="assignment_modal" class="modal assignment_modal">
 			<div class="modal-content">
 				<h4>Request Position</h4>
-				<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, enter "Any". If there is a specific position not listed that you would like to work, you may manually enter it.</p>
+				<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty.</p>
 				<p>Please be advised that requests are just that — requests. The events coordinator may place you on any position depending on multiple factors.</p>
 				<div class="chips chips-placeholder"></div>
 			</div>
@@ -66,7 +64,7 @@ export default {
 			preventScrolling: false
 		});
 		this.chips = M.Chips.init(document.querySelector('.chips'), {
-			placeholder: 'Select a position',
+			placeholder: 'Enter a callsign',
 			secondaryPlaceholder: ' ',
 			limit: 3
 		});
@@ -77,11 +75,11 @@ export default {
 				const {data} = await zabApi.get(`/event/${this.$route.params.slug}/positions`);
 				this.event = data.data;
 
-				this.positionCategories.enroute.positions =  this.event.positions.filter(position => ['CTR'].includes(position.type));
-				this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
-				this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
-
-				
+				if(this.event.positions !== null) {
+					this.positionCategories.enroute.positions =  this.event.positions.filter(position => ['CTR'].includes(position.type));
+					this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
+					this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
+				}
 			} catch(e) {
 				console.log(e);
 			}
@@ -127,13 +125,25 @@ export default {
 			'user'
 		]),
 		requestedPositions() {
-			return this.event.signups.some(su => su.cid == this.user.data.cid);
+			if(this.event.signups) {
+				return this.event.signups.some(su => su.cid == this.user.data.cid);
+			} else {
+				return false;
+			}
 		},
 		assignedPositions() {
-			return this.event.positions.some(su => su.user && (su.user.cid == this.user.data.cid));
+			if(this.event.positions) {
+				return this.event.positions.some(su => su.user && (su.user.cid == this.user.data.cid));
+			} else {
+				return false;
+			}
 		},
 		currentUserRequests() {
-			return this.event.signups.filter(su => su.cid == this.user.data.cid)[0].requests.join(', ');
+			if(this.event.signups) {
+				return this.event.signups.filter(su => su.cid == this.user.data.cid)[0].requests.join(`, `);
+			} else {
+				return false;
+			}
 		}
 	}
 };

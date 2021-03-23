@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<h6 class="position_category_heading">{{category.title}}</h6>
+		<div class="position_category_heading">{{category.title}}</div>
 		<table class="assignment_list striped">
-			<tbody v-if='category.positions.length'>
+			<tbody v-if='category.positions !== null && category.positions.length'>
 				<tr v-for="position in category.positions" :key="position.id">
 					<td>
 						{{position.pos}}
@@ -33,9 +33,6 @@ export default {
 <style scoped lang="scss">
 .position_category_heading {
 	padding: 0 1rem;
-	&:first-of-type {
-		margin-top: 0;
-	}
 	font-weight: 600;
 }
 
@@ -50,6 +47,8 @@ export default {
 	td {
 		padding: 5px 15px;
 	}
+
+	margin-bottom: 1em;
 }
 
 .no_positions {

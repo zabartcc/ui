@@ -203,9 +203,13 @@ export default {
 			return this.event.positions.filter((pos) => { return certsArray.includes(pos.code); });
 		},
 		checkAssigned(user) {
-			const taken = this.event.positions.filter((pos => { return typeof pos.takenBy === 'object' && pos.takenBy !== null && pos.takenBy.id == user;}));
-			if(taken.length > 0) {
-				return taken[0].pos;
+			if(this.event.positions) {
+				const taken = this.event.positions.filter((pos => { return typeof pos.takenBy === 'object' && pos.takenBy !== null && pos.takenBy.id == user;}));
+				if(taken.length > 0) {
+					return taken[0].pos;
+				} else {
+					return false;
+				}
 			} else {
 				return false;
 			}
