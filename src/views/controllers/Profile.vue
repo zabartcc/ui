@@ -17,6 +17,7 @@
 					</div>
 					<div class="col s12 m8 l9">
 						<div class="controller_certs">
+							<div v-if="controller.certifications.length" class="title">Roles</div>
 							<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
 								{{role.name}}
 							</span>
@@ -25,11 +26,10 @@
 								{{cert.name}}
 							</span>
 						</div>
-					</div>
-				</div>
-				<div class="card z-depth-2"  v-if=controller.bio>
-					<div class="card-content">
-						<p class="bio">{{controller.bio}}</p>
+						<div class="user_biography" v-if="controller.bio">
+							<div class="title">Biography</div>
+							<p class="bio">{{controller.bio}}</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -51,30 +51,30 @@
 					<tbody>
 						<tr v-for="month in stats.months" :key=month>
 							<td>{{month}}</td>
-							<td>{{sec2hm(stats[month].del)}}</td>
-							<td>{{sec2hm(stats[month].gnd)}}</td>
-							<td>{{sec2hm(stats[month].twr)}}</td>
-							<td>{{sec2hm(stats[month].app)}}</td>
-							<td>{{sec2hm(stats[month].ctr)}}</td>
-							<td>{{sec2hm(totalTime(stats[month]))}}</td>
+							<td>{{sec2hm('m', stats[month].del)}}</td>
+							<td>{{sec2hm('m', stats[month].gnd)}}</td>
+							<td>{{sec2hm('m', stats[month].twr)}}</td>
+							<td>{{sec2hm('m', stats[month].app)}}</td>
+							<td>{{sec2hm('m', stats[month].ctr)}}</td>
+							<td>{{sec2hm('t', totalTime(stats[month]))}}</td>
 						</tr>
 						<tr>
 							<td>>1 Year</td>
-							<td>{{sec2hm(stats.gtyear.del)}}</td>
-							<td>{{sec2hm(stats.gtyear.gnd)}}</td>
-							<td>{{sec2hm(stats.gtyear.twr)}}</td>
-							<td>{{sec2hm(stats.gtyear.app)}}</td>
-							<td>{{sec2hm(stats.gtyear.ctr)}}</td>
-							<td>{{sec2hm(totalTime(stats.gtyear))}}</td>
+							<td>{{sec2hm('m', stats.gtyear.del)}}</td>
+							<td>{{sec2hm('m', stats.gtyear.gnd)}}</td>
+							<td>{{sec2hm('m', stats.gtyear.twr)}}</td>
+							<td>{{sec2hm('m', stats.gtyear.app)}}</td>
+							<td>{{sec2hm('m', stats.gtyear.ctr)}}</td>
+							<td>{{sec2hm('t', totalTime(stats.gtyear))}}</td>
 						</tr>
 						<tr>
 							<td>Total</td>
-							<td>{{sec2hm(stats.total.del)}}</td>
-							<td>{{sec2hm(stats.total.gnd)}}</td>
-							<td>{{sec2hm(stats.total.twr)}}</td>
-							<td>{{sec2hm(stats.total.app)}}</td>
-							<td>{{sec2hm(stats.total.ctr)}}</td>
-							<td>{{sec2hm(totalTime(stats.total))}}</td>
+							<td>{{sec2hm('t', stats.total.del)}}</td>
+							<td>{{sec2hm('t', stats.total.gnd)}}</td>
+							<td>{{sec2hm('t', stats.total.twr)}}</td>
+							<td>{{sec2hm('t', stats.total.app)}}</td>
+							<td>{{sec2hm('t', stats.total.ctr)}}</td>
+							<td>{{sec2hm('t', totalTime(stats.total))}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -84,7 +84,7 @@
 					<strong>Total Sessions:</strong> {{stats.sessionCount}}
 				</div>
 				<div>
-					<strong>Average Session Time:</strong> {{sec2hm(stats.sessionAvg)}}
+					<strong>Average Session Time:</strong> {{sec2hm('t', stats.sessionAvg)}}
 				</div>
 			</div>
 		</div>
@@ -129,10 +129,13 @@ export default {
 			});
 			return certsToShow;
 		},
-		sec2hm(secs) {
-			if(!secs) {
+		sec2hm(type, secs) {
+			if(!secs && type === 'm') {
 				return '';
+			} else if(!secs && type === 't') {
+				return '00:00';
 			}
+
 			const hours = Math.floor(secs/3600);
 			const minutes = `0${Math.round((secs/60)%60)}`.slice(-2);
 			return `${hours}:${minutes}`;
@@ -171,7 +174,7 @@ export default {
 }
 
 .controller_certs {
-	margin-top: 1em;
+	margin-top: .5em;
 }
 
 .cert {
@@ -183,7 +186,7 @@ export default {
 	user-select: none;
 
 	&+.title {
-		margin-top: 1.5em;
+		margin-top: 1em;
 	}
 
 	&.cert_senior {
@@ -220,7 +223,9 @@ export default {
 	white-space: pre-wrap;
 }
 
-	
+.user_biography {
+	margin-top: .75em;
+}
 
 .session_table_wrap {
 	@media screen and (min-width: 993px) {
