@@ -6,60 +6,52 @@
 				<Spinner />
 			</div>
 			<div class="session_wrapper" v-else>
-				<div class="row row_no_margin">
-					<div class="col s12 l6">
-						<div class="input-field">
-							<input type="text" :value="session.student.fname + ' ' + session.student.lname" disabled id="student" />
-							<label for="student" class="active">Student</label>
-						</div>
-						<div class="input-field">
-							<input type="text" :value="session.instructor.fname + ' ' + session.instructor.lname" disabled id="ins" />
-							<label for="ins" class="active">Instructor</label>
-						</div>
-						<div class="input-field">
-							<input type="text" :value="dtLong(session.startTime)" disabled id="startTime" />
-							<label for="startTime" class="active">Start Time</label>
-						</div>
-						<div class="input-field">
-							<input type="text" :value="dtLong(session.endTime)" disabled id="endTime" />
-							<label for="endTime" class="active">End Time</label>
-						</div>
-						<div class="input-field">
-							<input type="text" :value="session.milestone.name" disabled id="milestone" />
-							<label for="milestone" class="active">Milestone</label>
-						</div>
-						<div class="input-field">
-							<input type="text" :value="session.position" disabled id="position" />
-							<label for="position" class="active">Position</label>
-						</div>
-						<div class="input-field">
-							<input type="number" :value="session.movements" disabled id="movements" />
-							<label for="movements" class="active">Movements</label>
-						</div>
-						<div class="input-field">
-							<input type="text" :value="formatLocation(session.location)" disabled id="location" />
-							<label for="location" class="active">Location</label>
-						</div>
-						<div class="input-field">
-							<span class="label">Progress</span>
-							<div class="stars">
-								<i class="material-icons">{{session.progress > 0 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons">{{session.progress > 1 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons">{{session.progress > 2 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons">{{session.progress > 3 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons">{{session.progress > 4 ? 'star' : 'star_border'}}</i>
-							</div>
-						</div>
+				<div class="row">
+					<div class="input-field col s12 m6">
+						<input type="text" :value="session.student.fname + ' ' + session.student.lname" disabled id="student" />
+						<label for="student" class="active">Student</label>
 					</div>
-					<div class="col s12 l6">
-						<div class="input-field">
-							<textarea class="materialize-textarea" disabled id="studentNotes" v-model="session.studentNotes"></textarea>
-							<label for="studentNotes" class="active">Student Notes</label>
-						</div>
-						<div class="input-field">
-							<textarea class="materialize-textarea" disabled id="insNotes" v-model="session.insNotes"></textarea>
-							<label for="insNotes" class="active">Instructor Notes</label>
-						</div>
+					<div class="input-field col s12 m6">
+						<input type="text" :value="session.instructor.fname + ' ' + session.instructor.lname" disabled id="ins" />
+						<label for="ins" class="active">Instructor</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input type="text" :value="dtLong(session.startTime)" disabled id="startTime" />
+						<label for="startTime" class="active">Start Time</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input type="text" :value="dtLong(session.endTime)" disabled id="endTime" />
+						<label for="endTime" class="active">End Time</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input type="text" :value="session.milestone.name" disabled id="milestone" />
+						<label for="milestone" class="active">Milestone</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input type="text" :value="session.position" disabled id="position" />
+						<label for="position" class="active">Position</label>
+					</div>
+					<div class="input-field col s12 m6 l4">
+						<input type="number" :value="session.movements" disabled id="movements" />
+						<label for="movements" class="active">Movements</label>
+					</div>
+					<div class="input-field col s12 m6 l4">
+						<input type="text" :value="formatLocation(session.location)" disabled id="location" />
+						<label for="location" class="active">Location</label>
+					</div>
+					<div class="input-field col s12 m6 l4">
+						<input type="text" :value="formatProgress(session.progress)" disabled id="progress" />
+						<label for="progress" class="active">Progress</label>
+					</div>
+				</div>
+				<div class="row row_no_margin">
+					<div class="input-field col s12">
+						<textarea class="materialize-textarea" disabled id="studentNotes" v-model="session.studentNotes"></textarea>
+						<label for="studentNotes" class="active">Student Notes</label>
+					</div>
+					<div class="input-field col s12">
+						<textarea class="materialize-textarea" disabled id="insNotes" v-model="session.insNotes"></textarea>
+						<label for="insNotes" class="active">Instructor Notes</label>
 					</div>
 				</div>
 			</div>
@@ -93,28 +85,11 @@ export default {
 		formatLocation(location) {
 			const locations = ['Classroom', 'Live Network', 'Sweatbox'];
 			return locations[location];
+		},
+		formatProgress(progress) {
+			const options = ['No Progress', 'Little Progress', 'Average Progress', 'Great Progress', 'Exceptional Progress'];
+			return options[progress - 1];
 		}
 	}
 };
 </script>
-
-<style scoped lang="scss">
-.label {
-	color: #9e9e9e;
-	font-size: .80rem;
-    position: absolute;
-    top: -1em;
-    left: 0em;
-    cursor: text;
-}
-
-.stars {
-	i {
-		color: $primary-color;
-		cursor: pointer;
-		user-select: none;
-		font-size: 24px;
-		margin-top: .33em;
-	}
-}
-</style>

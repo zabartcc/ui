@@ -63,15 +63,15 @@
 							<label>Location</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<span class="label">Progress</span>
-							<div class="stars">
-								<i class="material-icons" @click="session.progress = 1">{{session.progress > 0 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons" @click="session.progress = 2">{{session.progress > 1 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons" @click="session.progress = 3">{{session.progress > 2 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons" @click="session.progress = 4">{{session.progress > 3 ? 'star' : 'star_border'}}</i>
-								<i class="material-icons" @click="session.progress = 5">{{session.progress > 4 ? 'star' : 'star_border'}}</i>
-								<div class="helper-text">{{ratingHelper(session.progress)}}</div>
-							</div>
+							<select required v-model="session.progress">
+								<option value="" disabled selected>Select an option</option>
+								<option value=1>No Progress</option>
+								<option value=2>Little Progress</option>
+								<option value=3>Average Progress</option>
+								<option value=4>Great Progress</option>
+								<option value=5>Exceptional Progress</option>
+							</select>
+							<label>Progress</label>
 						</div>
 						<div class="input-field col s12 m6">
 							<select required v-model="session.ots">
@@ -171,10 +171,6 @@ export default {
 			} catch(e) {
 				console.log(e);
 			}
-		},
-		ratingHelper(rating) {
-			const ratings = ['', '1 - No Progress', '2 - Little Progress', '3 - Average Progress' , '4 - Great Progress', '5 - Exceptional Progress'];
-			return ratings[rating];
 		}
 	}
 };
@@ -189,32 +185,6 @@ label {
 		margin-top: .25em;
 		user-select: none;
 		cursor: pointer;
-	}
-}
-
-.label {
-	color: #9e9e9e;
-	font-size: .80rem;
-    position: absolute;
-    top: -10px;
-    left: 1em;
-    cursor: text;
-}
-
-.stars {
-	margin-top: .5em;
-
-	i {
-		color: $primary-color;
-		cursor: pointer;
-		user-select: none;
-		font-size: 30px;
-	}
-
-	.helper-text {
-		margin-top: -2px;
-		margin-left: 2px;
-		color: #9e9e9e;
 	}
 }
 

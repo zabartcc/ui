@@ -76,7 +76,7 @@ export default {
 			});
 
 			this.sessions = data.data.sessions;
-			this.amountOfSessions = data.data.count;
+			this.sessionAmount = data.data.count;
 		}
 	}
 };
