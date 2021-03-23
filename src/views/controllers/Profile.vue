@@ -8,7 +8,7 @@
 				<div class="row">
 					<div class="col s5 m4 l3">
 						<div class="controller_image">
-							<img :src="`https://zabartcc.sfo3.digitaloceanspaces.com/avatars/${controller.avatar}`" alt="">
+							<img :src="`https://zabartcc.sfo3.digitaloceanspaces.com/avatars/${controller.avatar || `${controller.cid}-default`}`" alt="">
 						</div>
 					</div>
 					<div class="col s7 m8 l9">
