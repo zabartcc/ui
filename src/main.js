@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import '@materializecss/materialize';
+import './assets/js/materialize.min.js';
 import '@materializecss/materialize/sass/materialize.scss';
 
 import dates from './helpers/dates.js';
