@@ -98,6 +98,10 @@ const routes = [
 				component: () => import('../views/instructor/controllers/Index.vue')
 			},
 			{
+				path: 'controllers/:cid',
+				component: () => import('../views/instructor/controllers/Edit.vue')
+			},
+			{
 				path: 'solo',
 				component: () => import('../views/instructor/solocerts/Index.vue')
 			},

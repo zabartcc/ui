@@ -27,15 +27,15 @@
 						<td>{{cert.expires}}</td>
 						<td class="options"><a :href="`#modal_delete_${i}`" class="modal-trigger red-text text-darken-2"><i class="material-icons">delete</i></a></td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
-						<div class="modal-content">
-							<h4>Are you sure?</h4>
-							<p>This will delete the solo certification for {{getName(cert.cid)}} on {{cert.position}} entirely.</p>
+							<div class="modal-content">
+								<h4>Are you sure?</h4>
+								<p>This will delete the solo certification for {{getName(cert.cid)}} on {{cert.position}} entirely.</p>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="waves-effect btn" @click="deleteCert(cert.cid, cert.position)">I'm sure</a>
+								<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+							</div>
 						</div>
-						<div class="modal-footer">
-							<a href="#!" class="waves-effect btn" @click="deleteCert(cert.cid, cert.position)">I'm sure</a>
-							<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
-						</div>
-					</div>
 					</tr>
 				</tbody>
 			</table>
@@ -60,6 +60,8 @@ export default {
 	async mounted() {
 		await this.getSoloCerts();
 		await this.getControllers();
+		this.loading = false;
+		
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
 		});
@@ -68,10 +70,9 @@ export default {
 		async getSoloCerts() {
 			try {
 				const {data} = await vatusaApi.get('/solo');
-				data.data.forEach((cert) => {
-					if(this.positions.includes(cert.position.slice(0,3))) this.certs.push(cert);
-				});
-				this.loading = false;
+				for (const cert of data.data) {
+					if(this.positions.includes(cert.position.slice(0, 3))) this.certs.push(cert);
+				}
 			} catch(e) {
 				console.log(e);
 			}
