@@ -86,6 +86,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import {zabApi, vatusaApiAuth} from '@/helpers/axios.js';
 
 export default {
@@ -115,7 +116,7 @@ export default {
 		async approveVisitor(cid) {
 			try {
 				await zabApi.put(`/controller/visit/${cid}`);
-				await vatusaApiAuth.post(`/facility/ZAB/roster/manageVisitor/${cid}`);
+				// await vatusaApiAuth.post(`/facility/ZAB/roster/manageVisitor/${cid}`); // BETADISABLE
 				this.toastSuccess('Visitor successfully added to roster');
 				await this.getNewApplications();
 			} catch(e) {

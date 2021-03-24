@@ -36,6 +36,7 @@
 	</div>
 </template>
 <script>
+// eslint-disable-next-line no-unused-vars
 import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
 
 export default {
@@ -81,7 +82,7 @@ export default {
 				formData.append('cid', this.form.cid);
 				formData.append('position', this.form.position);
 				formData.append('expDate', this.form.expDate);
-				await vatusaApiAuth.post('/solo', formData);
+				// await vatusaApiAuth.post('/solo', formData); // BETADISABLE
 
 				this.toastSuccess('Solo cert successfully added');
 
