@@ -36,15 +36,15 @@
 								<div class="modal_title">Training Request from {{request.student.fname + ' ' + request.student.lname}}</div>
 								<div class="request">
 									<div class="row row_no_margin" id="request">
-										<div class="input-field col s6">
+										<div class="input-field col s12 l6">
 											<p id="student">{{request.student.fname + ' ' + request.student.lname}} <span v-if="request.student.vis === true">(VC)</span></p>
 											<label for="student" class="active">Student</label>
 										</div>
-										<div class="input-field col s6">
+										<div class="input-field col s12 l6">
 											<p id="cid">{{request.milestone.name}} ({{request.milestone.code}})</p>
 											<label for="cid" class="active">Milestone</label>
 										</div>
-										<div class="input-field col s6">
+										<div class="input-field col s12 l6">
 											<div id="start_time">
 												<div class="date">{{formatHtmlDate(request.startTime)}}</div>
 												<div class="controls">
@@ -54,7 +54,7 @@
 											</div>
 											<label for="start_time" class="active">Start Time (Zulu)</label>
 										</div>
-										<div class="input-field col s6">
+										<div class="input-field col s12 l6">
 											<div id="end_time">
 												<div class="date">{{formatHtmlDate(request.endTime)}}</div>
 												<div class="controls">
@@ -156,22 +156,22 @@ export default {
 			};
 		},
 		increaseTime(type, i) {
-			if(type === 'start'  && this.requests[i].startTime !== this.times.endTime) {
+			if(type === 'start'  && this.requests[i].startTime !== this.times.endTime && new Date(this.requests[i].startTime) < new Date(this.requests[i].endTime)) {
 				let d = new Date(this.requests[i].startTime);
 				d.setUTCMinutes(d.getUTCMinutes() + 15);
 				this.requests[i].startTime = d.toISOString();
-			} else if(type === 'end' && this.requests[i].endTime !== this.times.endTime) {
+			} else if(type === 'end' && this.requests[i].endTime !== this.times.endTime && new Date(this.requests[i].endTime) >= new Date(this.requests[i].startTime)) {
 				let d = new Date(this.requests[i].endTime);
 				d.setUTCMinutes(d.getUTCMinutes() + 15);
 				this.requests[i].endTime = d.toISOString();
 			}
 		},
 		decreaseTime(type, i) {
-			if(type === 'start'  && this.requests[i].startTime !== this.times.startTime) {
+			if(type === 'start'  && this.requests[i].startTime !== this.times.startTime && new Date(this.requests[i].startTime) <= new Date(this.requests[i].endTime)) {
 				let d = new Date(this.requests[i].startTime);
 				d.setUTCMinutes(d.getUTCMinutes() - 15);
 				this.requests[i].startTime = d.toISOString();
-			} else if(type === 'end' && this.requests[i].endTime !== this.times.startTime) {
+			} else if(type === 'end' && this.requests[i].endTime !== this.times.startTime && new Date(this.requests[i].endTime) > new Date(this.requests[i].startTime)) {
 				let d = new Date(this.requests[i].endTime);
 				d.setUTCMinutes(d.getUTCMinutes() - 15);
 				this.requests[i].endTime = d.toISOString();
@@ -216,6 +216,7 @@ export default {
 	}
 
 	#start_time, #end_time {
+
 		.date {
 			margin-top: .5em;
 			height: 2.3rem;
@@ -251,4 +252,11 @@ export default {
 		}
 	}
 }
+
+@media only screen and (max-width: 992px) {
+	#start_time {
+		height: 2rem;
+	}
+}
+
 </style>
