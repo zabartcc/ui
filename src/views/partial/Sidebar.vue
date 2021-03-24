@@ -12,7 +12,7 @@
 			</ul>
 		</div>
 		<div id="atc_online">
-			<div v-if="!atcOnline">
+			<div v-if="!atcOnline" class="loading_container">
 				<Spinner />
 			</div>
 			<div v-else-if="atcOnline && atcOnline.length > 0">
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div id="pilots_online">
-			<div v-if="!pilotsOnline">
+			<div v-if="!pilotsOnline" class="loading_container">
 				<Spinner />
 			</div>
 			<div v-else-if="pilotsOnline && pilotsOnline.length > 0">
