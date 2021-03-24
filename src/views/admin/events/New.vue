@@ -8,13 +8,21 @@
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name">Name</label>
 					</div>
-					<div class="input-field col s12 m6">
-						<input id="start_time" type="datetime-local" v-model="form.eventStart" required>
-						<label for="start_time" class="active">Start Time (Zulu)</label>
+					<div class="input-field col s12 m3">
+						<input id="start_date" type="text" class="datepicker" ref="start_date" required>
+						<label for="start_date">Start Date (Zulu)</label>
 					</div>
-					<div class="input-field col s12 m6">
-						<input id="end_time" type="datetime-local" v-model="form.eventEnd" required>
-						<label for="end_time" class="active">End Time (Zulu)</label>
+					<div class="input-field col s12 m3">
+						<input id="start_time" type="text" class="timepicker" ref="start_time" required>
+						<label for="start_time">Start Time (Zulu)</label>
+					</div>
+					<div class="input-field col s12 m3">
+						<input id="end_date" type="text" class="datepicker" ref="end_date" required>
+						<label for="end_date">End Date (Zulu)</label>
+					</div>
+					<div class="input-field col s12 m3">
+						<input id="end_time" type="text" class="timepicker" ref="end_time" required>
+						<label for="end_time">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
 						<div class="btn">
@@ -29,64 +37,6 @@
 						<textarea id="description" class="materialize-textarea" v-model="form.description"></textarea>
 						<label for="description">Description</label>
 					</div>
-					<!-- <div class="input-field col s12">
-						<div class="row">
-							<div class="col s12 l4">
-								<div class="card card_positions z-depth-2">
-									<p class="positions_title">Center</p>
-									<p class="no_pos" v-if="centerPos.length == 0">No positions added yet.</p>
-									<ul v-else>
-										<li v-for="position in centerPos" class="collection-item" :key="position.pos">
-											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
-										</li>
-									</ul>
-									<form @submit.prevent=addPosition>
-										<input type="hidden" value="CTR" name="type" />
-										<input type="text" class="positions_input" placeholder="ABQ_CTR" name="pos" required />
-										<button class="positions_submit" type="submit" name="action">
-											<i class="material-icons">add</i>
-										</button>
-									</form>
-								</div>
-							</div>
-							<div class="col s12 l4">
-								<div class="card card_positions z-depth-2">
-									<p class="positions_title">TRACON</p>
-									<p class="no_pos" v-if="traconPos.length == 0">No positions added yet.</p>
-									<ul v-else>
-										<li v-for="position in traconPos" class="collection-item" :key="position.pos">
-											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
-										</li>
-									</ul>
-									<form @submit.prevent=addPosition>
-										<input type="hidden" value="APP" name="type" />
-										<input type="text" class="positions_input" placeholder="PHX_APP" name="pos" required />
-										<button class="positions_submit" type="submit" name="action">
-											<i class="material-icons">add</i>
-										</button>
-									</form>
-								</div>
-							</div>
-							<div class="col s12 l4">
-								<div class="card card_positions z-depth-2">
-									<p class="positions_title">Local</p>
-									<p class="no_pos" v-if="localPos.length == 0">No positions added yet.</p>
-									<ul v-else>
-										<li v-for="position in localPos" class="collection-item" :key="position.pos">
-											<div class="pos_header">{{position.pos}} <span class="delete_pos" @click="deletePos(position.pos)">Delete</span></div>
-										</li>
-									</ul>
-									<form @submit.prevent=addPosition>
-										<input type="hidden" value="TWR" name="type" />
-										<input type="text" class="positions_input" placeholder="TUS_TWR" name="pos" required />
-										<button class="positions_submit" type="submit" name="action">
-											<i class="material-icons">add</i>
-										</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div> -->
 					<div class="input-field col s12">
 						<input type="submit" class="btn right" value="submit" />
 					</div>
@@ -106,63 +56,40 @@ export default {
 		return {
 			form: {
 				name: '',
-				eventStart: '',
-				eventEnd: '',
+				eventStart: {
+					date: '',
+					time: ''
+				},
+				eventEnd: {
+					date: '',
+					time: ''
+				},
 				description: '',
 				positions: []
 			}
 		};
 	},
+	mounted() {
+		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+			format: 'yyyy-mm-dd',
+			showDaysInNextAndPreviousMonths: true,
+		});
+		M.Timepicker.init(document.querySelectorAll('.timepicker'), {
+			twelveHour: false,
+		});
+	},
 	methods: {
-		/* async addPosition(e) {
-		 	if(e.target.elements.type.value == 'CTR') {
-		 		const obj = {
-		 			"pos": e.target.elements.pos.value.toUpperCase(),
-		 			"type": e.target.elements.type.value,
-		 			"code": "zab"
-		 		};
-		 		this.form.positions.push(obj);
-		 		e.target.reset(); // clear input
-		 	} else if(e.target.elements.type.value == 'APP') {
-		 		let code = "app";
-		 		if(e.target.elements.pos.value.slice(0,3) == 'PHX') {
-					code = "p50app";
-		 		}
-				const obj = {
-		 			"pos": e.target.elements.pos.value.toUpperCase(),
-		 			"type": e.target.elements.type.value,
-					"code": code
-				};
-		 		this.form.positions.push(obj);
-		 		e.target.reset(); // clear input
-		 	} else {
-		 		let code = "";
-		 		const input = e.target.elements.pos.value.slice(0,3) + e.target.elements.pos.value.slice(-3);
-		 		if(input == "PHXTWR") { code = "p50twr"; }
-		 		else if(input == "PHXGND") { code = "p50gnd"; }
-		 		else if(input == "PHXDEL") { code = "p50gnd"; }
-		 		else if(input.slice(-3) == "TWR") { code = "twr"; }
-		 		else if(input.slice(-3) == "GND") { code = "gnd"; }
-		 		else if(input.slice(-3) == "DEL") { code = "gnd"; }
-				
-		 		const obj = {
-		 			"type": e.target.elements.pos.value.slice(-3).toUpperCase(),
-		 			"code": code
-		 		};
-		 		this.form.positions.push(obj);
-		 		e.target.reset(); // clear input
-		 	}
-		},*/
 		deletePos(pos) {
 			const i = this.form.positions.findIndex(obj => obj.pos === pos);
 			this.form.positions = [...this.form.positions.slice(0, i), ...this.form.positions.slice(i + 1)];
 		},
 		async submitForm() {
+			// console.log(this.$refs);
 			const formData = new FormData();
 			formData.append('banner', this.$refs.banner.files[0]);
 			formData.append('name', this.form.name);
-			formData.append('startTime', this.form.eventStart);
-			formData.append('endTime', this.form.eventEnd);
+			formData.append('startTime', `${this.$refs.start_date.value}T${this.$refs.start_time.value}:00.000Z`);
+			formData.append('endTime', `${this.$refs.end_date.value}T${this.$refs.end_time.value}:00.000Z`);
 			formData.append('description', this.form.description);
 			// formData.append('positions', JSON.stringify(this.form.positions));
 			// formData.append('createdBy', this.$store.state.user.user.data._id);

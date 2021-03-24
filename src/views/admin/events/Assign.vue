@@ -31,8 +31,8 @@
 						</td>
 						<td>
 							<select @change="assignPos($event, signup.user.cid)">
-								<option :selected="checkAssigned(signup.user.id) == false">No assignment</option>
-								<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="checkAssigned(signup.user.id) == position.pos">{{position.pos}}</option>
+								<option :selected="getAssignment(signup.user.cid) == false">No assignment</option>
+								<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="getAssignment(signup.user.cid) === position.pos">{{position.pos}}</option>
 							</select>
 						</td>
 						<td class="options">
@@ -202,11 +202,11 @@ export default {
 			userCerts.forEach(cert => certsArray.push(cert.code));
 			return this.event.positions.filter((pos) => { return certsArray.includes(pos.code); });
 		},
-		checkAssigned(user) {
+		getAssignment(cid) {
 			if(this.event.positions) {
-				const taken = this.event.positions.filter((pos => { return typeof pos.takenBy === 'object' && pos.takenBy !== null && pos.takenBy.id == user;}));
-				if(taken.length > 0) {
-					return taken[0].pos;
+				const assignedPos = this.event.positions.filter(p => p.takenBy === cid);
+				if(assignedPos.length) {
+					return assignedPos[0].pos;
 				} else {
 					return false;
 				}

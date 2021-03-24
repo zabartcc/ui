@@ -11,13 +11,21 @@
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name" class="active">Name</label>
 					</div>
-					<div class="input-field col s12 l6">
-						<input id="start_time" type="datetime-local" :value="form.eventStart.split('Z')[0]" @input="form.eventStart = $event.target.value" required>
-						<label for="start_time" class="active">Start Time (Zulu)</label>
+					<div class="input-field col s12 m3">
+						<input id="start_date" type="text" class="datepicker" ref="start_date" required>
+						<label class="active" for="start_date">Start Date (Zulu)</label>
 					</div>
-					<div class="input-field col s12 l6">
-						<input id="end_time" type="datetime-local" :value="form.eventEnd.split('Z')[0]" @input="form.eventEnd = $event.target.value" required>
-						<label for="end_time" class="active">End Time (Zulu)</label>
+					<div class="input-field col s12 m3">
+						<input id="start_time" type="text" class="timepicker" ref="start_time" required>
+						<label class="active" for="start_time">Start Time (Zulu)</label>
+					</div>
+					<div class="input-field col s12 m3">
+						<input id="end_date" type="text" class="datepicker" ref="end_date" required>
+						<label class="active" for="end_date">End Date (Zulu)</label>
+					</div>
+					<div class="input-field col s12 m3">
+						<input id="end_time" type="text" class="timepicker" ref="end_time" required>
+						<label class="active" for="end_time">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
 						<div class="btn">
@@ -81,13 +89,28 @@ export default {
 			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
 			this.form = data.data;
 			this.form.positions = this.form.positions.map(p => p.pos);
+			this.$nextTick(() => {
+				const start = this.form.eventStart.split('T');
+				const end = this.form.eventEnd.split('T');
+				this.$refs.start_date.value = start[0];
+				this.$refs.start_time.value = start[1].slice(0, -8);
+				this.$refs.end_date.value = end[0];
+				this.$refs.end_time.value = end[1].slice(0, -8);
+				M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+					format: 'yyyy-mm-dd',
+					showDaysInNextAndPreviousMonths: true,
+				});
+				M.Timepicker.init(document.querySelectorAll('.timepicker'), {
+					twelveHour: false,
+				});
+			});
 		},
 		async submitForm() {
 			try {
 				const formData = new FormData();
 				formData.append('name', this.form.name);
-				formData.append('startTime', this.form.eventStart);
-				formData.append('endTime', this.form.eventEnd);
+				formData.append('startTime', `${this.$refs.start_date.value}T${this.$refs.start_time.value}:00.000Z`);
+				formData.append('endTime', `${this.$refs.end_date.value}T${this.$refs.end_time.value}:00.000Z`);
 				formData.append('description', this.form.description);
 				formData.append('positions', JSON.stringify(this.form.positions));
 				formData.append('banner', this.$refs.banner.files[0]);

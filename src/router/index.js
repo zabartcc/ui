@@ -239,6 +239,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+	window.scrollTo({
+		top: 0
+	});
 	if(to.meta.loggedIn) {
 		const {data: user} = await zabApi.get('/user');
 		if(user.ret_det.code === 200) {

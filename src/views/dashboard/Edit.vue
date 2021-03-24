@@ -31,10 +31,12 @@ export default {
 		};
 	},
 	async mounted() {
-		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 		this.form.bio = this.user.data.bio || '';
-		M.textareaAutoResize(document.querySelectorAll('textarea'));
-		M.updateTextFields();
+		this.$nextTick(() => {
+			M.textareaAutoResize(document.querySelector('textarea'));
+			M.CharacterCounter.init(document.querySelector('textarea'));
+			M.updateTextFields();
+		});
 	},
 	methods: {
 		async updateProfile() {

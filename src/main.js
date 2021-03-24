@@ -32,5 +32,17 @@ createApp(App)
 			}
 		}
 	})
+	.mixin({
+		data() {
+			return {
+				footerTime: null
+			};
+		},
+		created() {
+			setInterval(() => {
+				this.footerTime = `${this.dtFull(new Date())}z`;
+			}, 1000);
+		}
+	})
 	.component('Spinner', Spinner)
 	.mount('#app');

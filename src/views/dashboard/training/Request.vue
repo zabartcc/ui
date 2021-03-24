@@ -14,13 +14,21 @@
 				</div>
 				<div class="col s12 l6 pull-l6">
 					<form class="row row_no_margin" @submit.prevent=submitRequest>
-						<div class="input-field col s12">
-							<input id="start_time" type="datetime-local" v-model="request.startTime" required>
-							<label for="start_time" class="active">Start Time (Zulu) <span class="red-text">*</span></label>
+						<div class="input-field col s12 m6">
+							<input id="start_date" type="text" class="datepicker" ref="start_date" required>
+							<label for="start_date">Start Date (Zulu)<span class="red-text">*</span></label>
 						</div>
-						<div class="input-field col s12">
-							<input id="end_time" type="datetime-local" v-model="request.endTime" required>
-							<label for="end_time" class="active">End Time (Zulu) <span class="red-text">*</span></label>
+						<div class="input-field col s12 m6">
+							<input id="start_time" type="text" class="timepicker" ref="start_time" required>
+							<label for="start_time">Start Time (Zulu)<span class="red-text">*</span></label>
+						</div>
+						<div class="input-field col s12 m6">
+							<input id="end_date" type="text" class="datepicker" ref="end_date" required>
+							<label for="end_date">End Date (Zulu)<span class="red-text">*</span></label>
+						</div>
+						<div class="input-field col s12 m6">
+							<input id="end_time" type="text" class="timepicker" ref="end_time" required>
+							<label for="end_time">End Time (Zulu)<span class="red-text">*</span></label>
 						</div>
 						<div class="input-field col s12">
 							<select v-model="request.milestone" required>
@@ -53,8 +61,6 @@ export default {
 	data() {
 		return {
 			request: {
-				startTime: '',
-				endTime: '',
 				milestone: '',
 				remarks: '',
 				submitter: this.$store.state.user.user.data._id
@@ -66,11 +72,22 @@ export default {
 		await this.getTrainingMilestones();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+			format: 'yyyy-mm-dd',
+			showDaysInNextAndPreviousMonths: true,
+		});
+		M.Timepicker.init(document.querySelectorAll('.timepicker'), {
+			twelveHour: false,
+		});
 	},
 	methods: {
 		async submitRequest() {
 			try {
-				const {data} = await zabApi.post('/training/request/new', this.request);
+				const {data} = await zabApi.post('/training/request/new', {
+					...this.request,
+					startTime: `${this.$refs.start_date.value}T${this.$refs.start_time.value}:00.000Z`,
+					endTime: `${this.$refs.end_date.value}T${this.$refs.end_time.value}:00.000Z`
+				});
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Training Request successfully submitted');
 					this.$router.push('/dash/training');

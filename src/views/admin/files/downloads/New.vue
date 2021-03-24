@@ -63,6 +63,7 @@ export default {
 	methods: {
 		async submitForm() {
 			try {
+				this.toastInfo('Uploading...');
 				const formData = new FormData();
 				formData.append('name', this.form.name);
 				formData.append('category', this.form.category);
