@@ -6,9 +6,9 @@
 		<div class="loading_container" v-if="unapproved === null">
 			<Spinner />
 		</div>
-		<p class="no_unapproved" v-else-if="unapproved && unapproved.length == 0">There is no unapproved feedback to display.</p>
+		<p class="no_unapproved" v-else-if="unapproved && unapproved.length === 0">There is no unapproved feedback to display.</p>
 		<div class="feedback_wrapper" v-else>
-			<table class="event_list striped">
+			<table class="feedback_list striped">
 				<thead class="feedback_list_head">
 					<tr>
 						<th>Date</th>
@@ -18,7 +18,7 @@
 						<th class="options">Options</th>
 					</tr>
 				</thead>
-				<tbody class="event_list_row">
+				<tbody class="feedback_list_row">
 					<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
 						<td>{{dtLong(feedback.createdAt)}}</td>
 						<td><span v-if="feedback.anonymous"><strong>Anonymous</strong><i> ({{feedback.name}})</i></span><span v-else>{{feedback.name}}</span></td>
