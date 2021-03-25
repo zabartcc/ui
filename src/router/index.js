@@ -76,6 +76,10 @@ const routes = [
 			{
 				path: '/files/documents/:slug',
 				component: () => import('../views/files/ViewDocument.vue')
+			},
+			{
+				path: '/briefing',
+				component: () => import('../views/page/PilotBrief.vue')
 			}
 		]
 	},
