@@ -22,7 +22,7 @@
 				<tbody class="event_list_row">
 					<tr v-for="(absence, i) in absences" :key="absence._id">
 						<td>{{absence.user.fname}} {{absence.user.lname}}</td>
-						<td>{{dtLong(absence.expirationDate)}}</td>
+						<td>{{dLong(absence.expirationDate)}}</td>
 						<td class="options">
 							<a :href="`#modal_absence_${i}`" data-position="top" data-tooltip="View Details" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
@@ -39,7 +39,7 @@
 											<label for="first_name" class="active">Controller</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{dtLong(absence.expirationDate)}}</p>
+											<p id="cid">{{dLong(absence.expirationDate)}}</p>
 											<label for="cid" class="active">Expiration Date</label>
 										</div>
 										<div class="input-field col s12">
@@ -96,14 +96,17 @@ export default {
 		},
 		async deleteLoa(id) {
 			try {
-				await zabApi.delete(`/controller/absence/${id}`);
+				const {data} = await zabApi.delete(`/controller/absence/${id}`);
+				if(data.ret_det.code === 200) {
+					this.toastSuccess('Controller removed from LOA successfully');
 
-				this.toastSuccess('Controller removed from LOA successfully');
-
-				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
-				await this.getAbsences();
+					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
+					await this.getAbsences();
+				} else {
+					this.toastError(data.ret_det.message);
+				}
 			} catch(e) {
-				this.toastError(e);
+				console.log(e);
 			}
 		}
 	}

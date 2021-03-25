@@ -12,7 +12,10 @@
 						</div>
 					</div>
 					<div class="col s7 m8 l9">
-						<div class="controller_name">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</div>
+						<div class="controller_name">
+							{{controller.fname}} {{controller.lname}} ({{controller.oi}})
+							<span v-if="controller.absence.length > 0" class="controller_loa">LOA</span>
+						</div>
 						<div class="controller_rating">{{controller.ratingLong}}</div>
 					</div>
 					<div class="col s12 m8 l9">
@@ -104,6 +107,7 @@ export default {
 	},
 	async mounted() {
 		await this.getController();
+
 		this.setTitle(`${this.controller.fname} ${this.controller.lname} | Controller Profile`);
 	},
 	methods: {
@@ -235,5 +239,14 @@ export default {
 	tbody td:first-of-type {
 		font-weight: 700;
 	}
+}
+
+.controller_loa {
+	background: $secondary-color-dark;
+	color: #fff;
+	font-weight: 400;
+	padding: 0.2rem 0.4rem;
+	font-size: 1rem;
+	margin-left: .25em;
 }
 </style>

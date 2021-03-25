@@ -208,6 +208,10 @@ const routes = [
 			{
 				path: 'absence',
 				component: () => import('../views/admin/absence/Index.vue')
+			},
+			{
+				path: 'absence/new',
+				component: () => import('../views/admin/absence/New.vue')
 			}
 		]
 	},

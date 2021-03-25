@@ -16,7 +16,7 @@
 						<td class="name">
 							<router-link :to="`/controllers/${controller.cid}`">
 								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-								<span v-if="controller.absence.length > 0" class="controller_loa tooltipped" data-tooltip="Leave of Absence" data-position="top">LOA</span>
+								<span v-if="controller.absence.length > 0" class="controller_loa">LOA</span>
 							</router-link><br />
 							<div class="rating">
 								{{controller.ratingLong}}
@@ -160,6 +160,7 @@ td {
 
 .name a {
 	font-weight: 700;
+	-webkit-user-select: none; /* Safari 3.1+ */ -moz-user-select: none; /* Firefox 2+ */ -ms-user-select: none; /* IE 10+ */ user-select: none; /* Standard syntax */ user-drag: none; -webkit-user-drag: none;
 }
 
 .name .rating {
