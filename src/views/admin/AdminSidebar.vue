@@ -25,6 +25,10 @@
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
 			</router-link>
+			<router-link to="/admin/absence" class="collection-item">
+				Leave of Absence
+				<div class="secondary-content"><i class="material-icons">access_time</i></div>
+			</router-link>
 			<router-link to="/admin/news" class="collection-item">
 				News
 				<div class="secondary-content"><i class="material-icons">rss_feed</i></div>

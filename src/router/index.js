@@ -204,6 +204,10 @@ const routes = [
 			{
 				path: 'visit/applications',
 				component: () => import('../views/admin/VisitApplications.vue')
+			},
+			{
+				path: 'absence',
+				component: () => import('../views/admin/absence/Index.vue')
 			}
 		]
 	},
