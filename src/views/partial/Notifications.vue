@@ -1,12 +1,17 @@
 <template>
 	<div class="notif_container">
-		<div class="notif" v-for="notification in notifications" :key="notification._id" @click="redirectTo(notification.link, notification._id)">
-			<div class="notif_unread" v-if="notification.read === false"></div>
-			<div :class="`notif_title ${notification.read ? '' : 'unread'}`">{{notification.title}}</div>
-			<div class="notif_text" v-html="notification.content"></div>
+		<div class="loading_container" v-if="!notifications">
+			<Spinner />
 		</div>
-		<span class="no_notif" v-if="notifications.length === 0">There are no new notifications.</span>
-		<span class="load_more" v-if="amount > (page * limit)" @click="getMoreNotifications">Load More</span>
+		<span class="no_notif" v-else-if="notifications.length === 0">There are no new notifications.</span>
+		<div v-else>
+			<div class="notif" v-for="notification in notifications" :key="notification._id" @click="redirectTo(notification.link, notification._id)">
+				<div class="notif_unread" v-if="notification.read === false"></div>
+				<div :class="`notif_title ${notification.read ? '' : 'unread'}`">{{notification.title}}</div>
+				<div class="notif_text" v-html="notification.content"></div>
+			</div>
+			<span class="load_more" v-if="amount > (page * limit)" @click="getMoreNotifications">Load More</span>
+		</div>
 	</div>
 	<div class="controls">
 		<button class="left btn-flat waves-effect" @click="deleteAll">Delete All</button>
@@ -21,7 +26,7 @@ export default {
 	name: "Notifications",
 	data() {
 		return {
-			notifications: [],
+			notifications: null,
 			unread: 0,
 			amount: 0,
 			page: 1,
