@@ -20,7 +20,7 @@
 				<tbody>
 					<tr v-for="news in newsItems" :key="news.id">
 						<td><router-link :to="`/news/${news.uriSlug}`">{{news.title}}</router-link></td>
-						<td class="options">{{dtLong(news.createdAt)}}</td>
+						<td class="options">{{dLong(news.createdAt)}}</td>
 					</tr>
 				</tbody>
 			</table>

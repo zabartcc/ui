@@ -5,10 +5,12 @@
 		</div>
 		<div v-else>
 			<div class="card-content">
-				<div class="card-title">{{news.title}}</div>
-				<div class="side-title">{{dLong(news.createdAt)}}</div>
-				<div class="author">
-					By {{news.user.fname}} {{news.user.lname}}
+				<div class="row row_no_margin">
+					<div class="col s12 l10 card-title">{{news.title}}</div>
+					<div class="col s12 l2 side-title">{{dLong(news.createdAt)}}</div>
+					<div class="col s12 author">
+						By {{news.user.fname}} {{news.user.lname}}
+					</div>
 				</div>
 				<div class="news_content">
 					{{news.content}}
@@ -20,16 +22,12 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import Spinner from '@/components/Spinner.vue';
 
 export default {
 	data() {
 		return {
 			news: null
 		};
-	},
-	components: {
-		Spinner
 	},
 	async mounted() {
 		await this.getArticle();
@@ -48,22 +46,20 @@ export default {
 <style lang="scss" scoped>
 .card-title {
 	font-weight: bold;
-	float: left;
 	margin-bottom: 0!important;
 }
 
 .side-title {
-	float: right;
+	margin-top: .4em;
 }
 
 .author {
 	font-weight: 400;
-	margin-top: 2.2em;
-	margin-bottom: 1em;
 	color: #9e9e9e;
 }
 
 .news_content {
+	margin-top: 1em;
 	white-space: pre;
 }
 </style>
