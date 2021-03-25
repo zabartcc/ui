@@ -34,13 +34,14 @@
 			</table>
 		</div>
 		<div v-if="pastSessions && sessionAmount !== 0">
-			<Pagination :amount="feedbackAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
+			<Pagination :amount="sessionAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
 		</div>
 	</div>
 </template>
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
 	name: 'PastSessions',
@@ -52,6 +53,9 @@ export default {
 			limit: 20,
 			amountOfPages: 0
 		};
+	},
+	components: {
+		Pagination
 	},
 	async mounted() {
 		await this.getPastSessions();
