@@ -123,7 +123,7 @@ export default {
 		},
 		async notifyAssignments() {
 			try {
-				const {data} = zabApi.put(`/event/${this.$route.params.slug}/notify`, {
+				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/notify`, {
 					assignment: this.event.positions
 				});
 
