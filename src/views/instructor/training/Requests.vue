@@ -32,7 +32,7 @@
 										{{date.date.slice(3, 10)}}
 									</span>
 								</div>
-								<div :class="`date_requests ${(new Date(Date.UTC(date.date)).getTime()) - (new Date(new Date().getUTCString()).getTime()) < 0 ? 'past' : ''}`" v-if="date.requests.length > 0">
+								<div :class="`date_requests ${(new Date(Date.UTC(date.date)).getTime()) - (new Date().getTime()) < 0 ? 'past' : ''}`" v-if="date.requests.length > 0">
 									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
 								</div>
 							</div>
