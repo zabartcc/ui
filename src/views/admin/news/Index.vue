@@ -26,10 +26,10 @@
 						<td>{{news.user.fname + ' ' + news.user.lname}}</td>
 						<td>{{dLong(news.createdAt)}}</td>
 						<td class="options">
-							<router-link data-position="top" data-tooltip="Edit Event" class="tooltipped" :to="`/admin/news/${news.uriSlug}`">
+							<router-link data-position="top" data-tooltip="Edit Article" class="tooltipped" :to="`/admin/news/${news.uriSlug}`">
 								<i class="material-icons">edit</i>
 							</router-link>
-							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Event" class="tooltipped modal-trigger">
+							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Article" class="tooltipped modal-trigger">
 								<i class="material-icons red-text text-darken-2">delete</i>
 							</a>
 						</td>
