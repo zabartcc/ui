@@ -174,7 +174,7 @@ export default {
 		},
 		async closeSignups() {
 			try {
-				const {data} = zabApi.put(`/event/${this.$route.params.slug}/close`);
+				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/close`);
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Sign-ups successfully closed');
 
