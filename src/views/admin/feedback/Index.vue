@@ -79,7 +79,7 @@
 			</table>
 		</div>
 	</div>
-	<RecentFeedback />
+	<RecentFeedback ref="recentFeedback" />
 </template>
 
 <script>
@@ -117,7 +117,10 @@ export default {
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Feedback successfully approved');
 					await this.getUnapproved();
-					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
+					this.$refs.recentFeedback.getFeedback();
+					this.$nextTick(() => {
+						M.Modal.getInstance(document.querySelector('.modal_unapproved')).close();
+					});
 				} else {
 					this.toastError(data.ret_det.message);
 				}
@@ -131,7 +134,10 @@ export default {
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Feedback successfully rejected');
 					await this.getUnapproved();
-					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_unapproved')).close(), 500);
+					this.$refs.recentFeedback.getFeedback();
+					this.$nextTick(() => {
+						M.Modal.getInstance(document.querySelector('.modal_unapproved')).close();
+					});
 				} else {
 					this.toastError(data.ret_det.message);
 				}
