@@ -43,7 +43,7 @@
 							<label for="remarks" class="active">Remarks</label>
 						</div>
 						<div class="submit_request">
-							<input type="submit" class="btn" value="submit" />
+							<input type="submit" class="btn" value="submit" :disabled="makingRequest" />
 						</div>
 					</form>
 				</div>
@@ -65,16 +65,22 @@ export default {
 				remarks: '',
 				submitter: this.$store.state.user.user.data._id
 			},
-			milestones: null
+			milestones: null,
+			makingRequest: false
 		};
 	},
 	async mounted() {
 		await this.getTrainingMilestones();
+		const today = new Date(new Date().toUTCString());
+		const future = new Date(new Date().toUTCString());
+
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+			autoClose: true,
 			format: 'yyyy-mm-dd',
-			showDaysInNextAndPreviousMonths: true,
+			minDate: today,
+			maxDate: new Date(future.setDate(future.getDate() + 21)),
 		});
 		M.Timepicker.init(document.querySelectorAll('.timepicker'), {
 			twelveHour: false,
@@ -83,6 +89,7 @@ export default {
 	methods: {
 		async submitRequest() {
 			try {
+				this.makingRequest = true;
 				const {data} = await zabApi.post('/training/request/new', {
 					...this.request,
 					startTime: `${this.$refs.start_date.value}T${this.$refs.start_time.value}:00.000Z`,
