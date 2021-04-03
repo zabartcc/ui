@@ -203,6 +203,10 @@ export default {
 	width: 35%;
 }
 
+table {
+	min-width: 500px;
+}
+
 .request {
 	.remarks_wrapper {
 		margin-top: 2.5em;

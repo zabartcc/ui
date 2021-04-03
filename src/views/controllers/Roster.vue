@@ -16,11 +16,12 @@
 						<td class="name">
 							<router-link :to="`/controllers/${controller.cid}`">
 								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-								<span v-if="controller.absence.length > 0" class="controller_loa">LOA</span>
+								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
 							</router-link><br />
 							<div class="rating">
 								{{controller.ratingLong}}
 							</div>
+							<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
 						</td>
 						<td class="certs">
 							<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
@@ -53,10 +54,12 @@
 						<td class="name">
 							<router-link :to="`/controllers/${controller.cid}`">
 								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
+								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
 							</router-link><br />
 							<div class="rating">
 								{{controller.ratingLong}}
 							</div>
+							<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
 						</td>
 						<td class="certs">
 							<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
@@ -213,5 +216,10 @@ td {
 	padding: 0.2rem 0.4rem;
 	font-size: .9rem;
 	margin-left: .25em;
+
+	&.mobile {
+		width: 36px;
+		margin-left: 0;
+	}
 }
 </style>

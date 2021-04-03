@@ -45,9 +45,12 @@ export default {
 	},
 	async mounted() {
 		await this.getControllers();
+		const future = new Date(new Date().toUTCString());
+
 		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+			autoClose: true,
+			minDate: new Date(future.setDate(future.getDate() + 31)),
 			format: 'yyyy-mm-dd',
-			showDaysInNextAndPreviousMonths: true,
 		});
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});

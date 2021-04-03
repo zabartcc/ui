@@ -16,9 +16,9 @@
   "dependencies": {
     "@materializecss/materialize": "^1.0.0",
     "axios": "^0.21.1",
-    "core-js": "^3.9.1",
+    "core-js": "^3.10.0",
     "metar-parser": "^1.0.0",
-    "vue": "^3.0.7",
+    "vue": "^3.0.11",
     "vue-router": "^4.0.5",
     "vuex": "^4.0.0"
   },
@@ -28,9 +28,9 @@
     "@vue/cli-plugin-router": "^4.5.12",
     "@vue/cli-plugin-vuex": "^4.5.12",
     "@vue/cli-service": "^4.5.12",
-    "@vue/compiler-sfc": "^3.0.7",
+    "@vue/compiler-sfc": "^3.0.11",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "eslint-plugin-vue": "^7.8.0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1"

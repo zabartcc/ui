@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Solo Certifications</span></div>
-				<div class="card-title col s4"><router-link to="/ins/solo/new"><span class="btn new_event_button right">New Solo Cert</span></router-link></div>
+				<div class="col s4"><router-link to="/ins/solo/new"><span class="btn new_event_button right">New</span></router-link></div>
 			</div>
 		</div>
 		<div class="card-content loading_container" v-if="loading">
