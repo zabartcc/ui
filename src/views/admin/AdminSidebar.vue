@@ -37,6 +37,10 @@
 				Visitor Applications
 				<div class="secondary-content"><i class="material-icons">group_add</i></div>
 			</router-link>
+			<router-link to="/admin/log" class="collection-item">
+				Action Log
+				<div class="secondary-content"><i class="material-icons">pageview</i></div>
+			</router-link>
 		</div>
 	</div>
 </template>

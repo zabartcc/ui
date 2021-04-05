@@ -216,6 +216,10 @@ const routes = [
 			{
 				path: 'absence/new',
 				component: () => import('../views/admin/absence/New.vue')
+			},
+			{
+				path: 'log',
+				component: () => import('../views/admin/log/Index.vue')
 			}
 		]
 	},
@@ -261,7 +265,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
 	const tooltips = document.querySelectorAll('.tooltipped');
 	tooltips.forEach(tip => {
-		M.Tooltip.getInstance(tip).destroy();
+		const inst = M.Tooltip.getInstance(tip);
+		if(inst) {
+			inst.destroy();
+		}
 	});
 	window.scrollTo({
 		top: 0
