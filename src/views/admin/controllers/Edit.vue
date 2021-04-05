@@ -28,7 +28,7 @@
 						<label for="email" class="active">Email</label>
 					</div>
 					<div class="input-field col s6 input_oi">
-						<input id="oi" type="text" v-model="form.oi" @input="checkOi($event)" maxlength="2" required>
+						<input id="oi" type="text" v-model="form.oi" @input="checkOi($event)"  maxlength="2" required>
 						<label for="oi" class="active">Operating Initials</label>
 						<div class="side_oi right">
 							<i v-if="oiAvail == true" class="material-icons green-text">check_circle</i>
@@ -157,7 +157,8 @@ export default {
 			this.controller.roles.forEach(role => this.form.roles[role.code] = true);
 			this.usedOi = (await zabApi.get(`/controller/oi`)).data.data;
 		},
-		checkOi() {
+		checkOi(e) {
+			this.form.oi = e.target.value.toUpperCase();
 			this.oiAvail = (this.form.oi !== this.controller.oi && (this.usedOi.includes(this.form.oi) || this.form.oi.length != 2)) ? false : true;
 		},
 		toggleCert: function(e) {

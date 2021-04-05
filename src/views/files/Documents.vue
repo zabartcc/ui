@@ -6,8 +6,8 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs">
-					<li class="tab col s6 l3"><a class="active" href="#loa">Agreements</a></li>
-					<li class="tab col s6 l2"><a href="#sop">SOP</a></li>
+					<li class="tab col s6 l2"><a class="active" href="#sop">SOPs</a></li>
+					<li class="tab col s6 l3"><a href="#loa">LOAs</a></li>
 					<li class="tab col s7 l3"><a href="#policy">Policies</a></li>
 					<li class="tab col s6 l4"><a href="#misc">Miscellaneous</a></li>
 				</ul>

@@ -39,7 +39,7 @@ export default {
 				this.toastSuccess('Token successfully generated');
 				this.token = tokenRet.data;
 			} else {
-				this.toastError(`${tokenRet.ret_det.message}`);
+				this.toastError(tokenRet.ret_det.message);
 			}
 		},
 		showToken() {
@@ -55,6 +55,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .ids {
 	width: 100%;
 	max-width: 400px;

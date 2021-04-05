@@ -198,6 +198,10 @@ const routes = [
 				component: () => import('../views/admin/files/documents/New.vue')
 			},
 			{
+				path: 'files/documents/:id',
+				component: () => import('../views/admin/files/documents/Edit.vue')
+			},
+			{
 				path: 'feedback',
 				component: () => import('../views/admin/feedback/Index.vue')
 			},
