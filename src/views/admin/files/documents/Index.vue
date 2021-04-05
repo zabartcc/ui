@@ -26,7 +26,7 @@
 						<td>{{convertCategory(doc.category)}}</td>
 						<td>{{dtLong(doc.updatedAt)}}</td>
 						<td class="options">
-							<router-link data-position="top" data-tooltip="Edit Document" class="tooltipped" :to="`/admin/files/documents/${doc._id}`"><i class="material-icons">edit</i></router-link>
+							<router-link data-position="top" data-tooltip="Edit Document" class="tooltipped" :to="`/admin/files/documents/${doc.slug}`"><i class="material-icons">edit</i></router-link>
 							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Document" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
 						</td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">

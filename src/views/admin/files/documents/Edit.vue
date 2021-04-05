@@ -1,12 +1,12 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">New Document</span>
+			<span class="card-title">Edit Document</span>
 			<div class="row">
-				<form method="post" @submit.prevent=addDocument>
+				<form method="post" @submit.prevent=updateDocument>
 					<div class="input-field col s12 m6">
 						<input id="name" type="text" v-model="form.name" required>
-						<label for="name">Name</label>
+						<label class="active" for="name">Name</label>
 					</div>
 					<div class="input-field col s12 m6">
 						<select id="category" v-model="form.category">
@@ -23,11 +23,11 @@
 						<label for="description">Description (optional)</label>
 					</div>
 					<div class="col s12">
-						<h6>Content</h6>
+						<span class="title">Content</span>
 						<div id="tui_editor"></div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="create" />
+						<input type="submit" class="btn right" value="Update" />
 					</div>
 				</form>
 			</div>
@@ -41,10 +41,8 @@ import 'codemirror/lib/codemirror.css'; // Editor's Dependency Style
 import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
 import {zabApi} from '@/helpers/axios.js';
 
-
 export default {
-	name: 'NewDoc',
-	title: 'New Document',
+	title: 'Edit Document',
 	data() {
 		return {
 			form: {
@@ -57,26 +55,32 @@ export default {
 		};
 	},
 	async mounted() {
-		M.FormSelect.init(document.querySelectorAll('select'), {});
+		const {data} = await zabApi.get(`/file/documents/${this.$route.params.id}`);
+		this.setTitle(`Edit ${data.data.name}`);
+		this.form = data.data;
 		this.$nextTick(() => {
+			M.FormSelect.init(document.querySelectorAll('select'), {});
+			M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+			M.updateTextFields();
 			this.editor = new Editor({
 				el: document.querySelector('#tui_editor'),
 				height: '500px',
 				initialEditType: 'markdown',
 				previewStyle: 'tab',
-				usageStatistics: false
+				usageStatistics: false,
+				initialValue: this.form.content
 			});
 		});
 	},
 	methods: {
-		async addDocument() {
+		async updateDocument() {
 			this.form.content = this.editor.getMarkdown();
-			const {data: addData} = await zabApi.post('/file/documents', this.form);
+			const {data: addData} = await zabApi.put(`/file/documents/${this.form.slug}`, this.form);
 
 			if(addData.ret_det.code === 200) {
-				this.toastSuccess('Document successfully created');
+				this.toastSuccess('Document updated successfully');
 
-				this.$router.push('/admin/files/documents');
+				// this.$router.push('/admin/files/documents');
 			} else {
 				this.toastError(addData.ret_det.message);
 			}
@@ -86,5 +90,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.title {
+	color: #9E9E9E;
+	font-size: .9rem;
+}
 </style>
