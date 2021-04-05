@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Training Requests</span></div>
-				<div class="card-title col s4"><router-link to="/dash/training/new"><span class="btn new_event_button right">Request Training</span></router-link></div>
+				<div class="col s4"><router-link to="/dash/training/new"><span class="btn new_event_button right">Request</span></router-link></div>
 			</div>
 		</div>
 		<div class="loading_container" v-if="!upcomingSessions">
@@ -69,8 +69,11 @@ export default {
 	font-style: italic;
 }
 
+table {
+	min-width: 500px;
+}
+
 .session_wrapper {
-	width: 100%;
 	overflow: auto;
 }
 

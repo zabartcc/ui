@@ -110,13 +110,13 @@
 				<router-link class="sidenav-close" to="/controllers/staff">ARTCC STAFF</router-link>
 			</li>
 			<li>
-				<router-link to="/controllers/visit">BECOME A VISITOR</router-link>
-			</li>
-			<li>
 				<router-link class="sidenav-close" to="/events">EVENTS</router-link>
 			</li>
 			<li>
 				<router-link class="sidenav-close" to="/news">NEWS</router-link>
+			</li>
+			<li>
+				<router-link class="sidenav-close" to="/briefing">PILOT BRIEFING</router-link>
 			</li>
 			<li>
 				<router-link class="sidenav-close" to="/feedback">FEEDBACK</router-link>
@@ -298,7 +298,7 @@ nav {
 		border-radius: 50%;
 		position: absolute;
 		top: 25px;
-		left: 12px;
+		left: 11px;
 	}
 }
 

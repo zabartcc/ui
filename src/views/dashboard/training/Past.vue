@@ -87,6 +87,10 @@ export default {
 	font-style: italic;
 }
 
+table {
+	min-width: 500px;
+}
+
 .session_wrapper {
 	overflow: auto;
 }

@@ -54,8 +54,9 @@ export default {
 	},
 	async mounted() {
 		await this.getControllers();
-		const today = new Date();
-		const future = new Date();
+		const today = new Date(new Date().toUTCString());
+		const future = new Date(new Date().toUTCString());
+		
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
 			autoClose: true,
