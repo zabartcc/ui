@@ -259,6 +259,10 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+	const tooltips = document.querySelectorAll('.tooltipped');
+	tooltips.forEach(tip => {
+		M.Tooltip.getInstance(tip).destroy();
+	});
 	window.scrollTo({
 		top: 0
 	});
