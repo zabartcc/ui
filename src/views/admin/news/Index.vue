@@ -46,9 +46,9 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div v-if="newsItems && newsAmount !== 0">
-			<Pagination :amount="newsAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
+			<div v-if="newsItems && newsAmount !== 0">
+				<Pagination :amount="newsAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
+			</div>
 		</div>
 	</div>
 </template>
@@ -66,10 +66,10 @@ export default {
 			newsAmount: 0,
 			page: 1,
 			limit: 10,
-			amountOfPages: 1
+			amountOfPages: 0
 		};
 	},
-	comments: {
+	components: {
 		Pagination
 	},
 	async mounted() {
