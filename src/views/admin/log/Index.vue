@@ -3,18 +3,23 @@
 		<div class="card-content">
 			<span class="card-title">Action Log</span>
 		</div>
-		<table class="striped highlight" v-if=log>
-			<thead>
-				<th>Date</th>
-				<th>Action</th>
-			</thead>
-			<tbody>
-				<tr v-for='item in log' :key=item._id>
-					<td>{{dtStandard(item.createdAt)}}</td>
-					<td v-html='populateLog(item)'></td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="actions_wrapper" v-if=log>
+			<table class="striped highlight">
+				<thead>
+					<th>Date</th>
+					<th>Action</th>
+				</thead>
+				<tbody>
+					<tr v-for='item in log' :key=item._id>
+						<td>{{dtStandard(item.createdAt)}}z</td>
+						<td v-html='populateLog(item)'></td>
+					</tr>
+				</tbody>
+			</table>
+			<div v-if="log && logAmount !== 0">
+				<Pagination :amount="logAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
+			</div>
+		</div>
 		<div class="loading_container" v-else>
 			<Spinner />
 		</div>
@@ -23,16 +28,32 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import Pagination from '@/components/Pagination.vue';
+
 export default {
 	title: "Action Log",
 	data() {
 		return {
-			log: null
+			log: null,
+			logAmount: 0,
+			page: 1,
+			limit: 20,
+			amountOfPages: 0
 		};
 	}, 
+	components: {
+		Pagination
+	},
 	async mounted() {
-		const {data: dossierData} = await zabApi.get('/controller/log');
-		this.log = dossierData.data;
+		const {data: dossierData} = await zabApi.get('/controller/log', {
+			params: {
+				page: this.page, 
+				limit: this.limit
+			}
+		});
+		this.log = dossierData.data.dossier;
+		this.logAmount = dossierData.data.amount;
+		this.amountOfPages = Math.ceil(this.newsAmount / this.limit);
 	},
 	methods: {
 		populateLog(log) {

@@ -25,18 +25,6 @@
 							</li>
 						</ul>
 					</li>
-					<li class="has_dropdown" data-state="hide">
-						<a class="dropdown-left" href="#!" data-target="pilots-dropdown">PILOTS</a>
-						<ul id="pilots-dropdown" class="dropdown-content">
-							<li>
-								<router-link to="/briefing">Pilot Briefing</router-link>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<router-link to="/feedback">Feedback</router-link>
-							</li>
-						</ul>
-					</li>
 					<li>
 						<router-link to="/events">EVENTS</router-link>
 					</li>
@@ -53,6 +41,9 @@
 								<router-link to="/files/documents">Documents</router-link>
 							</li>
 						</ul>
+					</li>
+					<li>
+						<router-link to="/feedback">FEEDBACK</router-link>
 					</li>
 				</ul>
 				<router-link to="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></router-link>
@@ -115,9 +106,9 @@
 			<li>
 				<router-link class="sidenav-close" to="/news">NEWS</router-link>
 			</li>
-			<li>
+			<!-- <li>
 				<router-link class="sidenav-close" to="/briefing">PILOT BRIEFING</router-link>
-			</li>
+			</li> -->
 			<li>
 				<router-link class="sidenav-close" to="/feedback">FEEDBACK</router-link>
 			</li>
