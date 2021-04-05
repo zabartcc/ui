@@ -6,7 +6,7 @@
 		<div class="col s12 l6">
 			<ul class="pagination right">
 				<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : setPreviousPage()"><i class="material-icons">chevron_left</i></a></li>
-				<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="this.$parent.page = pageNo"><a>{{pageNo}}</a></li>
+				<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="setPageNo(pageNo)"><a>{{pageNo}}</a></li>
 				<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : setNextPage()"><i class="material-icons">chevron_right</i></a></li>
 			</ul>
 		</div>
@@ -24,10 +24,14 @@ export default {
 	props: ['amount', 'page', 'limit', 'amountOfPages'],
 	methods: {
 		setNextPage() {
-			this.$parent.nextPage();
+			this.$parent.page += 1;
 		},
 		setPreviousPage() {
-			this.$parent.previousPage();
+			this.$parent.page -= 1;
+		},
+		setPageNo(pageNo) {
+			console.log(pageNo + ' it works');
+			this.$parent.updatePageNo(pageNo);
 		}
 	},
 	computed: {

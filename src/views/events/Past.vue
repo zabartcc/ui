@@ -67,6 +67,9 @@ export default {
 			});
 			this.historicEvents = data.data.events;
 			this.eventAmount = data.data.amount;
+		},
+		updatePageNo(pageNo) {
+			this.page === pageNo;
 		}
 	},
 	watch: {
