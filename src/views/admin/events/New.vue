@@ -8,21 +8,13 @@
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name">Name</label>
 					</div>
-					<div class="input-field col s12 m3">
+					<div class="input-field col s12 m6">
 						<input id="start_date" type="text" class="datepicker" ref="start_date" required>
-						<label for="start_date">Start Date (Zulu)</label>
+						<label for="start_date">Start Time (Zulu)</label>
 					</div>
-					<div class="input-field col s12 m3">
-						<input id="start_time" type="text" class="timepicker" ref="start_time" required>
-						<label for="start_time">Start Time (Zulu)</label>
-					</div>
-					<div class="input-field col s12 m3">
+					<div class="input-field col s12 m6">
 						<input id="end_date" type="text" class="datepicker" ref="end_date" required>
-						<label for="end_date">End Date (Zulu)</label>
-					</div>
-					<div class="input-field col s12 m3">
-						<input id="end_time" type="text" class="timepicker" ref="end_time" required>
-						<label for="end_time">End Time (Zulu)</label>
+						<label for="end_date">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
 						<div class="btn">
@@ -48,6 +40,8 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 export default {
 	name: 'NewEvent',
@@ -70,12 +64,27 @@ export default {
 		};
 	},
 	mounted() {
-		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
-			format: 'yyyy-mm-dd',
-			showDaysInNextAndPreviousMonths: true,
+		const today = new Date(new Date().toUTCString());
+		flatpickr(this.$refs.start_date, {
+			enableTime: true,
+			time_24hr: true,
+			minDate: today,
+			disableMobile: true,
+			minuteIncrement: 15,
+			dateFormat: 'Y-m-dTH:i:00.000\\Z',
+			altFormat: 'Y-m-d H:i',
+			altInput: true,
 		});
-		M.Timepicker.init(document.querySelectorAll('.timepicker'), {
-			twelveHour: false,
+
+		flatpickr(this.$refs.end_date, {
+			enableTime: true,
+			time_24hr: true,
+			minDate: today,
+			disableMobile: true,
+			minuteIncrement: 15,
+			dateFormat: 'Y-m-dTH:i:00.000\\Z',
+			altFormat: 'Y-m-d H:i',
+			altInput: true,
 		});
 	},
 	methods: {
@@ -88,8 +97,8 @@ export default {
 			const formData = new FormData();
 			formData.append('banner', this.$refs.banner.files[0]);
 			formData.append('name', this.form.name);
-			formData.append('startTime', `${this.$refs.start_date.value}T${this.$refs.start_time.value}:00.000Z`);
-			formData.append('endTime', `${this.$refs.end_date.value}T${this.$refs.end_time.value}:00.000Z`);
+			formData.append('startTime', `${this.$refs.start_date.value}`);
+			formData.append('endTime', `${this.$refs.end_date.value}`);
 			formData.append('description', this.form.description);
 			// formData.append('positions', JSON.stringify(this.form.positions));
 			// formData.append('createdBy', this.$store.state.user.user.data._id);

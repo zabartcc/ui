@@ -14,24 +14,16 @@
 				</div>
 				<div class="col s12 l6 pull-l6">
 					<form class="row row_no_margin" @submit.prevent=submitRequest>
-						<div class="input-field col s12 m6">
+						<div class="input-field col s12">
 							<input id="start_date" type="text" class="datepicker" ref="start_date" required>
-							<label for="start_date">Start Date (Zulu)<span class="red-text">*</span></label>
-						</div>
-						<div class="input-field col s12 m6">
-							<input id="start_time" type="text" class="timepicker" ref="start_time" required>
-							<label for="start_time">Start Time (Zulu)<span class="red-text">*</span></label>
-						</div>
-						<div class="input-field col s12 m6">
-							<input id="end_date" type="text" class="datepicker" ref="end_date" required>
-							<label for="end_date">End Date (Zulu)<span class="red-text">*</span></label>
-						</div>
-						<div class="input-field col s12 m6">
-							<input id="end_time" type="text" class="timepicker" ref="end_time" required>
-							<label for="end_time">End Time (Zulu)<span class="red-text">*</span></label>
+							<label for="start_date">Start Time (Zulu)<span class="red-text">*</span></label>
 						</div>
 						<div class="input-field col s12">
-							<select v-model="request.milestone" required>
+							<input id="end_date" type="text" class="datepicker" ref="end_date" required>
+							<label for="end_date">End Time (Zulu)<span class="red-text">*</span></label>
+						</div>
+						<div class="input-field col s12">
+							<select v-model="request.milestone">
 								<option value="" disabled selected>Select a milestone</option>
 								<option v-for="milestone in milestones" :key="milestone._id" :value="milestone._id">{{milestone.code + ' - ' + milestone.name}}</option>
 								
@@ -54,6 +46,8 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 export default {
 	name: 'RequestTraining',
@@ -72,34 +66,52 @@ export default {
 	async mounted() {
 		await this.getTrainingMilestones();
 		const today = new Date(new Date().toUTCString());
-		const future = new Date(new Date().toUTCString());
 
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
-		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
-			autoClose: true,
-			format: 'yyyy-mm-dd',
+
+		flatpickr(this.$refs.start_date, {
+			enableTime: true,
+			time_24hr: true,
 			minDate: today,
-			maxDate: new Date(future.setDate(future.getDate() + 21)),
+			disableMobile: true,
+			minuteIncrement: 15,
+			dateFormat: 'Y-m-dTH:i:00.000\\Z',
+			altFormat: 'Y-m-d H:i',
+			altInput: true,
 		});
-		M.Timepicker.init(document.querySelectorAll('.timepicker'), {
-			twelveHour: false,
+
+		flatpickr(this.$refs.end_date, {
+			enableTime: true,
+			time_24hr: true,
+			minDate: today,
+			disableMobile: true,
+			minuteIncrement: 15,
+			dateFormat: 'Y-m-dTH:i:00.000\\Z',
+			altFormat: 'Y-m-d H:i',
+			altInput: true,
 		});
 	},
 	methods: {
 		async submitRequest() {
 			try {
-				this.makingRequest = true;
-				const {data} = await zabApi.post('/training/request/new', {
-					...this.request,
-					startTime: `${this.$refs.start_date.value}T${this.$refs.start_time.value}:00.000Z`,
-					endTime: `${this.$refs.end_date.value}T${this.$refs.end_time.value}:00.000Z`
-				});
-				if(data.ret_det.code === 200) {
-					this.toastSuccess('Training Request successfully submitted');
-					this.$router.push('/dash/training');
+				if(!this.request.milestone) {
+					this.toastError('You must select a milestone.');
 				} else {
-					this.toastError(data.ret_det.message);
+					this.makingRequest = true;
+					const {data} = await zabApi.post('/training/request/new', {
+						...this.request,
+						startTime: `${this.$refs.start_date.value}`,
+						endTime: `${this.$refs.end_date.value}`
+					});
+					if(data.ret_det.code === 200) {
+						this.toastSuccess('Training Request successfully submitted');
+						this.$router.push('/dash/training');
+						this.makingRequest = false;
+					} else {
+						this.toastError(data.ret_det.message);
+						this.makingRequest = false;
+					}
 				}
 			} catch(e) {
 				console.log(e);

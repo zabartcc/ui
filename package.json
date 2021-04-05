@@ -18,6 +18,8 @@
     "@toast-ui/editor": "^2.5.1",
     "axios": "^0.21.1",
     "core-js": "^3.10.0",
+    "flatpickr": "^4.6.9",
+    "luxon": "^1.26.0",
     "metar-parser": "^1.0.0",
     "showdown": "^1.9.1",
     "vue": "^3.0.11",

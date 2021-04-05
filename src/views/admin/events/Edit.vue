@@ -11,21 +11,13 @@
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name" class="active">Name</label>
 					</div>
-					<div class="input-field col s12 m3">
+					<div class="input-field col s12 m6">
 						<input id="start_date" type="text" class="datepicker" ref="start_date" required>
-						<label class="active" for="start_date">Start Date (Zulu)</label>
+						<label for="start_date" class="active">Start Time (Zulu)</label>
 					</div>
-					<div class="input-field col s12 m3">
-						<input id="start_time" type="text" class="timepicker" ref="start_time" required>
-						<label class="active" for="start_time">Start Time (Zulu)</label>
-					</div>
-					<div class="input-field col s12 m3">
+					<div class="input-field col s12 m6">
 						<input id="end_date" type="text" class="datepicker" ref="end_date" required>
-						<label class="active" for="end_date">End Date (Zulu)</label>
-					</div>
-					<div class="input-field col s12 m3">
-						<input id="end_time" type="text" class="timepicker" ref="end_time" required>
-						<label class="active" for="end_time">End Time (Zulu)</label>
+						<label for="end_date" class="active">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
 						<div class="btn">
@@ -72,6 +64,9 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import {DateTime} from 'luxon';
 
 export default {
 	data() {
@@ -90,18 +85,29 @@ export default {
 			this.form = data.data;
 			this.form.positions = this.form.positions.map(p => p.pos);
 			this.$nextTick(() => {
-				const start = this.form.eventStart.split('T');
-				const end = this.form.eventEnd.split('T');
-				this.$refs.start_date.value = start[0];
-				this.$refs.start_time.value = start[1].slice(0, -8);
-				this.$refs.end_date.value = end[0];
-				this.$refs.end_time.value = end[1].slice(0, -8);
-				M.Datepicker.init(document.querySelectorAll('.datepicker'), {
-					format: 'yyyy-mm-dd',
-					showDaysInNextAndPreviousMonths: true,
+				// Okay, so working with timezones with JS is hard. This is really gross and I hate it, but it works so 🤷‍♀️
+				const startTime =  DateTime.fromISO(this.form.eventStart);
+				const endTime =  DateTime.fromISO(this.form.eventEnd);
+				flatpickr(this.$refs.start_date, {
+					enableTime: true,
+					time_24hr: true,
+					defaultDate: startTime.plus({minutes: -startTime.offset}).toISO(),
+					disableMobile: true,
+					minuteIncrement: 15,
+					dateFormat: 'Y-m-dTH:i:00.000\\Z',
+					altFormat: 'Y-m-d H:i',
+					altInput: true,
 				});
-				M.Timepicker.init(document.querySelectorAll('.timepicker'), {
-					twelveHour: false,
+
+				flatpickr(this.$refs.end_date, {
+					enableTime: true,
+					time_24hr: true,
+					defaultDate: endTime.plus({minutes: -endTime.offset}).toISO(),
+					disableMobile: true,
+					minuteIncrement: 15,
+					dateFormat: 'Y-m-dTH:i:00.000\\Z',
+					altFormat: 'Y-m-d H:i',
+					altInput: true,
 				});
 			});
 		},
@@ -109,8 +115,8 @@ export default {
 			try {
 				const formData = new FormData();
 				formData.append('name', this.form.name);
-				formData.append('startTime', `${this.$refs.start_date.value}T${this.$refs.start_time.value}:00.000Z`);
-				formData.append('endTime', `${this.$refs.end_date.value}T${this.$refs.end_time.value}:00.000Z`);
+				formData.append('startTime', `${this.$refs.start_date.value}`);
+				formData.append('endTime', `${this.$refs.end_date.value}`);
 				formData.append('description', this.form.description);
 				formData.append('positions', JSON.stringify(this.form.positions));
 				formData.append('banner', this.$refs.banner.files[0]);
