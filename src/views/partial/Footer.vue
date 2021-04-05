@@ -109,6 +109,13 @@ body .page-footer {
 	min-height: 20px!important;
 }
 
+#footer_text {
+	margin-right: 1em;
+	p + p {
+		margin-top: 0.4em;
+	}
+}
+
 .footer_notice {
 	a {
 		font-weight: 600;
@@ -180,6 +187,14 @@ body .page-footer {
 
 .trans_flag {
 	background: linear-gradient(180deg, #5BCEFA 20%, #F5A9B8 20%, 40%, #FFFFFF 40%, 60%, #F5A9B8 60%, 80%, #5BCEFA 80%);
+}
+
+
+@media screen and (max-width: 575px) {
+	body .page-footer .footer-copyright .wrapper {
+		flex-direction: column;
+		align-items: center;
+	}
 }
 
 </style>
