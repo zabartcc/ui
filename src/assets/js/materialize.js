@@ -1,4 +1,4 @@
-// eslint-disable
+/* eslint-disable */
 /*!
  * Materialize v1.0.0 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
@@ -3240,7 +3240,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
 				// Enable body scrolling only if there are no more modals open.
 				if (Modal._modalsOpen === 0) {
-					document.body.style.overflow = '';
+					document.body.style.overflow_y = 'scroll';
 				}
 
 				if (this.options.dismissible) {
