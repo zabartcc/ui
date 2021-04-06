@@ -19,15 +19,15 @@
 				</div>
 				<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback v-else>
 					<div class="input-field col s12 m6">
-						<input id="name" type="text" class="validate" v-model="feedback.name" required disabled>
+						<input id="name" type="text" class="validate" :value="feedback.name" disabled>
 						<label class="active" for="name">Your Name</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<input id="email" type="email" class="validate" v-model="feedback.email" required disabled>
+						<input id="email" type="email" class="validate" :value="feedback.email" disabled>
 						<label class="active" for="email">Your Email Address</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<input id="cid" type="text" minlength=6 maxlength=7 class="validate" v-model="feedback.cid" required disabled>
+						<input id="cid" type="text" minlength=6 maxlength=7 class="validate" :value="feedback.cid" disabled>
 						<label class="active" for="cid">Your CID</label>
 					</div>
 					<div class="input-field col s12 m6">
