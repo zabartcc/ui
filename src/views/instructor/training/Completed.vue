@@ -22,12 +22,12 @@
 				</thead>
 				<tbody class="session_list_row">
 					<tr v-for="session in sessions" :key="session._id">
-						<td>{{session.student.fname}} {{session.student.lname}}</td>
+						<td>{{ session.student ? `${session.student.fname} ${session.student.lname}` : session.studentCid}}</td>
 						<td>{{dtLong(session.startTime)}}</td>
 						<td>{{dtLong(session.endTime)}}</td>
-						<td>{{session.instructor.fname}} {{session.instructor.lname}}</td>
+						<td>{{session.instructor ? `${session.instructor.fname} ${session.instructor.lname}` : session.instructorCid}}</td>
 						<td class="options">
-							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Session Details" class="tooltipped modal-trigger">
+							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Session Details" class="tooltipped">
 								<i class="material-icons">search</i>
 							</router-link>
 						</td>
@@ -77,6 +77,14 @@ export default {
 
 			this.sessions = data.data.sessions;
 			this.sessionAmount = data.data.count;
+		}
+	},
+	watch: {
+		page: async function() {
+			await this.getSessions();
+			M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
+				margin: 0
+			});
 		}
 	}
 };
