@@ -46,6 +46,7 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import {mapState} from 'vuex';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -125,11 +126,9 @@ export default {
 	computed: {
 		filteredMilestones() {
 			const milestonesShowed = [];
-			const certs = this.$store.state.user.user.data.certCodes;
-			const rating = this.$store.state.user.user.data.rating;
-			if(this.milestones !== null && certs !== null && rating !== null) {
-
-				//if(rating !== 5) {
+			const certs = this.user.data.certCodes;
+			const rating = this.user.data.rating;
+			if(this.milestones !== null) {
 				this.milestones.filter((ms) => {
 					if(ms.certCode !== 'zab') {
 						if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50')) {
@@ -147,7 +146,10 @@ export default {
 				});
 			}
 			return milestonesShowed;
-		}
+		},
+		...mapState('user', [
+			'user'
+		])
 	}
 
 };
