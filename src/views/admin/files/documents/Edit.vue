@@ -92,6 +92,6 @@ export default {
 <style scoped lang="scss">
 .title {
 	color: #9E9E9E;
-	font-size: .9rem;
+	font-size: .75rem;
 }
 </style>

@@ -23,7 +23,7 @@
 						<label for="description">Description (optional)</label>
 					</div>
 					<div class="col s12">
-						<h6>Content</h6>
+						<span class="title">Content</span>
 						<div id="tui_editor"></div>
 					</div>
 					<div class="input-field col s12">
@@ -86,5 +86,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.title {
+	color: #9E9E9E;
+	font-size: .75rem;
+}
 </style>
