@@ -91,7 +91,7 @@ export default {
 				}
 			});
 			if(data.ret_det.code === 200) {
-				this.newsItems = data.data.slice(0,3);
+				this.newsItems = data.data;
 				this.newsAmount = data.amount;
 			}
 		},
