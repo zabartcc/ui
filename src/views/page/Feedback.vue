@@ -113,7 +113,7 @@ export default {
 	methods: {
 		async login() {
 			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 2}`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=1`;
 		},
 		async getControllers() {
 			const {data} = await zabApi.get('/feedback/controllers');
