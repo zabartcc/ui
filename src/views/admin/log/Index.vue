@@ -45,17 +45,20 @@ export default {
 		Pagination
 	},
 	async mounted() {
-		const {data: dossierData} = await zabApi.get('/controller/log', {
-			params: {
-				page: this.page, 
-				limit: this.limit
-			}
-		});
-		this.log = dossierData.data.dossier;
-		this.logAmount = dossierData.data.amount;
-		this.amountOfPages = Math.ceil(this.newsAmount / this.limit);
+		await this.getLog();
 	},
 	methods: {
+		async getLog() {
+			const {data: dossierData} = await zabApi.get('/controller/log', {
+				params: {
+					page: this.page, 
+					limit: this.limit
+				}
+			});
+			this.log = dossierData.data.dossier;
+			this.logAmount = dossierData.data.amount;
+			this.amountOfPages = Math.ceil(this.newsAmount / this.limit);
+		},
 		populateLog(log) {
 			let action = log.action;
 			if(action.match(/%b/)) {
@@ -68,6 +71,11 @@ export default {
 				action = action.replace(/\*(.+)\*/, `<strong>$1</strong>`);
 			}
 			return action;
+		}
+	},
+	watch: {
+		page: async function() {
+			await this.getLog();
 		}
 	}
 };

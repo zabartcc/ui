@@ -5,9 +5,9 @@
 		</div>
 		<div class="col s12 l6">
 			<ul class="pagination right">
-				<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : setPreviousPage()"><i class="material-icons">chevron_left</i></a></li>
-				<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="this.$parent.page = pageNo"><a>{{pageNo}}</a></li>
-				<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : setNextPage()"><i class="material-icons">chevron_right</i></a></li>
+				<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : $parent.page = $parent.page - 1"><i class="material-icons">chevron_left</i></a></li>
+				<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="$parent.page = pageNo"><a>{{pageNo}}</a></li>
+				<li :class="isLastPage ? 'disabled' : 'waves-effect'"><a @click="isLastPage ? '' : $parent.page = $parent.page + 1"><i class="material-icons">chevron_right</i></a></li>
 			</ul>
 		</div>
 	</div>
@@ -22,14 +22,6 @@ export default {
 		};
 	},
 	props: ['amount', 'page', 'limit', 'amountOfPages'],
-	methods: {
-		setNextPage() {
-			this.$parent.nextPage();
-		},
-		setPreviousPage() {
-			this.$parent.previousPage();
-		}
-	},
 	computed: {
 		isFirstPage() {
 			if(this.page == 1) return true;

@@ -91,7 +91,7 @@ export default {
 	data() {
 		return {
 			page: 1,
-			limit: 10,
+			limit: 30,
 			recentFeedback: null,
 			feedbackAmount: 1,
 			amountOfPages: 1

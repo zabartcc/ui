@@ -7,9 +7,8 @@
 			<div class="card-content">
 				<div class="row row_no_margin">
 					<div class="col s12 l10 card-title">{{news.title}}</div>
-					<div class="col s12 l2 side-title">{{dLong(news.createdAt)}}</div>
 					<div class="col s12 author">
-						By {{news.user.fname}} {{news.user.lname}}
+						By {{news.user.fname}} {{news.user.lname}} on {{dLong(news.createdAt)}}
 					</div>
 				</div>
 				<div class="news_content">
@@ -60,6 +59,6 @@ export default {
 
 .news_content {
 	margin-top: 1em;
-	white-space: pre;
+	white-space: pre-line;
 }
 </style>
