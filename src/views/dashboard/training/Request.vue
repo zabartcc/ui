@@ -125,9 +125,9 @@ export default {
 	computed: {
 		filteredMilestones() {
 			const milestonesShowed = [];
-			if(this.milestones !== null) {
-				const certs = this.$store.state.user.user.data.certCodes;
-				const rating = this.$store.state.user.user.data.rating;
+			const certs = this.$store.state.user.user.data.certCodes;
+			const rating = this.$store.state.user.user.data.rating;
+			if(this.milestones !== null && certs !== null && rating !== null) {
 
 				//if(rating !== 5) {
 				this.milestones.filter((ms) => {
