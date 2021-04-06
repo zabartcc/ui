@@ -212,6 +212,7 @@ export default {
 	transition: background-color .3s ease;
 	background: #eaeaea;
 	color: $gray_medium;
+	user-select: none;
 
 	&.active {
 		&.cert_senior {

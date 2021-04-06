@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Edit Controller {{controller !== null ? ` - ${controller.fname} ${controller.lname}` : ''}}</span>
+			<span class="card-title">Edit Controller {{controller !== null ? ` – ${controller.fname} ${controller.lname}` : ''}}</span>
 			<div class="loading_container" v-if="controller === null">
 				<Spinner />
 			</div>
@@ -74,15 +74,15 @@
 					<div class="input-field col s12">
 						<label for="roles" class="active">Roles</label>
 						<div id="roles_container">
-							<span id="atm" class="cert cert_senior" :class="{active: form.roles.atm}" @click="toggleRole">ATM</span>
-							<span id="datm" class="cert cert_senior" :class="{active: form.roles.datm}" @click="toggleRole">DATM</span>
-							<span id="ta" class="cert cert_senior" :class="{active: form.roles.ta}" @click="toggleRole">TA</span>
-							<span id="ec" class="cert cert_junior" :class="{active: form.roles.ec}" @click="toggleRole">EC</span>
-							<span id="fe" class="cert cert_junior" :class="{active: form.roles.fe}" @click="toggleRole">FE</span>
-							<span id="wm" class="cert cert_junior" :class="{active: form.roles.wm}" @click="toggleRole">WM</span>
-							<span id="ins" class="cert cert_training" :class="{active: form.roles.ins}"  @click="toggleRole">INS</span>
-							<span id="mtr" class="cert cert_training" :class="{active: form.roles.mtr}"  @click="toggleRole">MTR</span>
-							<span id="vis" class="cert cert_training" :class="{active: form.vis}"  @click="toggleVis">VIS</span>
+							<span id="atm" class="cert cert_senior" :class="{active: form.roles.atm}">ATM</span>
+							<span id="datm" class="cert cert_senior" :class="{active: form.roles.datm}">DATM</span>
+							<span id="ta" class="cert cert_senior" :class="{active: form.roles.ta}">TA</span>
+							<span id="ec" class="cert cert_junior" :class="{active: form.roles.ec}">EC</span>
+							<span id="fe" class="cert cert_junior" :class="{active: form.roles.fe}">FE</span>
+							<span id="wm" class="cert cert_junior" :class="{active: form.roles.wm}">WM</span>
+							<span id="ins" class="cert cert_training" :class="{active: form.roles.ins}">INS</span>
+							<span id="mtr" class="cert cert_training" :class="{active: form.roles.mtr}">MTR</span>
+							<span id="vis" class="cert cert_training" :class="{active: form.vis}">VIS</span>
 						</div>
 					</div>
 					<div class="input-field col s12">
@@ -157,14 +157,6 @@ export default {
 			e.target.classList.toggle('active');
 			this.form.certs[e.target.id] = e.target.classList.contains('active');
 		},
-		toggleRole: function(e) {
-			e.target.classList.toggle('active');
-			this.form.roles[e.target.id] = e.target.classList.contains('active');
-		},
-		toggleVis: function(e) {
-			e.target.classList.toggle('active');
-			this.form.vis = e.target.classList.contains('active');
-		},
 		async updateController() {
 			try {
 				const {data} = await zabApi.put(`/controller/${this.controller.cid}`, {
@@ -200,10 +192,10 @@ export default {
 	padding: 0.25rem 0.4rem;
 	font-size: 0.85rem;
 	margin: 2px;
-	cursor: pointer;
 	transition: background-color .3s ease;
 	background: #eaeaea;
 	color: $gray_medium;
+	user-select: none;
 
 	&.active {
 		&.cert_senior {
