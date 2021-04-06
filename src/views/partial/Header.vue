@@ -1,6 +1,6 @@
 <template>
 	<header>
-		<div id="header_hero" class="hero2">
+		<div id="header_hero" :class="`hero${number == 69 ? '_aprilfools' : '6'}`">
 			<div class="wrapper">
 				<div>
 					<router-link to="/"><h1>ALBUQUERQUE<span>ARTCC</span></h1></router-link>
@@ -125,6 +125,7 @@ import Notifications from './Notifications.vue';
 export default {
 	data() {
 		return {
+			number: 0,
 			unread: false
 		};
 	},
@@ -157,6 +158,7 @@ export default {
 		])
 	},
 	async mounted() {
+		this.number = Math.floor((Math.random() * (200)));
 		M.Dropdown.init(document.querySelectorAll('.dropdown-right'), {
 			alignment: 'right',
 			coverTrigger: false,
@@ -218,6 +220,14 @@ export default {
 
 	&.hero5 {
 		background-image: url('~@/assets/images/hero/cactus.jpg');
+	}
+
+	&.hero6 {
+		background-image: url('~@/assets/images/hero/sandias.jpg');
+	}
+
+	&.hero_aprilfools {
+		background-image: url('~@/assets/images/hero/bb.jpg');
 	}
 
 	.wrapper {

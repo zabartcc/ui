@@ -37,7 +37,7 @@
 							<div class="col s12 l6">
 								<div class="card card_positions z-depth-2">
 									<p class="positions_title">Event Positions</p>
-									<p class="no_pos" v-if="form.positions.length == 0">No positions added yet.</p>
+									<p class="no_pos" v-if="form.positions && form.positions.length === 0">No positions added yet.</p>
 									<ul v-else>
 										<li v-for="position in form.positions" class="collection-item" :key="position">
 											<div class="pos_header">{{position}} <span class="delete_pos" @click="deletePos(position)">Delete</span></div>
@@ -83,7 +83,9 @@ export default {
 		async getEvent() {
 			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
 			this.form = data.data;
-			this.form.positions = this.form.positions.map(p => p.pos);
+			if(this.form.positions && this.form.positions.length != 0) { this.form.positions = this.form.positions.map(p => p.pos); }
+			else { this.form.positions = []; }
+
 			this.$nextTick(() => {
 				// Okay, so working with timezones with JS is hard. This is really gross and I hate it, but it works so 🤷‍♀️
 				const startTime =  DateTime.fromISO(this.form.eventStart);
@@ -137,7 +139,7 @@ export default {
 			}
 		},
 		async addPosition(e) {
-			if(!this.form.positions.includes(this.$refs.pos.value.toUpperCase())) {
+			if(this.form.positions && (!this.form.positions.includes(this.$refs.pos.value.toUpperCase()) || this.form.positions.length === 0)) {
 				this.form.positions.push(this.$refs.pos.value.toUpperCase());
 			} else {
 				this.toastError('Position already exists.');
