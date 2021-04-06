@@ -8,11 +8,11 @@
 			<div class="session_wrapper" v-else>
 				<div class="row">
 					<div class="input-field col s12 m6">
-						<input type="text" :value="session.student.fname + ' ' + session.student.lname" disabled id="student" />
+						<input type="text" :value="session.student ? `${session.student.fname} ${session.student.lname}` : session.studentCid" disabled id="student" />
 						<label for="student" class="active">Student</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<input type="text" :value="session.instructor.fname + ' ' + session.instructor.lname" disabled id="ins" />
+						<input type="text" :value="session.instructor ? `${session.instructor.fname} ${session.instructor.lname}` : session.instructorCid" disabled id="ins" />
 						<label for="ins" class="active">Instructor</label>
 					</div>
 					<div class="input-field col s12 m6">
