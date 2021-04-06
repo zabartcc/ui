@@ -91,7 +91,7 @@ export default {
 				}
 			});
 			if(data.ret_det.code === 200) {
-				this.newsItems = data.data.slice(0,3);
+				this.newsItems = data.data;
 				this.newsAmount = data.amount;
 			}
 		},
@@ -110,7 +110,7 @@ export default {
 	},
 	watch: {
 		page: async function() {
-			await this.getFeedback();
+			await this.getNews();
 			M.Modal.init(document.querySelectorAll('.modal'), {
 				preventScrolling: false
 			});
