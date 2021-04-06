@@ -55,7 +55,7 @@
 										<label for="submission" class="active">Controller</label>
 									</div>
 									<div class="input-field col s6">
-										<p id="position">{{feedback.position}}</p>
+										<p id="position">{{feedback.position || '—'}}</p>
 										<label for="position" class="active">Position</label>
 									</div>
 									<div class="input-field col s6">
@@ -63,7 +63,7 @@
 										<label for="rating" class="active">Rating</label>
 									</div>
 									<div class="input-field col s12">
-										<pre id="comments">{{feedback.comments}}</pre>
+										<pre id="comments">{{feedback.comments || '—'}}</pre>
 										<label for="comments" class="active">Comments</label>
 									</div>
 								</div>
@@ -91,7 +91,7 @@ export default {
 	data() {
 		return {
 			page: 1,
-			limit: 30,
+			limit: 20,
 			recentFeedback: null,
 			feedbackAmount: 1,
 			amountOfPages: 1
