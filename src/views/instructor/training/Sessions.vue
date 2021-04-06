@@ -124,6 +124,10 @@ export default {
 	margin-bottom: .5em;
 }
 
+.session_list {
+	min-width: 500px;
+}
+
 .modal_session {
 	min-width: 300px;
 	width: 35%;

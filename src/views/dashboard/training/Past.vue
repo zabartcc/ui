@@ -94,4 +94,8 @@ table {
 .session_wrapper {
 	overflow: auto;
 }
+
+.session_list {
+	min-width: 600px;
+}
 </style>

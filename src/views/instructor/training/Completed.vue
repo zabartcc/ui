@@ -89,6 +89,10 @@ export default {
 	padding: 0 1em 1em 1em;
 }
 
+.session_list {
+	min-width: 500px;
+}
+
 .session_wrapper {
 	overflow: auto;
 }

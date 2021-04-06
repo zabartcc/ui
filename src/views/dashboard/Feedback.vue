@@ -20,7 +20,7 @@
 				<tbody class="feedback_list_row" v-if="feedback">
 					<tr v-for="(feedback, i) in feedback" :key="feedback._id">
 						<td>{{dtLong(feedback.createdAt)}}</td>
-						<td id="position">{{feedback.position}}</td>
+						<td id="position">{{feedback.position || '—'}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td class="options">
 							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
@@ -62,9 +62,9 @@
 					</tr>
 				</tbody>
 			</table>
-			<div v-if="feedback && feedbackAmount !== 0">
-				<Pagination :amount="feedbackAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
-			</div>
+		</div>
+		<div v-if="feedback && feedbackAmount !== 0">
+			<Pagination :amount="feedbackAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
 		</div>
 	</div>
 </template>
@@ -145,9 +145,13 @@ export default {
 	width: 35%;
 }
 
+.feedback_list {
+	min-width: 400px;
+}
+
 .feedback_wrapper {
 	width: 100%;
-	overflow: hidden;
+	overflow: auto;
 }
 
 .feedback {

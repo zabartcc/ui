@@ -23,10 +23,10 @@
 		<div class="footer-copyright">
 			<div class="wrapper">
 				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
-				<div>•</div>
+				<div class="hide-on-small-only">•</div>
 				<!-- Made with ♥ and (╯°□°）╯︵ ┻━┻ by Alexandra Robison and Daan Janssen. -->
 				<div><span ref="zulu_time">{{footerTime}}</span></div>
-				<div>•</div>
+				<div class="hide-on-small-only">•</div>
 				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank">GitLab</a></p>
 			</div>
 		</div>
