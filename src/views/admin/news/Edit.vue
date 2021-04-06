@@ -12,8 +12,8 @@
 						<label for="title">Title</label>
 					</div>
 					<div class="input-field col s12">
-						<textarea id="content" class="materialize-textarea" v-model="news.content" required></textarea>
-						<label for="content">Content</label>
+						<span class="title">Content</span>
+						<div id="tui_editor"></div>
 					</div>
 					<div class="input-field col s12">
 						<input type="submit" class="btn right" value="Update" />
@@ -25,6 +25,9 @@
 </template>
 
 <script>
+import Editor from '@toast-ui/editor';
+import 'codemirror/lib/codemirror.css'; // Editor's Dependency Style
+import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
 import {zabApi} from '@/helpers/axios.js';
 
 export default {
@@ -37,8 +40,19 @@ export default {
 	async mounted() {
 		await this.getArticle();
 		this.setTitle(`Edit ${this.news.title}`);
-		M.updateTextFields();
-		M.textareaAutoResize(document.querySelector('#content'));
+		this.$nextTick(() => {
+			M.FormSelect.init(document.querySelectorAll('select'), {});
+			M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+			M.updateTextFields();
+			this.editor = new Editor({
+				el: document.querySelector('#tui_editor'),
+				height: '500px',
+				initialEditType: 'markdown',
+				previewStyle: 'tab',
+				usageStatistics: false,
+				initialValue: this.news.content
+			});
+		});
 	},
 	methods: {
 		async getArticle() {
@@ -46,6 +60,7 @@ export default {
 			this.news = data.data;
 		},
 		async updateNews() {
+			this.news.content = this.editor.getMarkdown();
 			const {data} = await zabApi.put(`/news/${this.$route.params.slug}`, this.news);
 
 			if(data.ret_det.code === 200) {
@@ -60,6 +75,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped lang="scss">
+.title {
+	color: #9E9E9E;
+	font-size: .75rem;
+}
 </style>

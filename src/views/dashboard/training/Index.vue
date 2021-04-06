@@ -77,6 +77,10 @@ table {
 	overflow: auto;
 }
 
+.session_list {
+	min-width: 500px;
+}
+
 .session_list_row {
 	tr {
 		transition: background-color .3s ease;

@@ -17,15 +17,15 @@
 				Downloads
 				<div class="secondary-content"><i class="material-icons">insert_drive_file</i></div>
 			</router-link>
-			<router-link to="/admin/events" class="collection-item">
+			<router-link to="/admin/events" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta', 'ec'])">
 				Events
 				<div class="secondary-content"><i class="material-icons">event</i></div>
 			</router-link>
-			<router-link to="/admin/feedback" class="collection-item">
+			<router-link to="/admin/feedback" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta'])">
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
 			</router-link>
-			<router-link to="/admin/absence" class="collection-item">
+			<router-link to="/admin/absence" class="collection-item" v-if="requiresAuth(['atm', 'datm'])">
 				Leave of Absence
 				<div class="secondary-content"><i class="material-icons">access_time</i></div>
 			</router-link>
@@ -33,7 +33,7 @@
 				News
 				<div class="secondary-content"><i class="material-icons">rss_feed</i></div>
 			</router-link>
-			<router-link to="/admin/visit/applications" class="collection-item">
+			<router-link to="/admin/visit/applications" class="collection-item" v-if="requiresAuth(['atm', 'datm'])">
 				Visitor Applications
 				<div class="secondary-content"><i class="material-icons">group_add</i></div>
 			</router-link>
@@ -46,8 +46,24 @@
 </template>
 
 <script>
-export default {
+import {mapState} from 'vuex';
 
+export default {
+	methods: {
+		requiresAuth(roles) {
+			const havePermissions = roles.some(r => this.user.data.roleCodes.includes(r));
+			if(havePermissions) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	},
+	computed: {
+		...mapState('user', [
+			'user'
+		])
+	}
 };
 </script>
 

@@ -52,7 +52,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="month in stats.months" :key=month>
+						<tr v-for="month in stats.months" :key=month class="hover">
 							<td>{{month}}</td>
 							<td>{{sec2hm(stats[month].del)}}</td>
 							<td>{{sec2hm(stats[month].gnd)}}</td>
@@ -61,7 +61,7 @@
 							<td>{{sec2hm(stats[month].ctr)}}</td>
 							<td>{{sec2hm(totalTime(stats[month])) || '0:00'}}</td>
 						</tr>
-						<tr>
+						<tr class="hover">
 							<td>>1 Year</td>
 							<td>{{sec2hm(stats.gtyear.del)}}</td>
 							<td>{{sec2hm(stats.gtyear.gnd)}}</td>
@@ -248,5 +248,13 @@ export default {
 	padding: 0.2rem 0.4rem;
 	font-size: 1rem;
 	margin-left: .25em;
+}
+
+.hover {
+	transition: .3s ease;
+
+	&:hover {
+		background: #eaeaea;
+	}
 }
 </style>

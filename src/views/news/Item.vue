@@ -11,9 +11,7 @@
 						By {{news.user.fname}} {{news.user.lname}} on {{dLong(news.createdAt)}}
 					</div>
 				</div>
-				<div class="news_content">
-					{{news.content}}
-				</div>
+				<div class="news_content" v-html="news.content"></div>
 			</div>
 		</div>
 	</div>
@@ -21,6 +19,7 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import showdown from 'showdown';
 
 export default {
 	data() {
@@ -36,6 +35,10 @@ export default {
 		async getArticle() {
 			const {data} = await zabApi.get(`/news/${this.$route.params.slug}`);
 			this.news = data.data;
+			const converter = new showdown.Converter();
+			converter.setOption('tables', true);
+			converter.setOption('strikethrough', true);
+			this.news.content = converter.makeHtml(this.news.content);
 		},
 	}
 

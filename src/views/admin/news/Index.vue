@@ -110,7 +110,7 @@ export default {
 	},
 	watch: {
 		page: async function() {
-			await this.getFeedback();
+			await this.getNews();
 			M.Modal.init(document.querySelectorAll('.modal'), {
 				preventScrolling: false
 			});
