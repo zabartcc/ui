@@ -25,7 +25,7 @@
 						<div class="input-field col s12">
 							<select v-model="request.milestone">
 								<option value="" disabled selected>Select a milestone</option>
-								<option v-for="milestone in milestones" :key="milestone._id" :value="milestone._id">{{milestone.code + ' - ' + milestone.name}}</option>
+								<option v-for="milestone in filteredMilestones" :key="milestone._id" :value="milestone._id">{{milestone.code + ' - ' + milestone.name}}</option>
 								
 							</select>
 							<label>Milestone <span class="red-text">*</span></label>
@@ -120,6 +120,33 @@ export default {
 		async getTrainingMilestones() {
 			const {data} = await zabApi.get(`/training/milestones`);
 			this.milestones = data.data.milestones;
+		}
+	},
+	computed: {
+		filteredMilestones() {
+			const certs = this.$store.state.user.user.data.certCodes;
+			const rating = this.$store.state.user.user.data.rating;
+
+			const milestonesShowed = [];
+
+			//if(rating !== 5) {
+			this.milestones.filter((ms) => {
+				if(ms.certCode !== 'zab') {
+					if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50')) {
+						milestonesShowed.push(ms);
+					} else if (ms.rating <= rating && (!certs.includes(ms.certCode))) {
+						milestonesShowed.push(ms);
+					} else if (!certs.includes(ms.certCode) && certs.includes(ms.certCode.replace('p50', ''))) {
+						milestonesShowed.push(ms);
+					}
+				} else {
+					if(certs.includes('p50app') && !certs.includes('zab')) {
+						milestonesShowed.push(ms);
+					}
+				}
+			});
+
+			return milestonesShowed;
 		}
 	}
 
