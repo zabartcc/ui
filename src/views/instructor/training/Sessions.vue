@@ -30,7 +30,7 @@
 							<a :href="`#modal_session_${i}`" data-position="top" data-tooltip="View Session Details" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
 							</a>
-							<router-link :to="`/ins/training/sessions/edit/${session._id}`" data-position="top" data-tooltip="Enter Notes" class="tooltipped">
+							<router-link :to="`/ins/training/session/edit/${session._id}`" data-position="top" data-tooltip="Enter Notes" class="tooltipped">
 								<i class="material-icons">edit</i>
 							</router-link>
 						</td>
@@ -100,6 +100,7 @@ export default {
 			try {
 				const {data} = await zabApi.get(`/training/session/open`);
 				this.sessions = data.data;
+				console.log(this.sessions);
 			} catch(e) {
 				console.log(e);
 			}

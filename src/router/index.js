@@ -126,11 +126,15 @@ const routes = [
 				component: () => import('../views/instructor/training/Sessions.vue')
 			},
 			{
-				path: 'training/sessions/edit/:id',
+				path: 'training/sessions/:cid',
+				component: () => import('../views/instructor/training/UserSessions.vue')
+			},
+			{
+				path: 'training/session/edit/:id',
 				component: () => import('../views/instructor/training/EditSession.vue')
 			},
 			{
-				path: 'training/sessions/:id',
+				path: 'training/session/:id',
 				component: () => import('../views/instructor/training/ViewSession.vue')
 			}
 		]

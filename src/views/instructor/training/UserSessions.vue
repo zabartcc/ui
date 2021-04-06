@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="card-title">Completed Training Sessions</div>
+			<div class="card-title">Training Sessions {{controller !== '' ? ` – ${controller}` : ''}}</div>
 		</div>
 		<div v-if="sessions === null" class="loading_container">
 			<Spinner />
@@ -13,18 +13,18 @@
 			<table class="session_list striped">
 				<thead class="session_list_head">
 					<tr>
-						<th>Student</th>
 						<th>Start Time</th>
 						<th>End Time</th>
+						<th>Milestone</th>
 						<th>Instructor</th>
 						<th class="options">Options</th>
 					</tr>
 				</thead>
 				<tbody class="session_list_row">
 					<tr v-for="session in sessions" :key="session._id">
-						<td>{{session.student.fname}} {{session.student.lname}}</td>
 						<td>{{dtLong(session.startTime)}}</td>
 						<td>{{dtLong(session.endTime)}}</td>
+						<td>{{session.milestone.name}}</td>
 						<td>{{session.instructor.fname}} {{session.instructor.lname}}</td>
 						<td class="options">
 							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Session Details" class="tooltipped modal-trigger">
@@ -53,7 +53,8 @@ export default {
 			sessionAmount: 0,
 			page: 1,
 			limit: 20,
-			amountOfPages: 0
+			amountOfPages: 0,
+			controller: ''
 		};
 	},
 	components: {
@@ -68,7 +69,7 @@ export default {
 	},
 	methods: {
 		async getSessions() {
-			const {data} = await zabApi.get('/training/sessions', {
+			const {data} = await zabApi.get(`/training/sessions/${this.$route.params.cid}`, {
 				params: {
 					page: this.page,
 					limit: this.limit
@@ -77,6 +78,7 @@ export default {
 
 			this.sessions = data.data.sessions;
 			this.sessionAmount = data.data.count;
+			this.controller = data.data.controller.fname + ' ' + data.data.controller.lname;
 		}
 	}
 };
@@ -87,10 +89,6 @@ export default {
 	font-style: italic;
 	margin-top: -1em;
 	padding: 0 1em 1em 1em;
-}
-
-.session_list {
-	min-width: 500px;
 }
 
 .session_wrapper {
