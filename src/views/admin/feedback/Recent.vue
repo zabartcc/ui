@@ -21,7 +21,7 @@
 				<tbody class="feedback_list_row">
 					<tr v-for="(feedback, i) in recentFeedback" :key="feedback._id">
 						<td>{{dtLong(feedback.createdAt)}}</td>
-						<td>{{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
+						<td>{{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td>{{feedback.deleted ? 'Rejected' : 'Approved'}}</td>
 						<td class="options">
@@ -31,7 +31,7 @@
 						</td>
 						<div :id="`modal_feedback_${i}`" class="modal modal_feedback">
 							<div class="modal-content">
-								<div class="modal_title">Feedback for {{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
+								<div class="modal_title">Feedback for {{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s6">
@@ -51,7 +51,7 @@
 										<label for="submission" class="active">Submission Date</label>
 									</div>
 									<div class="input-field col s6">
-										<p id="submission">{{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
+										<p id="submission">{{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
 										<label for="submission" class="active">Controller</label>
 									</div>
 									<div class="input-field col s6">

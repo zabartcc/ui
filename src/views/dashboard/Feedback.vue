@@ -49,7 +49,7 @@
 											<label for="rating" class="active">Rating</label>
 										</div>
 										<div class="input-field col s12">
-											<div id="comments">{{feedback.comments || '—'}}</div>
+											<pre id="comments">{{feedback.comments || '—'}}</pre>
 											<label for="comments" class="active">Comments</label>
 										</div>
 									</div>
@@ -157,6 +157,13 @@ export default {
 .feedback {
 	#comments {
 		font-family: inherit;
+		white-space: pre-wrap;
+		overflow: hidden;
+		width: 100%;
+	}
+
+	#position {
+		text-transform: capitalize;
 	}
 	.row {
 		.input-field p, .input-field pre {
@@ -164,10 +171,6 @@ export default {
 			line-break: anywhere;
 		}
 	}
-}
-
-#position {
-	text-transform: capitalize;
 }
 
 .feedback_content {
