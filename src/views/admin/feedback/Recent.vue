@@ -21,7 +21,7 @@
 				<tbody class="feedback_list_row">
 					<tr v-for="(feedback, i) in recentFeedback" :key="feedback._id">
 						<td>{{dtLong(feedback.createdAt)}}</td>
-						<td>{{feedback.controller === null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
+						<td>{{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td>{{feedback.deleted ? 'Rejected' : 'Approved'}}</td>
 						<td class="options">
