@@ -41,7 +41,7 @@
 											<label for="submission" class="active">Submission Date</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="position">{{feedback.position}}</p>
+											<p id="position">{{feedback.position || '—'}}</p>
 											<label for="position" class="active">Position</label>
 										</div>
 										<div class="input-field col s6">
@@ -49,7 +49,7 @@
 											<label for="rating" class="active">Rating</label>
 										</div>
 										<div class="input-field col s12">
-											<div id="comments">{{feedback.comments}}</div>
+											<div id="comments">{{feedback.comments || '—'}}</div>
 											<label for="comments" class="active">Comments</label>
 										</div>
 									</div>
