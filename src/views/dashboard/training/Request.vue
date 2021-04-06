@@ -15,11 +15,11 @@
 				<div class="col s12 l6 pull-l6">
 					<form class="row row_no_margin" @submit.prevent=submitRequest>
 						<div class="input-field col s12">
-							<input id="start_date" type="text" class="datepicker" ref="start_date" required>
+							<input id="start_date" type="text" ref="start_date" required>
 							<label for="start_date">Start Time (Zulu)<span class="red-text">*</span></label>
 						</div>
 						<div class="input-field col s12">
-							<input id="end_date" type="text" class="datepicker" ref="end_date" required>
+							<input id="end_date" type="text" ref="end_date" required>
 							<label for="end_date">End Time (Zulu)<span class="red-text">*</span></label>
 						</div>
 						<div class="input-field col s12">
@@ -124,28 +124,28 @@ export default {
 	},
 	computed: {
 		filteredMilestones() {
-			const certs = this.$store.state.user.user.data.certCodes;
-			const rating = this.$store.state.user.user.data.rating;
-
 			const milestonesShowed = [];
+			if(this.milestones !== null) {
+				const certs = this.$store.state.user.user.data.certCodes;
+				const rating = this.$store.state.user.user.data.rating;
 
-			//if(rating !== 5) {
-			this.milestones.filter((ms) => {
-				if(ms.certCode !== 'zab') {
-					if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50')) {
-						milestonesShowed.push(ms);
-					} else if (ms.rating <= rating && (!certs.includes(ms.certCode))) {
-						milestonesShowed.push(ms);
-					} else if (!certs.includes(ms.certCode) && certs.includes(ms.certCode.replace('p50', ''))) {
-						milestonesShowed.push(ms);
+				//if(rating !== 5) {
+				this.milestones.filter((ms) => {
+					if(ms.certCode !== 'zab') {
+						if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50')) {
+							milestonesShowed.push(ms);
+						} else if (ms.rating <= rating && (!certs.includes(ms.certCode))) {
+							milestonesShowed.push(ms);
+						} else if (!certs.includes(ms.certCode) && certs.includes(ms.certCode.replace('p50', ''))) {
+							milestonesShowed.push(ms);
+						}
+					} else {
+						if(certs.includes('p50app') && !certs.includes('zab')) {
+							milestonesShowed.push(ms);
+						}
 					}
-				} else {
-					if(certs.includes('p50app') && !certs.includes('zab')) {
-						milestonesShowed.push(ms);
-					}
-				}
-			});
-
+				});
+			}
 			return milestonesShowed;
 		}
 	}

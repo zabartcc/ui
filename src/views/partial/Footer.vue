@@ -111,6 +111,7 @@ body .page-footer {
 
 #footer_text {
 	margin-right: 1em;
+	line-height: 1.1em;
 	p + p {
 		margin-top: 0.4em;
 	}
