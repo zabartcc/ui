@@ -25,7 +25,7 @@
 						<div class="input-field col s12">
 							<select v-model="request.milestone">
 								<option value="" disabled selected>Select a milestone</option>
-								<option v-for="milestone in filteredMilestones" :key="milestone._id" :value="milestone._id">{{milestone.code + ' - ' + milestone.name}}</option>
+								<option v-for="milestone in filteredMilestones" :key="milestone._id" :value="milestone.code">{{milestone.code + ' - ' + milestone.name}}</option>
 								
 							</select>
 							<label>Milestone <span class="red-text">*</span></label>
