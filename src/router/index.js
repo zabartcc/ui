@@ -80,7 +80,7 @@ const routes = [
 			{
 				path: '/briefing',
 				component: () => import('../views/page/PilotBrief.vue')
-			}
+			},
 		]
 	},
 	{
@@ -258,7 +258,15 @@ const routes = [
 	{
 		path: '/ids',
 		component: () => import('../views/page/Ids.vue')
-	}
+	},
+	{
+		path: '/:catchAll(.*)', component: Master, children: [
+			{
+				path: '/:catchAll(.*)',
+				component: () => import('../views/page/404.vue')
+			}
+		]
+	},
 ];
 
 const router = createRouter({
