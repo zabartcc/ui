@@ -142,12 +142,12 @@ export default {
 		]),
 		async processLogin() {
 			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=1`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 1}`;
 		},
 		async processLogout() {
 			await this.logout();
 			this.toastInfo('Successfully logged out');
-			if(this.$route.meta.isAdmin) {
+			if(this.$route.meta.isAdmin || this.$route.meta.isAdmin || this.$route.meta.loggedIn) {
 				this.$router.push('/');
 			}
 		}

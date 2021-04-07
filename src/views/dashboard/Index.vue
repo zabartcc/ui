@@ -2,19 +2,24 @@
 	<div class="card home_intro">
 		<div class="card-content">
 			<span class="card-title">Controller Dashboard</span>
-			<div class="ids">
-				<span class="title">IDS Token</span>
-				<div class="hidden" id="token_wrap" @mouseleave="hideToken">
-					<code>{{token}}</code>
-					<span class="generate right" @click=generateToken><i class="material-icons">refresh</i></span>
-				</div>
+			<span class="section_title">IDS Token</span>
+			<div class="hidden" id="token_wrap" @mouseleave="hideToken">
+				<code>{{token}}</code>
+				<span class="generate right" @click=generateToken><i class="material-icons">refresh</i></span>
 				<div id="click_to_see" @click="showToken">Click to view</div>
+			</div>
+			<span class="section_title">Discord Status</span>
+			<h6 class="discord_title" :class="`${discordConnected ? 'connect' : ''}`">{{discordConnected ? 'Connected!' : 'Not Connected.'}}</h6>
+			<div class="discord_connect">
+				<img :src="require(`@/assets/images/discord_${discordConnected ? 'color' : 'black'}.svg`)" alt="" draggable="false">
+				<button v-if="!discordConnected" @click.prevent=linkDiscord class="btn">Link</button>
+				<button v-else @click.prevent=unlinkDiscord class="btn">Unlink</button>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 import {zabApi} from '@/helpers/axios.js';
 export default {
 	name: 'UserDash',
@@ -22,15 +27,17 @@ export default {
 	data() {
 		return {
 			token: '',
+			discordConnected: false
 		};
 	},
 	computed: {
 		...mapState('user', [
 			'user'
-		])
+		]),
 	},
 	async mounted() {
 		this.token = this.user.data.idsToken || 'None Set';
+		await this.getDiscordStatus();
 	},
 	methods: {
 		async generateToken() {
@@ -42,6 +49,10 @@ export default {
 				this.toastError(tokenRet.ret_det.message);
 			}
 		},
+		async getDiscordStatus() {
+			const { data: discordData } = await zabApi.get('/user/discord');
+			this.discordConnected = discordData.data;
+		},
 		showToken() {
 			document.getElementById('token_wrap').classList.remove('hidden');
 			document.getElementById('click_to_see').classList.add('hidden');
@@ -49,30 +60,42 @@ export default {
 		hideToken() {
 			document.getElementById('token_wrap').classList.add('hidden');
 			document.getElementById('click_to_see').classList.remove('hidden');
-		}
+		},
+		linkDiscord() {
+			this.$router.push('/login/discord');
+		},
+		async unlinkDiscord() {
+			const { data: unlinkData } = await zabApi.delete('/user/discord');
+			if(unlinkData.ret_det.code === 200) {
+				this.toastSuccess('Discord unlinked.');
+				await this.getDiscordStatus();
+			} else {
+				this.toastError(unlinkData.ret_det.message);
+			}
+		},
+		...mapActions('user', [
+			'getUser'
+		])
 	}
 };
 </script>
 
 <style scoped lang="scss">
-
-.ids {
+#token_wrap {
+	background: $gray_light;
+	padding: 0.25em 0.5em 0.35em 0.5em;
+	border-radius: 2px;
+	height: 32px;
 	width: 100%;
 	max-width: 400px;
+	position: relative;
 
-	#token_wrap {
-		background: $gray_light;
-		padding: 0.25em 0.5em 0.35em 0.5em;
-		border-radius: 2px;
-		height: 32px;
+	&.hidden {
+		code, .generate {
+			display: none;
 
-		&.hidden {
-			code, .generate {
+			i {
 				display: none;
-
-				i {
-					display: none;
-				}
 			}
 		}
 	}
@@ -99,23 +122,51 @@ export default {
 			cursor: pointer;
 		}
 	}
+}
 
-	.title {
-		user-select: none;
-		color: #9E9E9E;
-		font-size: .9rem;
+.section_title {
+	user-select: none;
+	color: #9E9E9E;
+	font-size: .9rem;
+	display: inline-block;
+
+	&~.section_title {
+		margin-top: 2em;
 	}
+}
 
-	#click_to_see {
-		margin-top: -1.85em;
-		padding-bottom: .40em;
-		text-align: center;
-		cursor: pointer;
-		user-select: none;
+#click_to_see {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	cursor: pointer;
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-		&.hidden {
-			display: none;
-		}
+	&.hidden {
+		display: none;
+	}
+}
+
+.discord_title {
+	font-size: 0.85rem;
+
+	&.connect {
+		color: $accent-color;
+	}
+}
+
+.discord_connect {
+	display: flex;
+	align-items: center;
+	img {
+		max-width: 75px;
+		margin-right: 1em;
 	}
 }
 </style>
