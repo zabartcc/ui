@@ -8,14 +8,20 @@
 				<span class="generate right" @click=generateToken><i class="material-icons">refresh</i></span>
 				<div id="click_to_see" @click="showToken">Click to view</div>
 			</div>
-			<span class="section_title">Discord Status</span>
-			<h6 class="discord_title" :class="`${discordConnected ? 'connect' : ''}`">{{discordConnected ? 'Connected!' : 'Not Connected.'}}</h6>
+			<span class="section_title">External Integrations</span>
 			<div class="discord_connect">
-				<img :src="require(`@/assets/images/discord_${discordConnected ? 'color' : 'black'}.svg`)" alt="" draggable="false">
-				<button v-if="!discordConnected" @click.prevent=linkDiscord class="btn">Link</button>
-				<button v-else @click.prevent=unlinkDiscord class="btn">Unlink</button>
+				<button v-if="!discordConnected" class="btn" @click.prevent=linkDiscord>
+					<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
+					Link Discord
+				</button>
+				<button v-else class="btn grey lighten-1" @click.prevent=unlinkDiscord>
+					<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
+					Unlink Discord
+				</button>
+				<button class="btn-flat">
+					<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
+				</button>
 			</div>
-			<a href="https://vats.im/zabdiscord" target="blank" class="btn">Join the Discord!</a>
 		</div>
 	</div>
 </template>
@@ -163,11 +169,15 @@ export default {
 }
 
 .discord_connect {
-	display: flex;
-	align-items: center;
-	img {
-		max-width: 75px;
-		margin-right: 1em;
+	.btn {
+		padding-left: 2.5em;
+	}
+
+	.discord_logo {
+		position: absolute;
+		left: 0;
+		margin-left: 20px;
+		margin-top: 7px;
 	}
 }
 </style>
