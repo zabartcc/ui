@@ -53,10 +53,10 @@ export default {
 				}
 			} else {
 				let array = [];
-				let j = -1; // array starts at zero
+				let j = 0; // array starts at zero
 				for(let i = (this.page - 2); i < (this.page + 3); i++) {
-					j++;
 					array[j] = i;
+					j++;
 				}
 				return array;
 			}
@@ -70,5 +70,9 @@ export default {
 	padding-left: 1.5em;
 	font-size: 0.9rem;
 	margin-top: 1.5em;
+}
+
+.material-icons {
+	user-select: none;
 }
 </style>

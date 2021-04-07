@@ -57,7 +57,7 @@ export default {
 			});
 			this.log = dossierData.data.dossier;
 			this.logAmount = dossierData.data.amount;
-			this.amountOfPages = Math.ceil(this.newsAmount / this.limit);
+			this.amountOfPages = Math.ceil(this.logAmount / this.limit);
 		},
 		populateLog(log) {
 			let action = log.action;
