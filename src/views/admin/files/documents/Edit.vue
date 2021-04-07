@@ -37,6 +37,7 @@
 
 <script>
 import Editor from '@toast-ui/editor';
+import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell'; // Merging cells for SOPs
 import 'codemirror/lib/codemirror.css'; // Editor's Dependency Style
 import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
 import {zabApi} from '@/helpers/axios.js';
@@ -68,7 +69,8 @@ export default {
 				initialEditType: 'markdown',
 				previewStyle: 'tab',
 				usageStatistics: false,
-				initialValue: this.form.content
+				initialValue: this.form.content,
+				plugins: [tableMergedCell]
 			});
 		});
 	},

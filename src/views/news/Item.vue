@@ -11,7 +11,7 @@
 						By {{news.user.fname}} {{news.user.lname}} on {{dLong(news.createdAt)}}
 					</div>
 				</div>
-				<div class="news_content" v-html="news.content"></div>
+				<div class="news_content"></div>
 			</div>
 		</div>
 	</div>
@@ -19,7 +19,8 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import showdown from 'showdown';
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 export default {
 	data() {
@@ -30,15 +31,20 @@ export default {
 	async mounted() {
 		await this.getArticle();
 		this.setTitle(this.news.title);
+
+		this.$nextTick(() => {
+			this.viewer = new Viewer({
+				el: document.getElementById('news_content'),
+				height: '600px',
+				initialValue: this.news.content
+			});
+
+		});
 	},
 	methods: {
 		async getArticle() {
 			const {data} = await zabApi.get(`/news/${this.$route.params.slug}`);
 			this.news = data.data;
-			const converter = new showdown.Converter();
-			converter.setOption('tables', true);
-			converter.setOption('strikethrough', true);
-			this.news.content = converter.makeHtml(this.news.content);
 		},
 	}
 

@@ -8,7 +8,7 @@
 			<div class="document_date">
 				{{dtLong(document.updatedAt)}}
 			</div>
-			<div class="document_content" v-html="document.content">
+			<div id="document_content">
 			</div>
 		</div>
 	</div>
@@ -16,25 +16,34 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import showdown from 'showdown';
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell'; // Merging cells for SOPs
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 export default {
 	data() {
 		return {
-			document: null
+			document: null,
+			viewer: null
 		};
 	},
 	async mounted() {
 		await this.getDocument();
+
+		this.$nextTick(() => {
+			this.viewer = new Viewer({
+				el: document.getElementById('document_content'),
+				height: '600px',
+				initialValue: this.document.content,
+				plugins: [tableMergedCell]
+			});
+
+		});
 	},
 	methods: {
 		async getDocument() {
 			const {data} = await zabApi.get(`/file/documents/${this.$route.params.slug}`);
 			this.document = data.data;
-			const converter = new showdown.Converter();
-			converter.setOption('tables', true);
-			converter.setOption('strikethrough', true);
-			this.document.content = converter.makeHtml(this.document.content);
 		},
 	}
 };
@@ -46,20 +55,15 @@ export default {
 		color: rgba(0,0,0,.42);
 		font-size: .9rem;
 	}
-	.document_content {
+
+	#document_content {
 		width: 100%;
 		margin-top: 1em;
-		// white-space: pre-wrap;
-		// word-break: break-all;
-	}
-
-	.document_content {
-		
 		counter-reset: h2;
 		overflow: auto;
 
 		&:deep(code) {
-			background: $gray_light;
+			background-color: $gray_light;
 			padding: 0.125em;
 			color: $secondary-color-dark;
 		}
@@ -67,6 +71,10 @@ export default {
 		&:deep(h2) {
 			counter-reset: h3;
 			font-size: 2em;
+			border-bottom: none;
+			font-weight: 400;
+			color: #000;
+			margin-bottom: .25em;
 
 			&:first-of-type {
 				margin-top: 0;
@@ -82,6 +90,8 @@ export default {
 			counter-reset: h4;
 			margin-bottom: 10px;
 			font-size: 1.75em;
+			font-weight: 400;
+			color: #000;
 
 			&::before {
 				counter-increment: h3;
@@ -93,6 +103,10 @@ export default {
 			counter-reset: h5;
 			margin-bottom: 10px;
 			font-size: 1.5em;
+			font-weight: 400;
+			line-height: 110%;
+			margin: 1.52rem 0 .912rem 0;
+			color: #000;
 
 			&::before {
 				counter-increment: h4;
@@ -105,6 +119,8 @@ export default {
 			border-bottom: none;
 			font-style: normal;
 			font-size: 1.25em;
+			color: #000;
+			font-weight: 400;
 
 			&::before {
 				counter-increment: h5;
@@ -113,21 +129,77 @@ export default {
 		}
 
 		&:deep(p) {
+			color: #000;
 			&+p {
 				margin-top: 1.5em;
 			}
 		}
 
 		&:deep(ul) {
+			color: #000;
 
 			li {
 				list-style: disc outside;
 				margin-left: 2em;
+
+				&::before {
+					background-color: #000;
+					content: normal;
+				}
+			}
+		}
+		
+		&:deep(ol) {
+			color: #000;
+
+			li {
+				&::before {
+					color: #000;
+				}
 			}
 		}
 
 		&:deep(a) {
 			text-decoration: underline;
+		}
+
+		&:deep(table) {
+			width: 100%;
+			display: table;
+			border-collapse: collapse;
+			border: none;
+			border-spacing: 0;
+			color: #000;
+		}
+
+		&:deep(thead) {
+			border-bottom: 1px solid #666;
+		}
+
+		&:deep(tbody) {
+			display: table-row-group;
+			vertical-align: middle;
+			border-color: inherit;
+		}
+
+		&:deep(tr) {
+			border-bottom: none;
+		}
+
+		&:deep(tr:nth-child(odd)) {
+			background-color: rgba(242, 242, 242, 0.5);
+		}
+
+		&:deep(td) {
+			padding: 0.25em 1em !important;
+			border: none;
+		}
+
+		&:deep(th) {
+			background-color: #fff;
+			color: #000;
+			border: none;
+			font-weight: 700;
 		}
 	}
 
