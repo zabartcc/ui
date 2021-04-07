@@ -130,16 +130,22 @@ export default {
 			const rating = this.user.data.rating;
 			if(this.milestones !== null) {
 				this.milestones.filter((ms) => {
-					if(ms.certCode !== 'zab') {
-						if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50')) {
-							milestonesShowed.push(ms);
-						} else if (ms.rating <= rating && (!certs.includes(ms.certCode))) {
-							milestonesShowed.push(ms);
-						} else if (!certs.includes(ms.certCode) && certs.includes(ms.certCode.replace('p50', ''))) {
-							milestonesShowed.push(ms);
+					if(this.user.data.vis === false) {
+						if(ms.certCode !== 'zab') {
+							if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50') && !ms.certCode.includes('vis')) {
+								milestonesShowed.push(ms);
+							} else if (ms.rating <= rating && (!certs.includes(ms.certCode))) {
+								milestonesShowed.push(ms);
+							} else if (!certs.includes(ms.certCode) && certs.includes(ms.certCode.replace('p50', ''))) {
+								milestonesShowed.push(ms);
+							}
+						} else {
+							if(certs.includes('p50app') && !certs.includes('zab')) {
+								milestonesShowed.push(ms);
+							}
 						}
 					} else {
-						if(certs.includes('p50app') && !certs.includes('zab')) {
+						if(ms.certCode.includes('vis') && ms.rating <= rating) {
 							milestonesShowed.push(ms);
 						}
 					}
