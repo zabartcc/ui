@@ -27,7 +27,7 @@
 						<td>{{session.milestone.name}}</td>
 						<td>{{session.instructor ? `${session.instructor.fname} ${session.instructor.lname}` : session.instructorCid}}</td>
 						<td class="options">
-							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Session Details" class="tooltipped modal-trigger">
+							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Session Details" class="tooltipped">
 								<i class="material-icons">search</i>
 							</router-link>
 						</td>

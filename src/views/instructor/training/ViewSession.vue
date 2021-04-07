@@ -93,3 +93,9 @@ export default {
 	}
 };
 </script>
+
+<style scoped lang="scss">
+	input[type=text]:not(.browser-default):disabled, textarea.materialize-textarea:disabled {
+		color: #444;
+	}
+</style>
