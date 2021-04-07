@@ -24,7 +24,7 @@
 						<label for="endTime" class="active">End Time</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<input type="text" :value="session.milestone.name" disabled id="milestone" />
+						<input type="text" :value="session.milestone ? `${session.milestone.name} (${session.milestoneCode})` : 'General'" disabled id="milestone" />
 						<label for="milestone" class="active">Milestone</label>
 					</div>
 					<div class="input-field col s12 m6">
