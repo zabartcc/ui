@@ -2,8 +2,8 @@
 	<div :id="cat" class="col s12">
 		<div v-if="docs.length === 0" class="no_files">No documents in this category found.</div>
 		<div class="document" v-else v-for="doc in docs" :key="doc.id">
-			<div class="title">{{doc.name}}</div>
 			<router-link :to="`/files/documents/${doc.slug}`" class="button btn"><i class="material-icons">search</i></router-link>
+			<div class="title">{{doc.name}}</div>
 			<div class="desc">{{doc.description}}</div>
 			<div class="info">Updated at {{dtRegionalUS(doc.updatedAt)}}z</div>
 		</div>
@@ -24,15 +24,16 @@ export default {
 	.title {
 		font-weight: 700;
 		font-size: 1.3rem;
+		width: calc(100% - 45px);
 	}
 
 	.desc {
 		font-size: .9rem;
+		width: calc(100% - 45px);
 	}
 
 	.button {
 		float: right;
-		margin-top: -30px;
 		background: $primary-color-light;
 
 		&.btn {
