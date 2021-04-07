@@ -2,7 +2,7 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">New Document</span>
-			<div class="row">
+			<div class="row row_no_margin">
 				<form method="post" @submit.prevent=addDocument>
 					<div class="input-field col s12 m6">
 						<input id="name" type="text" v-model="form.name" required>
@@ -19,7 +19,7 @@
 						<label>Category</label>
 					</div>
 					<div class="input-field col s12">
-						<input id="description" type="text" v-model="form.description">
+						<textarea id="description" class="materialize-textarea" data-length="400" v-model="form.description"></textarea>
 						<label for="description">Description (optional)</label>
 					</div>
 					<div class="col s12">
@@ -59,6 +59,8 @@ export default {
 	},
 	async mounted() {
 		M.FormSelect.init(document.querySelectorAll('select'), {});
+		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+
 		this.$nextTick(() => {
 			this.editor = new Editor({
 				el: document.querySelector('#tui_editor'),

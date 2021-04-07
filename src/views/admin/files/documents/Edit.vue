@@ -2,7 +2,10 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Edit Document</span>
-			<div class="row">
+			<div class="loading_container" v-if="loading === true">
+				<Spinner />
+			</div>
+			<div class="row row_no_margin" v-else>
 				<form method="post" @submit.prevent=updateDocument>
 					<div class="input-field col s12 m6">
 						<input id="name" type="text" v-model="form.name" required>
@@ -19,7 +22,7 @@
 						<label>Category</label>
 					</div>
 					<div class="input-field col s12">
-						<input id="description" type="text" v-model="form.description">
+						<textarea id="description" class="materialize-textarea" data-length="400" v-model="form.description"></textarea>
 						<label for="description">Description (optional)</label>
 					</div>
 					<div class="col s12">
@@ -53,12 +56,15 @@ export default {
 				content: ''
 			},
 			editor: null,
+			loading: true
 		};
 	},
 	async mounted() {
-		const {data} = await zabApi.get(`/file/documents/${this.$route.params.id}`);
-		this.setTitle(`Edit ${data.data.name}`);
-		this.form = data.data;
+		await this.getDocument();
+		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+		M.textareaAutoResize(document.querySelector('textarea'));
+		this.setTitle(`Edit ${this.form.name}`);
+
 		this.$nextTick(() => {
 			M.FormSelect.init(document.querySelectorAll('select'), {});
 			M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
@@ -75,6 +81,11 @@ export default {
 		});
 	},
 	methods: {
+		async getDocument() {
+			const {data} = await zabApi.get(`/file/documents/${this.$route.params.id}`);
+			this.form = data.data;
+			this.loading = false;
+		},
 		async updateDocument() {
 			this.form.content = this.editor.getMarkdown();
 			const {data: addData} = await zabApi.put(`/file/documents/${this.form.slug}`, this.form);

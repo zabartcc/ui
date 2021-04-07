@@ -5,7 +5,7 @@
 			<div class="loading_container" v-if="loading === true">
 				<Spinner />
 			</div>
-			<div class="row" v-else>
+			<div class="row row_no_margin" v-else>
 				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
 					<div class="input-field col s12 l6">
 						<input id="name" type="text" v-model="form.name" required>
@@ -64,6 +64,7 @@ export default {
 		this.setTitle(`Edit ${this.form.name}`);
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+		M.textareaAutoResize(document.querySelector('textarea'));
 	},
 	methods: {
 		async getDownload() {
