@@ -32,7 +32,7 @@
 						<label for="position" class="active">Position</label>
 					</div>
 					<div class="input-field col s12 m6 l4">
-						<input type="number" :value="session.movements" disabled id="movements" />
+						<input type="text" :value="`${session.movements || 'Not Specified'}`" disabled id="movements" />
 						<label for="movements" class="active">Movements</label>
 					</div>
 					<div class="input-field col s12 m6 l4">
@@ -46,7 +46,7 @@
 				</div>
 				<div class="row row_no_margin">
 					<div class="input-field col s12">
-						<textarea class="materialize-textarea" disabled id="studentNotes" v-model="session.studentNotes"></textarea>
+						<textarea class="materialize-textarea" disabled id="studentNotes" :value="session.studentNotes || '–'"></textarea>
 						<label for="studentNotes" class="active">Notes</label>
 					</div>
 				</div>
@@ -71,7 +71,6 @@ export default {
 		await this.getSessionDetails();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.textareaAutoResize(document.getElementById('studentNotes'));
-		M.textareaAutoResize(document.getElementById('insNotes'));
 	},
 	methods: {
 		async getSessionDetails() {
@@ -91,7 +90,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-input[type=text]:not(.browser-default):disabled, textarea.materialize-textarea:disabled {
+input:not(.browser-default):disabled, textarea.materialize-textarea:disabled {
 	color: #444;
 }
 </style>

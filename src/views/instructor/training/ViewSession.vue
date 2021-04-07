@@ -46,11 +46,11 @@
 				</div>
 				<div class="row row_no_margin">
 					<div class="input-field col s12">
-						<textarea class="materialize-textarea" disabled id="studentNotes" v-model="session.studentNotes"></textarea>
+						<textarea class="materialize-textarea" disabled id="studentNotes" :value="session.studentNotes || '–'"></textarea>
 						<label for="studentNotes" class="active">Student Notes</label>
 					</div>
 					<div class="input-field col s12">
-						<textarea class="materialize-textarea" disabled id="insNotes" v-model="session.insNotes"></textarea>
+						<textarea class="materialize-textarea" disabled id="insNotes" :value="session.insNotes || '–'"></textarea>
 						<label for="insNotes" class="active">Instructor Notes</label>
 					</div>
 				</div>
@@ -95,7 +95,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-input[type=text]:not(.browser-default):disabled, textarea.materialize-textarea:disabled {
+input:not(.browser-default):disabled, textarea.materialize-textarea:disabled {
 	color: #444;
 }
 </style>
