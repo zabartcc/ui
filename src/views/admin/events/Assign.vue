@@ -1,13 +1,13 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Position Assignments {{event !== null ? `- ${event.name}` : ''}}</span>
+			<span class="card-title">Position Assignments {{event !== null ? `– ${event.name}` : ''}}</span>
 			<button class="btn right btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
 		</div>
 		<div class="loading_container" v-if="event === null">
 			<Spinner />
 		</div>
-		<div class="no_signups" v-else-if="event && event.signups.length == 0">
+		<div class="no_signups" v-else-if="event && (!event.signups || event.signups.length === 0)">
 			There have been no sign-ups for this event yet.
 		</div>
 		<div class="signups_wrapper" v-else>
