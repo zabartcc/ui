@@ -64,6 +64,7 @@ export default {
 
 		&:deep(.tui-editor-contents) {
 			font-family: "Lato", "Helvetica", sans-serif;
+			font-size: 1rem;
 		}
 
 		&:deep(code) {
