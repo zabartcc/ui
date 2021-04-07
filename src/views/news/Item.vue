@@ -11,7 +11,7 @@
 						By {{news.user.fname}} {{news.user.lname}} on {{dLong(news.createdAt)}}
 					</div>
 				</div>
-				<div class="news_content"></div>
+				<div id="news_content"></div>
 			</div>
 		</div>
 	</div>
@@ -25,7 +25,8 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 export default {
 	data() {
 		return {
-			news: null
+			news: null,
+			viewer: null
 		};
 	},
 	async mounted() {
@@ -38,7 +39,6 @@ export default {
 				height: '600px',
 				initialValue: this.news.content
 			});
-
 		});
 	},
 	methods: {
@@ -66,8 +66,12 @@ export default {
 	color: #9e9e9e;
 }
 
-.news_content {
+#news_content {
 	margin-top: 1em;
 	white-space: pre-line;
+
+	&:deep(p) {
+		font-size: 15px;
+	}
 }
 </style>
