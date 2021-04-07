@@ -62,6 +62,10 @@ export default {
 		counter-reset: h2;
 		overflow: auto;
 
+		&:deep(.tui-editor-contents) {
+			font-family: "Lato", "Helvetica", sans-serif;
+		}
+
 		&:deep(code) {
 			background-color: $gray_light;
 			padding: 0.125em;
