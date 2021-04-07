@@ -33,7 +33,7 @@ export default {
 		},
 		minEntries() {
 			if(this.page == 1) return 1;
-			else return (this.page - 1) * this.limit;
+			else return ((this.page - 1) * this.limit) + 1;
 		},
 		maxEntries() {
 			if(Math.ceil(this.amount / this.limit) == this.page) return this.amount;
