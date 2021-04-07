@@ -73,5 +73,14 @@ export default {
 	&:deep(p) {
 		font-size: 15px;
 	}
+
+	&:deep(.tui-editor-contents) {
+		font-family: "Lato", "Helvetica", sans-serif;
+		font-size: 1rem;
+	}
+
+	&:deep(h2) {
+		border: none;
+	}
 }
 </style>
