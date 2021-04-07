@@ -15,6 +15,7 @@
 				<button v-if="!discordConnected" @click.prevent=linkDiscord class="btn">Link</button>
 				<button v-else @click.prevent=unlinkDiscord class="btn">Unlink</button>
 			</div>
+			<a href="https://vats.im/zabdiscord" target="blank" class="btn">Join the Discord!</a>
 		</div>
 	</div>
 </template>
