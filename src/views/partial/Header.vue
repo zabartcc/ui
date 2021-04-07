@@ -142,7 +142,7 @@ export default {
 		]),
 		async processLogin() {
 			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=2`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=1`;
 		},
 		async processLogout() {
 			await this.logout();
