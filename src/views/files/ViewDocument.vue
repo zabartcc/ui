@@ -49,8 +49,8 @@ export default {
 	.document_content {
 		width: 100%;
 		margin-top: 1em;
-		white-space: pre;
-		word-break: break-all;
+		// white-space: pre-wrap;
+		// word-break: break-all;
 	}
 
 	.document_content {
