@@ -1,6 +1,6 @@
 <template>
-	<div class="card" v-if=document>
-		<div class="card-content">
+	<div class="card">
+		<div class="card-content" v-if="document !== null">
 			<span class="card-title">
 				{{document.name}}
 
@@ -10,6 +10,9 @@
 			</div>
 			<div id="document_content">
 			</div>
+		</div>
+		<div class="loading_container" v-else>
+			<Spinner />
 		</div>
 	</div>
 </template>
