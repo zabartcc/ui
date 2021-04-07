@@ -116,7 +116,7 @@ export default {
 		async approveVisitor(cid) {
 			try {
 				await zabApi.put(`/controller/visit/${cid}`);
-				// await vatusaApiAuth.post(`/facility/ZAB/roster/manageVisitor/${cid}`); // BETADISABLE
+				await vatusaApiAuth.post(`/facility/ZAB/roster/manageVisitor/${cid}`);
 				this.toastSuccess('Visitor successfully added to roster');
 				await this.getNewApplications();
 			} catch(e) {

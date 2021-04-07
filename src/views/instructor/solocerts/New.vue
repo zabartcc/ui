@@ -83,7 +83,7 @@ export default {
 				formData.append('cid', this.form.cid);
 				formData.append('position', this.form.position);
 				formData.append('expDate', this.form.expDate);
-				// await vatusaApiAuth.post('/solo', formData); // BETADISABLE
+				await vatusaApiAuth.post('/solo', formData);
 
 				this.toastSuccess('Solo cert successfully added');
 
