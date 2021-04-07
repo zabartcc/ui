@@ -28,7 +28,7 @@
 						</div>
 						<div class="input-field col s12 m6">
 							<input id="email" type="email" :value="user.data.email" class="validate" ref="email" required>
-							<label for="email">Email</label>
+							<label for="email" class="active">Email</label>
 						</div>
 						<div class="input-field col s12 m6">
 							<input id="home" type="text" :value="user.data.facility" class="validate" ref="home" required>
