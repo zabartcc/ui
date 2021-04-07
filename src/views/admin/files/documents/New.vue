@@ -99,7 +99,10 @@ export default {
 		async addDocument() {
 			if(this.type === 'doc') {
 				this.form.content = this.editor.getMarkdown();
-				const {data: addData} = await zabApi.post('/file/documents', this.form);
+				const {data: addData} = await zabApi.post('/file/documents', {
+					...this.form,
+					type: 'doc'
+				});
 
 				if(addData.ret_det.code === 200) {
 					this.toastSuccess('Document successfully created');
@@ -116,6 +119,7 @@ export default {
 				formData.append('description', this.form.description);
 				formData.append('download', this.$refs.download.files[0]);
 				formData.append('author', this.user.data._id);
+				formData.append('type', 'file');
 
 				const {data} = await zabApi.post(`/file/documents`, formData, {
 					headers: { 
