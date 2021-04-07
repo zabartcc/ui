@@ -32,7 +32,7 @@
 						<label for="position" class="active">Position</label>
 					</div>
 					<div class="input-field col s12 m6 l4">
-						<input type="number" :value="session.movements" disabled id="movements" />
+						<input type="text" :value="`${session.movements || 'Not Specified'}`" disabled id="movements" />
 						<label for="movements" class="active">Movements</label>
 					</div>
 					<div class="input-field col s12 m6 l4">

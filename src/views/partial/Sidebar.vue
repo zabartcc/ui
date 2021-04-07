@@ -59,16 +59,19 @@ export default {
 	async mounted() {
 		M.Tabs.init(document.querySelectorAll('.tabs'));
 		await this.getOnline();
+		setInterval(() => {
+			this.getOnline();
+		}, 15000);
 	},
 	methods: {
 		async getOnline() {
 			const {data} = await zabApi.get('/online');
 			this.pilotsOnline = data.data.pilots;
 			this.atcOnline = data.data.atc;
-			await this.getZuluTime(); // update time when refreshing who's online
+			this.getZuluTime(); // update time when refreshing who's online
 		},
 		getZuluTime() {
-			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
+			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
 		}
 	},
 	computed: {
