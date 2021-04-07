@@ -26,11 +26,11 @@
 						<span class="title">Type</span>
 						<p>
 							<label>
-								<input type="radio" value="file" v-model="type" />
+								<input type="radio" value="file" v-model="form.type" />
 								<span>File</span>
 							</label>
 							<label>
-								<input type="radio" value="doc" v-model="type"/>
+								<input type="radio" value="doc" v-model="form.type"/>
 								<span>Document</span>
 							</label>
 						</p>
@@ -74,10 +74,10 @@ export default {
 				name: '',
 				category: '',
 				description: '',
-				content: ''
+				content: '',
+				type: ''
 			},
-			editor: null,
-			type: null
+			editor: null
 		};
 	},
 	async mounted() {
@@ -97,12 +97,9 @@ export default {
 	},
 	methods: {
 		async addDocument() {
-			if(this.type === 'doc') {
+			if(this.form.type === 'doc') {
 				this.form.content = this.editor.getMarkdown();
-				const {data: addData} = await zabApi.post('/file/documents', {
-					...this.form,
-					type: 'doc'
-				});
+				const {data: addData} = await zabApi.post('/file/documents', this.form);
 
 				if(addData.ret_det.code === 200) {
 					this.toastSuccess('Document successfully created');
@@ -119,7 +116,7 @@ export default {
 				formData.append('description', this.form.description);
 				formData.append('download', this.$refs.download.files[0]);
 				formData.append('author', this.user.data._id);
-				formData.append('type', 'file');
+				formData.append('type', this.form.type);
 
 				const {data} = await zabApi.post(`/file/documents`, formData, {
 					headers: { 

@@ -9,7 +9,7 @@
 				<form method="post" @submit.prevent=updateDocument>
 					<div class="input-field col s12 m6">
 						<input id="name" type="text" v-model="form.name" required>
-						<label class="active" for="name">Name</label>
+						<label for="name">Name</label>
 					</div>
 					<div class="input-field col s12 m6">
 						<select id="category" v-model="form.category">
@@ -25,9 +25,31 @@
 						<textarea id="description" class="materialize-textarea" data-length="400" v-model="form.description"></textarea>
 						<label for="description">Description (optional)</label>
 					</div>
-					<div class="col s12">
+					<div class="col s12 radio_select">
+						<span class="title">Type</span>
+						<p>
+							<label>
+								<input type="radio" value="file" v-model="form.type" />
+								<span>File</span>
+							</label>
+							<label>
+								<input type="radio" value="doc" v-model="form.type"/>
+								<span>Document</span>
+							</label>
+						</p>
+					</div>
+					<div class="col s12" v-show="form.type === 'doc'">
 						<span class="title">Content</span>
 						<div id="tui_editor"></div>
+					</div>
+					<div class="file-field input-field col s12" v-if="form.type === 'file'">
+						<div class="btn">
+							<span>FILE</span>
+							<input type="file" ref="download" id="fileInput">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text" placeholder="Upload a file" :value="form.fileName">
+						</div>
 					</div>
 					<div class="input-field col s12">
 						<input type="submit" class="btn right" value="Update" />
@@ -106,5 +128,13 @@ export default {
 .title {
 	color: #9E9E9E;
 	font-size: .75rem;
+}
+
+p label {
+	margin-right: 1.5em;
+}
+
+.radio_select {
+	margin-bottom: 1em;
 }
 </style>
