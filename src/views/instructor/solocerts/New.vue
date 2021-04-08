@@ -68,7 +68,7 @@ export default {
 			altInput: true,
 		});
 		
-		M.FormSelect.init(document.querySelectorAll('select'), {});
+		M.FormSelect.init(document.querySelectorAll('.materialize-select'), {});
 	},
 	methods: {
 		async getControllers() {
