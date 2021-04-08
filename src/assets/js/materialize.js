@@ -2499,6 +2499,10 @@ $jscomp.polyfill = function (e, r, p, m) {
 					} while (newFocusedIndex < this.dropdownEl.children.length && newFocusedIndex >= 0);
 
 					if (foundNewIndex) {
+						// Remove active class from old element
+						if (this.focusedIndex >= 0) {
+							this.dropdownEl.children[this.focusedIndex].classList.remove('active');
+						}
 						this.focusedIndex = newFocusedIndex;
 						this._focusFocusedItem();
 					}
@@ -2582,7 +2586,12 @@ $jscomp.polyfill = function (e, r, p, m) {
 			key: "_focusFocusedItem",
 			value: function _focusFocusedItem() {
 				if (this.focusedIndex >= 0 && this.focusedIndex < this.dropdownEl.children.length && this.options.autoFocus) {
-					this.dropdownEl.children[this.focusedIndex].focus();
+					this.dropdownEl.children[this.focusedIndex].classList.add('active');
+					this.dropdownEl.children[this.focusedIndex].scrollIntoView({
+						behavior: 'smooth',
+						block: 'nearest',
+						inline: 'nearest'
+					});
 				}
 			}
 		}, {
@@ -2626,7 +2635,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 						if (alignments.spaceOnTop > alignments.spaceOnBottom) {
 							verticalAlignment = 'bottom';
 							idealHeight += alignments.spaceOnTop;
-							idealYPos -= alignments.spaceOnTop;
+							idealYPos -= this.options.coverTrigger ? alignments.spaceOnTop - 20 : alignments.spaceOnTop - 20 + triggerBRect.height;
 						} else {
 							idealHeight += alignments.spaceOnBottom;
 						}
@@ -2680,11 +2689,11 @@ $jscomp.polyfill = function (e, r, p, m) {
 				anim({
 					targets: this.dropdownEl,
 					opacity: {
-						value: [0, 1],
-						easing: 'easeOutQuad'
+					 	value: [1, 1],
+					 	easing: 'easeOutQuad'
 					},
-					scaleX: [0.3, 1],
-					scaleY: [0.3, 1],
+					scaleX: [1, 1],
+					scaleY: [1, 1],
 					duration: this.options.inDuration,
 					easing: 'easeOutQuint',
 					complete: function (anim) {
@@ -6666,6 +6675,13 @@ $jscomp.polyfill = function (e, r, p, m) {
 					if (this.activeIndex >= 0) {
 						this.$active = $(this.container).children('li').eq(this.activeIndex);
 						this.$active.addClass('active');
+
+						// Focus selected
+						this.container.children[this.activeIndex].scrollIntoView({
+							behavior: 'smooth',
+							block: 'nearest',
+							inline: 'nearest'
+						});
 					}
 				}
 			}
@@ -11975,7 +11991,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
 				options.each(function (el) {
 					if ($(el).prop('selected')) {
-						var text = $(el).text();
+						var text = $(el).text().trim();
 						values.push(text);
 					}
 				});
