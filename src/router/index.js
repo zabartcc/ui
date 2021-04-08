@@ -287,7 +287,7 @@ router.beforeEach(async (to, from, next) => {
 	});
 	if(to.meta.loggedIn) {
 		const {data: user} = await zabApi.get('/user');
-		if(user.ret_det.code === 200) {
+		if(user.ret_det.code === 200 && user.data.member === true) {
 			next();
 		} else {
 			next('/');
