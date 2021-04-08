@@ -1,8 +1,8 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Position Assignments {{event !== null ? `– ${event.name}` : ''}}</span>
 			<button class="btn right btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
+			<div class="card-title">Position Assignments {{event !== null ? `– ${event.name}` : ''}}</div>
 		</div>
 		<div class="loading_container" v-if="event === null">
 			<Spinner />
@@ -11,36 +11,38 @@
 			There have been no sign-ups for this event yet.
 		</div>
 		<div class="signups_wrapper" v-else>
-			<table class="signups_list striped">
-				<thead class="signups_list_head">
-					<tr>
-						<th>Controller</th>
-						<th>Preferences</th>
-						<th>Position</th>
-						<th class="options">Options</th>
-					</tr>
-				</thead>
-				<tbody class="signups_list_row">
-					<tr v-for="signup in event.signups" :key="signup._id">
-						<td>
-							<span class="signup_name">{{signup.user.fname}} {{signup.user.lname}}</span> <br />
-							<span class="signup_rating">{{signup.user.ratingLong}}</span>
-						</td>
-						<td>
-							{{signup.requests.join(',  ')}}
-						</td>
-						<td>
-							<select @change="assignPos($event, signup.user.cid)">
-								<option :selected="getAssignment(signup.user.cid) == false">No assignment</option>
-								<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="getAssignment(signup.user.cid) === position.pos">{{position.pos}}</option>
-							</select>
-						</td>
-						<td class="options">
-							<i class="material-icons red-text text-darken-2" @click="deleteSignup(signup.user.cid)">delete</i>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="table_wrapper">
+				<table class="signups_list striped">
+					<thead class="signups_list_head">
+						<tr>
+							<th>Controller</th>
+							<th>Preferences</th>
+							<th>Position</th>
+							<th class="options">Options</th>
+						</tr>
+					</thead>
+					<tbody class="signups_list_row">
+						<tr v-for="signup in event.signups" :key="signup._id">
+							<td>
+								<span class="signup_name">{{signup.user.fname}} {{signup.user.lname}}</span> <br />
+								<span class="signup_rating">{{signup.user.ratingLong}}</span>
+							</td>
+							<td>
+								{{signup.requests.join(',  ')}}
+							</td>
+							<td>
+								<select @change="assignPos($event, signup.user.cid)">
+									<option :selected="getAssignment(signup.user.cid) == false">No assignment</option>
+									<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="getAssignment(signup.user.cid) === position.pos">{{position.pos}}</option>
+								</select>
+							</td>
+							<td class="options">
+								<i class="material-icons red-text text-darken-2" @click="deleteSignup(signup.user.cid)">delete</i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<div class="row row_no_margin">
 				<div class="input-field col s12 signups_submit">
 					<button type="submit" class="btn right" @click="closeSignups" :disabled="event.open == false">Close</button>
@@ -230,6 +232,10 @@ export default {
 	color: $primary-color-light;
 }
 
+.card-title {
+	width: calc(100% - 50px);
+}
+
 .signup_rating {
 	display: block;
 	margin-top: -4px;
@@ -249,7 +255,6 @@ export default {
 }
 
 .btn_add_signup {
-	margin: -40px 1em 0 1em;
 	padding: 0 .75em;
 }
 
@@ -274,7 +279,7 @@ export default {
 }
 
 @media only screen and (max-width: 620px) {
-	.signups_wrapper {
+	.table_wrapper {
 		overflow: auto;
 	}
 }

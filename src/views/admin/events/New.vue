@@ -2,7 +2,7 @@
 	<div class="card" v-if=form>
 		<div class="card-content">
 			<span class="card-title">New Event</span>
-			<div class="row">
+			<div class="row row_no_margin">
 				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
 					<div class="input-field col s12">
 						<input id="name" type="text" v-model="form.name" required>
