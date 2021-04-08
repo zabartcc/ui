@@ -63,7 +63,7 @@ export default {
 			}
 		};
 	},
-	mounted() {
+	async mounted() {
 		const today = new Date(new Date().toUTCString());
 		flatpickr(this.$refs.start_date, {
 			enableTime: true,
@@ -93,15 +93,12 @@ export default {
 			this.form.positions = [...this.form.positions.slice(0, i), ...this.form.positions.slice(i + 1)];
 		},
 		async submitForm() {
-			// console.log(this.$refs);
 			const formData = new FormData();
 			formData.append('banner', this.$refs.banner.files[0]);
 			formData.append('name', this.form.name);
 			formData.append('startTime', `${this.$refs.start_date.value}`);
 			formData.append('endTime', `${this.$refs.end_date.value}`);
 			formData.append('description', this.form.description);
-			// formData.append('positions', JSON.stringify(this.form.positions));
-			// formData.append('createdBy', this.$store.state.user.user.data._id);
 
 			const {data: eventCreate} = await zabApi.post('/event', formData, {
 				headers: { 

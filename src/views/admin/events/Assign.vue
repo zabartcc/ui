@@ -33,7 +33,7 @@
 								{{signup.requests.join(',  ') || 'None'}}
 							</td>
 							<td>
-								<select @change="assignPos($event, signup.user.cid)">
+								<select @change="assignPos($event, signup.user.cid)" class="materialize-select">
 									<option :selected="getAssignment(signup.user.cid) == false">No assignment</option>
 									<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="getAssignment(signup.user.cid) === position.pos">{{position.pos}}</option>
 								</select>

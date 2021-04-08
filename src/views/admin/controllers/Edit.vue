@@ -6,7 +6,7 @@
 				<Spinner />
 			</div>
 			<form id="update_controller" @submit.prevent=updateController v-else>
-				<div class="row">
+				<div class="row row_no_margin">
 					<div class="input-field col s6">
 						<input id="cid" type="text" :value="controller.cid" disabled>
 						<label for="cid" class="active">Controller ID</label>
@@ -30,7 +30,7 @@
 					<div class="input-field col s6 input_oi">
 						<input id="oi" type="text" v-model="form.oi" @input="checkOi($event)"  maxlength="2" required>
 						<label for="oi" class="active">Operating Initials</label>
-						<div class="side_oi right">
+						<div class="oi_check right">
 							<i v-if="oiAvail == true" class="material-icons green-text">check_circle</i>
 							<i v-else class="material-icons red-text">remove_circle</i>
 						</div>
@@ -198,13 +198,13 @@ export default {
 
 <style scoped lang="scss">
 .input_oi input {
-	width: 85%;
+	width: calc(100% - 35px);
 }
 
-.side_oi {
+.oi_check {
 	margin-top: 20px;
-	width: 15%;
-	text-align: center;
+	width: 35px;
+	text-align: right;
 }
 
 .cert {

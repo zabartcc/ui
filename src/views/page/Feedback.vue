@@ -31,14 +31,14 @@
 						<label class="active" for="cid">Your CID</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<select v-model="feedback.controller" required>
+						<select v-model="feedback.controller" required class="materialize-select">
 							<option value="" disabled selected>Select a controller</option>
 							<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
 						</select>
 						<label>Controller</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<select v-model="feedback.position" required>
+						<select v-model="feedback.position" required class="materialize-select">
 							<option value="" disabled selected>Select a position</option>
 							<option value="center">Center</option>
 							<option value="approach">Approach</option>
@@ -49,7 +49,7 @@
 						<label>Position</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<select v-model="feedback.rating" required>
+						<select v-model="feedback.rating" required class="materialize-select">
 							<option value="" disabled selected>Select a rating</option>
 							<option value="5">Excellent</option>
 							<option value="4">Above Average</option>

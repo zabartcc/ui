@@ -38,7 +38,7 @@
 							<label for="endTime" class="active">End Time</label>
 						</div>
 						<div class="input-field col s12 m6 milestone">
-							<select required disabled>
+							<select required disabled class="materialize-select">
 								<option disabled selected>{{session.milestone.name}}</option>
 							</select>
 							<label>Milestone</label>
@@ -54,7 +54,7 @@
 							<label for="movements" class="active">Movements</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<select required v-model="session.location">
+							<select required v-model="session.location" class="materialize-select">
 								<option value="" disabled selected>Select a location</option>
 								<option value=0>Classroom</option>
 								<option value=1>Live Network</option>
@@ -63,7 +63,7 @@
 							<label>Location</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<select required v-model="session.progress">
+							<select required v-model="session.progress" class="materialize-select">
 								<option value="" disabled selected>Select an option</option>
 								<option value=1>No Progress</option>
 								<option value=2>Little Progress</option>
@@ -74,7 +74,7 @@
 							<label>Progress</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<select required v-model="session.ots">
+							<select required v-model="session.ots" class="materialize-select">
 								<option value="" disabled selected>Select an option</option>
 								<option value=0>No OTS</option>
 								<option value=1>OTS Pass</option>

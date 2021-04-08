@@ -12,7 +12,7 @@
 						<label for="name">Name</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<select id="category" v-model="form.category">
+						<select id="category" v-model="form.category" class="materialize-select">
 							<option value="" disabled selected>Choose a category</option>
 							<option value="sop">SOP</option>
 							<option value="loa">LOA</option>

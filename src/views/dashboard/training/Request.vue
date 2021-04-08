@@ -23,7 +23,7 @@
 							<label for="end_date">End Time (Zulu)<span class="red-text">*</span></label>
 						</div>
 						<div class="input-field col s12">
-							<select v-model="request.milestone">
+							<select v-model="request.milestone" class="materialize-select">
 								<option value="" disabled selected>Select a milestone</option>
 								<option v-for="milestone in filteredMilestones" :key="milestone._id" :value="milestone.code">{{milestone.code + ' - ' + milestone.name}}</option>
 								

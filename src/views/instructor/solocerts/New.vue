@@ -12,7 +12,7 @@
 				<form class="col s12 l6 pull-l6" @submit.prevent=submitCert>
 					<div class="row row_no_margin">
 						<div class="col s12 input-field">
-							<select v-model="form.cid" required>
+							<select v-model="form.cid" required class="materialize-select">
 								<option value="" disabled selected>Select a controller</option>
 								<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
 							</select>
@@ -36,7 +36,6 @@
 	</div>
 </template>
 <script>
-// eslint-disable-next-line no-unused-vars
 import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
 
 export default {
