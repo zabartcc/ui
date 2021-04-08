@@ -24,11 +24,13 @@
 					<tbody class="signups_list_row">
 						<tr v-for="signup in event.signups" :key="signup._id">
 							<td>
-								<span class="signup_name">{{signup.user.fname}} {{signup.user.lname}}</span> <br />
+								<router-link :to="`/controllers/${signup.user.cid}`">
+									<span class="signup_name">{{signup.user.fname}} {{signup.user.lname}} <span v-if="signup.user.vis">(VC)</span></span> <br />
+								</router-link>
 								<span class="signup_rating">{{signup.user.ratingLong}}</span>
 							</td>
 							<td>
-								{{signup.requests.join(',  ')}}
+								{{signup.requests.join(',  ') || 'None'}}
 							</td>
 							<td>
 								<select @change="assignPos($event, signup.user.cid)">
