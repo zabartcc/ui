@@ -23,8 +23,8 @@
 							<label for="position" class="active">Position</label>
 						</div>
 						<div class="col s12 input-field">
-							<input id="exp" type="text" class="validate datepicker" placeholder="Pick a date" v-model="form.expDate" required>
-							<label for="exp" class="active">Expiration  Date</label>
+							<input id="expiration_date" type="text" class="datepicker" ref="expirationDate" required>
+							<label for="expiration_date">Expiration Date</label>
 						</div>
 						<div class="col s12 input-field">
 							<input type="submit" class="btn" value="Submit" />
@@ -37,6 +37,8 @@
 </template>
 <script>
 import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 export default {
 	name: 'NewSoloCert',
@@ -46,28 +48,27 @@ export default {
 			controllers: null,
 			form: {
 				cid: '',
-				position: '',
-				expDate: ''
+				position: ''
 			}
 		};
 	},
 	async mounted() {
 		await this.getControllers();
+
 		const today = new Date(new Date().toUTCString());
 		const future = new Date(new Date().toUTCString());
-		
-		M.FormSelect.init(document.querySelectorAll('select'), {});
-		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
-			autoClose: true,
-			format: 'yyyy-mm-dd',
+
+		flatpickr(this.$refs.expirationDate, {
+			enableTime: false,
 			minDate: today,
 			maxDate: new Date(future.setDate(future.getDate() + 30)),
-			onSelect: (date) => {
-				const d = new Date(date);
-				const newDate = `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()}`;
-				this.form.expDate = newDate;
-			}
+			disableMobile: true,
+			dateFormat: 'Y-m-d',
+			altFormat: 'Y-m-d',
+			altInput: true,
 		});
+		
+		M.FormSelect.init(document.querySelectorAll('select'), {});
 	},
 	methods: {
 		async getControllers() {
@@ -81,7 +82,7 @@ export default {
 				const formData = new FormData();
 				formData.append('cid', this.form.cid);
 				formData.append('position', this.form.position);
-				formData.append('expDate', this.form.expDate);
+				formData.append('expDate', this.$refs.expirationDate.value);
 				await vatusaApiAuth.post('/solo', formData);
 
 				this.toastSuccess('Solo cert successfully added');

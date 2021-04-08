@@ -7,16 +7,16 @@
 			</div>
 			<form class="loa_form row row_no_margin"  @submit.prevent=submitForm v-else>
 				<div class="input-field col s12 m6">
-					<select v-model="form.controller" required>
+					<select class="materialize-select" v-model="form.controller" required>
 						<option value="" disabled selected>Select a controller</option>
 						<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
 					</select>
 					<label>Controller</label>
 				</div>
 				<div class="input-field col s12 m6">
-					<input id="expiration_date" type="text" class="datepicker" ref="expirationDate" required>
-					<label for="expiration_date">Expiration Date (Zulu)</label>
-				</div>
+						<input id="expiration_date" type="text" class="datepicker" ref="expirationDate" required>
+						<label for="expiration_date">Expiration Date (Zulu)</label>
+					</div>
 				<div class="input-field col s12">
 					<textarea class="materialize-textarea" id="reason" v-model="form.reason" data-length="2000" required></textarea>
 					<label for="reason">Reason</label>
@@ -30,6 +30,8 @@
 </template>
 <script>
 import {zabApi} from '@/helpers/axios.js';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 export default {
 	name: 'Absence',
@@ -45,14 +47,19 @@ export default {
 	},
 	async mounted() {
 		await this.getControllers();
-		const future = new Date(new Date().toUTCString());
 
-		M.Datepicker.init(document.querySelectorAll('.datepicker'), {
-			autoClose: true,
-			minDate: new Date(future.setDate(future.getDate() + 31)),
-			format: 'yyyy-mm-dd',
+		const today = new Date(new Date().toUTCString());
+		flatpickr(this.$refs.expirationDate, {
+			enableTime: false,
+			time_24hr: true,
+			minDate: today,
+			disableMobile: true,
+			dateFormat: 'Y-m-d',
+			altFormat: 'Y-m-d',
+			altInput: true,
 		});
-		M.FormSelect.init(document.querySelectorAll('select'), {});
+
+		M.FormSelect.init(document.querySelectorAll('.materialize-select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
 	},
 	methods: {
@@ -66,6 +73,8 @@ export default {
 					...this.form,
 					expirationDate: `${this.$refs.expirationDate.value}T00:00:00.000Z`
 				});
+
+				console.log(this.$refs.expirationDate.value);
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Leave of Absence granted successfully');
 
@@ -80,7 +89,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>
