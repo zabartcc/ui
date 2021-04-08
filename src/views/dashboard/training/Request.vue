@@ -134,9 +134,9 @@ export default {
 						if(ms.certCode !== 'zab') {
 							if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50') && !ms.certCode.includes('vis')) {
 								milestonesShowed.push(ms);
-							} else if (ms.rating <= rating && (!certs.includes(ms.certCode))) {
+							} else if (ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('vis')) {
 								milestonesShowed.push(ms);
-							} else if (!certs.includes(ms.certCode) && certs.includes(ms.certCode.replace('p50', ''))) {
+							} else if (!certs.includes(ms.certCode) && !ms.certCode.includes('vis') && certs.includes(ms.certCode.replace('p50', ''))) {
 								milestonesShowed.push(ms);
 							}
 						} else {
