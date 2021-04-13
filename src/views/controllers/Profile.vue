@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="loading_container" v-if="!controller || !stats">
+			<div class="loading_container" v-if="loading">
 				<Spinner />
 			</div>
 			<div v-else>
@@ -37,7 +37,7 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="controller && stats">
+		<div v-if="!loading">
 			<div class="session_table_wrap">
 				<table class="striped responsive-table centered">
 					<thead>
@@ -102,7 +102,8 @@ export default {
 	data() {
 		return {
 			controller: null,
-			stats: null
+			stats: null,
+			loading: true
 		};
 	},
 	async mounted() {
@@ -112,10 +113,12 @@ export default {
 	},
 	methods: {
 		async getController() {
+			this.loading = true;
 			const {data} = await zabApi.get(`/controller/${this.$route.params.cid}`);
 			this.controller = data.data;
 			const {data: statsData} = await zabApi.get(`/controller/stats/${this.$route.params.cid}`);
 			this.stats = statsData.data;
+			this.loading = false;
 		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];
@@ -141,6 +144,11 @@ export default {
 		},
 		totalTime(month) {
 			return Object.values(month).reduce((acc, cv) => acc + cv);
+		}
+	},
+	watch: {
+		'$route.params.cid': async function() { // get new data if route remains the same but parameter changes
+			await this.getController();
 		}
 	}
 };
