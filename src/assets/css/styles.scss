@@ -154,3 +154,7 @@ strong {
 select:not(.materialize-select):not(.browser-default) {
 	display: initial!important;
 }
+
+.material-icons {
+	vertical-align: middle;
+}

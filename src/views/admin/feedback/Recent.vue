@@ -6,24 +6,24 @@
 		<div class="loading_container" v-if="recentFeedback === null">
 			<Spinner />
 		</div>
-		<p class="no_feedback" v-else-if="recentFeedback && feedbackAmount === 0">There is no recent feedback to display.</p>
+		<p class="no_feedback" v-else-if="recentFeedback && feedbackAmount === 0">There is no recent feedback</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="feedback_list striped">
 				<thead class="feedback_list_head">
 					<tr>
+						<th class="status"></th>
 						<th>Date</th>
 						<th>Controller</th>
 						<th>Rating</th>
-						<th>Status</th>
 						<th class="options">Options</th>
 					</tr>
 				</thead>
 				<tbody class="feedback_list_row">
 					<tr v-for="(feedback, i) in recentFeedback" :key="feedback._id">
+						<td class="status"><i class="material-icons red-text text-darken-1" v-if="feedback.deleted">close</i><i class="material-icons green-text" v-else>check</i></td>
 						<td>{{dtLong(feedback.createdAt)}}</td>
 						<td>{{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
-						<td>{{feedback.deleted ? 'Rejected' : 'Approved'}}</td>
 						<td class="options">
 							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
@@ -183,5 +183,9 @@ export default {
 .feedback_content {
 	margin-top: -3px;
 	white-space: pre-wrap;
+}
+
+.status {
+	width: 40px;
 }
 </style>
