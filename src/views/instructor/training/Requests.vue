@@ -23,13 +23,13 @@
 							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date" @click="viewRequests(date)">
 								<div class="week_date">
 									<span v-if="new Date(Date.now()).getDay() === new Date(date.date).getDay()" class="current_date">
-										{{date.date.slice(3, 10)}}
+										{{new Date(date.date).toDateString().slice(3, 10)}}
 									</span>
 									<span v-else-if="(new Date(date.date).getTime()) - (new Date().getTime()) < 0" class="past_date">
-										{{date.date.slice(3, 10)}}
+										{{new Date(date.date).toDateString().slice(3, 10)}}
 									</span>
 									<span v-else>
-										{{date.date.slice(3, 10)}}
+										{{new Date(date.date).toDateString().slice(3, 10)}}
 									</span>
 								</div>
 								<div :class="`date_requests ${(new Date(Date.UTC(date.date)).getTime()) - (new Date().getTime()) < 0 ? 'past' : ''}`" v-if="date.requests.length > 0">
@@ -40,7 +40,7 @@
 						<div class="week">
 							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date" @click="viewRequests(date)">
 								<div class="week_date">
-									{{date.date.slice(3, 10)}}
+									{{new Date(date.date).toDateString().slice(3, 10)}}
 								</div>
 								<div class="date_requests" v-if="date.requests.length > 0">
 									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
@@ -50,7 +50,7 @@
 						<div class="week">
 							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date" @click="viewRequests(date)">
 								<div class="week_date">
-									{{date.date.slice(3, 10)}}
+									{{new Date(date.date).toDateString().slice(3, 10)}}
 								</div>
 								<div class="date_requests" v-if="date.requests.length > 0">
 									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
@@ -92,12 +92,12 @@ export default {
 
 				for(const request of data.data) {
 					for(const date of this.dates) {
-						if(date.date === new Date(new Date(request.startTime).toUTCString()).toDateString()) {
+						if(date.date === new Date(new Date(request.startTime)).toISOString().slice(0,10)) {
 							date.requests.push(request);
 						}
 					}
 				}
-				this.loading = false; // work around because the requests are being added to dates that are already there.
+				this.loading = false;
 			} catch(e) {
 				console.log(e);
 			}
@@ -118,7 +118,7 @@ export default {
 			
 			for(let i = 0; i < this.days; i++) {
 				this.dates.push({
-					"date": new Date(startOfWeek + (i * 1000 * 60 * 60 * 24)).toDateString(),
+					"date": (new Date(startOfWeek + (i * 1000 * 60 * 60 * 24)).toISOString()).slice(0,10),
 					"requests": []
 				});
 			}
