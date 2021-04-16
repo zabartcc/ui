@@ -2,11 +2,11 @@
 	<div>
 		<div class="card">
 			<div class="card-content">
-				<div class="row">
+				<div class="row row_no_margin">
 					<span class="card-title col s12 m8">Controllers</span>
 					<div class="input-field col s12 m4">
 						<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller">
-						<span class="helper-text right">You can search by CID, name, or operating initials.</span>
+						<span class="helper-text right">Search by CID, name, or operating initials</span>
 					</div>
 				</div>
 			</div>
@@ -40,16 +40,16 @@
 							</td>
 							<td class="options">
 								<router-link data-position="top" data-tooltip="Edit Controller" class="tooltipped" :to="`/admin/controllers/${controller.cid}`"><i class="material-icons">edit</i></router-link>
-								<a :href="`#modal_delete_${controller.cid}`" data-position="top" data-tooltip="Delete Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
+								<a :href="`#modal_delete_${controller.cid}`" data-position="top" data-tooltip="Remove Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
 							</td>
 							<div :id="`modal_delete_${controller.cid}`" class="modal modal_delete">
 								<div class="modal-content">
-									<h4>Removing Controller</h4>
-									<p>You are about to remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. Please state the reason for removal below. Please note that this will delete the controller from both the website and VATUSA's facility roster.</p>
-									<textarea class="materialize-textarea" placeholder="Please state a reason for removal" v-model="deleteReason[controller.cid]" required></textarea>
+									<h4>Remove Controller?</h4>
+									<p>This will remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. You must state a reason for removal below. Please note that this will delete the controller from both the website and the VATUSA facility roster.</p>
+									<textarea class="materialize-textarea" placeholder="Reason for removal" v-model="reason" required></textarea>
 								</div>
 								<div class="modal-footer">
-									<a href="#!" @click="deleteController(cid)" class="btn waves-effect">Remove</a>
+									<a href="#!" @click="removeController(controller.cid)" class="btn waves-effect">Remove</a>
 									<a href="#!" class="btn-flat waves-effect modal-close">Cancel</a>
 								</div>
 							</div>
@@ -72,7 +72,7 @@ export default {
 			controllers: null,
 			controllersFiltered: null,
 			filter: '',
-			deleteReason: {}
+			reason: ''
 		};
 	},
 	async mounted() {
@@ -90,6 +90,30 @@ export default {
 			this.controllers = data.data.home.concat(data.data.visiting);
 			this.controllers = this.controllers.filter(c => c.member);
 			this.controllersFiltered = this.controllers;
+		},
+		async removeController(cid) {
+			try {
+				this.toastInfo('Removing controller...');
+				const {data} = await zabApi.delete(`/controller/${cid}`, {
+					data: {
+						reason: this.reason
+					}
+				});
+
+				this.reason = '';
+
+				if(data.ret_det.code === 200) {
+					this.toastSuccess('Controller removed from roster');
+
+					this.$nextTick(() => {
+						M.Modal.getInstance(document.querySelector('.modal_delete')).close();
+					});
+				} else {
+					this.toastError(data.ret_det.message);
+				}
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		filterControllers() {
 			const search = new RegExp(this.filter, 'ig');
