@@ -30,7 +30,6 @@ export default {
 		});
 		if(data.ret_det.code === 200) {
 			this.getUser();
-			this.toastInfo('Successfully logged in');
 		} else {
 			this.toastError('Something went wrong, please try again');
 		}

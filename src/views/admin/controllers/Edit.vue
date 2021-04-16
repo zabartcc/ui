@@ -8,20 +8,20 @@
 			<form id="update_controller" @submit.prevent=updateController v-else>
 				<div class="row row_no_margin">
 					<div class="input-field col s6">
-						<input id="cid" type="text" :value="controller.cid" disabled>
-						<label for="cid" class="active">Controller ID</label>
-					</div>
-					<div class="input-field col s6">
-						<input id="rating" type="text" :value="controller.ratingLong" disabled>
-						<label for="rating" class="active">Rating</label>
-					</div>
-					<div class="input-field col s6">
 						<input id="first_name" type="text" v-model="form.fname" required>
 						<label for="first_name" class="active">First Name</label>
 					</div>
 					<div class="input-field col s6">
 						<input id="last_name" type="text" v-model="form.lname" required>
 						<label for="last_name" class="active">Last Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="cid" type="text" :value="controller.cid" disabled>
+						<label for="cid" class="active">Controller ID</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="rating" type="text" :value="controller.ratingLong" disabled>
+						<label for="rating" class="active">Rating</label>
 					</div>
 					<div class="input-field col s6">
 						<input id="email" type="email" v-model="form.email">

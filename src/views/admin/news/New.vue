@@ -13,7 +13,7 @@
 						<div id="tui_editor"></div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="create" />
+						<input type="submit" class="btn waves-effect waves-light right" value="create" />
 					</div>
 				</form>
 			</div>
@@ -64,7 +64,7 @@ export default {
 			});
 
 			if(data.ret_det.code === 200) {
-				this.toastSuccess('News article successfully created');
+				this.toastSuccess('News article created');
 
 				this.$router.push('/admin/news');
 			} else {

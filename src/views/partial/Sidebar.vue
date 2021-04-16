@@ -19,7 +19,7 @@
 				<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
 			</div>
 			<div v-else>
-				<p>There are no controllers online right now.</p>
+				<p>There are no controllers online right now</p>
 			</div>
 		</div>
 		<div id="pilots_online">
@@ -30,7 +30,7 @@
 				<PilotOnlineItem v-for="(pilot, k) in depsArrs" :key=k :pilot="pilot" />
 			</div>
 			<div v-else>
-				<p>There are no departures/arrivals online right now.</p>
+				<p>There are no departures/arrivals online right now</p>
 			</div>
 		</div>
 		<p class="as_of">As Of: {{getZuluTime()}}z</p>

@@ -7,7 +7,7 @@
 			<Spinner />
 		</div>
 		<div v-else-if="sessions && sessions.length === 0" class="no_sessions">
-			There have been no training sessions yet.
+			There have been no training sessions yet
 		</div>
 		<div class="session_wrapper" v-else>
 			<table class="session_list striped">
@@ -27,7 +27,7 @@
 						<td>{{dtLong(session.endTime)}}</td>
 						<td>{{session.instructor ? `${session.instructor.fname} ${session.instructor.lname}` : session.instructorCid}}</td>
 						<td class="options">
-							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Session Details" class="tooltipped">
+							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Details" class="tooltipped">
 								<i class="material-icons">search</i>
 							</router-link>
 						</td>

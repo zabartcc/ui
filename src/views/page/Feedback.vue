@@ -1,20 +1,20 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Submit Feedback</span>
+			<span class="card-title">Send Feedback</span>
 			<div class="loading_container" v-if="!controllers">
 				<Spinner />
 			</div>
 			<div v-else>
 				<div class="card_desc">
 					<p>
-						We welcome your feedback! Please use the form below to send feedback about one of our controllers. Please note that your identity will always be shared with the ATM, DATM, and TA, regardless of selecting the 'remain anonymous' option.
+						We welcome your feedback! Use the form below to send feedback about one of our controllers. Please note that your identity will always be shared with the ATM, DATM, and TA, regardless of selecting the 'remain anonymous' option.
 					</p>
 				</div>
 				<div v-if="!user.isLoggedIn">
-					<p>To prevent abuse of the feedback system, we require all users to log in via VATSIM SSO before submitting feedback. The only details shared with ZAB are your name, CID and email. Your password is never revealed to us.</p><br />
+					<p>To prevent abuse of the system, all users need to log in via VATSIM before sending feedback. The only details shared with us are your name, CID and email; your password is never revealed.</p><br />
 					<div class="center-align">
-						<button class="btn btn-waves login_button" @click="login">Login with VATSIM SSO</button>
+						<button class="btn btn-waves login_button" @click="login">Login via VATSIM</button>
 					</div>
 				</div>
 				<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback v-else>
@@ -66,11 +66,11 @@
 					<div class="checkbox col s12">
 						<label class="form_checkbox">
 							<input type="checkbox" :value="true" v-model="feedback.anon" />
-							<span>Remain anonymous</span>
+							<span>Remain anonymous?</span>
 						</label>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="Submit" />
+						<input type="submit" class="btn waves-effect waves-light right" value="Send" />
 					</div>
 				</form>
 			</div>
@@ -104,7 +104,7 @@ export default {
 		await this.getControllers();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
-		if(this.user) {
+		if(this.user && this.user.isLoggedIn) {
 			this.feedback.name = `${this.user.data.fname} ${this.user.data.lname}`;
 			this.feedback.email = this.user.data.email;
 			this.feedback.cid = this.user.data.cid;
@@ -122,7 +122,7 @@ export default {
 		async submitFeedback() {
 			const {data} = await zabApi.post('/feedback', this.feedback);
 			if(data.ret_det.code === 200) {
-				this.toastSuccess('Feedback successfully submitted');
+				this.toastSuccess('Feedback sent');
 
 				document.getElementById("feedback").reset();
 

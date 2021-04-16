@@ -7,7 +7,7 @@
 			<Spinner />
 		</div>
 		<div v-else-if="requests.length === 0" class="no_requests">
-			There are no training requests for {{formatDate(date)}}.
+			There are no training requests for {{formatDate(date)}}
 		</div>
 		<div class="requests_wrapper" v-else>
 			<table class="requests_list striped">
@@ -33,7 +33,7 @@
 						</td>
 						<div :id="`modal_request_${i}`" class="modal modal_request">
 							<div class="modal-content">
-								<div class="modal_title">Training Request from {{request.student.fname + ' ' + request.student.lname}}</div>
+								<div class="modal_title">Training Request Details</div>
 								<div class="request">
 									<div class="row row_no_margin" id="request">
 										<div class="input-field col s12 l6">
@@ -123,7 +123,7 @@ export default {
 					instructor: this.$store.state.user.user.data._id
 				});
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Training request successfully taken');
+					this.toastSuccess('Training request taken');
 					this.$router.push('/ins/training/requests');
 				} else {
 					this.toastError(data.ret_det.message);

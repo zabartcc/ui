@@ -5,7 +5,7 @@
 				<div>
 					<router-link to="/"><h1>ALBUQUERQUE<span>ARTCC</span></h1></router-link>
 				</div>
-                <router-link to="/"><img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="" draggable="false"></router-link>
+                <router-link to="/"><img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="Albuquerque ARTCC Logo Header" draggable="false" height="125" width="125"></router-link>
 			</div>
 		</div>
 		<nav>

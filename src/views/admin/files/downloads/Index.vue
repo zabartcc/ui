@@ -3,13 +3,13 @@
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Downloads</span></div>
-				<div class="col s4"><router-link to="/admin/files/downloads/new"><span class="btn new_event_button right">New</span></router-link></div>
+				<div class="col s4"><router-link to="/admin/files/downloads/new"><span class="btn waves-effect waves-light new_event_button right">New</span></router-link></div>
 			</div>
 		</div>
 		<div class="loading_container" v-if="downloads === null">
 			<Spinner />
 		</div>
-		<div class="no_downloads" v-else-if="downloads && downloads.length == 0">There are no downloads to display.</div>
+		<div class="no_downloads" v-else-if="downloads && downloads.length == 0">There are no downloads</div>
 		<div class="table_wrapper" v-else>
 			<table class="controller_list striped">
 				<thead class="controller_list_head">
@@ -31,12 +31,12 @@
 						</td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
 						<div class="modal-content">
-							<h4>Are you sure?</h4>
-							<p>Are you sure you want to delete <b>{{file.name}}</b> from the downloads section? This action is irreversible.</p>
+							<h4>Delete download?</h4>
+							<p>This will delete <b>{{doc.name}}</b> from the downloads section completely</p>
 						</div>
 						<div class="modal-footer">
-							<a href="#!" class="waves-effect btn" @click="deleteDownload(file._id)">I'm sure</a>
-							<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+							<a href="#!" class="waves-effect waves-light btn" @click="deleteDownload(file._id)">Delete</a>
+							<a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
 						</div>
 					</div>
 					</tr>
@@ -73,7 +73,7 @@ export default {
 			try {
 				const {data} = await zabApi.delete(`/file/downloads/${id}`);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Download successfully deleted');
+					this.toastSuccess('Download deleted');
 
 					await this.getDownloads();
 					setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);

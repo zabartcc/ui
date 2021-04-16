@@ -3,13 +3,13 @@
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Documents</span></div>
-				<div class="col s4"><router-link to="/admin/files/documents/new"><span class="btn new_event_button right">New</span></router-link></div>
+				<div class="col s4"><router-link to="/admin/files/documents/new"><span class="btn waves-effect wabes-light new_event_button right">New</span></router-link></div>
 			</div>
 		</div>
 		<div class="loading_container" v-if="documents === null">
 			<Spinner />
 		</div>
-		<div class="no_documents" v-else-if="documents && documents.length === 0">There are no documents to display.</div>
+		<div class="no_documents" v-else-if="documents && documents.length === 0">There are no documents</div>
 		<div class="table_wrapper" v-else>
 			<table class="controller_list striped">
 				<thead class="controller_list_head">
@@ -31,12 +31,12 @@
 						</td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
 						<div class="modal-content">
-							<h4>Are you sure?</h4>
-							<p>Are you sure you want to delete <b>{{doc.name}}</b> from the downloads section? This action is irreversible.</p>
+							<h4>Delete document?</h4>
+							<p>This will delete <b>{{doc.name}}</b> from the documents section completely</p>
 						</div>
 						<div class="modal-footer">
-							<a href="#!" class="waves-effect btn" @click="deleteDownload(doc._id)">I'm sure</a>
-							<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+							<a href="#!" class="waves-effect waves-light btn" @click="deleteDownload(doc._id)">Delete</a>
+							<a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
 						</div>
 					</div>
 					</tr>
@@ -86,7 +86,7 @@ export default {
 		},
 		convertCategory(cat) {
 			if(cat == "loa") return "Agreements";
-			else if(cat == "sop") return "Standard Operating Procedures";
+			else if(cat == "sop") return "Procedures";
 			else if(cat == "policy") return "Policies";
 			else return "Miscellaneous";
 		}

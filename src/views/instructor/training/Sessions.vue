@@ -7,7 +7,7 @@
 			<Spinner />
 		</div>
 		<div v-else-if="sessions.length === 0" class="no_sessions">
-			You have no open training sessions.
+			You have no open training sessions
 		</div>
 		<div class="sessions_wrapper" v-else>
 			<table class="sessions_list striped">
@@ -27,7 +27,7 @@
 						<td>{{dtLong(session.startTime)}}</td>
 						<td>{{dtLong(session.endTime)}}</td>
 						<td class="options">
-							<a :href="`#modal_session_${i}`" data-position="top" data-tooltip="View Session Details" class="tooltipped modal-trigger">
+							<a :href="`#modal_session_${i}`" data-position="top" data-tooltip="View Details" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
 							</a>
 							<router-link :to="`/ins/training/session/edit/${session._id}`" data-position="top" data-tooltip="Enter Notes" class="tooltipped">
@@ -36,7 +36,7 @@
 						</td>
 						<div :id="`modal_session_${i}`" class="modal modal_session">
 							<div class="modal-content">
-								<div class="modal_title">Training Session from {{session.student.fname + ' ' + session.student.lname}}</div>
+								<div class="modal_title">Training Session Details</div>
 								<div class="session">
 									<div class="row row_no_margin" id="session">
 										<div class="input-field col s6">
@@ -44,16 +44,16 @@
 											<label for="student" class="active">Student</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{session.milestone.name}} ({{session.milestone.code}})</p>
-											<label for="cid" class="active">Milestone</label>
+											<p id="milestone">{{session.milestone.name}} ({{session.milestone.code}})</p>
+											<label for="milestone" class="active">Milestone</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{dtLong(session.startTime)}}</p>
-											<label for="cid" class="active">Start Time</label>
+											<p id="startTime">{{dtLong(session.startTime)}}</p>
+											<label for="startTime" class="active">Start Time</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="cid">{{dtLong(session.endTime)}}</p>
-											<label for="cid" class="active">End Time</label>
+											<p id="endTime">{{dtLong(session.endTime)}}</p>
+											<label for="endTime" class="active">End Time</label>
 										</div>
 									</div>
 								</div>
@@ -135,7 +135,8 @@ export default {
 
 	.row {
 		.input-field p {
-			line-break: anywhere;
+			line-break: normal;
+			hyphens: auto;
 			margin: .33em 0 0 0;
 		}
 	}

@@ -96,7 +96,7 @@
 					</div>
 					<div class="row row_no_margin">
 						<div class="input-field col s12 submit_buttons">
-							<input type="submit" v-if="step === 3" class="btn right" value="Submit" />
+							<input type="submit" v-if="step === 3" class="btn right" value="Finalize" />
 							<input type="submit" v-if="step === 3" class="btn-flat right" value="Save" @click="saveForm" />
 							<button type="button" class="btn right" v-if="step !== 3" @click="step += 1">Next</button>
 							<button type="button" v-if="step !== 1" @click="step -= 1" class="btn-flat right">Back</button>
@@ -150,7 +150,7 @@ export default {
 					insNotes: this.session.insNotes
 				});
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Session notes successfully saved');
+					this.toastSuccess('Session notes saved');
 					this.$router.push('/ins/training/sessions');
 				} else {
 					this.toastError(data.ret_det.message);
@@ -163,7 +163,7 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/training/session/submit/${this.$route.params.id}`, this.session);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Session notes successfully submitted');
+					this.toastSuccess('Session notes finalized');
 					this.$router.push('/ins/training/sessions');
 				} else {
 					this.toastError(data.ret_det.message);
@@ -190,7 +190,7 @@ label {
 
 .submit_buttons {
 	input {
-		margin-left: 1em;
+		margin-left: .5em;
 	}
 }
 

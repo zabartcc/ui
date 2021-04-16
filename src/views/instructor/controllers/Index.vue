@@ -2,11 +2,11 @@
 	<div>
 		<div class="card">
 			<div class="card-content">
-				<div class="row">
+				<div class="row row_no_margin">
 					<span class="card-title col s12 m8">Controllers</span>
 					<div class="input-field col s12 m4">
 						<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller">
-						<span class="helper-text right">You can search by CID, name, or operating initials.</span>
+						<span class="helper-text right">Search by CID, name, or operating initials</span>
 					</div>
 				</div>
 			</div>

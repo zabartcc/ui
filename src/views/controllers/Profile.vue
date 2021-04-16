@@ -87,7 +87,7 @@
 					<strong>Total Sessions:</strong> {{stats.sessionCount}}
 				</div>
 				<div>
-					<strong>Average Session Time:</strong> {{sec2hm(stats.sessionAvg) || '0:00'}}
+					<strong>Average Session Length:</strong> {{sec2hm(stats.sessionAvg) || '0:00'}}
 				</div>
 			</div>
 		</div>
@@ -138,8 +138,8 @@ export default {
 		},
 		sec2hm(secs) {
 			if(!secs) return null;
-			const hours = Math.floor(secs/3600);
-			const minutes = `0${Math.round((secs/60)%60)}`.slice(-2);
+			const hours = Math.floor(secs / 3600);
+			const minutes = `0${Math.round((secs / 60) % 60)}`.slice(-2);
 			return `${hours}:${minutes}`;
 		},
 		totalTime(month) {

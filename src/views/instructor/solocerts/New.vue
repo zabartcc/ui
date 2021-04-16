@@ -7,7 +7,7 @@
 			</div>
 			<div class="row row_no_margin" v-else>
 				<div class="col s12 l6 push-l6 card_desc">
-					<p>Solo certifications may be issued to students who have demonstrated sufficient competency on the position they are receiving a solo certification for. <br /><br />Solo certifications must be issued in accordance with the training syllabus and are automatically submitted to VATUSA. <br /><br />Please note that solo certifications may not extend beyond thirty days in length.</p>
+					<p>Solo certifications may be issued to students who have demonstrated sufficient competency on the position they are receiving a solo certification for. <br /><br />Solo certifications must be issued in accordance with the training syllabus and are automatically submitted to VATUSA. <br /><br />Solo certifications may not extend beyond 30 days in length.</p>
 				</div>
 				<form class="col s12 l6 pull-l6" @submit.prevent=submitCert>
 					<div class="row row_no_margin">
@@ -42,7 +42,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 
 export default {
 	name: 'NewSoloCert',
-	title: 'New Solo Certification',
+	title: 'Issue Solo Certification',
 	data() {
 		return {
 			controllers: null,
@@ -85,7 +85,7 @@ export default {
 				formData.append('expDate', this.$refs.expirationDate.value);
 				await vatusaApiAuth.post('/solo', formData);
 
-				this.toastSuccess('Solo cert successfully added');
+				this.toastSuccess('Solo Certification issued');
 
 				this.$router.push('/ins/solo');
 			} catch(e) {

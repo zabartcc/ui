@@ -6,12 +6,12 @@
 		<div class="actions_wrapper" v-if=log>
 			<table class="striped highlight">
 				<thead>
-					<th>Date</th>
+					<th class="date">Date</th>
 					<th>Action</th>
 				</thead>
 				<tbody>
-					<tr v-for='item in log' :key=item._id>
-						<td>{{dtStandard(item.createdAt)}}z</td>
+					<tr v-for="item in log" :key=item._id>
+						<td class="date">{{dtStandard(item.createdAt)}}z</td>
 						<td v-html='populateLog(item)'></td>
 					</tr>
 				</tbody>
@@ -84,5 +84,9 @@ export default {
 <style scoped lang="scss">
 th {
 	padding: .75em 1em;
+}
+
+.date {
+	width: 170px;
 }
 </style>

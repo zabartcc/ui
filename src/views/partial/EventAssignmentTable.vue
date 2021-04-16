@@ -14,7 +14,7 @@
 			</tbody>
 			<tbody v-else>
 				<tr class="no_positions">
-					<td colspan="2">There are no {{category.title}} positions for this event.</td>
+					<td colspan="2">There are no {{category.title}} positions for this event</td>
 				</tr>
 			</tbody>
 		</table>

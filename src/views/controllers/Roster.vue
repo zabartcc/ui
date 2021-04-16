@@ -7,7 +7,7 @@
 			<table class="controller_list striped">
 				<thead class="controller_list_head">
 					<tr>
-						<th class="name">Controller</th>
+						<th class="name">Name</th>
 						<th class="certs">Certifications</th>
 					</tr>
 				</thead>
@@ -45,7 +45,7 @@
 			<table class="controller_list striped">
 				<thead class="controller_list_head">
 					<tr>
-						<th class="name">Controller</th>
+						<th class="name">Name</th>
 						<th class="certs">Certifications</th>
 					</tr>
 				</thead>
@@ -158,7 +158,7 @@ td {
 }
 
 .name {
-	width: 30%;
+	min-width: 150px;
 }
 
 .name a {

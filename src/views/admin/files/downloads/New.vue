@@ -23,7 +23,7 @@
 						<label for="description">Description (optional)</label>
 					</div>
 					<div class="file-field input-field col s12">
-						<div class="btn">
+						<div class="btn waves-effect waves-light">
 							<span>FILE</span>
 							<input type="file" ref="download" id="fileInput" required>
 						</div>
@@ -32,7 +32,7 @@
 						</div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="create" />
+						<input type="submit" class="btn waves-effect waves-light right" value="create" />
 					</div>
 				</form>
 			</div>
@@ -78,7 +78,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('File successfully added');
+					this.toastSuccess('Download created');
 
 					document.getElementById("fileInput").value = "";
 					this.$router.push('/admin/files/downloads');

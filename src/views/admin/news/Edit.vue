@@ -16,7 +16,7 @@
 						<div id="tui_editor"></div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="Update" />
+						<input type="submit" class="btn waves-effect waves-light right" value="Update" />
 					</div>
 				</form>
 			</div>
@@ -64,7 +64,7 @@ export default {
 			const {data} = await zabApi.put(`/news/${this.$route.params.slug}`, this.news);
 
 			if(data.ret_det.code === 200) {
-				this.toastSuccess('News article successfully updated');
+				this.toastSuccess('News article updated');
 
 				this.$router.push('/admin/news');
 			} else {

@@ -22,7 +22,7 @@
 					<label for="reason">Reason</label>
 				</div>
 				<div class="input-field col s12">
-					<input type="submit" class="btn right" value="Submit" />
+					<input type="submit" class="btn right" value="Grant" />
 				</div>
 			</form>
 		</div>
@@ -76,7 +76,7 @@ export default {
 
 				console.log(this.$refs.expirationDate.value);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Leave of Absence granted successfully');
+					this.toastSuccess('Leave of Absence granted');
 
 					this.$router.push('/admin/absence');
 				} else {

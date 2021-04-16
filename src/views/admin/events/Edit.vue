@@ -12,15 +12,15 @@
 						<label for="name" class="active">Name</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<input id="start_date" type="text" class="datepicker" ref="start_date" required>
-						<label for="start_date" class="active">Start Time (Zulu)</label>
+						<input id="startDate" type="text" class="datepicker" ref="start_date" required>
+						<label for="startDate" class="active">Start Time (Zulu)</label>
 					</div>
 					<div class="input-field col s12 m6">
-						<input id="end_date" type="text" class="datepicker" ref="end_date" required>
-						<label for="end_date" class="active">End Time (Zulu)</label>
+						<input id="endDate" type="text" class="datepicker" ref="end_date" required>
+						<label for="endDate" class="active">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
-						<div class="btn">
+						<div class="btn waves-effect waves-light">
 							<span>FILE</span>
 							<input type="file" ref="banner">
 						</div>
@@ -34,10 +34,10 @@
 					</div>
 					<div class="input-field col s12">
 						<div class="row">
-							<div class="col s12 l6">
+							<div class="col s12 l6 push-l3">
 								<div class="card card_positions z-depth-2">
 									<p class="positions_title">Event Positions</p>
-									<p class="no_pos" v-if="form.positions && form.positions.length === 0">No positions added yet.</p>
+									<p class="no_pos" v-if="form.positions && form.positions.length === 0">No positions added yet</p>
 									<ul v-else>
 										<li v-for="position in form.positions" class="collection-item" :key="position">
 											<div class="pos_header">{{position}} <span class="delete_pos" @click="deletePos(position)">Delete</span></div>
@@ -54,7 +54,7 @@
 						</div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="submit" />
+						<input type="submit" class="btn waves-effect waves-light right" value="Update" />
 					</div>
 				</form>
 			</div>
@@ -130,7 +130,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Event succesfully updated');
+					this.toastSuccess('Event updated');
 				} else {
 					this.toastError(data.ret_det.message);
 				}
@@ -142,7 +142,7 @@ export default {
 			if(this.form.positions && (!this.form.positions.includes(this.$refs.pos.value.toUpperCase()) || this.form.positions.length === 0)) {
 				this.form.positions.push(this.$refs.pos.value.toUpperCase());
 			} else {
-				this.toastError('Position already exists.');
+				this.toastError('Position already exists');
 			}
 			e.target.reset();
 		},

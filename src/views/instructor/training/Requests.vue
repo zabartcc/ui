@@ -22,13 +22,7 @@
 						<div class="week">
 							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date" @click="viewRequests(date)">
 								<div class="week_date">
-									<span v-if="new Date(Date.now()).getDay() === new Date(date.date).getDay()" class="current_date">
-										{{new Date(date.date).toDateString().slice(3, 10)}}
-									</span>
-									<span v-else-if="(new Date(date.date).getTime()) - (new Date().getTime()) < 0" class="past_date">
-										{{new Date(date.date).toDateString().slice(3, 10)}}
-									</span>
-									<span v-else>
+									<span :class="[((new Date(date.date).getTime()) - (new Date().getTime()) < 0 ? 'past_date' : ''), (new Date(Date.now()).getDay() === new Date(date.date).getDay() ? 'current_date' : '')]">
 										{{new Date(date.date).toDateString().slice(3, 10)}}
 									</span>
 								</div>
@@ -172,7 +166,7 @@ export default {
 
 			.current_date {
 				background-color: $primary-color-light;
-				color: #fff;
+				color: #fff!important;
 				padding: .2em .5em;
 				border-radius: 1em;
 			}

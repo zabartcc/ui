@@ -74,5 +74,6 @@ export default {
 
 .material-icons {
 	user-select: none;
+	margin-top: -3px;
 }
 </style>

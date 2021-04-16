@@ -3,7 +3,7 @@
 		<div class="loading_container" v-if="!notifications">
 			<Spinner />
 		</div>
-		<span class="no_notif" v-else-if="notifications.length === 0">There are no new notifications.</span>
+		<span class="no_notif" v-else-if="notifications.length === 0">You have no new notifications</span>
 		<div v-else>
 			<div class="notif" v-for="notification in notifications" :key="notification._id" @click="redirectTo(notification.link, notification._id)">
 				<div class="notif_unread" v-if="notification.read === false"></div>
@@ -196,9 +196,11 @@ export default {
 	
 	button {
 		font-size: 12px;
-		height: 2.25em;
-		line-height: 2.25;
+		height: 2em;
+		line-height: 2;
 		padding: 0 0.5em;
+		margin-left: -.5em;
+		margin-right: -.5em;
 	}
 }
 </style>

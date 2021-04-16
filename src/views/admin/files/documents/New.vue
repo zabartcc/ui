@@ -40,7 +40,7 @@
 						<div id="tui_editor"></div>
 					</div>
 					<div class="file-field input-field col s12" v-if="form.type === 'file'">
-						<div class="btn">
+						<div class="btn waves-effect waves-light">
 							<span>FILE</span>
 							<input type="file" ref="download" id="fileInput" required>
 						</div>
@@ -49,7 +49,7 @@
 						</div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="create" />
+						<input type="submit" class="btn waves-effect waves-light right" value="create" />
 					</div>
 				</form>
 			</div>
@@ -102,7 +102,7 @@ export default {
 				const {data: addData} = await zabApi.post('/file/documents', this.form);
 
 				if(addData.ret_det.code === 200) {
-					this.toastSuccess('Document successfully created');
+					this.toastSuccess('Document created');
 
 					this.$router.push('/admin/files/documents');
 				} else {
@@ -125,7 +125,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('File successfully added');
+					this.toastSuccess('File uploaded');
 
 					document.getElementById("fileInput").value = "";
 					this.$router.push('/admin/files/documents');

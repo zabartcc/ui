@@ -48,7 +48,7 @@
 									</div>
 									<div class="input-field col s6">
 										<p id="submission">{{dtLong(feedback.createdAt)}}</p>
-										<label for="submission" class="active">Submission Date</label>
+										<label for="submission" class="active">Date</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="submission">{{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>

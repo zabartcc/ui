@@ -17,7 +17,7 @@
 						<label for="end_date">End Time (Zulu)</label>
 					</div>
 					<div class="file-field input-field col s12">
-						<div class="btn">
+						<div class="btn waves-effect waves-light">
 							<span>FILE</span>
 							<input type="file" ref="banner" required>
 						</div>
@@ -109,7 +109,7 @@ export default {
 			if(eventCreate.ret_det.code != 200) {
 				this.toastError(eventCreate.ret_det.message);
 			} else {
-				this.toastSuccess('Event successfully created!');
+				this.toastSuccess('Event created');
 				this.$router.push('/admin/events');
 			}
 		}

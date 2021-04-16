@@ -3,15 +3,15 @@
 		<div class="download_wrapper">
 			<div class="download_container">
 				<div class="top_text">
-					<img alt="ZAB logo" :src="require('@/assets/images/icons/zab_icon_new.png')" class="download_logo">
+					<img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="Albuquerque ARTCC Logo" class="download_logo" height="150" width="150">
 					<p class="title">Albuquerque ARTCC — Information Display System</p>
 					<p class="description">
-						The ZAB Information Display System (IDS) is a tool available to all home and visiting controllers within the Albuquerque ARTCC. It provides you with a platform that shows information useful when controlling, and helps ease coordination with your fellow controllers. <br /><br />Please select your operating system below to download the program.<br />
+						The ZAB Information Display System (IDS) is a program available to all home and visiting controllers within the Albuquerque ARTCC. It gives controllers a platform that provides them with information useful when controlling, and helps ease coordination with fellow controllers. <br /><br />Select your operating system below to download the program.<br />
 					</p>
 				</div>
 				<div class="row downloads_row">
 					<div class="col s12">
-						<button class="btn waves-effect download_button windows">DOWNLOAD FOR WINDOWS</button>
+						<button class="btn waves-effect waves-light download_button windows">DOWNLOAD FOR WINDOWS</button>
 					</div>
 					<div class="col s12">
 						<div class="other_downloads">or</div>
@@ -55,9 +55,7 @@ export default {
 }
 
 .download_logo {
-	height: 150px;
 	display: block;
-	width: auto;
 	margin: auto;
 }
 
@@ -67,7 +65,8 @@ export default {
 
 .download_container {
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-	width: 600px;
+	width: 30%;
+	min-width: 340px;
 	z-index: 1;
 	background-color: #1A1A1A;
 	position: absolute;

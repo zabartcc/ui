@@ -43,7 +43,7 @@
 						<div id="tui_editor"></div>
 					</div>
 					<div class="file-field input-field col s12" v-if="form.type === 'file'">
-						<div class="btn">
+						<div class="btn waves-effect waves-light">
 							<span>FILE</span>
 							<input type="file" ref="download" id="fileInput">
 						</div>
@@ -52,7 +52,7 @@
 						</div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="Update" />
+						<input type="submit" class="btn waves-effect waves-light right" value="Update" />
 					</div>
 				</form>
 			</div>
@@ -113,9 +113,7 @@ export default {
 			const {data: addData} = await zabApi.put(`/file/documents/${this.form.slug}`, this.form);
 
 			if(addData.ret_det.code === 200) {
-				this.toastSuccess('Document updated successfully');
-
-				// this.$router.push('/admin/files/documents');
+				this.toastSuccess('Document updated');
 			} else {
 				this.toastError(addData.ret_det.message);
 			}

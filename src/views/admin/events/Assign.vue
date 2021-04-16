@@ -1,14 +1,14 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<button class="btn right btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
+			<button class="btn right waves-effect waves-light btn_add_signup modal-trigger" data-target="modal_add_signup"><i class="material-icons">add</i></button>
 			<div class="card-title">Position Assignments {{event !== null ? `– ${event.name}` : ''}}</div>
 		</div>
 		<div class="loading_container" v-if="event === null">
 			<Spinner />
 		</div>
 		<div class="no_signups" v-else-if="event && (!event.signups || event.signups.length === 0)">
-			There have been no sign-ups for this event yet.
+			There have been no sign-ups for this event yet
 		</div>
 		<div class="signups_wrapper" v-else>
 			<div class="table_wrapper">
@@ -34,22 +34,34 @@
 							</td>
 							<td>
 								<select @change="assignPos($event, signup.user.cid)" class="materialize-select">
-									<option :selected="getAssignment(signup.user.cid) == false">No assignment</option>
+									<option :selected="getAssignment(signup.user.cid) == false">No position</option>
 									<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="getAssignment(signup.user.cid) === position.pos">{{position.pos}}</option>
 								</select>
 							</td>
 							<td class="options">
-								<i class="material-icons red-text text-darken-2" @click="deleteSignup(signup.user.cid)">delete</i>
+								<a :href="`#modal_delete_${signup.user.cid}`" data-position="top" data-tooltip="Delete Sign-up" class="tooltipped modal-trigger">
+									<i class="material-icons red-text text-darken-2">delete</i>
+								</a>
 							</td>
+							<div :id="`modal_delete_${signup.user.cid}`" class="modal">
+								<div class="modal-content">
+									<h4>Delete sign-up?</h4>
+									<p>This will delete <strong>{{signup.user.fname}} {{signup.user.lname}}</strong>'s sign-up for this event.  You can still manually sign {{signup.user.fname}} up.</p>
+								</div>
+								<div class="modal-footer">
+									<a href="#!" class="waves-effect waves-light btn" @click="deleteSignup(signup.user.cid)">Delete</a>
+									<a href="#!" class="waved-effect waves-light modal-close btn-flat">Cancel</a>
+								</div>
+							</div>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="row row_no_margin">
 				<div class="input-field col s12 signups_submit">
-					<button type="submit" class="btn right" @click="closeSignups" :disabled="event.open == false">Close</button>
-					<button type="submit" class="btn right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Notify</button>
-					<button type="submit" class="btn-flat right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button>
+					<button type="submit" class="btn waves-effect waves-light right" @click="closeSignups" :disabled="event.open == false">Close</button>
+					<button type="submit" class="btn waves-effect waves-light right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Notify</button>
+					<button type="submit" class="btn-flat waves-effect waves-light right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button>
 				</div>
 			</div>
 		</div>
@@ -67,8 +79,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<a href="#!" class="waves-effect btn" @click="addSignup">Add</a>
-				<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
+				<a href="#!" class="waves-effect waves-light btn" @click="addSignup">Add</a>
+				<a href="#!" class="waved-effect waves-light modal-close btn-flat">Cancel</a>
 			</div>
 		</div>
 		<div id="modal_notify" class="modal">
@@ -77,8 +89,8 @@
 				<p>By clicking notify, an email will be send out to all controllers that signed up with the position assignments.  You can still make changes to the assignments after clicking notify.  You cannot undo the email.</p>
 			</div>
 			<div class="modal-footer">
-				<a href="#!" class="waves-effect btn" @click="notifyAssignments">Notify</a>
-				<a href="#!" class="waved-effect modal-close btn-flat">Cancel</a>
+				<a href="#!" class="waves-effect waves-light btn" @click="notifyAssignments">Notify</a>
+				<a href="#!" class="waved-effect waves-light modal-close btn-flat">Cancel</a>
 			</div>
 		</div>
 	</div>
@@ -116,7 +128,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Position assignments successfully saved');
+					this.toastSuccess('Position assignments saved');
 				} else {
 					this.toastError(data.ret_det.message);
 				}
@@ -132,7 +144,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Controllers successfully notified');
+					this.toastSuccess('Controllers notified');
 
 					await this.getEventData();
 					setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_notify')).close(), 500);
@@ -147,7 +159,7 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Sign-up successfully added');
+					this.toastSuccess('Sign-up manually added');
 
 					await this.getEventData();
 					this.cid = null;
@@ -166,7 +178,7 @@ export default {
 			try {
 				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/mandelete/${cid}`);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Sign-up successfully deleted');
+					this.toastSuccess('Sign-up manually deleted');
 
 					await this.getEventData();
 				} else {
@@ -180,7 +192,7 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/close`);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Sign-ups successfully closed');
+					this.toastSuccess('Sign-ups closed');
 
 					await this.getEventData();
 				} else {
@@ -251,18 +263,13 @@ export default {
 	}
 }
 
-#modal_notify {
+.modal {
 	min-width: 340px;
 	width: 30%;
 }
 
 .btn_add_signup {
 	padding: 0 .75em;
-}
-
-#modal_add_signup {
-	min-width: 340px;
-	width: 30%;
 }
 
 .options {

@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="!feedback">
 			<Spinner />
 		</div>
-		<p class="no_feedback" v-else-if="feedback && feedback.length === 0">You have not received any feedback yet.</p>
+		<p class="no_feedback" v-else-if="feedback && feedback.length === 0">You have not received any feedback yet</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="feedback_list striped">
 				<thead class="feedback_list_head">
@@ -23,22 +23,22 @@
 						<td id="position">{{feedback.position || '—'}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td class="options">
-							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Feedback" class="tooltipped modal-trigger">
+							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Details" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
 							</a>
 						</td>
 						<div :id="`modal_feedback_${i}`" class="modal modal_feedback">
 							<div class="modal-content">
-								<div class="modal_title">Submitted Feedback</div>
+								<div class="modal_title">Feedback Details</div>
 								<div class="feedback">
 									<div class="row row_no_margin" id="feedback">
 										<div class="input-field col s6">
 											<p id="first_name">{{feedback.anonymous ? 'Anonymous' : feedback.name}}</p>
-											<label for="first_name" class="active">Submitter</label>
+											<label for="first_name" class="active">From</label>
 										</div>
 										<div class="input-field col s6">
 											<p id="submission">{{dtLong(feedback.createdAt)}}</p>
-											<label for="submission" class="active">Submission Date</label>
+											<label for="submission" class="active">Date</label>
 										</div>
 										<div class="input-field col s6">
 											<p id="position">{{feedback.position || '—'}}</p>

@@ -54,15 +54,15 @@
 							</div>
 						</div>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
-								<div class="modal-content">
-									<h4>Are you sure?</h4>
-									<p>Are you sure you want to remove <strong>{{absence.user.fname}} {{absence.user.lname}}</strong> from LOA?</p>
-								</div>
-								<div class="modal-footer">
-									<a href="#!" @click="deleteLoa(absence._id)" class="btn waves-effect">I'm sure</a>
-									<a href="#!" class="btn-flat waves-effect modal-close">Cancel</a>
-								</div>
+							<div class="modal-content">
+								<h4>Delete Leave of Absence?</h4>
+								<p>This will delete the Leave of Absence granted to <strong>{{absence.user.fname}} {{absence.user.lname}}</strong> until <strong>{{dLong(absence.expirationDate)}}</strong></p>
 							</div>
+							<div class="modal-footer">
+								<a href="#!" @click="deleteLoa(absence._id)" class="btn waves-effect">Delete</a>
+								<a href="#!" class="btn-flat waves-effect modal-close">Cancel</a>
+							</div>
+						</div>
 					</tr>
 				</tbody>
 			</table>

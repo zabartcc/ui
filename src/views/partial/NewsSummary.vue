@@ -6,7 +6,7 @@
 				<Spinner />
 			</div>
 			<div v-else-if="newsItems && newsItems.length === 0" class="no_news">
-				There are no recent news articles to display.
+				No news articles have been posted recently
 			</div>
 		</div>
 		<div class="table_overflow_wrapper" v-if="newsItems && newsItems.length > 0">

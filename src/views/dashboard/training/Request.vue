@@ -7,10 +7,10 @@
 			</div>
 			<div class="request_wrapper row row_no_margin" v-else>
 				<div class="col s12 l6 push-l6">
-					<p><b class="red-text">Important: </b> training requests are just that—requests. <br /><br />
+					<p><b class="red-text">Important: </b> training requests are just that — requests. <br /><br />
 					There is no guarantee that your session will be picked up by a member of the training staff. If a request you've made gets picked up, you are expected to show up.
-					Treat the times as your availability, mentors and instructors have the ability to modify these times when they pick up the session. <br /><br />
-					Please also make sure that you've read through the required material, as per the Training Syllabus, before requesting a session.</p>
+					Treat the times as your availability, mentors and instructors have the ability to modify them when they pick up the session. <br /><br />
+					Please make sure that you've read through the relevant training material, as per the Training Syllabus, before requesting a session.</p>
 				</div>
 				<div class="col s12 l6 pull-l6">
 					<form class="row row_no_margin" @submit.prevent=submitRequest>
@@ -35,7 +35,7 @@
 							<label for="remarks" class="active">Remarks</label>
 						</div>
 						<div class="submit_request">
-							<input type="submit" class="btn" value="submit" :disabled="makingRequest" />
+							<input type="submit" class="btn" value="Request" :disabled="makingRequest" />
 						</div>
 					</form>
 				</div>
@@ -58,7 +58,7 @@ export default {
 			request: {
 				milestone: '',
 				remarks: '',
-				submitter: this.$store.state.user.user.data._id
+				submitter: ''
 			},
 			milestones: null,
 			makingRequest: false
@@ -70,6 +70,8 @@ export default {
 
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
+
+		this.request.submitter = this.user.data._id;
 
 		flatpickr(this.$refs.start_date, {
 			enableTime: true,
@@ -97,7 +99,7 @@ export default {
 		async submitRequest() {
 			try {
 				if(!this.request.milestone) {
-					this.toastError('You must select a milestone.');
+					this.toastError('You must select a milestone');
 				} else {
 					this.makingRequest = true;
 					const {data} = await zabApi.post('/training/request/new', {
@@ -106,7 +108,7 @@ export default {
 						endTime: `${this.$refs.end_date.value}`
 					});
 					if(data.ret_det.code === 200) {
-						this.toastSuccess('Training Request successfully submitted');
+						this.toastSuccess('Training Session requested');
 						this.$router.push('/dash/training');
 						this.makingRequest = false;
 					} else {

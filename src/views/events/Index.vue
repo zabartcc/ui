@@ -5,7 +5,7 @@
 			<div class="loading_container" v-if="!events">
 			<Spinner />
 		</div>
-		<p v-else-if="events && events.length === 0" class="no_event">There are no upcoming events to display.</p>
+		<p v-else-if="events && events.length === 0" class="no_event">There are no upcoming events</p>
         </div>
 	</div>
 	<div v-if="events && events.length > 0">
@@ -18,7 +18,7 @@
 						<span class="card-title event_date">{{dtLong(event.eventStart)}} <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
 					</div>
 					<div class="col s12 l4">
-						<router-link :to="`/events/${event.url}`" class="btn btn-signup waves-effect right">More Info &amp; Sign Up</router-link>
+						<router-link :to="`/events/${event.url}`" class="btn btn-signup waves-effect waves-light right">More Info &amp; Sign Up</router-link>
 					</div>
 				</div>
 			</div>

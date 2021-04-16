@@ -35,7 +35,7 @@
 						</div>
 					</div>
 					<div class="input-field col s12">
-						<input type="submit" class="btn right" value="update" />
+						<input type="submit" class="btn waves-effect waves-light right" value="update" />
 					</div>
 				</form>
 			</div>
@@ -88,7 +88,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Download successfully updated');
+					this.toastSuccess('Download updated');
 				} else {
 					this.toastError(data.ret_det.message);
 				}

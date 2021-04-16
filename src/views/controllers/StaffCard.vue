@@ -8,7 +8,7 @@
 			<div v-else>
 				<span class="staff_member">Vacant</span>
 			</div>
-			<a :href="`mailto:${staffItem.code}@zabartcc.org`" class="staff_email"><i class="material-icons tiny">email</i> {{staffItem.code}}@zabartcc.org</a>
+			<a :href="`mailto:${staffItem.code}@zabartcc.org`" class="staff_email"><i class="material-icons">email</i> {{staffItem.code}}@zabartcc.org</a>
 		</div>
 	</div>
 </template>
@@ -37,7 +37,9 @@ export default {
 	margin-top: 0.5em;
 
 	.material-icons {
-		margin-right: 0.5em;
+		font-size: 16px;
+		margin-top: 0.2em;
+		margin-right: 0.2em;
 	}
 }
 

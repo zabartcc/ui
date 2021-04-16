@@ -10,15 +10,15 @@
 			</div>
 			<span class="section_title">External Integrations</span>
 			<div class="discord_connect">
-				<button v-if="!discordConnected" class="btn" @click.prevent=linkDiscord>
+				<button v-if="!discordConnected" class="btn waves-effect waves-light" @click.prevent=linkDiscord>
 					<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
 					Link Discord
 				</button>
-				<button v-else class="btn grey lighten-1" @click.prevent=unlinkDiscord>
+				<button v-else class="btn waves-effect grey lighten-1" @click.prevent=unlinkDiscord>
 					<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
 					Unlink Discord
 				</button>
-				<button class="btn-flat">
+				<button class="btn-flat waves-effect">
 					<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
 				</button>
 			</div>
@@ -177,7 +177,7 @@ export default {
 	.discord_logo {
 		position: absolute;
 		left: 0;
-		margin-left: 20px;
+		margin-left: 6px;
 		margin-top: 7px;
 	}
 }

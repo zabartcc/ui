@@ -21,7 +21,7 @@ export default {
 			code: this.$route.query.code
 		});
 		if(data.ret_det.code === 200) {
-			this.toastSuccess('Discord account successfully linked');
+			this.toastSuccess('Discord account linked');
 		} else {
 			this.toastError(data.ret_det.message);
 		}

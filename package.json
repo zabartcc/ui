@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@materializecss/materialize": "^1.0.0",
-    "@toast-ui/editor": "^2.5.1",
+    "@toast-ui/editor": "^2.5.2",
     "@toast-ui/editor-plugin-table-merged-cell": "^1.3.2",
     "axios": "^0.21.1",
     "core-js": "^3.10.1",

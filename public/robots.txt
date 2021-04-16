@@ -1,0 +1,11 @@
+User-Agent: *
+Disallow: /controllers/*
+Disallow: /controllers
+
+User-Agent: Googlebot
+Disallow: /controllers/*
+Disallow: /controllers
+
+User-Agent: Googlebot-Mobile
+Disallow: /controllers/*
+Disallow: /controllers

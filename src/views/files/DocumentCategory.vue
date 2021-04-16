@@ -1,6 +1,6 @@
 <template>
 	<div :id="cat" class="col s12">
-		<div v-if="docs.length === 0" class="no_files">No documents in this category found.</div>
+		<div v-if="docs.length === 0" class="no_files">No documents in this category found</div>
 		<div class="document" v-else v-for="doc in docs" :key="doc.id">
 			<router-link v-if="doc.type === 'doc'" :to="`/files/documents/${doc.slug}`" class="button btn"><i class="material-icons">search</i></router-link>
 			<a v-else :href="`https://zabartcc.sfo3.digitaloceanspaces.com/downloads/${doc.fileName}`" class="btn button"><i class="material-icons">search</i></a>

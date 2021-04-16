@@ -6,12 +6,12 @@
 		<div class="card-content loading" v-if="applications === null">
 			<Spinner />
 		</div>
-		<p class="no_visit" v-else-if="applications && applications.length === 0">There are no new visitor applications.</p>
+		<p class="no_visit" v-else-if="applications && applications.length === 0">There are no new visitor applications</p>
 		<div class="table_wrapper" v-else>
 			<table class="striped">
 				<thead class="certs_list_head">
 					<tr>
-						<th>Applicant</th>
+						<th>Name</th>
 						<th>Rating</th>
 						<th>Home ARTCC</th>
 						<th class="options">Options</th>
@@ -29,27 +29,27 @@
 								<div class="row row_no_margin">
 									<div class="input-field col s6">
 										<p id="name">{{app.fname + ' ' + app.lname}}</p>
-										<label for="name" class="active">Applicant Name</label>
+										<label for="name" class="active">Name</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="email">{{app.email}}</p>
-										<label for="email" class="active">Applicant Email</label>
+										<label for="email" class="active">Email</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="cid">{{app.cid}}</p>
-										<label for="cid" class="active">Applicant CID</label>
+										<label for="cid" class="active">CID</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="rating">{{app.rating}}</p>
-										<label for="rating" class="active">Applicant Rating</label>
+										<label for="rating" class="active">Rating</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="home">{{app.home}}</p>
-										<label for="home" class="active">Applicant Home ARTCC</label>
+										<label for="home" class="active">Home ARTCC</label>
 									</div>
 									<div class="input-field col s6">
 										<p id="submission_date">{{dtLong(app.createdAt)}}</p>
-										<label for="submission_date" class="active">Submission Date</label>
+										<label for="submission_date" class="active">Date</label>
 									</div>
 									<div class="input-field col s12">
 										<p id="join_reason">{{app.reason}}</p>
@@ -58,14 +58,15 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="waves-effect btn" @click="approveVisitor(app.cid)">Approve</a>
-								<a href="#!" class="waves-effect btn-flat" @click="openRejectModal(app.cid)">Reject</a>
+								<a href="#!" class="btn-flat modal-close right">Cancel</a>
+								<a href="#!" class="btn-flat right" @click="openRejectModal(app.cid)">Reject</a>
+								<a href="#!" class="waves-effect waves-light btn right" @click="approveVisitor(app.cid)">Approve</a>
 							</div>
 						</div>
 						<div :id="`modal_reject_${app.cid}`" class="modal modal_visit">
 							<div class="modal-content">
-								<div class="modal_title">Reject Visiting Application</div>
-								<p>Are you sure you want to reject the visiting application from <strong>{{app.fname + ' ' + app.lname}}</strong>?  You must provide a reason for rejection below.</p>
+								<div class="modal_title">Reject Visiting Application?</div>
+								<p>This will reject the visiting application from <strong>{{app.fname + ' ' + app.lname}}</strong>.  You must provide a reason for rejection below. This will also be shown to the applicant.</p>
 								<div class="row row_no_margin">
 									<div class="input-field col s12">
 										<input :id="`reason_${app.cid}`" :name="`reason_${app.cid}`" v-model="reason[app.cid]" />
@@ -86,8 +87,7 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import {zabApi, vatusaApiAuth} from '@/helpers/axios.js';
+import {zabApi} from '@/helpers/axios.js';
 
 export default {
 	name: 'VisitorApplications',

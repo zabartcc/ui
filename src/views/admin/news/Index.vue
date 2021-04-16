@@ -3,13 +3,13 @@
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">News Articles</span></div>
-				<div class="col s4"><router-link to="/admin/news/new"><span class="btn right">New</span></router-link></div>
+				<div class="col s4"><router-link to="/admin/news/new"><span class="btn waves-effect waves-light right">New</span></router-link></div>
 			</div>
 		</div>
 		<div class="loading_container" v-if="!newsItems">
 			<Spinner />
 		</div>
-		<p class="no_news" v-else-if="newsItems && newsItems.length === 0">There are no news articles to display.</p>
+		<p class="no_news" v-else-if="newsItems && newsItems.length === 0">There are no news articles</p>
 		<div class="news_wrapper" v-else>
 			<table class="news_list striped">
 				<thead class="news_list_head">
@@ -35,11 +35,11 @@
 						</td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
 							<div class="modal-content">
-								<h4>Are you sure?</h4>
-								<p>Are you sure you want to delete this news article?</p>
+								<h4>Delete article?</h4>
+								<p>This will delete <strong>{{news.title}}</strong> completely</p>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="waves-effect btn" @click="deleteNews(news.uriSlug)">I'm sure</a>
+								<a href="#!" class="waves-effect btn" @click="deleteNews(news.uriSlug)">Delete</a>
 								<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
 							</div>
 						</div>
@@ -98,7 +98,7 @@ export default {
 		async deleteNews(slug) {
 			const {data} = await zabApi.delete(`/news/${slug}`);
 			if(data.ret_det.code === 200) {
-				this.toastSuccess('News article successfully deleted');
+				this.toastSuccess('News article deleted');
 
 				setTimeout(() => M.Modal.getInstance(document.querySelector('.modal_delete')).close(), 500);
 				await this.getNews();

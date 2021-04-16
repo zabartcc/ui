@@ -5,14 +5,14 @@
 		</div>
 		<EventAssignmentTable v-for="category in positionCategories" :category="category" :key="category" />
 		<div class="card-content assignment_cta">
-			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign-ups for this event are now closed</div>
-			<div v-else-if="!user.data" class="sign_up_err">Please log in to sign up</div>
+			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign-ups for this event are closed</div>
+			<div v-else-if="!user.data" class="sign_up_err">Log in to sign up</div>
 			<div v-else-if="user.data.member === false">You are not a member of ZAB</div>
 			<div v-else-if="assignedPositions">You have been assigned a position. Contact the EC if you need to cancel.</div>
 			<div v-else-if="requestedPositions" class="sign_up_err">
 				You have requested<br />
-				{{currentUserRequests || 'No preference'}}<br /><br />
-				<a href="#" @click.prevent="deleteRequest()" class="btn btn-small waves-effect waves-light">Delete Request</a>
+				{{currentUserRequests || 'No preference'}}<br />
+				<button @click="deleteRequest()" class="btn btn-small waves-effect waves-light btn_delete">Delete Request</button>
 			</div>
 			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Request Position</button>
 		</div>
@@ -90,7 +90,7 @@ export default {
 				const requests = this.chips.chipsData.map(chip => chip.tag);
 				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/signup`, {requests});
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Request successfully submitted');
+					this.toastSuccess('Request submitted');
 
 					await this.getPositions();
 					this.$nextTick(() => {
@@ -111,7 +111,7 @@ export default {
 				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/signup`);
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Request successfully deleted');
+					this.toastSuccess('Request deleted');
 					await this.getPositions();
 				} else {
 					this.toastError(data.ret_det.message);
@@ -152,6 +152,7 @@ export default {
 
 <style scoped lang="scss">
 .assignment_cta {
+	padding: 1em!important;
 	text-align: center;
 }
 
@@ -171,6 +172,10 @@ export default {
 	.dropdown-content {
 		width:auto !important;
 	}
+}
+
+.btn_delete {
+	margin-top: .5em;
 }
 
 .modal-footer {

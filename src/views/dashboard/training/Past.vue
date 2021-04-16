@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="!pastSessions">
 			<Spinner />
 		</div>
-		<p class="no_sessions" v-else-if="pastSessions && pastSessions.length === 0">You have not completed a training session yet.</p>
+		<p class="no_sessions" v-else-if="pastSessions && pastSessions.length === 0">You have not completed any training sessions yet</p>
 		<div class="session_wrapper" v-else>
 			<table class="session_list striped">
 				<thead class="session_list_head">

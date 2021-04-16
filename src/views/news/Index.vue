@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="newsItems === null">
 			<Spinner />
 		</div>
-		<p class="no_news" v-else-if="newsItems && newsItems.length === 0">There are no news articles to display.</p>
+		<p class="no_news" v-else-if="newsItems && newsItems.length === 0">There have been no news articles yet</p>
 		<div class="news_wrapper" v-else>
 			<table class="news_list striped">
 				<thead class="news_list_head">

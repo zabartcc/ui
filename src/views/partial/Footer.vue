@@ -6,7 +6,7 @@
 				<p>This site works best in Google Chrome, Mozilla Firefox, and Microsoft Edge.</p>
 				<p>If you are still using Internet Explorer, please consider switching to a more modern browser.</p>
 			</div>
-			<img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="">
+			<img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="Albuquerque ARTCC Logo Footer" draggable="false" height="70" width="70">
 		</div>
 		<div class="footer_pride">
 			<div class="wrapper">
@@ -16,7 +16,7 @@
 					<div class="bi_flag"></div>
 				</div>
 				<a href="#lgbt_modal" class="modal-trigger">
-					The Albuquerque ARTCC stands with the LGBTQIA+ community on VATSIM.
+					The Albuquerque ARTCC stands with the LGBTQIA+ community on VATSIM
 				</a>
 			</div>
 		</div>
@@ -27,7 +27,7 @@
 				<!-- Made with ♥ and (╯°□°）╯︵ ┻━┻ by Alexandra Robison and Daan Janssen. -->
 				<div><span ref="zulu_time">{{footerTime}}</span></div>
 				<div class="hide-on-small-only">•</div>
-				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank">GitLab</a></p>
+				<p class="footer_notice">Open source on <a href="https://gitlab.com/albuquerque-web-stack/" class="white-text" target="_blank" rel="noopener noreferrer">GitLab</a></p>
 			</div>
 		</div>
 		<div id="lgbt_modal" class="modal">
@@ -98,10 +98,6 @@ body .page-footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-
-	img {
-		height: 70px;
-	}
 }
 
 #footer_text, .footer-copyright {
@@ -111,7 +107,8 @@ body .page-footer {
 
 #footer_text {
 	margin-right: 1em;
-	line-height: 1.1em;
+	line-height: 16px;
+
 	p + p {
 		margin-top: 0.4em;
 	}

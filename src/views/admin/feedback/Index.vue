@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="unapproved === null">
 			<Spinner />
 		</div>
-		<p class="no_unapproved" v-else-if="unapproved && unapproved.length === 0">There is no unapproved feedback to display.</p>
+		<p class="no_unapproved" v-else-if="unapproved && unapproved.length === 0">There is no unapproved feedback</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="feedback_list striped">
 				<thead class="feedback_list_head">
@@ -48,7 +48,7 @@
 										</div>
 										<div class="input-field col s6">
 											<p id="submission">{{dtLong(feedback.createdAt)}}</p>
-											<label for="submission" class="active">Submission Date</label>
+											<label for="submission" class="active">Date</label>
 										</div>
 										<div class="input-field col s6">
 											<p id="submission">{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
@@ -70,8 +70,8 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="waves-effect btn" @click="approveFeedback(feedback._id)">Approve</a>
-								<a href="#!" class="waves-effect btn-flat" @click="rejectFeedback(feedback._id)">Reject</a>
+								<a href="#!" class="waves-effect waves-light btn" @click="approveFeedback(feedback._id)">Approve</a>
+								<a href="#!" class="waves-effect waves-light btn-flat" @click="rejectFeedback(feedback._id)">Reject</a>
 							</div>
 						</div>
 					</tr>
@@ -115,7 +115,7 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/feedback/approve/${id}`);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Feedback successfully approved');
+					this.toastSuccess('Feedback approved');
 					await this.getUnapproved();
 					this.$refs.recentFeedback.getFeedback();
 					this.$nextTick(() => {
@@ -132,7 +132,7 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/feedback/reject/${id}`);
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Feedback successfully rejected');
+					this.toastSuccess('Feedback rejected');
 					await this.getUnapproved();
 					this.$refs.recentFeedback.getFeedback();
 					this.$nextTick(() => {
