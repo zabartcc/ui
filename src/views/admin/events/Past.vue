@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="!historicEvents">
 			<Spinner />
 		</div>
-		<p v-else-if="historicEvents && historicEvents.length == 0" class="no_event">There are no past events to display.</p>
+		<p v-else-if="historicEvents && historicEvents.length == 0" class="no_event">There have been no events yet</p>
 		<div v-else>
 			<table class="event_list striped">
 				<thead class="event_list_head">
@@ -36,11 +36,11 @@
 						</td>
 						<div :id="`modal_historic_${i}`" class="modal modal_delete">
 							<div class="modal-content">
-								<h4>Are you sure?</h4>
-								<p>Events shouldn't be deleted unless they contain errors or were canceled. If you're not sure, click cancel. Otherwise, continue.</p>
+								<h4>Delete Event?</h4>
+								<p>This will delete the event and all information associated to it. Events should not be deleted unless they were canceled. If you are unsure, click cancel.</p>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="waves-effect btn" @click="deleteEvent(event.url)">I'm sure</a>
+								<a href="#!" class="waves-effect btn" @click="deleteEvent(event.url)">Delete</a>
 								<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
 							</div>
 						</div>
@@ -86,6 +86,18 @@ export default {
 			});
 			this.historicEvents = data.data.events;
 			this.eventAmount = data.data.amount;
+		},
+		async deleteEvent(slug) {
+			try {
+				const {data} = await zabApi.delete(`/event/${slug}`);
+				if(data.ret_det.code === 200) {
+					this.toastSuccess('Event deleted');
+				} else {
+					this.toastError(data.ret_det.message);
+				}
+			} catch(e) {
+				console.log(e);
+			}
 		}
 	},
 	watch: {
