@@ -40,10 +40,10 @@
 		<div class="card">
 			<div class="card-content">
 				<span class="card-title">
-					Leaderboard - {{new Date().toLocaleString('en-US', {
+					{{new Date().toLocaleString('en-US', {
 						month: 'long',
 						timeZone: 'UTC', 
-					})}}
+					})}} Leaderboard
 				</span>
 			</div>
 			<div class="card-tabs">
@@ -80,7 +80,6 @@
 					<p>There is no one on the leaderboard yet. Go control already!</p>
 				</div>
 			</div>
-			<p class="as_of">As Of: {{getZuluTime()}}z</p>
 		</div>
 	</div>
 </template>

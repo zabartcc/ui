@@ -256,6 +256,7 @@ export default {
 	padding: 0.2rem 0.4rem;
 	font-size: 1rem;
 	margin-left: .25em;
+	user-select: none;
 }
 
 .hover {

@@ -97,15 +97,13 @@ export default {
 			}
 		},
 		viewRequests(date) {
-			if(date.requests.length > 0) {
-				const d = new Date(date.date + ' UTC'),
-					newDate = d.toISOString().slice(0,10).replaceAll('-', '');
+			const d = new Date(date.date + ' UTC'),
+				newDate = d.toISOString().slice(0,10).replaceAll('-', '');
 
-				this.$router.push(`/ins/training/requests/${newDate}`);
-			}
+			this.$router.push(`/ins/training/requests/${newDate}`);
 		},
 		calculateDates() {
-			const d = new Date(Date.now()),
+			const d = new Date((new Date()).toISOString()),
 				currentDay = d.getDay(),
 				diff = d.getDate() - currentDay,
 				startOfWeek = d.setDate(diff);
