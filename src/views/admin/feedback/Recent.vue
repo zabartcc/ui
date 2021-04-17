@@ -34,36 +34,36 @@
 								<div class="modal_title">Feedback for {{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</div>
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
-									<div class="input-field col s6">
+									<div class="input-field col s12 m6">
 										<p id="first_name"><span v-if="feedback.anonymous"><strong>Anonymous</strong><i> ({{feedback.name}})</i></span><span v-else>{{feedback.name}}</span></p>
 										<label for="first_name" class="active">Submitter Name</label>
 									</div>
-									<div class="input-field col s6">
+									<div class="input-field col s12 m6">
 										<p id="cid">{{feedback.submitter}}</p>
 										<label for="cid" class="active">Submitter CID</label>
 									</div>
-									<div class="input-field col s6">
+									<div class="input-field col s12 m6">
 										<p id="email">{{feedback.email}}</p>
 										<label for="email" class="active">Submitter Email</label>
 									</div>
-									<div class="input-field col s6">
+									<div class="input-field col s12 m6">
 										<p id="submission">{{dtLong(feedback.createdAt)}}</p>
 										<label for="submission" class="active">Date</label>
 									</div>
-									<div class="input-field col s6">
+									<div class="input-field col s12 m6">
 										<p id="submission">{{feedback.controller === null ? feedback.controllerCid : feedback.controller.fname + ' ' + feedback.controller.lname}}</p>
 										<label for="submission" class="active">Controller</label>
 									</div>
-									<div class="input-field col s6">
+									<div class="input-field col s12 m6">
 										<p id="position">{{feedback.position || '—'}}</p>
 										<label for="position" class="active">Position</label>
 									</div>
-									<div class="input-field col s6">
+									<div class="input-field col s12 m6">
 										<p id="rating">{{convertRating(feedback.rating)}}</p>
 										<label for="rating" class="active">Rating</label>
 									</div>
 									<div class="input-field col s12">
-										<pre id="comments">{{feedback.comments || '—'}}</pre>
+										<div id="comments">{{feedback.comments || '—'}}</div>
 										<label for="comments" class="active">Comments</label>
 									</div>
 								</div>
@@ -173,9 +173,9 @@ export default {
 		text-transform: capitalize;
 	}
 	.row {
-		.input-field p, .input-field pre {
+		.input-field p, .input-field div {
 			margin: .33em 0 0 0;
-			line-break: anywhere;
+			line-break: normal;
 		}
 	}
 }
