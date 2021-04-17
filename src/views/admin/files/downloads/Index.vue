@@ -32,7 +32,7 @@
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
 						<div class="modal-content">
 							<h4>Delete download?</h4>
-							<p>This will delete <b>{{doc.name}}</b> from the downloads section completely</p>
+							<p>This will delete <b>{{file.name}}</b> from the downloads section completely</p>
 						</div>
 						<div class="modal-footer">
 							<a href="#!" class="waves-effect waves-light btn" @click="deleteDownload(file._id)">Delete</a>
