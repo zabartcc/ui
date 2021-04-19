@@ -20,36 +20,36 @@
 					</div>
 					<div class="calendar-body">
 						<div class="week">
-							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date" @click="viewRequests(date)">
+							<router-link :to="`/ins/training/requests/${(new Date(date.date + ' UTC')).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date">
 								<div class="week_date">
 									<span :class="[((new Date(date.date).getTime()) - (new Date().getTime()) < 0 ? 'past_date' : ''), (new Date(Date.now()).getDay() === new Date(date.date).getDay() ? 'current_date' : '')]">
-										{{new Date(date.date).toDateString().slice(3, 10)}}
+										{{new Date(date.date).toUTCString().slice(5, 11)}}
 									</span>
 								</div>
 								<div :class="`date_requests ${(new Date(Date.UTC(date.date)).getTime()) - (new Date().getTime()) < 0 ? 'past' : ''}`" v-if="date.requests.length > 0">
 									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
 								</div>
-							</div>
+							</router-link>
 						</div>
 						<div class="week">
-							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date" @click="viewRequests(date)">
+							<router-link :to="`/ins/training/requests/${(new Date(date.date + ' UTC')).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date">
 								<div class="week_date">
-									{{new Date(date.date).toDateString().slice(3, 10)}}
+									{{new Date(date.date).toUTCString().slice(5, 11)}}
 								</div>
 								<div class="date_requests" v-if="date.requests.length > 0">
 									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
 								</div>
-							</div>
+							</router-link>
 						</div>
 						<div class="week">
-							<div :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date" @click="viewRequests(date)">
+							<router-link :to="`/ins/training/requests/${(new Date(date.date + ' UTC')).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date">
 								<div class="week_date">
-									{{new Date(date.date).toDateString().slice(3, 10)}}
+									{{new Date(date.date).toUTCString().slice(5, 11)}}
 								</div>
 								<div class="date_requests" v-if="date.requests.length > 0">
 									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
 								</div>
-							</div>
+							</router-link>
 						</div>
 					</div>
 				</div>
@@ -96,12 +96,6 @@ export default {
 				console.log(e);
 			}
 		},
-		viewRequests(date) {
-			const d = new Date(date.date + ' UTC'),
-				newDate = d.toISOString().slice(0,10).replaceAll('-', '');
-
-			this.$router.push(`/ins/training/requests/${newDate}`);
-		},
 		calculateDates() {
 			const d = new Date((new Date()).toISOString()),
 				currentDay = d.getDay(),
@@ -142,6 +136,7 @@ export default {
 		display: flex;
 
 		.day {
+			display: block;
 			width: 14.285%;
 			min-width: 90px;
 			height: 5em;
@@ -149,10 +144,6 @@ export default {
 			text-align: right;
 			border-bottom: 1px solid $gray_light;
 			transition: .3s ease;
-
-			&.has_request {
-				cursor: pointer;
-			}
 
 			&+.day {
 				border-left: 1px solid $gray_light;

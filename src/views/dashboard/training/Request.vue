@@ -108,7 +108,7 @@ export default {
 						endTime: `${this.$refs.end_date.value}`
 					});
 					if(data.ret_det.code === 200) {
-						this.toastSuccess('Training Session requested');
+						this.toastSuccess('Training session requested');
 						this.$router.push('/dash/training');
 						this.makingRequest = false;
 					} else {
