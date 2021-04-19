@@ -34,7 +34,7 @@
 					<p>There are no departures/arrivals online right now</p>
 				</div>
 			</div>
-			<p class="as_of">As Of: {{getZuluTime()}}z</p>
+			<p class="as_of">As of {{getZuluTime()}}z</p>
 		</div>
 
 		<div class="card">
@@ -121,7 +121,7 @@ export default {
 			this.getZuluTime(); // update time when refreshing who's online
 		},
 		getZuluTime() {
-			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'});
+			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		},
 		sec2hms(secs) {
 			if(!secs) return null;
