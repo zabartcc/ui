@@ -20,7 +20,7 @@
 					</div>
 					<div class="calendar-body">
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${(new Date(date.date + ' UTC')).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${(new Date(date.date)).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date">
 								<div class="week_date">
 									<span :class="[((new Date(date.date).getTime()) - (new Date().getTime()) < 0 ? 'past_date' : ''), (new Date(new Date().getTime()).getUTCDate() === new Date(date.date).getUTCDate() ? 'current_date' : '')]">
 										{{new Date(date.date).toUTCString().slice(5, 11)}}
@@ -32,7 +32,7 @@
 							</router-link>
 						</div>
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${(new Date(date.date + ' UTC')).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${(new Date(date.date)).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date">
 								<div class="week_date">
 									{{new Date(date.date).toUTCString().slice(5, 11)}}
 								</div>
@@ -42,7 +42,7 @@
 							</router-link>
 						</div>
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${(new Date(date.date + ' UTC')).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${(new Date(date.date)).toISOString().slice(0,10).replaceAll('-', '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date">
 								<div class="week_date">
 									{{new Date(date.date).toUTCString().slice(5, 11)}}
 								</div>
@@ -86,7 +86,7 @@ export default {
 
 				for(const request of data.data) {
 					for(const date of this.dates) {
-						if(date.date === new Date(new Date(request.startTime)).toISOString().slice(0,10)) {
+						if(date.date.slice(0,10) === new Date(new Date(request.startTime)).toISOString().slice(0,10)) {
 							date.requests.push(request);
 						}
 					}
@@ -104,7 +104,7 @@ export default {
 			
 			for(let i = 0; i < this.days; i++) {
 				this.dates.push({
-					"date": (new Date(startOfWeek + (i * 1000 * 60 * 60 * 24)).toISOString()).slice(0,10),
+					"date": (new Date(startOfWeek + (i * 1000 * 60 * 60 * 24)).toISOString()),
 					"requests": []
 				});
 			}
