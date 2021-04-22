@@ -4,8 +4,8 @@
 		<span>{{pilot.dep}} - {{pilot.dest}}</span>
 		<div class="flight_info">
 			<h6>Flight Details - {{pilot.callsign}}</h6>
-			<p>{{pilot.route}}</p>
-			<p class="remarks">{{pilot.remarks}}</p>
+			<p>{{pilot.route || '—'}}</p>
+			<p class="remarks">{{pilot.remarks || '—'}}</p>
 		</div>
 	</div>
 </template>
