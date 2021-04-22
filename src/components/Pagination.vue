@@ -1,9 +1,9 @@
 <template>
 	<div class="row row_no_margin">
-		<div class="page_info col s12 l6">
+		<div class="page_info col s12 m4">
 			Showing {{minEntries}}–{{maxEntries}} of {{amount}} entries
 		</div>
-		<div class="col s12 l6">
+		<div class="col s12 m8">
 			<ul class="pagination right">
 				<li :class="isFirstPage ? 'disabled' : 'waves-effect'"><a @click="isFirstPage ? '' : $parent.page = $parent.page - 1"><i class="material-icons">chevron_left</i></a></li>
 				<li v-for="pageNo in showPages" class="waves-effect" :class="pageNo == page ? 'active' : ''" :key="pageNo" @click="$parent.page = pageNo"><a>{{pageNo}}</a></li>
@@ -72,8 +72,18 @@ export default {
 	margin-top: 1.5em;
 }
 
+.pagination {
+	text-align: right;
+}
+
 .material-icons {
 	user-select: none;
 	margin-top: -3px;
+}
+
+@media only screen and (max-width: 600px) {
+	.pagination {
+		text-align: left;
+	}
 }
 </style>
