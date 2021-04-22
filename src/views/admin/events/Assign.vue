@@ -68,7 +68,7 @@
 		<div id="modal_add_signup" class="modal">
 			<div class="modal-content">
 				<h4>Manually add sign-up</h4>
-				<p>Enter a CID to manually sign a controller up for this event. Please note that the controller is not a home or visiting controller, they cannot be added.</p>
+				<p>Enter a CID to manually sign a controller up for this event. The controller must be a home or visiting controller.</p>
 				<div class="row row_no_margin">
 					<form @submit.prevent=addSignup>
 						<div class="input-field col s12">
@@ -159,6 +159,7 @@ export default {
 			try {
 				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`);
 				if(data.ret_det.code === 200) {
+					this.cid = null;
 					this.toastSuccess('Sign-up manually added');
 
 					await this.getEventData();
@@ -261,11 +262,6 @@ export default {
 	button {
 		margin: .25em;
 	}
-}
-
-.modal {
-	min-width: 340px;
-	width: 30%;
 }
 
 .btn_add_signup {

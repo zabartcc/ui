@@ -11,7 +11,7 @@
 					<label for="bio" class="active">Biography</label>
 				</div>
 				<div class="input-field col s12">
-					<input type="submit" class="btn right" value="submit" />
+					<input type="submit" class="btn right" value="Update" />
 				</div>
 			</form>
 		</div>

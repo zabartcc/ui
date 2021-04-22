@@ -28,7 +28,7 @@
 						<td>{{dtLong(request.endTime)}}</td>
 						<td class="options">
 							<a :href="`#modal_request_${i}`" data-position="top" data-tooltip="View Request" class="tooltipped modal-trigger">
-								<i class="material-icons" @click="changeTimes(i)">search</i>
+								<i class="material-icons" @click="setTimes(i)">search</i>
 							</a>
 						</td>
 						<div :id="`modal_request_${i}`" class="modal modal_request">
@@ -36,15 +36,15 @@
 								<div class="modal_title">Training Request Details</div>
 								<div class="request">
 									<div class="row row_no_margin" id="request">
-										<div class="input-field col s12 l6">
+										<div class="input-field col s12 m6">
 											<p id="student">{{request.student.fname + ' ' + request.student.lname}} <span v-if="request.student.vis === true">(VC)</span></p>
 											<label for="student" class="active">Student</label>
 										</div>
-										<div class="input-field col s12 l6">
-											<p id="cid">{{request.milestone.name}} ({{request.milestone.code}})</p>
-											<label for="cid" class="active">Milestone</label>
+										<div class="input-field col s12 m6">
+											<p id="milestone">{{request.milestone.name}} ({{request.milestone.code}})</p>
+											<label for="milestone" class="active">Milestone</label>
 										</div>
-										<div class="input-field col s12 l6">
+										<div class="input-field col s12 m6">
 											<div id="start_time">
 												<div class="date">{{formatHtmlDate(request.startTime)}}</div>
 												<div class="controls">
@@ -54,7 +54,7 @@
 											</div>
 											<label for="start_time" class="active">Start Time (Zulu)</label>
 										</div>
-										<div class="input-field col s12 l6">
+										<div class="input-field col s12 m6">
 											<div id="end_time">
 												<div class="date">{{formatHtmlDate(request.endTime)}}</div>
 												<div class="controls">
@@ -149,29 +149,29 @@ export default {
 			const d = new Date(value).toISOString();
 			return d.replace('T', ' ').slice(0,16);
 		},
-		changeTimes(i) {
-			this.times = {
+		setTimes(i) {
+			this.oldTimes = {
 				startTime: this.requests[i].startTime,
 				endTime: this.requests[i].endTime
 			};
 		},
 		increaseTime(type, i) {
-			if(type === 'start'  && this.requests[i].startTime !== this.times.endTime && new Date(this.requests[i].startTime) < new Date(this.requests[i].endTime)) {
+			if(type === 'start'  && this.requests[i].startTime !== this.oldTimes.endTime && new Date(this.requests[i].startTime) < new Date(this.requests[i].endTime)) {
 				let d = new Date(this.requests[i].startTime);
 				d.setUTCMinutes(d.getUTCMinutes() + 15);
 				this.requests[i].startTime = d.toISOString();
-			} else if(type === 'end' && this.requests[i].endTime !== this.times.endTime && new Date(this.requests[i].endTime) >= new Date(this.requests[i].startTime)) {
+			} else if(type === 'end' && this.requests[i].endTime !== this.oldTimes.endTime && new Date(this.requests[i].endTime) >= new Date(this.requests[i].startTime)) {
 				let d = new Date(this.requests[i].endTime);
 				d.setUTCMinutes(d.getUTCMinutes() + 15);
 				this.requests[i].endTime = d.toISOString();
 			}
 		},
 		decreaseTime(type, i) {
-			if(type === 'start'  && this.requests[i].startTime !== this.times.startTime && new Date(this.requests[i].startTime) <= new Date(this.requests[i].endTime)) {
+			if(type === 'start'  && this.requests[i].startTime !== this.oldTimes.startTime && new Date(this.requests[i].startTime) <= new Date(this.requests[i].endTime)) {
 				let d = new Date(this.requests[i].startTime);
 				d.setUTCMinutes(d.getUTCMinutes() - 15);
 				this.requests[i].startTime = d.toISOString();
-			} else if(type === 'end' && this.requests[i].endTime !== this.times.startTime && new Date(this.requests[i].endTime) > new Date(this.requests[i].startTime)) {
+			} else if(type === 'end' && this.requests[i].endTime !== this.oldTimes.startTime && new Date(this.requests[i].endTime) > new Date(this.requests[i].startTime)) {
 				let d = new Date(this.requests[i].endTime);
 				d.setUTCMinutes(d.getUTCMinutes() - 15);
 				this.requests[i].endTime = d.toISOString();
@@ -198,13 +198,8 @@ export default {
 	margin-bottom: .5em;
 }
 
-.modal_request {
-	min-width: 300px;
-	width: 35%;
-}
-
 table {
-	min-width: 500px;
+	min-width: 600px;
 }
 
 .request {
@@ -220,7 +215,6 @@ table {
 	}
 
 	#start_time, #end_time {
-
 		.date {
 			margin-top: .5em;
 			height: 2.3rem;
@@ -231,13 +225,17 @@ table {
 		}
 
 		.controls {
-			height: 10px;
-			margin-top: -2.4em;
-			margin-left: 92%;
+			height: 15px;
+			margin-top: -2.5em;
+			margin-left: calc(100% - 20px);
+
+			div:first-child {
+				margin-top: -5px;
+			}
 
 			div:not(:first-child) {
 				margin-top: 0px;
-				padding-bottom: 5px;
+				
 			}
 
 			div {
@@ -251,7 +249,7 @@ table {
 
 	.row {
 		.input-field p {
-			line-break: anywhere;
+			white-space: pre-wrap;
 			margin: .33em 0 0 0;
 		}
 	}

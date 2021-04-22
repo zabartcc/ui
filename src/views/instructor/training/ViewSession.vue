@@ -31,15 +31,15 @@
 						<input type="text" :value="session.position" disabled id="position" />
 						<label for="position" class="active">Position</label>
 					</div>
-					<div class="input-field col s12 m6 l4">
+					<div class="input-field col s12 m4">
 						<input type="text" :value="`${session.movements || 'Not Specified'}`" disabled id="movements" />
 						<label for="movements" class="active">Movements</label>
 					</div>
-					<div class="input-field col s12 m6 l4">
+					<div class="input-field col s12 m4">
 						<input type="text" :value="formatLocation(session.location)" disabled id="location" />
 						<label for="location" class="active">Location</label>
 					</div>
-					<div class="input-field col s12 m6 l4">
+					<div class="input-field col s12 m4">
 						<input type="text" :value="formatProgress(session.progress)" disabled id="progress" />
 						<label for="progress" class="active">Progress</label>
 					</div>

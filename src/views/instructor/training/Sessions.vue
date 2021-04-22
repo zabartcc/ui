@@ -130,9 +130,6 @@ export default {
 }
 
 .modal_session {
-	min-width: 300px;
-	width: 35%;
-
 	.row {
 		.input-field p {
 			line-break: normal;

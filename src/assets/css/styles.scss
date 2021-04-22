@@ -158,3 +158,9 @@ select:not(.materialize-select):not(.browser-default) {
 .material-icons {
 	vertical-align: middle;
 }
+
+.modal {
+	min-width: 300px;
+	width: 66%;
+	max-width: 700px;
+}

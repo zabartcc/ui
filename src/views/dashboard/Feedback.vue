@@ -140,11 +140,6 @@ export default {
 	margin-bottom: .5em;
 }
 
-.modal_feedback {
-	min-width: 300px;
-	width: 35%;
-}
-
 .feedback_list {
 	min-width: 400px;
 }
@@ -152,6 +147,10 @@ export default {
 .feedback_wrapper {
 	width: 100%;
 	overflow: auto;
+}
+
+#position {
+	text-transform: capitalize;
 }
 
 .feedback {
@@ -162,9 +161,6 @@ export default {
 		width: 100%;
 	}
 
-	#position {
-		text-transform: capitalize;
-	}
 	.row {
 		.input-field p, .input-field div {
 			margin: .33em 0 0 0;
