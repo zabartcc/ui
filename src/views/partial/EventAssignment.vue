@@ -14,17 +14,17 @@
 				{{currentUserRequests || 'No preference'}}<br />
 				<button @click="deleteRequest()" class="btn btn-small waves-effect waves-light btn_delete">Delete Request</button>
 			</div>
-			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Request Position</button>
+			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Sign up</button>
 		</div>
 		<div id="assignment_modal" class="modal assignment_modal">
 			<div class="modal-content">
-				<h4>Request Position</h4>
+				<h4>Sign up for {{event.name}}</h4>
 				<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty.</p>
-				<p>Please be advised that requests are just that — requests. The events coordinator may place you on any position depending on multiple factors.</p>
+				<p>Please be advised that requests are just that — requests. The events coordinator may place you on any (or no) position depending on multiple factors.</p>
 				<div class="chips chips-placeholder"></div>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">SIGN UP</a>
+				<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">Sign up</a>
 				<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
 			</div>
 		</div>
