@@ -125,11 +125,6 @@ export default {
 	font-style: italic;
 }
 
-.modal_absence, .modal_delete {
-	min-width: 300px;
-	width: 35%;
-}
-
 .absence {
 	#comments {
 		font-family: inherit;
@@ -140,7 +135,7 @@ export default {
 
 	.row {
 		.input-field p {
-			line-break: anywhere;
+			white-space: pre-wrap;
 			margin: 0;
 		}
 	}

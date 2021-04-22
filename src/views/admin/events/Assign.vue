@@ -163,13 +163,10 @@ export default {
 					this.toastSuccess('Sign-up manually added');
 
 					await this.getEventData();
-					this.cid = null;
 					M.FormSelect.init(document.querySelectorAll('select'), {});
 					setTimeout(() => M.Modal.getInstance(document.querySelector('#modal_add_signup')).close(), 500);
 				} else {
 					this.toastError(data.ret_det.message);
-
-					this.cid = null;
 				}
 			} catch(e) {
 				console.log(e);

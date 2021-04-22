@@ -174,11 +174,6 @@ table tbody {
 	font-style: italic;
 }
 
-.modal_unapproved {
-	min-width: 300px;
-	width: 35%;
-}
-
 .feedback_title {
 	color: #9e9e9e;
 	font-size: .8rem;
@@ -197,7 +192,7 @@ table tbody {
 	.row {
 		.input-field p, .input-field div {
 			margin: .33em 0 0 0;
-			line-break: normal;
+			white-space: pre-wrap;
 		}
 	}
 }

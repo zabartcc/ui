@@ -134,9 +134,4 @@ export default {
 	font-size: 0.9rem;
 	margin-top: 1.5em;
 }
-
-.modal_delete {
-	min-width: 400px;
-	width: 30%;
-}
 </style>

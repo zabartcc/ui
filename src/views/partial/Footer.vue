@@ -146,7 +146,6 @@ body .page-footer {
 }
 
 #lgbt_modal {
-	max-width: 750px;
 	color: #000;
 
 	p {

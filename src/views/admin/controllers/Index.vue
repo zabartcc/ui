@@ -137,11 +137,14 @@ export default {
 	width: 100%;
 	overflow: auto;
 }
+
 .input-field {
 	margin-top: 0;
 }
+
 .name {
 	color: $primary-color;
+	
 	font-weight: 700;
 }
 .rating {
@@ -160,10 +163,5 @@ table tbody {
 .type_controller {
 	vertical-align: top;
 	margin-top: .4em;
-}
-
-.modal_delete {
-	min-width: 340px;
-	width: 30%;
 }
 </style>

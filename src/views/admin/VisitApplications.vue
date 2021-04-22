@@ -148,21 +148,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.modal {
-	min-width: 340px;
-	width: 30%;
-}
-
 .modal_title {
 	font-size: 1.8em;
 	margin-bottom: .5em;
 }
-
-.modal_feedback {
-	min-width: 300px;
-	width: 35%;
-}
-
 .no_visit {
 	padding: 0 1em 1em 1em;
 	margin-top: -1em;
@@ -171,15 +160,13 @@ export default {
 
 #join_reason {
 	font-family: inherit;
-	white-space: pre-wrap;
-	overflow: hidden;
 	width: 100%;
 }
 
 .row {
-	.input-field p, .input-field pre {
+	.input-field p {
 		margin: .33em 0 0 0;
-		line-break: anywhere;
+		white-space: pre-wrap;
 	}
 }
 </style>

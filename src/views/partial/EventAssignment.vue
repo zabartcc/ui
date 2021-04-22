@@ -161,9 +161,6 @@ export default {
 }
 
 .assignment_modal {
-	min-width: 300px;
-	width: 35%;
-
 	.chips {
 		height: 30px;
 		margin-bottom: 2rem;

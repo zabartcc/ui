@@ -152,11 +152,6 @@ export default {
 	margin-bottom: .5em;
 }
 
-.modal_feedback {
-	min-width: 300px;
-	width: 35%;
-}
-
 .feedback_wrapper {
 	width: 100%;
 	overflow: auto;
