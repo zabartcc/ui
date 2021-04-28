@@ -87,11 +87,11 @@
 					<div class="row row_no_margin" v-show="step === 3">
 						<div class="input-field col s12">
 							<textarea id="studentNotes" class="materialize-textarea" data-length="3000" v-model="session.studentNotes"></textarea>
-							<label for="studentNotes" class="active">Student Notes <i class="material-icons tooltipped" data-position="right" data-tooltip="Notes visible to the Student">help</i></label>
+							<label for="studentNotes" class="active">Student Notes <i class="material-icons tooltipped" data-position="right" data-tooltip="Notes visible to the student">help</i></label>
 						</div>
 						<div class="input-field col s12">
 							<textarea id="insNotes" class="materialize-textarea" data-length="3000" v-model="session.insNotes"></textarea>
-							<label for="insNotes" class="active">Instructor Notes <i class="material-icons tooltipped" data-position="right" data-tooltip="Notes visible to Training Staff only">help</i></label>
+							<label for="insNotes" class="active">Instructor Notes <i class="material-icons tooltipped" data-position="right" data-tooltip="Notes visible to training staff only">help</i></label>
 						</div>
 					</div>
 					<div class="row row_no_margin">

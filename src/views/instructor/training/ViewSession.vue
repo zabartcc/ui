@@ -96,8 +96,8 @@ export default {
 
 <style scoped lang="scss">
 input:not(.browser-default):disabled, textarea.materialize-textarea:disabled {
-	color: #444;
-	-webkit-text-fill-color: #444;
+	color: #333;
+	-webkit-text-fill-color: #333;
 	opacity: 1; /* required on iOS */
 }
 </style>

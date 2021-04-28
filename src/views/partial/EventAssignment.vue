@@ -7,14 +7,14 @@
 		<div class="card-content assignment_cta">
 			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign-ups for this event are closed</div>
 			<div v-else-if="!user.data" class="sign_up_err">Log in to sign up</div>
-			<div v-else-if="user.data.member === false">You are not a member of ZAB</div>
-			<div v-else-if="assignedPositions">You have been assigned a position. Contact the EC if you need to cancel.</div>
-			<div v-else-if="requestedPositions" class="sign_up_err">
+			<div v-else-if="user.data.member === false" class="sign_up_err">You are not a member of ZAB</div>
+			<div v-else-if="assignedPositions" class="sign_up_err">You have been assigned a position. Contact the EC if you need to cancel.</div>
+			<div v-else-if="requestedPositions" class="requested_pos">
 				You have requested<br />
 				{{currentUserRequests || 'No preference'}}<br />
 				<button @click="deleteRequest()" class="btn btn-small waves-effect waves-light btn_delete">Delete Request</button>
 			</div>
-			<button v-else class="btn waves-effect waves-light modal-trigger" data-target="assignment_modal">Sign up</button>
+			<button v-else class="btn waves-effect waves-light modal-trigger btn_signup" data-target="assignment_modal">Sign up</button>
 		</div>
 		<div id="assignment_modal" class="modal assignment_modal">
 			<div class="modal-content">
@@ -156,7 +156,12 @@ export default {
 	text-align: center;
 }
 
-.sign_up_err {
+.sign_up_err, .btn_signup {
+	margin-top: -1em;
+}
+
+.requested_pos {
+	margin-top: -1em;
 	line-height: 1.8;
 }
 
