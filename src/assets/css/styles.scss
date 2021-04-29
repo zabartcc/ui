@@ -103,12 +103,22 @@ body {
 table {
 	thead {
 		border-bottom: 1px solid #666;
+		td, th {
+			padding: .75em 1em;
+		}
 	}
 	tr {
 		td, th {
 			padding: .75em 1em;
 		}
 	} 
+	&.medium {
+		tr, thead {
+			td, th {
+				padding: .5em 1em;
+			}
+		} 
+	}
 	&.compact {
 		tr {
 			td, th {

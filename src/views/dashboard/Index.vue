@@ -22,6 +22,26 @@
 					<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
 				</button>
 			</div>
+			<span class="section_title">My Last 20 Sessions</span>
+			<table class="medium hover striped" v-if=controllingSessions>
+				<thead>
+					<th>Position</th>
+					<th>Sign On</th>
+					<th>Sign Off</th>
+					<th>Length</th>
+				</thead>
+				<tbody>
+					<tr v-for="session in controllingSessions" :key="session.timeStart">
+						<td>{{session.position}}</td>
+						<td>{{dtLong(session.timeStart)}}</td>
+						<td>{{dtLong(session.timeEnd)}}</td>
+						<td>{{sec2hms((new Date(session.timeEnd).getTime() - new Date(session.timeStart).getTime())/1000)}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="loading_container" v-else>
+				<Spinner />
+			</div>
 		</div>
 	</div>
 </template>
@@ -34,7 +54,8 @@ export default {
 	data() {
 		return {
 			token: '',
-			discordConnected: false
+			discordConnected: false,
+			controllingSessions: null,
 		};
 	},
 	computed: {
@@ -45,6 +66,7 @@ export default {
 	async mounted() {
 		this.token = this.user.data.idsToken || 'None Set';
 		await this.getDiscordStatus();
+		await this.getControllingSessions();
 	},
 	methods: {
 		async generateToken() {
@@ -59,6 +81,10 @@ export default {
 		async getDiscordStatus() {
 			const { data: discordData } = await zabApi.get('/user/discord');
 			this.discordConnected = discordData.data;
+		},
+		async getControllingSessions() {
+			const { data: sessionData } = await zabApi.get('/user/sessions');
+			this.controllingSessions = sessionData.data;
 		},
 		showToken() {
 			document.getElementById('token_wrap').classList.remove('hidden');
@@ -79,6 +105,16 @@ export default {
 			} else {
 				this.toastError(unlinkData.ret_det.message);
 			}
+		},
+		sec2hms(secs) {
+			if(!secs) return null;
+			let hours = Math.floor(secs / 3600);
+			if(hours < 10) {
+				hours = `00${hours}`.slice(-2);
+			}
+			const minutes = `0${Math.round((secs / 60) % 60)}`.slice(-2);
+			const seconds = `0${secs % 60}`.slice(-2);
+			return `${hours}:${minutes}:${seconds}`;
 		},
 		...mapActions('user', [
 			'getUser'
