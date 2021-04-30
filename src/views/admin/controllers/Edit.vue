@@ -176,14 +176,14 @@ export default {
 		async updateController() {
 			try {
 				if(!this.oiAvail) {
-					this.toastError('Those Operating Initials are currently in use.');
+					this.toastError('Operating initials already in use');
 				} else {
 					const {data} = await zabApi.put(`/controller/${this.controller.cid}`, {
 						form: this.form
 					});
 	
 					if(data.ret_det.code === 200) {
-						this.toastSuccess('Controller successfully updated');
+						this.toastSuccess('Controller updated');
 					} else {
 						this.toastError(data.ret_det.message);
 					}

@@ -164,7 +164,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Controller successfully updated');
+					this.toastSuccess('Controller updated');
 				} else {
 					this.toastError(data.ret_det.message);
 				}
@@ -196,6 +196,7 @@ export default {
 	background: #eaeaea;
 	color: $gray_medium;
 	user-select: none;
+	cursor: pointer;
 
 	&.active {
 		&.cert_senior {
