@@ -154,6 +154,10 @@ const routes = [
 				component: () => import('../views/admin/controllers/Edit.vue')
 			},
 			{
+				path: 'activity',
+				component: () => import('../views/admin/controllers/Activity.vue')
+			},
+			{
 				path: 'events',
 				component: () => import('../views/admin/events/Index.vue')
 			},
