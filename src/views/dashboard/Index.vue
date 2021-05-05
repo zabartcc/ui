@@ -22,26 +22,30 @@
 					<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
 				</button>
 			</div>
-			<span class="section_title">My Last 20 Sessions</span>
-			<table class="medium hover striped" v-if=controllingSessions>
-				<thead>
-					<th>Position</th>
-					<th>Sign On</th>
-					<th>Sign Off</th>
-					<th>Length</th>
-				</thead>
-				<tbody>
-					<tr v-for="session in controllingSessions" :key="session.timeStart">
-						<td>{{session.position}}</td>
-						<td>{{dtLong(session.timeStart)}}</td>
-						<td>{{dtLong(session.timeEnd)}}</td>
-						<td>{{sec2hms((new Date(session.timeEnd).getTime() - new Date(session.timeStart).getTime())/1000)}}</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="loading_container" v-else>
-				<Spinner />
-			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-content">
+			<span class="card-title">Recent Connections</span>
+		</div>
+		<table class="medium hover striped" v-if="controllingSessions">
+			<thead>
+				<th>Position</th>
+				<th>Sign On</th>
+				<th>Sign Off</th>
+				<th>Length</th>
+			</thead>
+			<tbody>
+				<tr v-for="session in controllingSessions" :key="session.timeStart">
+					<td>{{session.position}}</td>
+					<td>{{dtLong(session.timeStart)}}</td>
+					<td>{{dtLong(session.timeEnd)}}</td>
+					<td>{{sec2hms((new Date(session.timeEnd).getTime() - new Date(session.timeStart).getTime()) / 1000)}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="loading_container" v-else>
+			<Spinner />
 		</div>
 	</div>
 </template>
