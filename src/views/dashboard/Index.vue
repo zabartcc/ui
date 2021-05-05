@@ -28,24 +28,26 @@
 		<div class="card-content">
 			<span class="card-title">Recent Connections</span>
 		</div>
-		<table class="medium hover striped" v-if="controllingSessions">
-			<thead>
-				<th>Position</th>
-				<th>Sign On</th>
-				<th>Sign Off</th>
-				<th>Length</th>
-			</thead>
-			<tbody>
-				<tr v-for="session in controllingSessions" :key="session.timeStart">
-					<td>{{session.position}}</td>
-					<td>{{dtLong(session.timeStart)}}</td>
-					<td>{{dtLong(session.timeEnd)}}</td>
-					<td>{{sec2hms((new Date(session.timeEnd).getTime() - new Date(session.timeStart).getTime()) / 1000)}}</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="loading_container" v-else>
-			<Spinner />
+		<div class="table_wrapper">
+			<table class="medium hover striped" v-if="controllingSessions">
+				<thead>
+					<th>Position</th>
+					<th>Sign On</th>
+					<th>Sign Off</th>
+					<th>Length</th>
+				</thead>
+				<tbody>
+					<tr v-for="session in controllingSessions" :key="session.timeStart">
+						<td>{{session.position}}</td>
+						<td>{{dtLong(session.timeStart)}}</td>
+						<td>{{dtLong(session.timeEnd)}}</td>
+						<td>{{sec2hms((new Date(session.timeEnd).getTime() - new Date(session.timeStart).getTime()) / 1000)}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="loading_container" v-else>
+				<Spinner />
+			</div>
 		</div>
 	</div>
 </template>
@@ -219,6 +221,14 @@ export default {
 		left: 0;
 		margin-left: 6px;
 		margin-top: 7px;
+	}
+}
+
+.table_wrapper {
+	overflow: auto;
+
+	table {
+		min-width: 500px;
 	}
 }
 </style>

@@ -32,7 +32,7 @@
 						<label for="oi" class="active">Operating Initials</label>
 						<div class="oi_check right">
 							<i v-if="oiAvail == true" class="material-icons green-text">check_circle</i>
-							<i v-else class="material-icons red-text">remove_circle</i>
+							<i v-else class="material-icons red-text text-darken-1">remove_circle</i>
 						</div>
 					</div>
 					<div class="input-field col s12">

@@ -21,7 +21,7 @@
 				<tbody class="feedback_list_row">
 					<tr v-for="(feedback, i) in unapproved" :key="feedback._id">
 						<td>{{dtLong(feedback.createdAt)}}</td>
-						<td><span v-if="feedback.anonymous"><strong>Anonymous</strong><i> ({{feedback.name}})</i></span><span v-else>{{feedback.name}}</span></td>
+						<td><span v-if="feedback.anonymous"><strong>Anonymous</strong> ({{feedback.name}})</span><span v-else>{{feedback.name}}</span></td>
 						<td>{{feedback.controller == null ? 'Unknown' : feedback.controller.fname + ' ' + feedback.controller.lname}}</td>
 						<td>{{convertRating(feedback.rating)}}</td>
 						<td class="options">
@@ -35,7 +35,7 @@
 								<div class="feedback">
 									<div class="row row_no_margin" id="feedback">
 										<div class="input-field col s12 m6">
-											<p id="first_name">{{feedback.name}} <span v-if="feedback.anonymous"><i><strong>(Anonymous)</strong></i></span></p>
+											<p id="first_name"><span v-if="feedback.anonymous"><strong>Anonymous</strong> ({{feedback.name}})</span><span v-else>{{feedback.name}}</span></p>
 											<label for="first_name" class="active">Submitter Name</label>
 										</div>
 										<div class="input-field col s12 m6">

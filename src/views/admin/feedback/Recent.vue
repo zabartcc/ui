@@ -35,7 +35,7 @@
 								<div class="feedback">
 								<div class="row row_no_margin" id="feedback">
 									<div class="input-field col s12 m6">
-										<p id="first_name"><span v-if="feedback.anonymous"><strong>Anonymous</strong><i> ({{feedback.name}})</i></span><span v-else>{{feedback.name}}</span></p>
+										<p id="first_name"><span v-if="feedback.anonymous"><strong>Anonymous</strong> ({{feedback.name}})</span><span v-else>{{feedback.name}}</span></p>
 										<label for="first_name" class="active">Submitter Name</label>
 									</div>
 									<div class="input-field col s12 m6">

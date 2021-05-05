@@ -10,8 +10,8 @@
 				<div class="secondary-content"><i class="material-icons">people</i></div>
 			</router-link>
 			<router-link to="/admin/activity" class="collection-item">
-				Activity Report
-				<div class="secondary-content"><i class="material-icons">radio</i></div>
+				Controller Activity
+				<div class="secondary-content"><i class="material-icons">assessment</i></div>
 			</router-link>
 			<router-link to="/admin/files/documents" class="collection-item">
 				Documents

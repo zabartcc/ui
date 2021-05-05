@@ -4,28 +4,35 @@
 			<span class="card-title">Controller Activity Report</span>
 			<p>Showing controller activity since {{dLong(chkDate)}}</p>
 		</div>
-		<table class="medium"  v-if="report">
-			<thead>
-				<th>Controller</th>
-				<th>CID</th>
-				<th>Is Visitor?</th>
-				<th>Rating</th>
-				<th>Time</th>
-				<th>Join Date</th>
-			</thead>
-			<tbody>
-				<tr v-for="user of report" :class="[(user.tooLow)?'too_low':'',(user.protected)?'protected':'']" :key="user.cid">
-					<td>{{user.fname}} {{user.lname}}</td>
-					<td>{{user.cid}}</td>
-					<td>{{user.vis?'Yes':'No'}}</td>
-					<td>{{user.ratingShort}}</td>
-					<td>{{secondsToHms(user.total)}}</td>
-					<td>{{dLong(new Date(user.createdAt))}}</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="loading_container" v-else>
-			<Spinner />
+		<div class="table_wrapper">
+			<table class="medium striped" v-if="report">
+				<thead>
+					<th>Active?</th>
+					<th>Controller</th>
+					<th>CID</th>
+					<th>Visitor</th>
+					<th>Rating</th>
+					<th>Time</th>
+					<th>Join Date</th>
+				</thead>
+				<tbody>
+					<tr v-for="user of report" :class="[(user.tooLow)?'too_low':'',(user.protected)?'protected':'']" :key="user.cid">
+						<td>
+							<i class="material-icons green-text" v-if="!user.tooLow || user.protected">check</i>
+							<i class="material-icons red-text text-darken-1" v-else>close</i>
+						</td>
+						<td><router-link :to="`/controllers/${user.cid}`">{{user.fname}} {{user.lname}}</router-link></td>
+						<td>{{user.cid}}</td>
+						<td>{{user.vis?'Yes':'No'}}</td>
+						<td>{{user.ratingShort}}</td>
+						<td>{{secondsToHms(user.total)}}</td>
+						<td>{{dLong(new Date(user.createdAt))}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="loading_container" v-else>
+				<Spinner />
+			</div>
 		</div>
 	</div>
 </template>
@@ -47,11 +54,11 @@ export default {
 		this.report = reportData.data;
 	},
 	methods: {
-		secondsToHms: seconds => {
-			const days = Math.floor(seconds / 86400);
-			const remainderSeconds = seconds % 86400;
+		secondsToHms(secs){
+			const days = Math.floor(secs / 86400);
+			const remainderSeconds = secs % 86400;
 			const hms = new Date(remainderSeconds * 1000).toISOString().substring(11, 19);
-			return hms.replace(/^(\d+)/, h => `${Number(h) + days * 24}`.padStart(2, '0'));
+			return hms.replace(/^(\d+)/, h => `${+h + days * 24}`.padStart(2, '0'));
 		},
 		sec2hms(secs) {
 			if(!secs) return '00:00:00';
@@ -62,16 +69,21 @@ export default {
 			const minutes = `0${Math.round((secs / 60) % 60)}`.slice(-2);
 			const seconds = `0${secs % 60}`.slice(-2);
 			return `${hours}:${minutes}:${seconds}`;
-		},
+		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-	.too_low {
-		background: rgba($secondary-color-dark, 0.25);
+.protected {
+	background: rgba($accent-color, 0.25);
+}
+
+.table_wrapper {
+	overflow: auto;
+
+	table {
+		min-width: 700px;
 	}
-	.protected {
-		background: rgba($accent-color, 0.25);
-	}
+}
 </style>
