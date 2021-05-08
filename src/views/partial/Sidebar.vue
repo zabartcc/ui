@@ -143,7 +143,13 @@ export default {
 
 <style scoped lang="scss">
 .tabs-fixed-width {
-	overflow: visible;
+	overflow: hidden;
+
+	.tab {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
 }
 
 #atc_online, #pilots_online, #top_controllers, #top_positions {
@@ -153,6 +159,13 @@ export default {
 		font-style: italic;
 	}
 }
+
+#atc_online, #pilots_online {
+	p {
+		padding: 15px 10px 5px 10px;
+	}
+}
+
 .as_of {
 	padding: 10px;
 	margin-top: 0;
