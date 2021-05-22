@@ -47,6 +47,7 @@ export default {
 		async getDocument() {
 			const {data} = await zabApi.get(`/file/documents/${this.$route.params.slug}`);
 			this.document = data.data;
+			this.setTitle(this.document.name);
 		},
 	}
 };
