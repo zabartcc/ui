@@ -2,7 +2,7 @@
 	<router-view v-if=hasQueryCompleted></router-view>
 	<div v-else id="loading">
 		<div id="loading_box" class="z-depth-3">
-			<img :src="require('@/assets/images/icons/zab_icon_new.png')" alt="">
+			<img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo.png" alt="">
 			<h3>Please Wait...</h3>
 			<Spinner/>
 		</div>
