@@ -112,15 +112,11 @@ export default {
 				this.toastError(unlinkData.ret_det.message);
 			}
 		},
-		sec2hms(secs) {
-			if(!secs) return null;
-			let hours = Math.floor(secs / 3600);
-			if(hours < 10) {
-				hours = `00${hours}`.slice(-2);
-			}
-			const minutes = `0${Math.round((secs / 60) % 60)}`.slice(-2);
-			const seconds = `0${secs % 60}`.slice(-2);
-			return `${hours}:${minutes}:${seconds}`;
+		sec2hms(secs){
+			const days = Math.floor(secs / 86400);
+			const remainderSeconds = secs % 86400;
+			const hms = new Date(remainderSeconds * 1000).toISOString().substring(11, 19);
+			return hms.replace(/^(\d+)/, h => `${+h + days * 24}`.padStart(2, '0'));
 		},
 		...mapActions('user', [
 			'getUser'
