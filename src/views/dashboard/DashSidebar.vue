@@ -9,6 +9,10 @@
 				Edit Profile
 				<div class="secondary-content"><i class="material-icons">edit</i></div>
 			</router-link>
+			<router-link to="/ids" class="collection-item">
+				IDS
+				<div class="secondary-content"><i class="material-icons">computer</i></div>
+			</router-link>
 			<router-link to="/dash/training" class="collection-item">
 				Training Sessions
 				<div class="secondary-content"><i class="material-icons">insert_invitation</i></div>

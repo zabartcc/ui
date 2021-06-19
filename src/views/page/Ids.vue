@@ -6,21 +6,12 @@
 					<img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo.png" alt="Albuquerque ARTCC Logo" class="download_logo" height="150" width="150">
 					<p class="title">Albuquerque ARTCC — Information Display System</p>
 					<p class="description">
-						The ZAB Information Display System (IDS) is a program available to all home and visiting controllers within the Albuquerque ARTCC. It gives controllers a platform that provides them with information useful when controlling, and helps ease coordination with fellow controllers. <br /><br />Select your operating system below to download the program.<br />
+						The ZAB Information Display System (IDS) is a program that provides you with information useful when controlling and helps ease communication and coordination with fellow controllers. <br/><br />Select the download button for your operating system below to download and install the IDS.
 					</p>
 				</div>
 				<div class="row downloads_row">
 					<div class="col s12">
-						<button class="btn waves-effect waves-light download_button windows">DOWNLOAD FOR WINDOWS</button>
-					</div>
-					<div class="col s12">
-						<div class="other_downloads">or</div>
-					</div>
-					<div class="col s12">
-						<div class="smaller_download">Download for MacOS</div>
-					</div>
-					<div class="col s12">
-						<div class="smaller_download">Download for Linux</div>
+						<a class="btn waves-effect waves-light download_button windows" href="https://zabartcc.sfo3.digitaloceanspaces.com/ids/AlbuquerqueIDSInstall.exe" target="_blank">DOWNLOAD FOR WINDOWS</a>
 					</div>
 				</div>
 			</div>
@@ -99,7 +90,7 @@ export default {
 			background-color: $secondary-color;
 			width: 270px;
 			height: 40px;
-			font-size: 1.15rem;
+			font-size: 1.05rem;
 		}
 	}
 }
