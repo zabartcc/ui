@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<span class="card-title">Controller Dashboard</span>
 			<span class="section_title">IDS Token</span>
-			<div class="hidden" id="token_wrap" @mouseleave="hideToken">
+			<div class="hidden" id="token_wrap">
 				<code>{{token}}</code>
 				<span class="generate right" @click=generateToken><i class="material-icons">refresh</i></span>
 				<div id="click_to_see" @click="showToken">Click to view</div>
