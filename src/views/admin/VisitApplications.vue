@@ -75,7 +75,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="waves-effect btn" @click="rejectVisitor(app.cid)">Reject</a>
+								<a href="#!" class="waves-effect btn modal-close" @click="rejectVisitor(app.cid)">Reject</a>
 								<a href="#!" class="waves-effect btn-flat modal-close">Cancel</a>
 							</div>
 						</div>
@@ -116,7 +116,7 @@ export default {
 		async approveVisitor(cid) {
 			try {
 				await zabApi.put(`/controller/visit/${cid}`);
-				this.toastSuccess('Visitor successfully added to roster');
+				this.toastSuccess('Visiting application approved');
 				await this.getNewApplications();
 			} catch(e) {
 				console.log(e);
@@ -130,10 +130,9 @@ export default {
 					reason: this.reason[cid]
 				}});
 
-				this.toastSuccess('Application successfully rejected');
+				this.toastSuccess('Visiting application rejected');
 
 				await this.getNewApplications();
-				M.Modal.getInstance(document.querySelector(`#modal_reject_${cid}`)).close();
 			} catch(e) {
 				console.log(e);
 				this.toastError('Something went wrong, please try again');

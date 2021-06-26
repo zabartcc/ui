@@ -7,36 +7,41 @@
 				<p><b class="red-text">Important: </b>please ensure that you are allowed to visit per <a href="https://www.vatsim.net/documents/transfer-and-visiting-controller-policy" target="_blank"><b>VATSIM's Transfer and Visiting Controller Policy</b></a>. Any application that doesn't meet the requirements as outlined in that policy will be rejected.</p>
 				<button class="btn btn-waves login_button" @click="login">Login with VATSIM</button>
 			</div>
+			<div v-else-if="pendingApplication">
+				<p>
+					We have received your visiting application successfully! Our staff team will review your application as soon as possible. In the meantime, if you have any questions or concerns, please don't hesitate to <a class="mailto_link" href="mailto:datm@zabartcc.org">let the DATM know.</a>
+				</p>
+			</div>
 			<div v-else>
 				<div v-if="!user.data.isMem">
-					<div class="row" v-if="user.data">
+					<div class="row row_no_margin" v-if="user.data">
 						<div class="input-field col s12 m6">
-							<input id="fname" type="text" v-model="user.data.fname" ref="fname" disabled required>
+							<input id="fname" type="text" :value="user.data.fname" disabled required>
 							<label for="fname" class="active">First Name</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="lname" type="text" :value="user.data.lname" ref="lname" disabled required>
+							<input id="lname" type="text" :value="user.data.lname" disabled required>
 							<label for="lname" class="active">Last Name</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="cid" type="text" :value="user.data.cid" ref="cid" disabled required>
+							<input id="cid" type="text" :value="user.data.cid" disabled required>
 							<label for="cid" class="active">Controller ID</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="rating" type="text" :value="user.data.ratingLong" ref="rating" disabled required>
+							<input id="rating" type="text" :value="user.data.ratingLong" disabled required>
 							<label for="rating" class="active">Rating</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="email" type="email" :value="user.data.email" class="validate" ref="email" required>
+							<input id="email" type="email" :value="user.data.email" ref="email" class="validate" required>
 							<label for="email" class="active">Email</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="home" type="text" :value="user.data.facility" class="validate" ref="home" required>
+							<input id="home" type="text" v-model="form.facility" class="validate" required>
 							<label for="home">Home ARTCC/FIR</label>
 						</div>
 						<div class="input-field col s12">
 							<label for="reason">Why would you like to visit ZAB?</label>
-							<textarea id="reason" class="materialize-textarea validate" ref="reason" required></textarea>
+							<textarea id="reason" class="materialize-textarea validate" v-model="form.reason" required></textarea>
 						</div>
 						<div class="input-field col s12">
 							<button type="submit" class="btn right" @click.prevent="submitApplication" ref="submitButton">Submit</button>
@@ -60,24 +65,36 @@ export default {
 	title: 'Become A Visitor',
 	data() {
 		return {
+			pendingApplication: false,
+			form: {
+				facility: null,
+				reason: null
+			}
 		};
+	},
+	async mounted() {
+		await this.checkOpenApplications();
 	},
 	methods: {
 		async login() {
 			localStorage.setItem('redirect', this.$route.path);
 			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 1}`;
 		},
+		async checkOpenApplications() {
+			try {
+				const {data} = await zabApi.get('/controller/visit/status');
+
+				if(data !== 0) this.pendingApplication = true;
+			} catch(e) {
+				console.log(e);
+			}
+		},
 		async submitApplication() {
 			try {
 				this.$refs.submitButton.classList.add('disabled');
 				const {data} = await zabApi.post('/controller/visit', {
-					fname: this.$refs.fname.value,
-					lname: this.$refs.lname.value,
-					cid: this.$refs.cid.value,
-					rating: this.$refs.rating.value,
-					email: this.$refs.email.value,
-					home: this.$refs.home.value,
-					reason: this.$refs.reason.value
+					...this.form,
+					email: this.$refs.email.value
 				});
 
 				if(data.ret_det.code === 200) {
@@ -104,5 +121,9 @@ export default {
 	margin: 1em auto;
 	display: block;
 	width: 200px;
+}
+
+.mailto_link {
+	font-weight: 600;
 }
 </style>
