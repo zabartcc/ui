@@ -3,7 +3,6 @@
 		<div class="card-content" v-if="document !== null">
 			<span class="card-title">
 				{{document.name}}
-
 			</span>
 			<div class="document_date">
 				{{dtLong(document.updatedAt)}}

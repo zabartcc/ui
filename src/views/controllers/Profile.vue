@@ -5,9 +5,6 @@
 				<Spinner />
 			</div>
 		</div>
-		<div class="card-content not_found" v-else-if="!controller || !controller.isMem">
-			<h5>Controller Not Found</h5>
-		</div>
 		<div v-else>
 			<div class="card-content">
 				<div>
@@ -127,6 +124,7 @@ export default {
 				const {data: statsData} = await zabApi.get(`/controller/stats/${this.$route.params.cid}`);
 				this.stats = statsData.data;
 			}
+			if(!this.controller || !this.controller.isMem) this.$router.push('/404');
 			this.loading = false;
 		},
 		reduceControllerCerts: certs => {
