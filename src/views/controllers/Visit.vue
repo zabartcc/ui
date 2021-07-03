@@ -82,9 +82,8 @@ export default {
 		},
 		async checkOpenApplications() {
 			try {
-				const {data} = await zabApi.get('/controller/visit/status');
-
-				if(data !== 0) this.pendingApplication = true;
+				const {data: statusData} = await zabApi.get('/controller/visit/status');
+				this.pendingApplication = !!statusData.data;
 			} catch(e) {
 				console.log(e);
 			}
