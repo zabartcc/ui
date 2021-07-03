@@ -37,4 +37,4 @@ jobs:
       - name: Deploy image to cluster
         run: kubectl set image deployment/ui ui=ghcr.io/${{ github.repository }}/ui:${{ github.sha }} --record -n zab-web-stack
       - name: Verify deployment
-        run: kubectl rollout status deployment/ui
+        run: kubectl rollout status deployment/ui -n zab-web-stack
