@@ -25,6 +25,7 @@ jobs:
             ghcr.io/${{ github.repository }}/ui:master
             ghcr.io/${{ github.repository }}/ui:latest
   deploy-docker-image:
+    needs: build-docker-image
     runs-on: ubuntu-latest
     steps:
       - name: Initialize doctl
