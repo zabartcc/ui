@@ -21,9 +21,9 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/ui:${{ github.sha }}
-            ghcr.io/${{ github.repository }}/ui:master
-            ghcr.io/${{ github.repository }}/ui:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:master
+            ghcr.io/${{ github.repository }}:latest
   deploy-docker-image:
     needs: build-docker-image
     runs-on: ubuntu-latest
@@ -35,6 +35,6 @@ jobs:
       - name: Log into K8s cluster
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 tcs
       - name: Deploy image to cluster
-        run: kubectl set image deployment/ui ui=ghcr.io/${{ github.repository }}/ui:${{ github.sha }} --record -n zab-web-stack
+        run: kubectl set image deployment/ui ui=ghcr.io/${{ github.repository }}:${{ github.sha }} --record -n zab-web-stack
       - name: Verify deployment
         run: kubectl rollout status deployment/ui -n zab-web-stack
