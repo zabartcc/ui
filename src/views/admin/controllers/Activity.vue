@@ -25,7 +25,7 @@
 						<td>{{user.cid}}</td>
 						<td>{{user.vis?'Yes':'No'}}</td>
 						<td>{{user.ratingShort}}</td>
-						<td>{{secondsToHms(user.total)}}</td>
+						<td>{{secondsToHms(user.totalTime)}}</td>
 						<td>{{dLong(new Date(user.createdAt))}}</td>
 					</tr>
 				</tbody>
