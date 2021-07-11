@@ -15,6 +15,9 @@
   },
   "dependencies": {
     "@materializecss/materialize": "^1.0.0",
+    "@sentry/browser": "^6.8.0",
+    "@sentry/integrations": "^6.8.0",
+    "@sentry/tracing": "^6.8.0",
     "@toast-ui/editor": "^3.0.0",
     "@toast-ui/editor-plugin-table-merged-cell": "^3.0.0",
     "axios": "^0.21.1",
