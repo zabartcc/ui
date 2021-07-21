@@ -17,7 +17,7 @@
 						<tr>
 							<th>Controller</th>
 							<th>Preferences</th>
-							<th>Position</th>
+							<!-- <th>Position</th> -->
 							<th class="options">Options</th>
 						</tr>
 					</thead>
@@ -31,12 +31,6 @@
 							</td>
 							<td>
 								{{signup.requests.join(',  ') || 'None'}}
-							</td>
-							<td>
-								<select @change="assignPos($event, signup.user.cid)" class="materialize-select">
-									<option :selected="getAssignment(signup.user.cid) == false">No position</option>
-									<option v-for="position in event.positions" :key="position" :value="position.pos" :selected="getAssignment(signup.user.cid) === position.pos">{{position.pos}}</option>
-								</select>
 							</td>
 							<td class="options">
 								<a :href="`#modal_delete_${signup.user.cid}`" data-position="top" data-tooltip="Delete Sign-up" class="tooltipped modal-trigger">
@@ -57,11 +51,35 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="card-content">
+				<span class="card-title">Assignments</span>
+			</div>
+			<div class="position_table">
+				<table class="striped">
+					<thead>
+						<tr>
+							<th>Position</th>
+							<th>Controller</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="position in event.positions" :key="position.pos">
+							<td>{{position.pos}}</td>
+							<td>
+								<select name="" id="" @change="assignPos(position._id)" :ref="`pos_${position._id}`" class="materialize-select">
+									<option value="" :selected="!position.takenBy">Unassigned</option>
+									<option v-for="signup in event.signups" :key="signup.cid" :selected="position.takenBy === signup.cid" :value="signup.cid">{{signup.user.fname}} {{signup.user.lname}}</option>
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<div class="row row_no_margin">
 				<div class="input-field col s12 signups_submit">
-					<button type="submit" class="btn waves-effect waves-light right" @click="closeSignups" :disabled="event.open == false">Close</button>
-					<button type="submit" class="btn waves-effect waves-light right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Notify</button>
-					<button type="submit" class="btn-flat waves-effect waves-light right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button>
+					<!-- <button type="submit" class="btn waves-effect waves-light right" @click="closeSignups" :disabled="event.open == false">Close</button> -->
+					<button type="submit" class="btn waves-effect waves-light right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Send Notification Email</button>
+					<!-- <button type="submit" class="btn-flat waves-effect waves-light right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button> -->
 				</div>
 			</div>
 		</div>
@@ -70,7 +88,7 @@
 				<h4>Manually add sign-up</h4>
 				<p>Enter a CID to manually sign a controller up for this event. The controller must be a home or visiting controller.</p>
 				<div class="row row_no_margin">
-					<form @submit.prevent=addSignup>
+					<form @submit.prevent="addSignup">
 						<div class="input-field col s12">
 							<input type="text" id="cid" v-model="cid" required />
 							<label for="cid">Controller ID</label>
@@ -119,23 +137,6 @@ export default {
 		async getEventData() {
 			const {data} = await zabApi.get(`/event/${this.$route.params.slug}/positions`);
 			this.event = data.data;
-		},
-		async saveAssignments() {
-			try {
-				const positions = this.event.positions;
-				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/assign`, {
-					assignment: positions
-				});
-
-				if(data.ret_det.code === 200) {
-					this.toastSuccess('Position assignments saved');
-				} else {
-					this.toastError(data.ret_det.message);
-				}
-			} catch(e) {
-				console.log(e);
-			}
-			
 		},
 		async notifyAssignments() {
 			try {
@@ -186,48 +187,22 @@ export default {
 				console.log(e);
 			}
 		},
-		async closeSignups() {
-			try {
-				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/close`);
-				if(data.ret_det.code === 200) {
-					this.toastSuccess('Sign-ups closed');
-
-					await this.getEventData();
-				} else {
-					this.toastError(data.ret_det.message);
-				}
-			} catch(e) {
-				console.log(e);
+		async assignPos(pos) {
+			const update = await zabApi.put(`/event/${this.$route.params.slug}/assign`, {
+				position: pos,
+				cid: this.$refs[`pos_${pos}`].value,
+			});
+			if(update.data.ret_det.code === 200) {
+				this.toastSuccess(`Position ${update.data.data.pos} set.`);
+			} else {
+				this.toastError("An error occured, please try again.");
 			}
-		},
-		assignPos(e, user) {
-			const alreadyAssigned = this.event.positions.filter((pos) => { return typeof pos.takenBy === 'object' && pos.takenBy !== null && pos.takenBy.id == user;});
-			if(alreadyAssigned.length > 0) {
-				alreadyAssigned.forEach((pos) => {
-					pos.takenBy = null;
-				});
-			}
-			let pos = e.target.value;
-			let index = this.event.positions.findIndex((obj => obj.pos == pos));
-			this.event.positions[index].takenBy = user;
 		},
 		filterPos(userCerts) {
 			let certsArray = [];
 			userCerts.forEach(cert => certsArray.push(cert.code));
 			return this.event.positions.filter((pos) => { return certsArray.includes(pos.code); });
 		},
-		getAssignment(cid) {
-			if(this.event.positions) {
-				const assignedPos = this.event.positions.filter(p => p.takenBy === cid);
-				if(assignedPos.length) {
-					return assignedPos[0].pos;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
 	}
 };
 </script>

@@ -67,8 +67,8 @@ export default {
 			if(action.match(/%a/)) {
 				action = action.replace(/%a/, `<strong>${log.userAffected.fname} ${log.userAffected.lname}</strong>`);
 			}
-			if(action.match(/\*.+\*/)) {
-				action = action.replace(/\*(.+)\*/, `<strong>$1</strong>`);
+			if(action.match(/\*([^*]+)\*/g)) {
+				action = action.replace(/\*([^*]+)\*/g, `<strong>$1</strong>`);
 			}
 			return action;
 		}
