@@ -267,7 +267,7 @@ export default {
 			if(station.parsedMetar.wind.speedKt < 4) return 'Calm';
 			else if(!('speedKt' in station.parsedMetar.wind)) return 'Unknown';
 			const paddedWind = `0${station.parsedMetar.wind.direction}`.slice(-3);
-			return `${paddedWind}@${station.parsedMetar.wind.speedKt}`;
+			return `${paddedWind}@${station.parsedMetar.wind.speedKt}${(station.parsedMetar.wind.gust?`G${station.parsedMetar.wind.gust}`:'')}`;
 		},
 		getConditions: function(station) {
 			return (station.parsedMetar.visibility.miles > 3) ? `<i class="material-icons weather_icon">wb_sunny</i>VFR` : `<i class="material-icons weather_icon">wb_cloudy</i>IFR`;
