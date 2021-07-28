@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="!historicEvents">
 			<Spinner />
 		</div>
-		<p v-else-if="historicEvents && historicEvents.length == 0" class="no_event">There have been no events yet</p>
+		<p v-else-if="historicEvents && historicEvents.length == 0" class="no_event">There are no past events</p>
 		<div v-else>
 			<table class="event_list striped">
 				<thead class="event_list_head">

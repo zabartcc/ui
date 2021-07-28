@@ -28,8 +28,12 @@
 		<div class="card-content">
 			<span class="card-title">Recent Connections</span>
 		</div>
-		<div class="table_wrapper">
-			<table class="medium hover striped" v-if="controllingSessions">
+		<div class="loading_container" v-if="!controllingSessions">
+			<Spinner />
+		</div>
+		<p v-else-if="controllingSessions && controllingSessions.length === 0" class="no_sessions">There are no recent connections to display</p>
+		<div class="table_wrapper" v-else>
+			<table class="medium hover striped">
 				<thead>
 					<th>Position</th>
 					<th>Sign On</th>
@@ -45,9 +49,6 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="loading_container" v-else>
-				<Spinner />
-			</div>
 		</div>
 	</div>
 </template>
@@ -226,5 +227,11 @@ export default {
 	table {
 		min-width: 500px;
 	}
+}
+
+.no_sessions {
+	padding: 0 1em 1em 1em;
+	margin-top: -1em;
+	font-style: italic;
 }
 </style>
