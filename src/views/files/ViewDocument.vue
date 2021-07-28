@@ -63,7 +63,7 @@ export default {
 	width: 100%;
 	margin-top: 1em;
 	counter-reset: h2;
-	overflow: auto;
+	overflow: visible;
 
 	&:deep(.tui-editor-contents) {
 		font-family: "Lato", "Helvetica", sans-serif;
@@ -74,6 +74,10 @@ export default {
 		background-color: $gray_light;
 		padding: 0.125em;
 		color: $secondary-color-dark;
+	}
+
+	&:deep(h1) {
+		border-bottom: 2px solid #EBEBEB;
 	}
 
 	&:deep(h2) {
@@ -172,7 +176,8 @@ export default {
 	}
 
 	&:deep(table) {
-		width: 100%;
+		width: calc(100% + 30px);
+		margin-left: -15px;
 		display: table;
 		border-collapse: collapse;
 		border: none;
