@@ -2,9 +2,9 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Become a Visitor</span>
+			<p v-if="!user.isLoggedIn">Thank you for your interest in visiting the Albuquerque ARTCC. To apply for visiting status, click the button below to login and continue.<br /></p>
+			<p><b class="red-text">Important: </b>please ensure that you are allowed to visit per <a href="https://www.vatsim.net/documents/transfer-and-visiting-controller-policy" target="_blank"><b>VATSIM's Transfer and Visiting Controller Policy</b></a>. Any application that doesn't meet the requirements as outlined in that policy will be rejected.</p>
 			<div v-if="!user.isLoggedIn">
-				<p>Thank you for your interest in visiting the Albuquerque ARTCC. To apply for visiting status, click the button below to login and continue.</p><br />
-				<p><b class="red-text">Important: </b>please ensure that you are allowed to visit per <a href="https://www.vatsim.net/documents/transfer-and-visiting-controller-policy" target="_blank"><b>VATSIM's Transfer and Visiting Controller Policy</b></a>. Any application that doesn't meet the requirements as outlined in that policy will be rejected.</p>
 				<button class="btn btn-waves login_button" @click="login">Login with VATSIM</button>
 			</div>
 			<div v-else-if="pendingApplication">
@@ -13,6 +13,7 @@
 				</p>
 			</div>
 			<div v-else>
+				<br />
 				<div v-if="!user.data.isMem">
 					<div class="row row_no_margin" v-if="user.data">
 						<div class="input-field col s12 m6">
@@ -49,7 +50,7 @@
 					</div>
 				</div>
 				<div v-else>
-					<p>You already are a member of ZAB</p>
+					<p>You cannot apply to become a visitor since you're already a member of ZAB.</p>
 				</div>
 			</div>
 		</div>
