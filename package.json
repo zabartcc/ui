@@ -21,7 +21,7 @@
     "@toast-ui/editor": "^3.0.1",
     "@toast-ui/editor-plugin-table-merged-cell": "^3.0.0",
     "axios": "^0.21.1",
-    "chart.js": "^3.4.1",
+    "chart.js": "^3.5.0",
     "core-js": "^3.15.2",
     "flatpickr": "^4.6.9",
     "luxon": "^1.28.0",
