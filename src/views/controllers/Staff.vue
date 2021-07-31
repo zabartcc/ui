@@ -38,17 +38,17 @@
 						<div class="col s1 push-s5 border_right border_long hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
-						<div class="col s4 push-s4 border_top hide-on-med-and-down"></div>
+						<div class="col s6 push-s3 border_top hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
-						<div class="col s1 push-s4 border_left hide-on-med-and-down"></div>
-						<div class="col s4 push-s3 border_right hide-on-med-and-down"></div>
+						<div class="col s1 push-s3 border_left hide-on-med-and-down"></div>
+						<div class="col s4 push-s4 border_right hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
-						<div class="col s12 l4 push-l2">
+						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.ec" />
 						</div>
-						<div class="col s12 l4 push-l2">
+						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.fe" />
 						</div>
 					</div>
