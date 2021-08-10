@@ -30,12 +30,24 @@
 							<label for="instructor" class="active">Instructor Name</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="startTime" type="text" :value="dtLong(session.startTime)" required disabled>
-							<label for="startTime" class="active">Start Time</label>
+							<div id="start_time">
+								<div class="date">{{formatHtmlDate(session.startTime)}}</div>
+								<div class="controls">
+									<div><i class="material-icons" @click="increaseTime('start')">arrow_drop_up</i></div>
+									<div><i class="material-icons" @click="decreaseTime('start')">arrow_drop_down</i></div>
+								</div>
+							</div>
+							<label for="start_time" class="active">Start Time (Zulu)</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input id="endTime" type="text" :value="dtLong(session.endTime)" required disabled>
-							<label for="endTime" class="active">End Time</label>
+							<div id="end_time">
+								<div class="date">{{formatHtmlDate(session.endTime)}}</div>
+								<div class="controls">
+									<div><i class="material-icons" @click="increaseTime('end')">arrow_drop_up</i></div>
+									<div><i class="material-icons" @click="decreaseTime('end')">arrow_drop_down</i></div>
+								</div>
+							</div>
+							<label for="end_time" class="active">End Time (Zulu) </label>
 						</div>
 						<div class="input-field col s12 m6 milestone">
 							<select required disabled class="materialize-select">
@@ -43,7 +55,7 @@
 							</select>
 							<label>Milestone</label>
 						</div>
-						<div class="input-field col s12 m6">
+						<div class="input-field col s12 m6 position">
 							<input id="position" type="text" required v-model="session.position">
 							<label for="position" class="active">Position</label>
 						</div>
@@ -121,6 +133,9 @@ export default {
 	},
 	async mounted() {
 		await this.getSessionDetails();
+
+		this.setTimes();
+
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.Tooltip.init(document.querySelectorAll('.tooltipped'), {
 			margin: 0
@@ -170,6 +185,38 @@ export default {
 				}
 			} catch(e) {
 				console.log(e);
+			}
+		},
+		formatHtmlDate(value) {
+			const d = new Date(value).toISOString();
+			return d.replace('T', ' ').slice(0,16);
+		},
+		setTimes() {
+			this.oldTimes = {
+				startTime: this.session.startTime,
+				endTime: this.session.endTime
+			};
+		},
+		increaseTime(type) {
+			if(type === 'start'  && this.session.startTime !== this.oldTimes.endTime && new Date(this.session.startTime) < new Date(this.session.endTime)) {
+				let d = new Date(this.session.startTime);
+				d.setUTCMinutes(d.getUTCMinutes() + 15);
+				this.session.startTime = d.toISOString();
+			} else if(type === 'end' && this.session.endTime !== this.oldTimes.endTime && new Date(this.session.endTime) >= new Date(this.session.startTime)) {
+				let d = new Date(this.session.endTime);
+				d.setUTCMinutes(d.getUTCMinutes() + 15);
+				this.session.endTime = d.toISOString();
+			}
+		},
+		decreaseTime(type) {
+			if(type === 'start'  && this.session.startTime !== this.oldTimes.startTime && new Date(this.session.startTime) <= new Date(this.session.endTime)) {
+				let d = new Date(this.session.startTime);
+				d.setUTCMinutes(d.getUTCMinutes() - 15);
+				this.session.startTime = d.toISOString();
+			} else if(type === 'end' && this.session.endTime !== this.oldTimes.startTime && new Date(this.session.endTime) > new Date(this.session.startTime)) {
+				let d = new Date(this.session.endTime);
+				d.setUTCMinutes(d.getUTCMinutes() - 15);
+				this.session.endTime = d.toISOString();
 			}
 		}
 	}
@@ -226,5 +273,42 @@ label {
 		margin-top: 1.25em;
 		background: lightgray;
 	}
+}
+
+#start_time, #end_time {
+	.date {
+		margin-top: .5em;
+		height: 2.3rem;
+		padding-top: .3em;
+		border-bottom: 1px solid #9E9E9E;
+		font-size: 16px;
+		line-height: 1.15;
+	}
+
+	.controls {
+		height: 15px;
+		margin-top: -2.5em;
+		margin-left: calc(100% - 20px);
+
+		div:first-child {
+			margin-top: -5px;
+		}
+
+		div:not(:first-child) {
+			margin-top: 0px;
+			
+		}
+
+		div {
+			cursor: pointer;
+			user-select: none;
+			height: 15px;
+			margin-top: -10px;
+		}
+	}
+}
+
+.milestone, .position {
+	margin-top: 3em;
 }
 </style>
