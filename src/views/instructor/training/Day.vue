@@ -30,6 +30,9 @@
 							<a :href="`#modal_request_${i}`" data-position="top" data-tooltip="View Request" class="tooltipped modal-trigger">
 								<i class="material-icons" @click="setTimes(i)">search</i>
 							</a>
+							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Request" class="tooltipped modal-trigger red-text text-darken-2">
+								<i class="material-icons">delete</i>
+							</a>
 						</td>
 						<div :id="`modal_request_${i}`" class="modal modal_request">
 							<div class="modal-content">
@@ -76,6 +79,16 @@
 								<a href="#!" class="waves-effect btn-flat modal-close">Cancel</a>
 							</div>
 						</div>
+						<div :id="`modal_delete_${i}`" class="modal modal_request">
+							<div class="modal-content">
+								<div class="modal_title">Delete Request?</div>
+								Are you sure you want to delete <b>{{request.student.fname + ' ' + request.student.lname}}</b>'s training request from <b>{{dtLong(request.startTime)}}</b> until <b>{{dtLong(request.endTime)}}</b>?
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="waves-effect btn modal-close" @click="deleteRequest(request._id)">Delete</a>
+								<a href="#!" class="waves-effect btn-flat modal-close">Cancel</a>
+							</div>
+						</div>
 					</tr>
 				</tbody>
 			</table>
@@ -109,7 +122,7 @@ export default {
 	methods: {
 		async getRequests() {
 			try {
-				const {data} = await zabApi.get(`/training/request/${this.$route.params.date}`);
+				const { data } = await zabApi.get(`/training/request/${this.$route.params.date}`);
 				this.requests = data.data;
 			} catch(e) {
 				console.log(e);
@@ -117,7 +130,7 @@ export default {
 		},
 		async takeSession(i, id) {
 			try {
-				const {data} = await zabApi.post(`/training/request/take/${id}`, {
+				const { data } = await zabApi.post(`/training/request/take/${id}`, {
 					startTime: this.requests[i].startTime,
 					endTime: this.requests[i].endTime,
 					instructor: this.$store.state.user.user.data._id
@@ -132,6 +145,20 @@ export default {
 				console.log(e);
 			}
 			
+		},
+		async deleteRequest(id) {
+			try {
+				const { data } = await zabApi.delete(`/training/request/${id}`);
+
+				if(data.ret_det.code === 200) {
+					this.toastSuccess('Training request deleted');
+					await this.getRequests();
+				} else {
+					this.toastError(data.ret_det.message);
+				}
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		verifyRoute() {
 			const d = this.$route.params.date;

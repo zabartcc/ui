@@ -33,7 +33,7 @@
 						<label for="description" class="active">Description</label>
 					</div>
 					<div class="input-field col s12">
-						<div class="row">
+						<div class="row row_no_margin">
 							<div class="col s12 l6 push-l3">
 								<div class="card card_positions z-depth-2">
 									<p class="positions_title">Event Positions</p>
@@ -63,10 +63,10 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import {DateTime} from 'luxon';
+import { DateTime } from 'luxon';
 
 export default {
 	data() {

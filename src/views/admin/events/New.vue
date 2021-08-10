@@ -1,9 +1,9 @@
 <template>
-	<div class="card" v-if=form>
+	<div class="card">
 		<div class="card-content">
 			<span class="card-title">New Event</span>
 			<div class="row row_no_margin">
-				<form method="post" enctype="multipart/form-data" @submit.prevent=submitForm>
+				<form method="post" enctype="multipart/form-data" @submit.prevent="submitForm">
 					<div class="input-field col s12">
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name">Name</label>
@@ -106,7 +106,7 @@ export default {
 				}
 			});
 
-			if(eventCreate.ret_det.code != 200) {
+			if(eventCreate.ret_det.code !== 200) {
 				this.toastError(eventCreate.ret_det.message);
 			} else {
 				this.toastSuccess('Event created');
@@ -116,13 +116,13 @@ export default {
 	},
 	computed: {
 		centerPos() {
-			return this.form.positions.filter((pos) => pos.type == "CTR");
+			return this.form.positions.filter((pos) => pos.type === "CTR");
 		},
 		traconPos() {
-			return this.form.positions.filter((pos) => pos.type == "APP");
+			return this.form.positions.filter((pos) => pos.type === "APP");
 		},
 		localPos() {
-			return this.form.positions.filter((pos) => pos.type == "TWR" || pos.type == "GND" || pos.type == "DEL");
+			return this.form.positions.filter((pos) => pos.type === "TWR" || pos.type === "GND" || pos.type === "DEL");
 		}
 	}
 };

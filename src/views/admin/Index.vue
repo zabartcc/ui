@@ -74,9 +74,9 @@
 	</div>
 </template>
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import { Chart, registerables } from 'chart.js';
-// import {DateTime} from 'luxon';
+
 export default {
 	name: 'AdminDash',
 	title: 'Admin Dashboard',

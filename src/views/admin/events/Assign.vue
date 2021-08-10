@@ -77,9 +77,7 @@
 			</div>
 			<div class="row row_no_margin">
 				<div class="input-field col s12 signups_submit">
-					<!-- <button type="submit" class="btn waves-effect waves-light right" @click="closeSignups" :disabled="event.open == false">Close</button> -->
 					<button type="submit" class="btn waves-effect waves-light right modal-trigger" data-target="modal_notify" :disabled="event.signups.length == 0 || event.submitted == true">Send Notification Email</button>
-					<!-- <button type="submit" class="btn-flat waves-effect waves-light right" @click="saveAssignments" :disabled="event.signups.length == 0">Save</button> -->
 				</div>
 			</div>
 		</div>

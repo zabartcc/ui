@@ -6,7 +6,7 @@
 				<Spinner />
 			</div>
 			<div class="session_wrapper" v-else>
-				<div class="row">
+				<div class="row row_no_margin">
 					<div class="input-field col s12 m6">
 						<input type="text" :value="session.student ? `${session.student.fname} ${session.student.lname}` : session.studentCid" disabled id="student" />
 						<label for="student" class="active">Student</label>
@@ -43,8 +43,6 @@
 						<input type="text" :value="formatProgress(session.progress)" disabled id="progress" />
 						<label for="progress" class="active">Progress</label>
 					</div>
-				</div>
-				<div class="row row_no_margin">
 					<div class="input-field col s12">
 						<textarea class="materialize-textarea" disabled id="studentNotes" :value="session.studentNotes || '–'"></textarea>
 						<label for="studentNotes" class="active">Notes</label>

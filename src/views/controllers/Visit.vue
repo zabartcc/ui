@@ -9,7 +9,7 @@
 			</div>
 			<div v-else-if="pendingApplication">
 				<p>
-					We have received your visiting application successfully! Our staff team will review your application as soon as possible. In the meantime, if you have any questions or concerns, please don't hesitate to <a class="mailto_link" href="mailto:datm@zabartcc.org">let the DATM know.</a>
+					<br />We have received your visiting application successfully! Our staff team will review your application as soon as possible. In the meantime, if you have any questions or concerns, please don't hesitate to <a class="mailto_link" href="mailto:datm@zabartcc.org">let the DATM know.</a>
 				</p>
 			</div>
 			<div v-else>
@@ -98,7 +98,7 @@ export default {
 				});
 
 				if(data.ret_det.code === 200) {
-					this.toastSuccess('Visitor application successfully submitted');
+					this.toastSuccess('Visitor application submitted');
 					this.$router.push('/');
 				} else {
 					this.toastError(data.ret_det.message);

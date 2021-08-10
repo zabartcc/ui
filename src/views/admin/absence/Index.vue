@@ -9,7 +9,7 @@
 		<div class="loading_container" v-if="absences === null">
 			<Spinner />
 		</div>
-		<p class="no_absence" v-else-if="absences && absences.length === 0">There are no controllers on Leave of Absence.</p>
+		<p class="no_absence" v-else-if="absences && absences.length === 0">There are no controllers on Leave of Absence</p>
 		<div class="loa_wrapper" v-else>
 			<table class="loa_list striped">
 				<thead class="feedback_list_head">
