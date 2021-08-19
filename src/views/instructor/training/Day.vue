@@ -30,7 +30,7 @@
 							<a :href="`#modal_request_${i}`" data-position="top" data-tooltip="View Request" class="tooltipped modal-trigger">
 								<i class="material-icons" @click="setTimes(i)">search</i>
 							</a>
-							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Request" class="tooltipped modal-trigger red-text text-darken-2">
+							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Request" class="tooltipped modal-trigger red-text text-darken-2" v-if="requiresAuth(['atm', 'datm', 'ta', 'ins'])">
 								<i class="material-icons">delete</i>
 							</a>
 						</td>
@@ -97,7 +97,8 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
+import { mapState } from 'vuex';
 
 export default {
 	name: 'TrainingRequestsDay',
@@ -203,7 +204,20 @@ export default {
 				d.setUTCMinutes(d.getUTCMinutes() - 15);
 				this.requests[i].endTime = d.toISOString();
 			}
+		},
+		requiresAuth(roles) {
+			const havePermissions = roles.some(r => this.user.data.roleCodes.includes(r));
+			if(havePermissions) {
+				return true;
+			} else {
+				return false;
+			}
 		}
+	},
+	computed: {
+		...mapState('user', [
+			'user'
+		])
 	}
 };
 </script>
