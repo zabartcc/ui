@@ -227,7 +227,7 @@ export default {
 
 		.type_controller {
 			color: rgba(0, 0, 0, 0.87);
-			margin-right: -10px;
+			margin-right: -14px;
 		}
 
 		th {

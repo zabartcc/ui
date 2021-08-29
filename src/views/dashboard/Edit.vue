@@ -2,10 +2,7 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Edit Controller Profile</span>
-			<div class="loading_container" v-if="form.bio === null">
-				<Spinner />
-			</div>
-			<form class="row row_no_margin user_info" v-else @submit.prevent=updateProfile>
+			<form class="row row_no_margin user_info" @submit.prevent="updateProfile">
 				<div class="input-field col s12">
 					<textarea id="bio" class="materialize-textarea" data-length="2000" v-model="form.bio"></textarea>
 					<label for="bio" class="active">Biography</label>
