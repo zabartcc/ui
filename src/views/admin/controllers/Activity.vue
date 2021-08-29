@@ -66,7 +66,7 @@
 										</span>
 									</div>
 									<div class="certifications training_request" v-else>
-										Observer has made <b>{{controller.totalRequests}}</b> training requests in the last 60 days
+										Observer has made <b>{{controller.totalRequests}}</b> training request(s) in the last 60 days
 									</div>
 								</div>
 							</router-link>
@@ -244,6 +244,7 @@ export default {
 					color: #a8a8a8;
 					font-size: 24px;
 					margin-top: 0;
+					margin-left: -3px;
 				}
 			}
 		}
