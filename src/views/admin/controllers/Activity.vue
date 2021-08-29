@@ -180,9 +180,9 @@ export default {
 			let array = this.report;
 
 			if(this.sortBy && this.descending) {
-				array.sort((a, b) => (a[this.sortBy] > b[this.sortBy]) - (a[this.sortBy] < b[this.sortBy]));
-			} else if(this.sortBy && !this.descending) {
 				array.sort((a, b) => (b[this.sortBy] > a[this.sortBy]) - (b[this.sortBy] < a[this.sortBy]));
+			} else if(this.sortBy && !this.descending) {
+				array.sort((a, b) => (a[this.sortBy] > b[this.sortBy]) - (a[this.sortBy] < b[this.sortBy]));
 			}
 
 			return array;
