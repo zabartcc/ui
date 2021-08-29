@@ -20,11 +20,11 @@
 						<i class="material-icons active" v-else-if="sortBy === 'rating' && descending">arrow_drop_down</i>
 						<i class="material-icons active" v-else-if="sortBy === 'rating' && !descending">arrow_drop_up</i>
 					</th>
-					<th @click="sort('fiftyTime')">
+					<th @click="sort('totalTime')">
 						Time
-						<i class="material-icons" v-if="sortBy !== 'fiftyTime'">unfold_more</i>
-						<i class="material-icons active" v-else-if="sortBy === 'fiftyTime' && descending">arrow_drop_down</i>
-						<i class="material-icons active" v-else-if="sortBy === 'fiftyTime' && !descending">arrow_drop_up</i>
+						<i class="material-icons" v-if="sortBy !== 'totalTime'">unfold_more</i>
+						<i class="material-icons active" v-else-if="sortBy === 'totalTime' && descending">arrow_drop_down</i>
+						<i class="material-icons active" v-else-if="sortBy === 'totalTime' && !descending">arrow_drop_up</i>
 					</th>
 					<th @click="sort('createdAt')">
 						Join Date
@@ -41,6 +41,7 @@
 							<i class="material-icons red-text text-darken-1" v-else>close</i>
 						</td>
 						<td>
+							<i class="type_controller material-icons right">{{controller.vis?'work':'home'}}</i>
 							<router-link :to="`/controllers/${controller.cid}`" class="controller_name">
 								<span class="bold">{{controller.fname}} {{controller.lname}}</span>
 								<div class="controller_info">
@@ -51,6 +52,9 @@
 										<div class="title">Certifications</div>
 										<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
 											{{cert.name}}
+										</span>
+										<span v-if="controller.certifications.length === 0">
+											—
 										</span>
 									</div>
 								</div>
@@ -171,8 +175,12 @@ export default {
 			return certsToShow;
 		},
 		sort(p) {
-			if(p === this.sortBy) this.descending = !this.descending;
-			this.sortBy = p;
+			if(p === this.sortBy) {
+				this.descending = !this.descending;
+			} else {
+				this.sortBy = p;
+				this.descending = true;
+			}
 		}
 	},
 	computed: {
@@ -205,6 +213,10 @@ export default {
 
 	table {
 		min-width: 700px;
+
+		.type_controller {
+			color: rgba(0, 0, 0, 0.87);
+		}
 
 		th {
 			user-select: none;
