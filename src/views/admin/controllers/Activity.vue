@@ -10,27 +10,35 @@
 					<th>Active?</th>
 					<th @click="sort('fname')">
 						Controller
-						<i class="material-icons" v-if="sortBy !== 'fname'">unfold_more</i>
-						<i class="material-icons active" v-else-if="sortBy === 'fname' && descending">arrow_drop_down</i>
-						<i class="material-icons active" v-else-if="sortBy === 'fname' && !descending">arrow_drop_up</i>
+						<div class="right">
+							<i class="material-icons" v-if="sortBy !== 'fname'">unfold_more</i>
+							<i class="material-icons active" v-else-if="sortBy === 'fname' && descending">arrow_drop_down</i>
+							<i class="material-icons active" v-else-if="sortBy === 'fname' && !descending">arrow_drop_up</i>
+						</div>
 					</th>
 					<th @click="sort('rating')">
 						Rating
-						<i class="material-icons" v-if="sortBy !== 'rating'">unfold_more</i>
-						<i class="material-icons active" v-else-if="sortBy === 'rating' && descending">arrow_drop_down</i>
-						<i class="material-icons active" v-else-if="sortBy === 'rating' && !descending">arrow_drop_up</i>
+						<div class="right">
+							<i class="material-icons" v-if="sortBy !== 'rating'">unfold_more</i>
+							<i class="material-icons active" v-else-if="sortBy === 'rating' && descending">arrow_drop_down</i>
+							<i class="material-icons active" v-else-if="sortBy === 'rating' && !descending">arrow_drop_up</i>
+						</div>
 					</th>
 					<th @click="sort('totalTime')">
 						Time
-						<i class="material-icons" v-if="sortBy !== 'totalTime'">unfold_more</i>
-						<i class="material-icons active" v-else-if="sortBy === 'totalTime' && descending">arrow_drop_down</i>
-						<i class="material-icons active" v-else-if="sortBy === 'totalTime' && !descending">arrow_drop_up</i>
+						<div class="right">
+							<i class="material-icons" v-if="sortBy !== 'totalTime'">unfold_more</i>
+							<i class="material-icons active" v-else-if="sortBy === 'totalTime' && descending">arrow_drop_down</i>
+							<i class="material-icons active" v-else-if="sortBy === 'totalTime' && !descending">arrow_drop_up</i>
+						</div>
 					</th>
 					<th @click="sort('createdAt')">
 						Join Date
-						<i class="material-icons" v-if="sortBy !== 'createdAt'">unfold_more</i>
-						<i class="material-icons active" v-else-if="sortBy === 'createdAt' && descending">arrow_drop_down</i>
-						<i class="material-icons active" v-else-if="sortBy === 'createdAt' && !descending">arrow_drop_up</i>
+						<div class="right">
+							<i class="material-icons" v-if="sortBy !== 'createdAt'">unfold_more</i>
+							<i class="material-icons active" v-else-if="sortBy === 'createdAt' && descending">arrow_drop_down</i>
+							<i class="material-icons active" v-else-if="sortBy === 'createdAt' && !descending">arrow_drop_up</i>
+						</div>
 					</th>
 					<th class="options">Options</th>
 				</thead>
@@ -48,7 +56,7 @@
 									<h6>Controller Details</h6>
 									<p class="bold">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</p>
 									<p class="light">{{controller.ratingLong}}</p>
-									<div class="certifications">
+									<div class="certifications" v-if="controller.rating > 1">
 										<div class="title">Certifications</div>
 										<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
 											{{cert.name}}
@@ -56,6 +64,9 @@
 										<span v-if="controller.certifications.length === 0">
 											—
 										</span>
+									</div>
+									<div class="certifications training_request" v-else>
+										Observer has made <b>{{controller.totalRequests}}</b> training requests in the last 60 days
 									</div>
 								</div>
 							</router-link>
@@ -216,6 +227,7 @@ export default {
 
 		.type_controller {
 			color: rgba(0, 0, 0, 0.87);
+			margin-right: -10px;
 		}
 
 		th {
@@ -223,13 +235,15 @@ export default {
 			cursor: pointer;
 
 			i {
-				font-size: 16px;
+				font-size: 17px;
 				color: #858585;
+				position: absolute;
+				margin-top: 4px;
 
 				&.active {
 					color: rgb(26, 26, 26);
 					font-size: 24px;
-					position: absolute;
+					margin-top: 0;
 				}
 			}
 		}
@@ -295,6 +309,11 @@ export default {
 
 	.certifications {
 		padding: .5em .75em .75em .75em;
+	}
+
+	.training_request {
+		color: #000;
+		font-size: .875rem;
 	}
 
 	.cert {

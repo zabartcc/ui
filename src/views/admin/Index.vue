@@ -10,7 +10,7 @@
 					<div class="col m4 s12">
 						<div class="card stats_card">
 							<div class="card-content">
-								<h6>Total Time (This Month)</h6>
+								<h6>Total Hours (This Month)</h6>
 								<h5>
 									{{sec2hms(stats.totalTime)}}
 								</h5>
@@ -53,7 +53,7 @@
 					<div class="col s12">
 						<div class="card stats_card">
 							<div class="card-content">
-								<h6>Controller Distribution</h6>
+								<h6>Rating Distribution</h6>
 								<canvas ref="distb_chart"></canvas>
 							</div>
 						</div>
@@ -117,7 +117,7 @@ export default {
 				data: {
 					labels: this.stats.hours.map(f => `${f.month} ${f.year}`),
 					datasets: [{
-						label: "Total Time (Hours)",
+						label: "Total Hours",
 						data: this.stats.hours.map(h => Math.round(h.total/60/60*100)/100),
 						borderColor: '#ed5c30',
 						tension: 0.3
