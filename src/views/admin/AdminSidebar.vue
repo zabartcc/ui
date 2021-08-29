@@ -9,7 +9,7 @@
 				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
 			</router-link>
-			<router-link to="/admin/activity" class="collection-item">
+			<router-link to="/admin/activity" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta', 'wm'])">
 				Controller Activity
 				<div class="secondary-content"><i class="material-icons">assessment</i></div>
 			</router-link>
