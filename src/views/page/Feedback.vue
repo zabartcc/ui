@@ -12,12 +12,12 @@
 					</p>
 				</div>
 				<div v-if="!user.isLoggedIn">
-					<p>To prevent abuse of the system, all users need to log in via VATSIM before sending feedback. The only details shared with us are your name, CID and email; your password is never revealed.</p><br />
+					<p>To prevent abuse of the system, all users need to log in via VATSIM before sending feedback. The only details shared with us are your name, CID and email address; your password is never revealed.</p><br />
 					<div class="center-align">
 						<button class="btn btn-waves login_button" @click="login">Login via VATSIM</button>
 					</div>
 				</div>
-				<form class="row row_no_margin" id="feedback" @submit.prevent=submitFeedback v-else>
+				<form class="row row_no_margin" id="feedback" @submit.prevent="submitFeedback" v-else>
 					<div class="input-field col s12 m6">
 						<input id="name" type="text" class="validate" :value="feedback.name" disabled>
 						<label class="active" for="name">Your Name</label>
@@ -79,8 +79,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
-import {zabApi} from '@/helpers/axios.js';
+import { mapState } from 'vuex';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'Feedback',

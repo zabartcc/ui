@@ -6,12 +6,12 @@
 				<Spinner />
 			</div>
 			<div v-else>
-				<div class="row">
+				<div class="row row_no_margin">
 					<div class="col s12">
 						<div class="card stats_card">
 							<div class="card-content">
 								<h6>Students Longest in Queue</h6>
-								<p class="center">Names in bold have never had a session, so their last request is displayed instead.</p>
+								<p class="center">Students listed in bold have never had a session, so their last request is displayed instead.</p>
 							</div>
 							<table class="striped compact">
 								<thead>
@@ -48,7 +48,8 @@
 	</div>
 </template>
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
+
 export default {
 	name: 'InsDash',
 	title: 'Instructor Dashboard',
@@ -87,5 +88,4 @@ export default {
 		}
 	}
 }
-
 </style>
