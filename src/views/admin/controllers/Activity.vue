@@ -236,12 +236,12 @@ export default {
 
 			i {
 				font-size: 17px;
-				color: #858585;
+				color: #a8a8a8;
 				position: absolute;
 				margin-top: 4px;
 
 				&.active {
-					color: rgb(26, 26, 26);
+					color: #a8a8a8;
 					font-size: 24px;
 					margin-top: 0;
 				}
