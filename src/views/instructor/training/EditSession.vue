@@ -19,7 +19,7 @@
 					<div class="stepper_divider"></div>
 					<div :class="`step ${step > 2 ? 'active' : ''}`">3</div>
 				</div>
-				<form @submit.prevent=submitForm>
+				<form>
 					<div class="row row_no_margin" v-show="step === 1">
 						<div class="input-field col s12 m6">
 							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname" required disabled>
@@ -108,8 +108,8 @@
 					</div>
 					<div class="row row_no_margin">
 						<div class="input-field col s12 submit_buttons">
-							<input type="submit" v-if="step === 3" class="btn right" value="Finalize" />
-							<input type="submit" v-if="step === 3" class="btn-flat right" value="Save" @click="saveForm" />
+							<button type="button" v-if="step === 3" class="btn right" @click="submitForm">Finalize</button>
+							<button type="button" v-if="step === 3" class="btn-flat right" @click="saveForm">Save</button>
 							<button type="button" class="btn right" v-if="step !== 3" @click="step += 1">Next</button>
 							<button type="button" v-if="step !== 1" @click="step -= 1" class="btn-flat right">Back</button>
 						</div>
