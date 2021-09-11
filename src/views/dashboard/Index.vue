@@ -79,6 +79,7 @@ export default {
 	title: 'Dashboard',
 	data() {
 		return {
+			approvedAirports: ['ABQ', 'PHX', 'TUS', 'AMA', 'ELP', 'DMA', 'DVT', 'SDL', 'FFZ', 'CHD', 'IWA', 'GEU', 'GYR', 'LUF', 'PRC', 'FLG'],
 			token: '',
 			discordConnected: false,
 			controllingSessions: null,
@@ -161,10 +162,14 @@ export default {
 			if(this.controllingSessions.length > 0 ) {
 				let seconds = 0;
 				for (const session of this.controllingSessions) {
-					if(seconds < 7200) {
+					if(seconds < 7200 && this.approvedAirports.includes(session.position.slice(0, 3))) {
 						const newSeconds = (new Date(session.timeEnd) - new Date(session.timeStart)) / 1000;
 						seconds += newSeconds;
 						date = new Date(session.timeEnd);
+					}
+
+					if(seconds >= 7200) {
+						break;
 					}
 				}
 			}
