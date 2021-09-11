@@ -2,25 +2,44 @@
 	<div class="card home_intro">
 		<div class="card-content">
 			<span class="card-title">Controller Dashboard</span>
-			<span class="section_title">IDS Token</span>
-			<div class="hidden" id="token_wrap">
-				<code>{{token}}</code>
-				<span class="generate right" @click=generateToken><i class="material-icons">refresh</i></span>
-				<div id="click_to_see" @click="showToken">Click to view</div>
+			<div class="loading_container" v-if="!controllingSessions">
+				<Spinner />
 			</div>
-			<span class="section_title">External Integrations</span>
-			<div class="discord_connect">
-				<button v-if="!discordConnected" class="btn waves-effect waves-light" @click.prevent=linkDiscord>
-					<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
-					Link Discord
-				</button>
-				<button v-else class="btn waves-effect grey lighten-1" @click.prevent=unlinkDiscord>
-					<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
-					Unlink Discord
-				</button>
-				<button class="btn-flat waves-effect">
-					<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
-				</button>
+			<div v-else>
+				<div class="hours_info">
+					<span>
+						You have controlled for <b>{{hoursCalc}}</b> in the past 60 days.
+					</span>
+					<span v-if="user.rating !== 1">
+						You will need to control again by <b>{{calcControlDate}}</b> to prevent removal from the roster.
+					</span>
+				</div>
+				<span class="section_title">
+					<br>IDS Token
+				</span>
+				<div class="hidden" id="token_wrap">
+					<code>{{token}}</code>
+					<span class="generate right" @click="generateToken">
+						<i class="material-icons">refresh</i>
+					</span>
+					<div id="click_to_see" @click="showToken">Click to view</div>
+				</div>
+				<span class="section_title">
+					External Integrations
+				</span>
+				<div class="discord_connect">
+					<button v-if="!discordConnected" class="btn waves-effect waves-light" @click.prevent="linkDiscord">
+						<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
+						Link Discord
+					</button>
+					<button v-else class="btn waves-effect grey lighten-1" @click.prevent="unlinkDiscord">
+						<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
+						Unlink Discord
+					</button>
+					<button class="btn-flat waves-effect">
+						<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -53,8 +72,8 @@
 	</div>
 </template>
 <script>
-import {mapState, mapActions} from 'vuex';
-import {zabApi} from '@/helpers/axios.js';
+import { mapState, mapActions } from 'vuex';
+import { zabApi } from '@/helpers/axios.js';
 export default {
 	name: 'UserDash',
 	title: 'Dashboard',
@@ -64,11 +83,6 @@ export default {
 			discordConnected: false,
 			controllingSessions: null,
 		};
-	},
-	computed: {
-		...mapState('user', [
-			'user'
-		]),
 	},
 	async mounted() {
 		this.token = this.user.data.idsToken || 'None Set';
@@ -119,9 +133,45 @@ export default {
 			const hms = new Date(remainderSeconds * 1000).toISOString().substring(11, 19);
 			return hms.replace(/^(\d+)/, h => `${+h + days * 24}`.padStart(2, '0'));
 		},
+		formatDate(value) {
+			const d = new Date(value);
+			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',});
+		},
 		...mapActions('user', [
 			'getUser'
 		])
+	},
+	computed: {
+		...mapState('user', [
+			'user'
+		]),
+		hoursCalc() {
+			let seconds = 0;
+			for(const session of this.controllingSessions) {
+				if((Math.abs(new Date().getTime() - new Date(session.timeEnd).getTime()) / (1000 * 60 * 60 * 24) < 61)) {
+					const newSeconds = (new Date(session.timeEnd) - new Date(session.timeStart)) / 1000;
+					seconds += newSeconds;
+				}
+			}
+			return this.sec2hms(seconds);
+		},
+		calcControlDate() {
+			let date = new Date(this.user.data.joinDate ?? Date.now());
+
+			if(this.controllingSessions.length > 0 ) {
+				let seconds = 0;
+				for (const session of this.controllingSessions) {
+					if(seconds < 7200) {
+						const newSeconds = (new Date(session.timeEnd) - new Date(session.timeStart)) / 1000;
+						seconds += newSeconds;
+						date = new Date(session.timeEnd);
+					}
+				}
+			}
+
+			date.setUTCDate(date.getUTCDate() + 61);
+			return this.formatDate(date);
+		}
 	}
 };
 </script>
