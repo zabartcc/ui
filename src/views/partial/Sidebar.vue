@@ -37,7 +37,7 @@
 			<p class="as_of">As of {{getZuluTime()}}z</p>
 		</div>
 
-		<div class="card">
+		<div class="card" v-if="user.isLoggedIn">
 			<div class="card-content">
 				<span class="card-title">
 					{{new Date().toLocaleString('en-US', {
@@ -87,7 +87,8 @@
 <script>
 import AtcOnlineItem from './AtcOnlineItem';
 import PilotOnlineItem from './PilotOnlineItem';
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
+import { mapState } from 'vuex';
 
 export default {
 	components: {
@@ -132,6 +133,9 @@ export default {
 		},
 	},
 	computed: {
+		...mapState('user', [
+			'user'
+		]),
 		depsArrs() {
 			return this.pilotsOnline.filter(flight => {
 				return this.airports.includes(flight.dep) || this.airports.includes(flight.dest);
