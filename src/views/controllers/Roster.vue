@@ -1,9 +1,14 @@
 <template>
 	<div>
-		<div v-if="!user.isLoggedIn">
-			<p>Due to privacy concerns, the roster has been hidden for non-VATSIM members.  If you are a member of VATSIM, click the login button below to view the roster.</p><br />
-			<div class="center-align">
-				<button class="btn btn-waves login_button" @click="login">Login via VATSIM</button>
+		<div class="card" v-if="!user.isLoggedIn">
+			<div class="card-content">
+				<span class="card-title">Controller Roster</span>
+				<span>
+					Due to privacy concerns, the roster has been hidden for non-VATSIM members.  If you are a member of VATSIM, click the login button below to view the roster.<br /><br />
+				</span>
+				<div class="center-align">
+					<button class="btn btn-waves login_button" @click="login">Login via VATSIM</button>
+				</div>
 			</div>
 		</div>
 		<div v-else>
