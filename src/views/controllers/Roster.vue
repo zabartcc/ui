@@ -1,86 +1,95 @@
 <template>
 	<div>
-		<div class="card">
-			<div class="card-content">
-				<span class="card-title">Home Controllers</span>
-			</div>
-			<table class="controller_list striped">
-				<thead class="controller_list_head">
-					<tr>
-						<th class="name">Name</th>
-						<th class="certs">Certifications</th>
-					</tr>
-				</thead>
-				<tbody class="controller_list_row" v-if="controllers.home">
-					<tr v-for="controller in controllers.home" :key="controller.cid">
-						<td class="name">
-							<router-link :to="`/controllers/${controller.cid}`">
-								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
-							</router-link><br />
-							<div class="rating">
-								{{controller.ratingLong}}
-							</div>
-							<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
-						</td>
-						<td class="certs">
-							<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-								{{role.code.toUpperCase()}}
-							</span>
-							<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-								{{cert.name}}
-							</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="loading_container" v-if="!controllers.home">
-				<Spinner />
+		<div v-if="!user.isLoggedIn">
+			<p>Due to privacy concerns, the roster has been hidden for non-VATSIM members.  If you are a member of VATSIM, click the login button below to view the roster.</p><br />
+			<div class="center-align">
+				<button class="btn btn-waves login_button" @click="login">Login via VATSIM</button>
 			</div>
 		</div>
-		<div class="card">
-			<div class="card-content">
-				<span class="card-title">Visiting Controllers</span>
+		<div v-else>
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Home Controllers</span>
+				</div>
+				<table class="controller_list striped">
+					<thead class="controller_list_head">
+						<tr>
+							<th class="name">Name</th>
+							<th class="certs">Certifications</th>
+						</tr>
+					</thead>
+					<tbody class="controller_list_row" v-if="controllers.home">
+						<tr v-for="controller in controllers.home" :key="controller.cid">
+							<td class="name">
+								<router-link :to="`/controllers/${controller.cid}`">
+									{{controller.fname}} {{controller.lname}} ({{controller.oi}})
+									<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
+								</router-link><br />
+								<div class="rating">
+									{{controller.ratingLong}}
+								</div>
+								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
+							</td>
+							<td class="certs">
+								<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
+									{{role.code.toUpperCase()}}
+								</span>
+								<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
+									{{cert.name}}
+								</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="loading_container" v-if="!controllers.home">
+					<Spinner />
+				</div>
 			</div>
-			<table class="controller_list striped">
-				<thead class="controller_list_head">
-					<tr>
-						<th class="name">Name</th>
-						<th class="certs">Certifications</th>
-					</tr>
-				</thead>
-				<tbody class="controller_list_row" v-if="controllers.visiting">
-					<tr v-for="controller in controllers.visiting" :key="controller.cid">
-						<td class="name">
-							<router-link :to="`/controllers/${controller.cid}`">
-								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
-							</router-link><br />
-							<div class="rating">
-								{{controller.ratingLong}}
-							</div>
-							<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
-						</td>
-						<td class="certs">
-							<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-								{{role.code.toUpperCase()}}
-							</span>
-							<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-								{{cert.name}}
-							</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="loading_container" v-if="!controllers.visiting">
-				<Spinner />
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Visiting Controllers</span>
+				</div>
+				<table class="controller_list striped">
+					<thead class="controller_list_head">
+						<tr>
+							<th class="name">Name</th>
+							<th class="certs">Certifications</th>
+						</tr>
+					</thead>
+					<tbody class="controller_list_row" v-if="controllers.visiting">
+						<tr v-for="controller in controllers.visiting" :key="controller.cid">
+							<td class="name">
+								<router-link :to="`/controllers/${controller.cid}`">
+									{{controller.fname}} {{controller.lname}} ({{controller.oi}})
+									<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
+								</router-link><br />
+								<div class="rating">
+									{{controller.ratingLong}}
+								</div>
+								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
+							</td>
+							<td class="certs">
+								<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
+									{{role.code.toUpperCase()}}
+								</span>
+								<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
+									{{cert.name}}
+								</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="loading_container" v-if="!controllers.visiting">
+					<Spinner />
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { mapState } from 'vuex';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'Controller Roster',
@@ -106,6 +115,10 @@ export default {
 			this.controllers.home = this.controllers.home.filter(c => c.member);
 			this.controllers.visiting = this.controllers.visiting.filter(c => c.member);
 		},
+		async login() {
+			localStorage.setItem('redirect', this.$route.path);
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 1}`;
+		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];
 			const hasCerts = certs.map(cert => cert.code);
@@ -122,6 +135,11 @@ export default {
 			});
 			return certsToShow;
 		}
+	},
+	computed: {
+		...mapState('user', [
+			'user'
+		])
 	}
 };
 </script>
