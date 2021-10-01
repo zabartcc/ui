@@ -6,7 +6,7 @@
 				<p>
 					Hello, and welcome to the Albuquerque ARTCC. We are a group of aviation enthusiasts providing simulated ATC services, operating on the VATSIM network, the Americas region and the VATUSA division. The Albuquerque ARTCC covers most of Arizona and New Mexico as well as parts of Texas, Colorado and Oklahoma.
 				</p>
-				<div class="visit" v-if="!user.data.isMem && !user.data.vis">
+				<div class="visit" v-if="!user.isLoggedIn || (!user.data.vis && !user.data.isMem)">
 					<p>
 						If you would like to become a visitor, please click the button below.
 					</p>
