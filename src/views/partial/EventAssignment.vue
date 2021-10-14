@@ -19,7 +19,7 @@
 		<div id="assignment_modal" class="modal assignment_modal">
 			<div class="modal-content">
 				<h4>Sign up for {{event.name}}</h4>
-				<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty.</p>
+				<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty. <br><b>You must press enter after each callsign to add the preference!</b></p>
 				<p>Please be advised that requests are just that — requests. The events coordinator may place you on any (or no) position depending on multiple factors.</p>
 				<div class="chips chips-placeholder"></div>
 			</div>
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
-import {mapState} from 'vuex';
+import { zabApi } from '@/helpers/axios.js';
+import { mapState } from 'vuex';
 import EventAssignmentTable from './EventAssignmentTable.vue';
 
 export default {
@@ -172,7 +172,7 @@ export default {
 	}
 
 	.dropdown-content {
-		width:auto !important;
+		width: auto!important;
 	}
 }
 
