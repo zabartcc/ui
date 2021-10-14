@@ -17,7 +17,7 @@
     "@materializecss/materialize": "^1.1.0-alpha",
     "@sentry/browser": "^6.13.3",
     "@sentry/integrations": "^6.13.3",
-    "@sentry/tracing": "^6.13.03",
+    "@sentry/tracing": "^6.13.3",
     "@toast-ui/editor": "^3.1.0",
     "@toast-ui/editor-plugin-table-merged-cell": "^3.0.0",
     "axios": "^0.23.0",
