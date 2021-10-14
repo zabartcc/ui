@@ -59,7 +59,7 @@
 				<div v-else-if="top.controllers && top.controllers.length > 0">
 					<router-link class="top" :to="`/controllers/${item.cid}`" v-for='item in top.controllers' :key=item.cid>
 						<span><strong>{{item.name}}</strong></span>
-						<span>{{sec2hms(item.len)}}</span>
+						<span>{{secondsToHms(item.len)}}</span>
 					</router-link>
 				</div>
 				<div v-else>
@@ -73,7 +73,7 @@
 				<div v-else-if="top.positions && top.positions.length > 0">
 					<span class="top" v-for='item in top.positions' :key=item.cid>
 						<span><strong>{{item.name}}</strong></span>
-						<span>{{sec2hms(item.len)}}</span>
+						<span>{{secondsToHms(item.len)}}</span>
 					</span>
 				</div>
 				<div v-else>
@@ -130,6 +130,12 @@ export default {
 			const minutes = `0${Math.round((secs / 60) % 60)}`.slice(-2);
 			const seconds = `0${secs % 60}`.slice(-2);
 			return `${hours}:${minutes}:${seconds}`;
+		},
+		secondsToHms(secs){
+			const days = Math.floor(secs / 86400);
+			const remainderSeconds = secs % 86400;
+			const hms = new Date(remainderSeconds * 1000).toISOString().substring(11, 19);
+			return hms.replace(/^(\d+)/, h => `${+h + days * 24}`.padStart(2, '0'));
 		},
 	},
 	computed: {
