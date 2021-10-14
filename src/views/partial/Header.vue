@@ -51,7 +51,7 @@
 					<li>
 						<a v-show="user.isLoggedIn" class="dropdown-notif nav_notifications" href="#!" data-target="notifications-dropdown"><i class="material-icons">notifications</i><div v-if="unread" class="new_notification"></div></a>
 						<ul v-show="user.isLoggedIn" id="notifications-dropdown" class="dropdown-content">
-							<Notifications />
+							<Notifications v-if="user.isLoggedIn" />
 						</ul>
 					</li>
 					<li class="user">
