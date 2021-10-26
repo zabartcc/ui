@@ -85,8 +85,8 @@
 </template>
 
 <script>
-import AtcOnlineItem from './AtcOnlineItem';
-import PilotOnlineItem from './PilotOnlineItem';
+import AtcOnlineItem from './AtcOnlineItem.vue';
+import PilotOnlineItem from './PilotOnlineItem.vue';
 import { zabApi } from '@/helpers/axios.js';
 import { mapState } from 'vuex';
 

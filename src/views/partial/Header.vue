@@ -1,6 +1,6 @@
 <template>
 	<header>
-		<div id="header_hero" :class="`hero${number == 69 ? '_aprilfools' : '6'}`">
+		<div id="header_hero" :class="`hero${number === 69 ? '_aprilfools' : '6'}`">
 			<div class="wrapper">
 				<div>
 					<router-link to="/"><h1>ALBUQUERQUE<span>ARTCC</span></h1></router-link>
@@ -91,7 +91,7 @@
 			<li>
 				<router-link class="sidenav-close" to="/controllers">CONTROLLER ROSTER</router-link>
 			</li>
-						<li>
+			<li>
 				<router-link class="sidenav-close" to="/files/downloads">CONTROLLER DOWNLOADS</router-link>
 			</li>
 			<li>
@@ -119,7 +119,7 @@
 
 <script>
 
-import {mapState, mapMutations, mapActions} from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import Notifications from './Notifications.vue';
 
 export default {
@@ -142,7 +142,7 @@ export default {
 		]),
 		async processLogin() {
 			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 1}`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VITE_ULS_LOGIN_REDIRECT_URL || 1}`;
 		},
 		async processLogout() {
 			await this.logout();
@@ -202,32 +202,32 @@ export default {
 	}
 
 	&.hero1 {
-		background-image: url('~@/assets/images/hero/grand_canyon.jpg');
+		background-image: url('@/assets/images/hero/grand_canyon.jpg');
 		background-position: top 20% center;
 	}
 
 	&.hero2 {
-		background-image: url('~@/assets/images/hero/scaled/camelback.jpg');
+		background-image: url('@/assets/images/hero/scaled/camelback.jpg');
 	}
 
 	&.hero3 {
-		background-image: url('~@/assets/images/hero/saguaro.jpg');
+		background-image: url('@/assets/images/hero/saguaro.jpg');
 	}
 
 	&.hero4 {
-		background-image: url('~@/assets/images/hero/abq.jpg');
+		background-image: url('@/assets/images/hero/abq.jpg');
 	}
 
 	&.hero5 {
-		background-image: url('~@/assets/images/hero/cactus.jpg');
+		background-image: url('@/assets/images/hero/cactus.jpg');
 	}
 
 	&.hero6 {
-		background-image: url('~@/assets/images/hero/sandias.jpg');
+		background-image: url('@/assets/images/hero/sandias.jpg');
 	}
 
 	&.hero_aprilfools {
-		background-image: url('~@/assets/images/hero/bb.jpg');
+		background-image: url('@/assets/images/hero/bb.jpg');
 	}
 
 	.wrapper {
@@ -247,13 +247,10 @@ export default {
 
 		h1 {
 			font-weight: 600;
-			// margin-left: 60px;
 			margin: 0;
 			font-size: 3rem;
 			color: #fff;
-			// padding: 0 15px;
 			text-shadow: -2px -2px 3px $primary-color-light;
-			// background: rgba(#fff,0.75);
 
 			span {
 				display: block;

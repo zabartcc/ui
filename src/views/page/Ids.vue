@@ -30,7 +30,7 @@ export default {
 .home {
 	width: 100%;
 	height: 100vh;
-	background: url('~@/assets/images/ids_background.jpg');
+	background: url('@/assets/images/ids_background.jpg');
 	color: #fff;
 }
 

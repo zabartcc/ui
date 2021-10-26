@@ -24,7 +24,7 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import DownloadCategory from './DownloadCategory';
+import DownloadCategory from './DownloadCategory.vue';
 
 export default {
 	name: 'Downloads',

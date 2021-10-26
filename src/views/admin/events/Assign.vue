@@ -17,7 +17,6 @@
 						<tr>
 							<th>Controller</th>
 							<th>Preferences</th>
-							<!-- <th>Position</th> -->
 							<th class="options">Options</th>
 						</tr>
 					</thead>
@@ -84,7 +83,7 @@
 		<div id="modal_add_signup" class="modal">
 			<div class="modal-content">
 				<h4>Manually add sign-up</h4>
-				<p>Enter a CID to manually sign a controller up for this event. The controller must be a home or visiting controller.</p>
+				<p>Enter a CID to manually sign a controller up for this event. The controller must have logged in on the website at least once.</p>
 				<div class="row row_no_margin">
 					<form @submit.prevent="addSignup">
 						<div class="input-field col s12">
@@ -113,7 +112,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'EventAssignments',
@@ -133,12 +132,12 @@ export default {
 	},
 	methods: {
 		async getEventData() {
-			const {data} = await zabApi.get(`/event/${this.$route.params.slug}/positions`);
+			const { data } = await zabApi.get(`/event/${this.$route.params.slug}/positions`);
 			this.event = data.data;
 		},
 		async notifyAssignments() {
 			try {
-				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/notify`, {
+				const { data } = await zabApi.put(`/event/${this.$route.params.slug}/notify`, {
 					assignment: this.event.positions
 				});
 
@@ -156,7 +155,7 @@ export default {
 		},
 		async addSignup() {
 			try {
-				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`);
+				const { data } = await zabApi.put(`/event/${this.$route.params.slug}/mansignup/${this.cid}`);
 				if(data.ret_det.code === 200) {
 					this.cid = null;
 					this.toastSuccess('Sign-up manually added');
@@ -173,7 +172,7 @@ export default {
 		},
 		async deleteSignup(cid) {
 			try {
-				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/mandelete/${cid}`);
+				const { data } = await zabApi.delete(`/event/${this.$route.params.slug}/mandelete/${cid}`);
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Sign-up manually deleted');
 
@@ -191,15 +190,15 @@ export default {
 				cid: this.$refs[`pos_${pos}`].value,
 			});
 			if(update.data.ret_det.code === 200) {
-				this.toastSuccess(`Position ${update.data.data.pos} set.`);
+				this.toastSuccess(`Position ${update.data.data.pos} assigned`);
 			} else {
-				this.toastError("An error occured, please try again.");
+				this.toastError();
 			}
 		},
 		filterPos(userCerts) {
 			let certsArray = [];
 			userCerts.forEach(cert => certsArray.push(cert.code));
-			return this.event.positions.filter((pos) => { return certsArray.includes(pos.code); });
+			return this.event.positions.filter((pos) => { return certsArray.includes(pos.code) });
 		},
 	}
 };

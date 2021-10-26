@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import Header from '../partial/Header';
-import Footer from '../partial/Footer';
+import Header from '../partial/Header.vue';
+import Footer from '../partial/Footer.vue';
 import DashSidebar from '../dashboard/DashSidebar.vue';
 
 export default {

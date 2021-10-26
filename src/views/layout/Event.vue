@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import Header from '../partial/Header';
-import Footer from '../partial/Footer';
-import Sidebar from '../partial/Sidebar';
-import EventAssignment from '../partial/EventAssignment';
+import Header from '../partial/Header.vue';
+import Footer from '../partial/Footer.vue';
+import Sidebar from '../partial/Sidebar.vue';
+import EventAssignment from '../partial/EventAssignment.vue';
 
 export default {
 	components: {

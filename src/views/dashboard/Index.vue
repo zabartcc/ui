@@ -29,11 +29,11 @@
 				</span>
 				<div class="discord_connect">
 					<button v-if="!discordConnected" class="btn waves-effect waves-light" @click.prevent="linkDiscord">
-						<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
+						<img src="@/assets/images/discord.svg" alt="" draggable="false" class="discord_logo" height="24">
 						Link Discord
 					</button>
 					<button v-else class="btn waves-effect grey lighten-1" @click.prevent="unlinkDiscord">
-						<img :src="require(`@/assets/images/discord.svg`)" alt="" draggable="false" class="discord_logo" height="24">
+						<img src="@/assets/images/discord.svg" alt="" draggable="false" class="discord_logo" height="24">
 						Unlink Discord
 					</button>
 					<button class="btn-flat waves-effect">

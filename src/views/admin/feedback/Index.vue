@@ -84,7 +84,7 @@
 
 <script>
 import {zabApi} from '@/helpers/axios.js';
-import RecentFeedback from './Recent';
+import RecentFeedback from './Recent.vue';
 
 export default {
 	name: 'Feedback',

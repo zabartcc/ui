@@ -6,7 +6,7 @@
 				<Spinner />
 			</div>
 			<div class="row row_no_margin" v-else>
-				<form enctype="multipart/form-data"  @submit.prevent=submitForm>
+				<form enctype="multipart/form-data" @submit.prevent="submitForm">
 					<div class="input-field col s12">
 						<input id="name" type="text" v-model="form.name" required>
 						<label for="name" class="active">Name</label>
@@ -43,7 +43,7 @@
 											<div class="pos_header">{{position}} <span class="delete_pos" @click="deletePos(position)">Delete</span></div>
 										</li>
 									</ul>
-									<form @submit.prevent=addPosition>
+									<form @submit.prevent="addPosition">
 										<input type="text" class="positions_input" placeholder="ABQ_CTR" name="pos" ref="pos" required />
 										<button class="positions_submit" type="submit" name="action">
 											<i class="material-icons">add</i>
@@ -81,7 +81,7 @@ export default {
 	},
 	methods: {
 		async getEvent() {
-			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
+			const { data } = await zabApi.get(`/event/${this.$route.params.slug}`);
 			this.form = data.data;
 			if(this.form.positions && this.form.positions.length != 0) { this.form.positions = this.form.positions.map(p => p.pos); }
 			else { this.form.positions = []; }

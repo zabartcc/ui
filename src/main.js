@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import './assets/js/materialize.min.js';
+import M from '@materializecss/materialize'; // Temporary fix until I figure out why I can't import a (custom) minified file directly
 import '@materializecss/materialize/sass/materialize.scss';
 
 import dates from './helpers/dates.js';
@@ -25,7 +25,7 @@ const app = createApp(App)
 	})
 	.mixin({
 		created() {
-			const {title} = this.$options;
+			const { title } = this.$options;
 			if(title) {
 				document.title = `${(typeof title === 'function') ? title.call(this) : title} | Albuquerque ARTCC`;
 			}

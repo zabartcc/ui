@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import Past from './Past.vue';
 
 export default {

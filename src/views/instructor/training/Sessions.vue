@@ -100,7 +100,6 @@ export default {
 			try {
 				const {data} = await zabApi.get(`/training/session/open`);
 				this.sessions = data.data;
-				console.log(this.sessions);
 			} catch(e) {
 				console.log(e);
 			}
