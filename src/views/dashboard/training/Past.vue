@@ -88,7 +88,7 @@ export default {
 }
 
 table {
-	min-width: 500px;
+	min-width: 100%;
 }
 
 .session_wrapper {

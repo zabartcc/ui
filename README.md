@@ -23,7 +23,7 @@ Thank you to all contributors, past and present.
 # Contributing
 
 Prerequisites:
-- Most recent LTS of Node.js (v14), with the corresponding version of npm.
+- Most recent LTS of Node.js (v16), with the corresponding version of npm.
 - Have the ZAB API running locally at `http://localhost:3000`.
 - A basic understanding of Git (branches, merge requests).
 

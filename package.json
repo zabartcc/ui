@@ -19,8 +19,8 @@
     "@sentry/browser": "^6.13.3",
     "@sentry/integrations": "^6.13.3",
     "@sentry/tracing": "^6.13.3",
-    "@toast-ui/editor": "^3.1.0",
-    "@toast-ui/editor-plugin-table-merged-cell": "^3.0.0",
+    "@toast-ui/editor": "^3.1.1",
+    "@toast-ui/editor-plugin-table-merged-cell": "^3.0.1",
     "axios": "^0.24.0",
     "chart.js": "^3.6.0",
     "core-js": "^3.19.0",
@@ -32,11 +32,11 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "vite": "^2.6.11",
-    "@vitejs/plugin-vue": "^1.9.3",
+    "vite": "^2.6.13",
+    "@vitejs/plugin-vue": "^1.9.4",
     "eslint": "^8.1.0",
     "eslint-plugin-vue": "^7.20.0",
     "babel-eslint": "^10.1.0",
-    "sass": "^1.43.3"
+    "sass": "^1.43.4"
   }
 }

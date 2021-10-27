@@ -280,7 +280,7 @@ export default {
 	overflow: auto;
 
 	table {
-		min-width: 500px;
+		min-width: 100%;
 	}
 }
 
