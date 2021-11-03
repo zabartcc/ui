@@ -65,7 +65,7 @@
 								<router-link to="/controllers/visit">Become a Visitor</router-link>
 							</li>
 							<li v-if="user.isLoggedIn && (user.data.isIns || user.data.isStaff)" class="divider"></li>
-							<li v-if="user.isLoggedIn && user.data.isStaff">
+							<li v-if="user.isLoggedIn && (user.data.isIns || user.data.isStaff)">
 								<a href="https://sunport.zabartcc.org/mail/" target="_blank" rel="noopener noreferrer">Webmail</a>
 							</li>
 							<li v-if="user.isLoggedIn && user.data.isIns">
