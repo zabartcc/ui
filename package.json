@@ -9,7 +9,7 @@
   ],
   "license": "CC-BY-NC-SA-4.0",
   "scripts": {
-    "dev": "vite --open --port 8080",
+    "dev": "BROWSER=none vite --open --port 8080",
     "serve": "vite preview --open",
     "build": "vite build",
     "lint": "eslint src"

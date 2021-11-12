@@ -37,7 +37,7 @@
 											<td>{{session.student.fname}} {{session.student.lname}}</td>
 											<td>{{session.student.ratingLong}}</td>
 											<td>{{dtStandard(session.lastSession)}}</td>
-											<td>{{session.milestone.name}}</td>
+											<td>{{session.milestone?.name || "Unknown"}}</td>
 										</tr>
 									</tbody>
 								</table>

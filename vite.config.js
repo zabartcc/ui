@@ -33,5 +33,8 @@ export default defineConfig({
 				additionalData: `@import "./src/assets/css/styles";`
 			}
 		}
+	},
+	define: {
+		'process.env': process.env
 	}
 });

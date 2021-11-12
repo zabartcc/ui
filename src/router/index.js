@@ -16,7 +16,7 @@ const routes = [
 			{
 				path: '/login',
 				beforeEnter() {
-					location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 1}`;
+					location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${import.meta.env.VITE_ULS_LOGIN_REDIRECT_URL || 1}`;
 				}
 			},
 			{ 

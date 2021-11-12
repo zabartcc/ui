@@ -122,7 +122,7 @@ export default {
 		},
 		async login() {
 			localStorage.setItem('redirect', this.$route.path);
-			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${process.env.VUE_APP_ULS_LOGIN_REDIRECT_URL || 1}`;
+			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${import.meta.env.VITE_ULS_LOGIN_REDIRECT_URL || 1}`;
 		},
 		reduceControllerCerts: certs => {
 			if(!certs) return [];

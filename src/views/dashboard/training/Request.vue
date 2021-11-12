@@ -134,6 +134,7 @@ export default {
 				this.milestones.filter((ms) => {
 					if(this.user.data.vis === false) {
 						if(ms.certCode !== 'zab') {
+							console.log(ms.certCode)
 							if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50') && !ms.certCode.includes('vis')) {
 								milestonesShowed.push(ms);
 							} else if (ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('vis')) {
