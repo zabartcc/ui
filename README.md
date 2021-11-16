@@ -31,9 +31,9 @@ If you wish to contribute, please do the following:
 
 1. Clone down the repository to your local machine. 
 2. Run `npm install`
-3. Run `npm run serve`
+3. Run `npm run dev
 
-This will compile all of the Vue JS, and start a hot-reloading live server. Visit `http://localhost:8080` to view the app.
+This will compile all of the Vue JS, and start a hot-reloading live server with Vite. Visit `http://localhost:8080` to view the app.
 
 
 ## Contributing Guidelines and Style

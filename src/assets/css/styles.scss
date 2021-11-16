@@ -174,3 +174,7 @@ select:not(.materialize-select):not(.browser-default) {
 	width: 66%;
 	max-width: 700px;
 }
+
+.table_wrapper {
+	overflow: auto;
+}

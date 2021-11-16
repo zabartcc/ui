@@ -9,33 +9,33 @@
   ],
   "license": "CC-BY-NC-SA-4.0",
   "scripts": {
-    "dev": "BROWSER=none vite --open --port 8080",
+    "dev": "vite --open --port 8080",
     "serve": "vite preview --open",
     "build": "vite build",
     "lint": "eslint src"
   },
   "dependencies": {
     "@materializecss/materialize": "^1.1.0-alpha",
-    "@sentry/browser": "^6.13.3",
-    "@sentry/integrations": "^6.13.3",
-    "@sentry/tracing": "^6.13.3",
+    "@sentry/browser": "^6.15.0",
+    "@sentry/integrations": "^6.15.0",
+    "@sentry/tracing": "^6.15.0",
     "@toast-ui/editor": "^3.1.1",
     "@toast-ui/editor-plugin-table-merged-cell": "^3.0.1",
     "axios": "^0.24.0",
     "chart.js": "^3.6.0",
-    "core-js": "^3.19.0",
+    "core-js": "^3.19.1",
     "flatpickr": "^4.6.9",
     "luxon": "^1.28.0",
     "metar-parser": "^1.0.0",
-    "vue": "^3.2.20",
+    "vue": "^3.2.22",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "vite": "^2.6.13",
+    "vite": "^2.6.14",
     "@vitejs/plugin-vue": "^1.9.4",
-    "eslint": "^8.1.0",
-    "eslint-plugin-vue": "^7.20.0",
+    "eslint": "^8.2.0",
+    "eslint-plugin-vue": "^8.0.3",
     "babel-eslint": "^10.1.0",
     "sass": "^1.43.4"
   }

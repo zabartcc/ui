@@ -9,7 +9,7 @@
 				We're sorry, but the content you request could not be found. If you believe that you are receiving this message in error, please email the webmaster. In the meantime, a cute pupper has been dispatched to ease your sorrows.
 			</p>
 			<p>
-				<img :src="require('@/assets/images/dog.jpg')" alt="Cute dog">
+				<img src="@/assets/images/dog.jpg" alt="Cute dog">
 			</p>
 		</div>
 	</div>
