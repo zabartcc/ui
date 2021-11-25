@@ -25,7 +25,7 @@
     "chart.js": "^3.6.0",
     "core-js": "^3.19.1",
     "flatpickr": "^4.6.9",
-    "luxon": "^1.28.0",
+    "luxon": "^2.1.1",
     "metar-parser": "^1.0.0",
     "vue": "^3.2.22",
     "vue-router": "^4.0.12",
@@ -33,10 +33,10 @@
   },
   "devDependencies": {
     "vite": "^2.6.14",
-    "@vitejs/plugin-vue": "^1.9.4",
-    "eslint": "^8.2.0",
-    "eslint-plugin-vue": "^8.0.3",
+    "@vitejs/plugin-vue": "^1.10.0",
+    "eslint": "^8.3.0",
+    "eslint-plugin-vue": "^8.1.1",
     "babel-eslint": "^10.1.0",
-    "sass": "^1.43.4"
+    "sass": "^1.43.5"
   }
 }
