@@ -136,11 +136,12 @@ export default {
 
 				let milestonesShowed = this.milestones.filter((milestone) => {
 					if(this.user.data.vis) {
-						return milestone.certCode.substring(0, 3) === "vis" && milestone.rating <= rating;
+						return (milestone.certCode.substring(0, 3) === "vis" && milestone.rating <= rating) || milestone.code === "GT1";
 					} else {
 						return (  // This is still slightly hard to understand.  It returns the milestones that haven't been completed yet for the rating, or the P50 equivelant (if no major cert has been attained yet) and next rating's milestones, or center milestones if all other certs have been attained.
 							!certs.includes(milestone.certCode) &&
 							(
+								milestone.code === "GT1" ||
 								(milestone.certCode.substring(0, 3) === "p50" && certs.includes(milestone.certCode.slice(-3)) && certs.includes(majorPrerequisites[milestone.rating - 1])) || 
 								(milestone.certCode.substring(0, 3) !== "p50" && (certs.includes(minorPrerequisites[milestone.rating - 1]) || (milestone.rating === "1" && certs.length === 0)) && milestone.certCode !== "zab") ||
 								(milestone.certCode === "zab" && certs.includes("p50app"))
