@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'Controller Profile',

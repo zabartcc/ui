@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<div class="card-title">Training Requests for {{formatDate(date)}}</div>
 		</div>
-		<div class="loading_container" v-if="requests === null">
+		<div class="loading_container" v-if="!requests">
 			<Spinner />
 		</div>
 		<div v-else-if="requests.length === 0" class="no_requests">
@@ -134,7 +134,7 @@ export default {
 				const { data } = await zabApi.post(`/training/request/take/${id}`, {
 					startTime: this.requests[i].startTime,
 					endTime: this.requests[i].endTime,
-					instructor: this.$store.state.user.user.data._id
+					instructor: this.user.data._id
 				});
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Training request taken');
