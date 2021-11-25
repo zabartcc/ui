@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<span class="card-title">Position Assignments</span>
 		</div>
-		<div v-if="!event">
+		<div class="card-content" v-if="!event">
 			<Spinner />
 		</div>
 		<div v-else>
