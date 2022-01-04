@@ -20,7 +20,7 @@
 					</div>
 					<div class="calendar-body">
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${(new Date(date.date)).toISOString().slice(0,10).replace(/-/g, '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date">
 								<div class="week_date">
 									<span :class="[((new Date(date.date).getTime()) - (new Date().getTime()) < 0 ? 'past_date' : ''), (new Date(new Date().getTime()).getUTCDate() === new Date(date.date).getUTCDate() ? 'current_date' : '')]">
 										{{new Date(date.date).toUTCString().slice(5, 11)}}
@@ -32,7 +32,7 @@
 							</router-link>
 						</div>
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${(new Date(date.date)).toISOString().slice(0,10).replace(/-/g, '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date">
 								<div class="week_date">
 									{{new Date(date.date).toUTCString().slice(5, 11)}}
 								</div>
@@ -42,7 +42,7 @@
 							</router-link>
 						</div>
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${(new Date(date.date)).toISOString().slice(0,10).replace(/-/g, '')}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date">
 								<div class="week_date">
 									{{new Date(date.date).toUTCString().slice(5, 11)}}
 								</div>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'TrainingRequests',
@@ -108,7 +108,10 @@ export default {
 					"requests": []
 				});
 			}
-		}
+		},
+		urlSafeDate(date) {
+			return (new Date(date)).toISOString().slice(0,10).replace(/-/g, '');
+		} 
 	}
 };
 </script>

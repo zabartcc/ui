@@ -17,7 +17,7 @@
 						<div class="col s7 m8 l9">
 							<div class="controller_name">
 								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-								<span v-if="controller.absence" class="controller_loa">LOA</span>
+								<span v-if="controller.absence.length > 0" class="controller_loa">LOA</span>
 							</div>
 							<div class="controller_rating">{{controller.ratingLong}}</div>
 						</div>
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'Controller Profile',

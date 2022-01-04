@@ -10,7 +10,7 @@
 					<p><b class="red-text">Important: </b> training requests are just that — requests. <br /><br />
 					There is no guarantee that your session will be picked up by a member of the training staff. If a request you've made gets picked up, you are expected to show up.
 					Treat the times as your availability, mentors and instructors have the ability to modify them when they pick up the session. <br /><br />
-					Please make sure that you've read through the relevant training material, as per the Training Syllabus, before requesting a session.</p>
+					Please make sure that you've studied the relevant training material, as per the Training Syllabus, before requesting a session.</p>
 				</div>
 				<div class="col s12 l6 pull-l6">
 					<form class="row row_no_margin" @submit.prevent=submitRequest>
@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
-import {mapState} from 'vuex';
+import { zabApi } from '@/helpers/axios.js';
+import { mapState } from 'vuex';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -127,34 +127,32 @@ export default {
 	},
 	computed: {
 		filteredMilestones() {
-			const milestonesShowed = [];
 			const certs = this.user.data.certCodes;
 			const rating = this.user.data.rating;
+
 			if(this.milestones !== null) {
-				this.milestones.filter((ms) => {
-					if(this.user.data.vis === false) {
-						if(ms.certCode !== 'zab') {
-							console.log(ms.certCode)
-							if(ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('p50') && !ms.certCode.includes('vis')) {
-								milestonesShowed.push(ms);
-							} else if (ms.rating <= rating && !certs.includes(ms.certCode) && !ms.certCode.includes('vis')) {
-								milestonesShowed.push(ms);
-							} else if (!certs.includes(ms.certCode) && !ms.certCode.includes('vis') && certs.includes(ms.certCode.replace('p50', ''))) {
-								milestonesShowed.push(ms);
-							}
-						} else {
-							if(certs.includes('p50app') && !certs.includes('zab')) {
-								milestonesShowed.push(ms);
-							}
-						}
+				const minorPrerequisites = ["obs", "gnd", "twr", "app"];
+				const majorPrerequisites = ["obs", "gnd", "p50gnd", "p50twr", "p50app"];
+
+				let milestonesShowed = this.milestones.filter((milestone) => {
+					if(this.user.data.vis) {
+						return (milestone.certCode.substring(0, 3) === "vis" && milestone.rating <= rating) || milestone.code === "GT1";
 					} else {
-						if(ms.certCode.includes('vis') && ms.rating <= rating) {
-							milestonesShowed.push(ms);
-						}
+						return (  // This is still slightly hard to understand.  It returns the milestones that haven't been completed yet for the rating, or the P50 equivelant (if no major cert has been attained yet) and next rating's milestones, or center milestones if all other certs have been attained.
+							!certs.includes(milestone.certCode) &&
+							(
+								milestone.code === "GT1" ||
+								(milestone.certCode.substring(0, 3) === "p50" && certs.includes(milestone.certCode.slice(-3)) && certs.includes(majorPrerequisites[milestone.rating - 1])) || 
+								(milestone.certCode.substring(0, 3) !== "p50" && (certs.includes(minorPrerequisites[milestone.rating - 1]) || (milestone.rating === "1" && certs.length === 0)) && milestone.certCode !== "zab") ||
+								(milestone.certCode === "zab" && certs.includes("p50app"))
+							) && 
+							milestone.certCode.substring(0, 3) !== "vis"
+						);
 					}
 				});
+
+				return milestonesShowed;
 			}
-			return milestonesShowed;
 		},
 		...mapState('user', [
 			'user'

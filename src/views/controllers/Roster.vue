@@ -124,7 +124,7 @@ export default {
 			localStorage.setItem('redirect', this.$route.path);
 			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${import.meta.env.VITE_ULS_LOGIN_REDIRECT_URL || 1}`;
 		},
-		reduceControllerCerts: certs => {
+		reduceControllerCerts(certs) {
 			if(!certs) return [];
 			const hasCerts = certs.map(cert => cert.code);
 			let certsToShow = [];

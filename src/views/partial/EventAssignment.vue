@@ -1,31 +1,36 @@
 <template>
-	<div class="card signup-card" v-if="event">
+	<div class="card signup-card">
 		<div class="card-content">
 			<span class="card-title">Position Assignments</span>
 		</div>
-		<EventAssignmentTable v-for="category in positionCategories" :category="category" :key="category" />
-		<div class="card-content assignment_cta">
-			<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign-ups for this event are closed</div>
-			<div v-else-if="!user.data" class="sign_up_err">Log in to sign up</div>
-			<div v-else-if="user.data.member === false" class="sign_up_err">You are not a member of ZAB</div>
-			<div v-else-if="assignedPositions" class="sign_up_err">You have been assigned a position. Contact the EC if you need to cancel.</div>
-			<div v-else-if="requestedPositions" class="requested_pos">
-				You have requested<br />
-				{{currentUserRequests || 'No preference'}}<br />
-				<button @click="deleteRequest()" class="btn btn-small waves-effect waves-light btn_delete">Delete Request</button>
-			</div>
-			<button v-else class="btn waves-effect waves-light modal-trigger btn_signup" data-target="assignment_modal">Sign up</button>
+		<div class="card-content" v-if="!event">
+			<Spinner />
 		</div>
-		<div id="assignment_modal" class="modal assignment_modal">
-			<div class="modal-content">
-				<h4>Sign up for {{event.name}}</h4>
-				<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty. <br><b>You must press enter after each callsign to add the preference!</b></p>
-				<p>Please be advised that requests are just that — requests. The events coordinator may place you on any (or no) position depending on multiple factors.</p>
-				<div class="chips chips-placeholder"></div>
+		<div v-else>
+			<EventAssignmentTable v-for="category in positionCategories" :category="category" :key="category" />
+			<div class="card-content assignment_cta">
+				<div v-if="!event.open || new Date(event.eventStart).getTime() < Date.now()" class="sign_up_err">Sign-ups for this event are closed</div>
+				<div v-else-if="!user.data" class="sign_up_err">Log in to sign up</div>
+				<div v-else-if="user.data.member === false" class="sign_up_err">You are not a member of ZAB</div>
+				<div v-else-if="assignedPositions" class="sign_up_err">You have been assigned a position. Contact the EC if you need to cancel.</div>
+				<div v-else-if="requestedPositions" class="requested_pos">
+					You have requested<br />
+					{{currentUserRequests || 'No preference'}}<br />
+					<button @click="deleteRequest()" class="btn btn-small waves-effect waves-light btn_delete">Delete Request</button>
+				</div>
+				<button v-else class="btn waves-effect waves-light modal-trigger btn_signup" data-target="assignment_modal">Sign up</button>
 			</div>
-			<div class="modal-footer">
-				<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">Sign up</a>
-				<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+			<div id="assignment_modal" class="modal assignment_modal">
+				<div class="modal-content">
+					<h4>Sign up for {{event.name}}</h4>
+					<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty. <br><b>You must press enter after each callsign to add the preference!</b></p>
+					<p>Please be advised that requests are just that — requests. The events coordinator may place you on any (or no) position depending on multiple factors.</p>
+					<div class="chips chips-placeholder"></div>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">Sign up</a>
+					<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
+				</div>
 			</div>
 		</div>
 	</div>

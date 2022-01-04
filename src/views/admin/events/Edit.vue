@@ -90,6 +90,7 @@ export default {
 				// Okay, so working with timezones with JS is hard. This is really gross and I hate it, but it works so 🤷‍♀️
 				const startTime =  DateTime.fromISO(this.form.eventStart);
 				const endTime =  DateTime.fromISO(this.form.eventEnd);
+				
 				flatpickr(this.$refs.start_date, {
 					enableTime: true,
 					time_24hr: true,

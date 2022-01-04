@@ -22,8 +22,8 @@
 							<div class="card-content">
 								<h6>Total Controllers</h6>
 								<h5>
-									<span class="tooltipped" data-tooltip="Home" data-position="top"><i class="material-icons">home</i> {{stats.counts.home}}</span> / 
-									<span class="tooltipped" data-tooltip="Visiting" data-position="top"><i class="material-icons">work</i> {{stats.counts.vis}}</span>
+									<span class="tooltipped" data-tooltip="Home" data-position="top"><i class="material-icons">home</i> {{stats.counts?.home || 0}}</span> / 
+									<span class="tooltipped" data-tooltip="Visiting" data-position="top"><i class="material-icons">work</i> {{stats.counts?.vis || 0}}</span>
 								</h5>
 							</div>
 						</div>

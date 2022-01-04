@@ -45,7 +45,7 @@
 							<p>This will delete the event and all information associated to it. Events should not be deleted unless they were canceled. If you are unsure, click cancel.</p>
 						</div>
 						<div class="modal-footer">
-							<a href="#!" class="waves-effect waves-light btn" @click="deleteEvent(event.url)">Delete</a>
+							<a href="#!" class="modal-close waves-effect waves-light btn" @click="deleteEvent(event.url)">Delete</a>
 							<a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
 						</div>
 					</div>
