@@ -14,6 +14,7 @@
 				</div>
 			</div>
 		</div>
+		<EventSummary />
 		<NewsSummary />
 		<WeatherInfo />
 	</div>
@@ -23,12 +24,14 @@
 import { mapState } from 'vuex';
 import WeatherInfo from '../partial/WeatherInfo.vue';
 import NewsSummary from '../partial/NewsSummary.vue';
+import EventSummary from '../partial/EventSummary.vue';
 
 export default {
 	title: "Home",
 	components: {
 		NewsSummary,
-		WeatherInfo
+		WeatherInfo,
+		EventSummary
 	},
 	computed: {
 		...mapState('user', [
