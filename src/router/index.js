@@ -84,6 +84,10 @@ const routes = [
 			{
 				path: '/tanmac',
 				component: () => import('../views/page/Tanmac.vue')
+			},
+			{
+				path: '/tanmac/pfr',
+				component: () => import('../views/page/TanmacPFR.vue')
 			}
 		]
 	},
