@@ -37,7 +37,7 @@
 						<li>Check with the instructor or mentor before calling up to make sure that they are ready for your flight.</li>
 						<li>Keep your requests reasonable for the controller's capability. If you can tell that the controller is nervous, struggling or otherwise having issues, tone it down. However, the flipside of this is that if the controller is knocking it out of the park, hit them with anything (within the restrictions set by the mentor/instructor).</li>
 						<li>Coordinate with other TANMAC pilots (via <code>#tanmac</code> or the TANMAC voice channel ONLY). There are certain situations where having 2 or 3 pilots working together to present a complex situation is necessary. Again, make sure you are working within the restrictions set by the mentor/instructor.</li>
-						<li>Don't pester the mentor/instructor during the session if you observe mistakes made by the student. Note down any deficiencies and include them in a TANMAC PFR (details on this coming soon - for now a message in <code>#tanmac</code> will suffice).</li>
+						<li>Don't pester the mentor/instructor during the session if you observe mistakes made by the student. Note down any deficiencies and include them in a <router-link to="/tanmac/pfr">TANMAC PFR</router-link>.</li>
 					</ul>
 					Specifically for OTS sessions, you will not be restricted by the instructor - go all out. However, if the instructor needs to see a specific situation, you may be asked to fly it.
 					<br /><br />
@@ -120,6 +120,10 @@ ul {
 		list-style: disc outside;
 		margin-left: 2em;
 	}
+}
+
+a {
+	text-decoration: underline;
 }
 
 code {
