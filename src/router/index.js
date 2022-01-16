@@ -81,6 +81,10 @@ const routes = [
 				path: '/briefing',
 				component: () => import('../views/page/PilotBrief.vue')
 			},
+			{
+				path: '/tanmac',
+				component: () => import('../views/page/Tanmac.vue')
+			}
 		]
 	},
 	{
