@@ -8,6 +8,10 @@
     "Daan Janssen"
   ],
   "license": "CC-BY-NC-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zabartcc/ui"
+  },
   "scripts": {
     "dev": "vite --open --port 8080",
     "serve": "vite preview --open",
@@ -16,27 +20,27 @@
   },
   "dependencies": {
     "@materializecss/materialize": "^1.1.0-alpha",
-    "@sentry/browser": "^6.15.0",
-    "@sentry/integrations": "^6.15.0",
-    "@sentry/tracing": "^6.15.0",
-    "@toast-ui/editor": "^3.1.1",
+    "@sentry/browser": "^6.16.1",
+    "@sentry/integrations": "^6.16.1",
+    "@sentry/tracing": "^6.16.1",
+    "@toast-ui/editor": "^3.1.2",
     "@toast-ui/editor-plugin-table-merged-cell": "^3.0.1",
     "axios": "^0.24.0",
-    "chart.js": "^3.6.0",
-    "core-js": "^3.19.1",
+    "chart.js": "^3.7.0",
+    "core-js": "^3.20.3",
     "flatpickr": "^4.6.9",
-    "luxon": "^2.1.1",
+    "luxon": "^2.3.0",
     "metar-parser": "^1.0.0",
-    "vue": "^3.2.22",
+    "vue": "^3.2.27",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "vite": "^2.6.14",
-    "@vitejs/plugin-vue": "^1.10.0",
-    "eslint": "^8.3.0",
-    "eslint-plugin-vue": "^8.1.1",
+    "vite": "^2.7.12",
+    "@vitejs/plugin-vue": "^2.0.1",
+    "eslint": "^8.7.0",
+    "eslint-plugin-vue": "^8.3.0",
     "babel-eslint": "^10.1.0",
-    "sass": "^1.43.5"
+    "sass": "^1.48.0"
   }
 }
