@@ -4,7 +4,7 @@
 			<span class="card-title">
 				Enter Session Notes
 			</span>
-			<div class="loading_container" v-if="session === null">
+			<div class="loading_container" v-if="!session">
 				<Spinner />
 			</div>
 			<div class="session_notes" v-else>
@@ -176,7 +176,7 @@ export default {
 		},
 		async submitForm() {
 			try {
-				const {data} = await zabApi.put(`/training/session/submit/${this.$route.params.id}`, this.session);
+				const { data } = await zabApi.put(`/training/session/submit/${this.$route.params.id}`, this.session);
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Session notes finalized');
 					this.$router.push('/ins/training/sessions');

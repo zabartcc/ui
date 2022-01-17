@@ -3,10 +3,10 @@
 		<div class="card-content">
 			<div class="card-title">Your Training Sessions</div>
 		</div>
-		<div v-if="sessions === null" class="loading_container">
+		<div v-if="!sessions" class="loading_container">
 			<Spinner />
 		</div>
-		<div v-else-if="sessions.length === 0" class="no_sessions">
+		<div v-else-if="!sessions.length" class="no_sessions">
 			You have no open training sessions
 		</div>
 		<div class="sessions_wrapper" v-else>
@@ -22,10 +22,10 @@
 				</thead>
 				<tbody class="sessions_list_row">
 					<tr v-for="(session, i) in sessions" :key="session._id">
-						<td>{{session.student.fname + ' ' + session.student.lname}} <span v-if="session.student.vis === true">(VC)</span></td>
-						<td>{{session.milestone.name}}</td>
-						<td>{{dtLong(session.startTime)}}</td>
-						<td>{{dtLong(session.endTime)}}</td>
+						<td>{{ session.student.fname + ' ' + session.student.lname }} <span v-if="session.student.vis">(VC)</span></td>
+						<td>{{ session.milestone.name }}</td>
+						<td>{{ dtLong(session.startTime) }}</td>
+						<td>{{ dtLong(session.endTime) }}</td>
 						<td class="options">
 							<a :href="`#modal_session_${i}`" data-position="top" data-tooltip="View Details" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
@@ -40,19 +40,19 @@
 								<div class="session">
 									<div class="row row_no_margin" id="session">
 										<div class="input-field col s6">
-											<p id="student">{{session.student.fname + ' ' + session.student.lname}} <span v-if="session.student.vis === true">(VC)</span></p>
+											<p id="student">{{ session.student.fname + ' ' + session.student.lname }} <span v-if="session.student.vis">(VC)</span></p>
 											<label for="student" class="active">Student</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="milestone">{{session.milestone.name}} ({{session.milestone.code}})</p>
+											<p id="milestone">{{ session.milestone.name }} ({{ session.milestone.code }})</p>
 											<label for="milestone" class="active">Milestone</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="startTime">{{dtLong(session.startTime)}}</p>
+											<p id="startTime">{{ dtLong(session.startTime) }}</p>
 											<label for="startTime" class="active">Start Time</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="endTime">{{dtLong(session.endTime)}}</p>
+											<p id="endTime">{{ dtLong(session.endTime) }}</p>
 											<label for="endTime" class="active">End Time</label>
 										</div>
 									</div>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import Completed from './Completed.vue';
 
 export default {
@@ -98,7 +98,7 @@ export default {
 	methods: {
 		async getSessions() {
 			try {
-				const {data} = await zabApi.get(`/training/session/open`);
+				const { data } = await zabApi.get(`/training/session/open`);
 				this.sessions = data.data;
 			} catch(e) {
 				console.log(e);

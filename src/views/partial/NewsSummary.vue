@@ -5,11 +5,11 @@
 			<div v-if="!newsItems" class="loading_container">
 				<Spinner />
 			</div>
-			<div v-else-if="newsItems && newsItems.length === 0" class="no_news">
+			<div v-else-if="newsItems && !newsItems.length" class="no_news">
 				No news articles have been posted recently
 			</div>
 		</div>
-		<div class="table_overflow_wrapper" v-if="newsItems && newsItems.length > 0">
+		<div class="table_overflow_wrapper" v-if="newsItems && newsItems.length">
 			<table class="striped">
 				<thead>
 					<tr>
@@ -19,8 +19,8 @@
 				</thead>
 				<tbody>
 					<tr v-for="news in newsItems" :key="news.id">
-						<td><router-link :to="`/news/${news.uriSlug}`">{{news.title}}</router-link></td>
-						<td class="options">{{dLong(news.createdAt)}}</td>
+						<td><router-link :to="`/news/${news.uriSlug}`">{{ news.title }}</router-link></td>
+						<td class="options">{{ dLong(news.createdAt) }}</td>
 					</tr>
 				</tbody>
 			</table>

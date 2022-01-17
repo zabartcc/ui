@@ -1,12 +1,12 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="card-title">Training Sessions {{controller !== '' ? ` – ${controller}` : ''}}</div>
+			<div class="card-title">Training Sessions {{ controller !== '' ? ` – ${controller}` : '' }}</div>
 		</div>
-		<div v-if="sessions === null" class="loading_container">
+		<div v-if="!sessions" class="loading_container">
 			<Spinner />
 		</div>
-		<div v-else-if="sessions && sessions.length === 0" class="no_sessions">
+		<div v-else-if="sessions && !sessions.length" class="no_sessions">
 			There are no completed training sessions
 		</div>
 		<div class="session_wrapper" v-else>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
@@ -69,7 +69,7 @@ export default {
 	},
 	methods: {
 		async getSessions() {
-			const {data} = await zabApi.get(`/training/sessions/${this.$route.params.cid}`, {
+			const { data } = await zabApi.get(`/training/sessions/${this.$route.params.cid}`, {
 				params: {
 					page: this.page,
 					limit: this.limit

@@ -9,7 +9,7 @@
 		<div class="card-content loading_container" v-if="loading">
 			<Spinner />
 		</div>
-		<p class="no_certs" v-else-if="loading === false && certs.length === 0">There are no active solo certifications issued by ZAB</p>
+		<p class="no_certs" v-else-if="!loading && !certs.length">There are no active solo certifications issued by ZAB</p>
 		<div class="table_wrapper" v-else>
 			<table class="striped">
 				<thead class="certs_list_head">
@@ -22,14 +22,14 @@
 				</thead>
 				<tbody class="certs_list_row">
 					<tr v-for="(cert, i) in certs" :key="cert.id">
-						<td><router-link :to="`/controllers/${cert.cid}`" class="controller_link">{{getName(cert.cid)}}</router-link></td>
-						<td>{{cert.position}}</td>
-						<td>{{cert.expires}}</td>
+						<td><router-link :to="`/controllers/${cert.cid}`" class="controller_link">{{ getName(cert.cid) }}</router-link></td>
+						<td>{{ cert.position }}</td>
+						<td>{{ cert.expires }}</td>
 						<td class="options"><a :href="`#modal_delete_${i}`" class="modal-trigger red-text text-darken-2"><i class="material-icons">delete</i></a></td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
 							<div class="modal-content">
 								<h4>Delete solo certification?</h4>
-								<p>This will delete the solo certification for {{getName(cert.cid)}} on {{cert.position}} entirely.</p>
+								<p>This will delete the solo certification for {{ getName(cert.cid) }} on {{ cert.position }} entirely.</p>
 							</div>
 							<div class="modal-footer">
 								<a href="#!" class="waves-effect btn" @click="deleteCert(cert.cid, cert.position)">Delete</a>
@@ -43,7 +43,7 @@
 	</div>
 </template>
 <script>
-import {vatusaApiAuth, vatusaApi, zabApi} from '@/helpers/axios.js';
+import { vatusaApiAuth, vatusaApi, zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'SoloCerts',
@@ -68,7 +68,7 @@ export default {
 	methods: {
 		async getSoloCerts() {
 			try {
-				const {data} = await vatusaApi.get('/solo');
+				const { data } = await vatusaApi.get('/solo');
 				for (const cert of data.data) {
 					if(this.positions.includes(cert.position.slice(0, 3))) this.certs.push(cert);
 				}
@@ -78,7 +78,7 @@ export default {
 		},
 		async getControllers() {
 			try {
-				const {data} = await zabApi.get('/feedback/controllers');
+				const { data } = await zabApi.get('/feedback/controllers');
 				this.controllers = data.data;
 			} catch(e) {
 				console.log(e);
@@ -104,7 +104,6 @@ export default {
 		},
 		getName(cid2) {
 			const controller = this.controllers.filter(i => { return i.cid === cid2; });
-			console.log(controller);
 			return controller[0].fname + ' ' + controller[0].lname;
 		}
 	}

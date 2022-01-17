@@ -2,19 +2,19 @@
 	<div>
 		<div class="position_category_heading">{{category.title}}</div>
 		<table class="assignment_list striped">
-			<tbody v-if='category.positions !== null && category.positions.length'>
+			<tbody v-if="category.positions && category.positions.length">
 				<tr v-for="position in category.positions" :key="position.id">
 					<td>
-						{{position.pos}}
+						{{ position.pos }}
 					</td>
 					<td class="right">
-						{{getName(position.user)}}
+						{{ getName(position.user) }}
 					</td>
 				</tr>
 			</tbody>
 			<tbody v-else>
 				<tr class="no_positions">
-					<td colspan="2">There are no {{category.title}} positions for this event</td>
+					<td colspan="2">There are no {{ category.title }} positions for this event</td>
 				</tr>
 			</tbody>
 		</table>

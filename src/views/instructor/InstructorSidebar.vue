@@ -25,21 +25,8 @@
 	</div>
 </template>
 
-<script>
-export default {
-
-};
-</script>
-
 <style scoped lang="scss">
 .card.admin_sidebar {
-	// position: absolute;
-	// top: 0;
-	// left: 0;
-	// width: 350px;
-	// height: 100%;
-	// background: $primary-color;
-	// color: #fff;
 	padding: 0;
 }
 

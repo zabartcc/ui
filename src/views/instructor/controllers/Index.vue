@@ -5,7 +5,7 @@
 				<div class="row row_no_margin">
 					<span class="card-title col s12 m8">Controllers</span>
 					<div class="input-field col s12 m4">
-						<input autocomplete="off" @keyup=filterControllers v-model=filter type="text" placeholder="Search for a controller">
+						<input autocomplete="off" @keyup="filterControllers" v-model="filter" type="text" placeholder="Search for a controller">
 						<span class="helper-text right">Search by CID, name, or operating initials</span>
 					</div>
 				</div>
@@ -25,17 +25,17 @@
 					<tbody class="controller_list_row">
 						<tr v-for="controller in controllersFiltered" :key="controller.cid">
 							<td>
-								<i class="material-icons right type_controller">{{controller.vis?'work':'home'}}</i>
+								<i class="material-icons right type_controller">{{ controller.vis ? 'work' : 'home' }}</i>
 								<div class="name">
-									<router-link :to="`/controllers/${controller.cid}`">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</router-link>
+									<router-link :to="`/controllers/${controller.cid}`">{{ controller.fname }} {{ controller.lname }} ({{ controller.oi }})</router-link>
 								</div>
 								<div class="rating">
-									{{controller.ratingLong}}
+									{{ controller.ratingLong }}
 								</div>
 							</td>
 							<td>
 								<div class="cid">
-									{{controller.cid}}
+									{{ controller.cid }}
 								</div>
 							</td>
 							<td class="options">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'Controllers',

@@ -1,11 +1,11 @@
 <template>
 	<div class="pilot">
-		<span class="pilot_details"><strong class="text-xl text-black">{{pilot.callsign}}</strong>{{pilot.aircraft}}</span>
-		<span>{{pilot.dep}} - {{pilot.dest}}</span>
+		<span class="pilot_details"><strong class="text-xl text-black">{{ pilot.callsign }}</strong>{{ pilot.aircraft }}</span>
+		<span>{{ pilot.dep }} - {{ pilot.dest }}</span>
 		<div class="flight_info">
-			<h6>Flight Details - {{pilot.callsign}}</h6>
-			<p>{{pilot.route || '—'}}</p>
-			<p class="remarks">{{pilot.remarks || '—'}}</p>
+			<h6>Flight Details - {{ pilot.callsign }}</h6>
+			<p>{{ pilot.route || '—' }}</p>
+			<p class="remarks">{{ pilot.remarks || '—' }}</p>
 		</div>
 	</div>
 </template>

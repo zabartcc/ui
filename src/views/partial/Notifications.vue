@@ -3,7 +3,7 @@
 		<div class="loading_container" v-if="!notifications">
 			<Spinner />
 		</div>
-		<span class="no_notif" v-else-if="notifications.length === 0">You have no new notifications</span>
+		<span class="no_notif" v-else-if="!notifications.length">You have no new notifications</span>
 		<div v-else>
 			<div class="notif" v-for="notification in notifications" :key="notification._id" @click="redirectTo(notification.link, notification._id)">
 				<div class="notif_unread" v-if="notification.read === false"></div>
@@ -39,7 +39,7 @@ export default {
 	methods: {
 		async getNotifications() {
 			try {
-				const {data} = await zabApi.get(`/user/notifications`, {
+				const { data } = await zabApi.get(`/user/notifications`, {
 					params: {
 						page: this.page, 
 						limit: this.limit
@@ -59,7 +59,7 @@ export default {
 		async getMoreNotifications() {
 			this.page += 1;
 
-			const {data} = await zabApi.get(`/user/notifications`, {
+			const { data } = await zabApi.get(`/user/notifications`, {
 				params: {
 					page: this.page, 
 					limit: this.limit
@@ -91,7 +91,7 @@ export default {
 		},
 		async deleteAll() {
 			try {
-				if(this.notifications.length > 0) {
+				if(this.notifications.length) {
 					await zabApi.delete(`/user/notifications`);
 					this.notifications = [];
 					this.$parent.unread = false;

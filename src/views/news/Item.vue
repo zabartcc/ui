@@ -6,9 +6,9 @@
 		<div v-else>
 			<div class="card-content">
 				<div class="row row_no_margin">
-					<div class="col s12 l10 card-title">{{news.title}}</div>
+					<div class="col s12 l10 card-title">{{ news.title }}</div>
 					<div class="col s12 author">
-						By {{news.user.fname}} {{news.user.lname}} on {{dLong(news.createdAt)}}
+						By {{ news.user.fname }} {{ news.user.lname }} on {{ dLong(news.createdAt) }}
 					</div>
 				</div>
 				<div id="news_content"></div>
@@ -43,7 +43,7 @@ export default {
 	},
 	methods: {
 		async getArticle() {
-			const {data} = await zabApi.get(`/news/${this.$route.params.slug}`);
+			const { data } = await zabApi.get(`/news/${this.$route.params.slug}`);
 			this.news = data.data;
 		},
 	}

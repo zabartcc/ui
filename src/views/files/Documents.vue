@@ -12,7 +12,7 @@
 					<li class="tab col s6 l4"><a href="#misc">Miscellaneous</a></li>
 				</ul>
 			</div>
-			<div class="loading_container loading_files" v-if="documents === null">
+			<div class="loading_container loading_files" v-if="!documents">
 				<Spinner />
 			</div>
 			<div class="tabs_content" v-else>

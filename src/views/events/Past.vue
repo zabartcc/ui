@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="!historicEvents">
 			<Spinner />
 		</div>
-		<p v-else-if="historicEvents && historicEvents.length == 0" class="no_event">There are no past events</p>
+		<p v-else-if="historicEvents && !historicEvents.length" class="no_event">There are no past events</p>
 		<div v-else>
 			<table class="event_list striped">
 				<thead class="event_list_head">
@@ -19,11 +19,11 @@
 					<tr v-for="event in historicEvents" :key="event.id">
 						<td class="name">
 							<router-link :to="`/events/${event.url}`">
-								{{event.name}}
+								{{ event.name }}
 							</router-link><br />
 						</td>
 						<td class="date right">
-							{{dtLong(event.eventStart)}}
+							{{ dtLong(event.eventStart) }}
 						</td>
 					</tr>
 				</tbody>
@@ -59,7 +59,7 @@ export default {
 	},
 	methods: {
 		async getHistoricEvents() {
-			const {data} = await zabApi.get('/event/archive', {
+			const { data } = await zabApi.get('/event/archive', {
 				params: {
 					page: this.page,
 					limit: this.limit

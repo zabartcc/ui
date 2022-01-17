@@ -1,6 +1,6 @@
 <template>
 	<div class="card event_card">
-		<div class="loading_container" v-if="event === null">
+		<div class="loading_container" v-if="!event">
 			<Spinner />
 		</div>
 		<div class="event" v-else>
@@ -8,13 +8,13 @@
 			<div class="card-content">
 				<div class="row">
 					<div class="col s12">
-						<span class="card-title event_title">{{event.name}}</span>
-						<span class="card-title event_date">{{dtLong(event.eventStart)}} <i class="material-icons rotate tiny">airplanemode_active</i> {{formatTime(event.eventEnd)}}z</span>
+						<span class="card-title event_title">{{ event.name }}</span>
+						<span class="card-title event_date">{{ dtLong(event.eventStart) }} <i class="material-icons rotate tiny">airplanemode_active</i> {{ formatTime(event.eventEnd) }}z</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col s12 event_desc">
-						{{event.description}}
+						{{ event.description }}
 					</div>
 				</div>
 			</div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'Events',
@@ -43,14 +43,14 @@ export default {
 	methods: {
 		async getEvent() {
 			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
-			if(data.data === null) {
+			if(!data.data) {
 				this.$router.push('/events');
 			} else {
 				this.event = data.data;
 			}
 		},
 		formatTime(value) {
-			var d = new Date(value);
+			const d = new Date(value);
 			return d.toLocaleString('en-us', {timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
 		},
 	}

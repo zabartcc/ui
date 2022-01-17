@@ -1,7 +1,7 @@
 <template>
 	<router-link :to="`/controllers/${controller.cid}`">
-		<span><strong>{{controller.name}}</strong>/{{controller.ratingShort}}</span>
-		<span class="controller_position">{{controller.pos}}</span>
+		<span><strong>{{ controller.name }}</strong>/{{ controller.ratingShort }}</span>
+		<span class="controller_position">{{ controller.pos }}</span>
 	</router-link>
 </template>
 

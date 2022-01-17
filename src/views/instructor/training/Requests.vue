@@ -86,7 +86,7 @@ export default {
 
 				for(const request of data.data) {
 					for(const date of this.dates) {
-						if(date.date.slice(0,10) === new Date(new Date(request.startTime)).toISOString().slice(0,10)) {
+						if(date.date.slice(0,10) === new Date(request.startTime).toISOString().slice(0, 10)) {
 							date.requests.push(request);
 						}
 					}

@@ -12,7 +12,7 @@
 					<li class="tab col s6 l3"><a href="#misc">Miscellaneous</a></li>
 				</ul>
 			</div>
-			<div class="loading_container loading_files" v-if="downloads === null">
+			<div class="loading_container loading_files" v-if="!downloads">
 				<Spinner />
 			</div>
 			<div class="tabs_content" v-else>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import DownloadCategory from './DownloadCategory.vue';
 
 export default {

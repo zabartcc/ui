@@ -17,11 +17,11 @@
 				</thead>
 				<tbody>
 					<tr v-for="station in stations" :key="station.icao">
-						<td><span class="hide-on-med-and-down">{{station.fullName}} <strong>({{station.icao}})</strong></span><span class="hide-on-large-only">{{station.icao}}</span></td>
-						<td>{{formatWind(station)}}</td>
+						<td><span class="hide-on-med-and-down">{{ station.fullName }} <strong>({{ station.icao }})</strong></span><span class="hide-on-large-only">{{ station.icao }}</span></td>
+						<td>{{ formatWind(station) }}</td>
 						<td><div class="airport_conditions" v-html="getConditions(station)"></div></td>
-						<td>{{station.getLanding()}}</td>
-						<td>{{station.getDeparting()}}</td>
+						<td>{{ station.getLanding() }}</td>
+						<td>{{ station.getDeparting() }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -263,13 +263,13 @@ export default {
 			}
 			
 		},
-		formatWind: function(station) {
+		formatWind(station) {
 			if(station.parsedMetar.wind.speedKt < 4) return 'Calm';
 			else if(!('speedKt' in station.parsedMetar.wind)) return 'Unknown';
 			const paddedWind = `0${station.parsedMetar.wind.direction}`.slice(-3);
 			return `${paddedWind}@${station.parsedMetar.wind.speedKt}${(station.parsedMetar.wind.gust?`G${station.parsedMetar.wind.gust}`:'')}`;
 		},
-		getConditions: function(station) {
+		getConditions(station) {
 			return (station.parsedMetar.visibility.miles > 3) ? `<i class="material-icons weather_icon">wb_sunny</i>VFR` : `<i class="material-icons weather_icon">wb_cloudy</i>IFR`;
 		}
 	}

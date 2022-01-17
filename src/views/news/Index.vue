@@ -3,10 +3,10 @@
 		<div class="card-content">
 			<span class="card-title">News Articles</span>
 		</div>
-		<div class="loading_container" v-if="newsItems === null">
+		<div class="loading_container" v-if="!newsItems">
 			<Spinner />
 		</div>
-		<p class="no_news" v-else-if="newsItems && newsItems.length === 0">There have been no news articles yet</p>
+		<p class="no_news" v-else-if="newsItems && !newsItems.length">There have been no news articles yet</p>
 		<div class="news_wrapper" v-else>
 			<table class="news_list striped">
 				<thead class="news_list_head">
@@ -62,7 +62,7 @@ export default {
 	},
 	methods: {
 		async getNews() {
-			const {data} = await zabApi.get('/news', {
+			const { data } = await zabApi.get('/news', {
 				params: {
 					page: this.page, 
 					limit: this.limit

@@ -14,7 +14,7 @@
 						<div class="col s12 input-field">
 							<select v-model="form.cid" required class="materialize-select">
 								<option value="" disabled selected>Select a controller</option>
-								<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
+								<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{ controller.fname }} {{ controller.lname }}</option>
 							</select>
 							<label>Controller</label>
 						</div>
@@ -36,7 +36,7 @@
 	</div>
 </template>
 <script>
-import {vatusaApiAuth, zabApi} from '@/helpers/axios.js';
+import { vatusaApiAuth, zabApi } from '@/helpers/axios.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -72,7 +72,7 @@ export default {
 	},
 	methods: {
 		async getControllers() {
-			const {data} = await zabApi.get('/feedback/controllers');
+			const { data } = await zabApi.get('/feedback/controllers');
 			this.controllers = data.data.filter(c => {
 				return c.rating > 2 && c.vis == false;
 			});

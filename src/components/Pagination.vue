@@ -1,7 +1,7 @@
 <template>
 	<div class="row row_no_margin">
 		<div class="page_info col s12 m4">
-			Showing {{minEntries}}–{{maxEntries}} of {{amount}} entries
+			Showing {{ minEntries }}–{{ maxEntries }} of {{ amount }} entries
 		</div>
 		<div class="col s12 m8">
 			<ul class="pagination right">
@@ -16,11 +16,6 @@
 <script>
 export default {
 	name: 'Pagination',
-	data() {
-		return {
-
-		};
-	},
 	props: ['amount', 'page', 'limit', 'amountOfPages'],
 	computed: {
 		isFirstPage() {

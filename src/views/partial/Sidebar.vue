@@ -16,7 +16,7 @@
 				<div v-if="!atcOnline" class="loading_container">
 					<Spinner />
 				</div>
-				<div v-else-if="atcOnline && atcOnline.length > 0">
+				<div v-else-if="atcOnline && atcOnline.length">
 					<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
 				</div>
 				<div v-else>
@@ -27,14 +27,14 @@
 				<div v-if="!pilotsOnline" class="loading_container">
 					<Spinner />
 				</div>
-				<div v-else-if="pilotsOnline && pilotsOnline.length > 0">
+				<div v-else-if="pilotsOnline && pilotsOnline.length">
 					<PilotOnlineItem v-for="(pilot, k) in depsArrs" :key=k :pilot="pilot" />
 				</div>
 				<div v-else>
 					<p>There are no departures/arrivals online right now</p>
 				</div>
 			</div>
-			<p class="as_of">As of {{getZuluTime()}}z</p>
+			<p class="as_of">As of {{ getZuluTime() }}z</p>
 		</div>
 
 		<div class="card" v-if="user.isLoggedIn">
@@ -56,10 +56,10 @@
 				<div v-if="!top" class="loading_container">
 					<Spinner />
 				</div>
-				<div v-else-if="top.controllers && top.controllers.length > 0">
-					<router-link class="top" :to="`/controllers/${item.cid}`" v-for='item in top.controllers' :key=item.cid>
-						<span><strong>{{item.name}}</strong></span>
-						<span>{{secondsToHms(item.len)}}</span>
+				<div v-else-if="top.controllers && top.controllers.length">
+					<router-link class="top" :to="`/controllers/${item.cid}`" v-for="item in top.controllers" :key="item.cid">
+						<span><strong>{{ item.name }}</strong></span>
+						<span>{{ secondsToHms(item.len) }}</span>
 					</router-link>
 				</div>
 				<div v-else>
@@ -70,10 +70,10 @@
 				<div v-if="!top" class="loading_container">
 					<Spinner />
 				</div>
-				<div v-else-if="top.positions && top.positions.length > 0">
-					<span class="top" v-for='item in top.positions' :key=item.cid>
-						<span><strong>{{item.name}}</strong></span>
-						<span>{{secondsToHms(item.len)}}</span>
+				<div v-else-if="top.positions && top.positions.length">
+					<span class="top" v-for="item in top.positions" :key="item.cid">
+						<span><strong>{{ item.name }}</strong></span>
+						<span>{{ secondsToHms(item.len) }}</span>
 					</span>
 				</div>
 				<div v-else>
@@ -114,10 +114,10 @@ export default {
 	},
 	methods: {
 		async getOnline() {
-			const {data} = await zabApi.get('/online');
+			const { data } = await zabApi.get('/online');
 			this.pilotsOnline = data.data.pilots;
 			this.atcOnline = data.data.atc;
-			const {data: topData} = await zabApi.get('/online/top');
+			const { data: topData } = await zabApi.get('/online/top');
 			this.top = topData.data;
 			this.getZuluTime(); // update time when refreshing who's online
 		},

@@ -17,7 +17,7 @@ export default {
 	name: 'ConnectDiscord',
 	title: 'Linking Discord...',
 	async mounted() {
-		const {data} = await zabApi.post('/user/discord', {
+		const { data } = await zabApi.post('/user/discord', {
 			cid: this.user.data.cid,
 			code: this.$route.query.code
 		});

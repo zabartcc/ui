@@ -3,10 +3,10 @@
 		<div class="card-content">
 			<div class="card-title">Completed Training Sessions</div>
 		</div>
-		<div v-if="sessions === null" class="loading_container">
+		<div v-if="!sessions" class="loading_container">
 			<Spinner />
 		</div>
-		<div v-else-if="sessions && sessions.length === 0" class="no_sessions">
+		<div v-else-if="sessions && !sessions.length" class="no_sessions">
 			There have been no training sessions yet
 		</div>
 		<div class="session_wrapper" v-else>
@@ -68,7 +68,7 @@ export default {
 	},
 	methods: {
 		async getSessions() {
-			const {data} = await zabApi.get('/training/sessions', {
+			const { data } = await zabApi.get('/training/sessions', {
 				params: {
 					page: this.page,
 					limit: this.limit

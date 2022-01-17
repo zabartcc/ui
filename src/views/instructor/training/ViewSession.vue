@@ -77,7 +77,7 @@ export default {
 	},
 	methods: {
 		async getSessionDetails() {
-			const {data} = await zabApi.get(`/training/session/${this.$route.params.id}`);
+			const { data } = await zabApi.get(`/training/session/${this.$route.params.id}`);
 			this.session = data.data;
 		},
 		formatLocation(location) {

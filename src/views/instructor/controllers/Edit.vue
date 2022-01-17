@@ -1,11 +1,11 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<span class="card-title">Edit Controller {{controller !== null ? ` – ${controller.fname} ${controller.lname}` : ''}}</span>
-			<div class="loading_container" v-if="controller === null">
+			<span class="card-title">Edit Controller {{ controller ? ` – ${controller.fname} ${controller.lname}` : '' }}</span>
+			<div class="loading_container" v-if="!controller">
 				<Spinner />
 			</div>
-			<form id="update_controller" @submit.prevent=updateController v-else>
+			<form id="update_controller" @submit.prevent="updateController" v-else>
 				<div class="row row_no_margin">
 					<div class="input-field col s6">
 						<input id="first_name" type="text" :value="form.fname" disabled>
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	data() {
@@ -153,13 +153,13 @@ export default {
 			this.controller.roles.forEach(role => this.form.roles[role.code] = true);
 			this.usedOi = (await zabApi.get(`/controller/oi`)).data.data;
 		},
-		toggleCert: function(e) {
+		toggleCert(e) {
 			e.target.classList.toggle('active');
 			this.form.certs[e.target.id] = e.target.classList.contains('active');
 		},
 		async updateController() {
 			try {
-				const {data} = await zabApi.put(`/controller/${this.controller.cid}`, {
+				const { data } = await zabApi.put(`/controller/${this.controller.cid}`, {
 					form: this.form
 				});
 

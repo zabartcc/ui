@@ -25,19 +25,19 @@
 									</thead>
 									<tbody>
 										<tr v-for="member in stats.controllersWithoutTraining" :key="member.cid">
-											<td><strong>{{member.fname}} {{member.lname}}</strong></td>
-											<td>{{member.ratingLong}}</td>
-											<td>{{stats.lastRequest[member.cid] ? dtStandard(stats.lastRequest[member.cid].lastRequest) : 'N/A'}}</td>
-											<td>{{stats.lastRequest[member.cid]?.milestone.name ?? 'N/A'}}</td>
+											<td><strong>{{ member.fname }} {{ member.lname }}</strong></td>
+											<td>{{ member.ratingLong }}</td>
+											<td>{{ stats.lastRequest[member.cid] ? dtStandard(stats.lastRequest[member.cid].lastRequest) : 'N/A' }}</td>
+											<td>{{ stats.lastRequest[member.cid]?.milestone.name ?? 'N/A' }}</td>
 										</tr>
 										<tr>
 											<td colspan="4" style="background-color: #333;"></td>
 										</tr>
 										<tr v-for="session in stats.lastTraining" :key="session.cid">
-											<td>{{session.student.fname}} {{session.student.lname}}</td>
-											<td>{{session.student.ratingLong}}</td>
-											<td>{{dtStandard(session.lastSession)}}</td>
-											<td>{{session.milestone?.name || "Unknown"}}</td>
+											<td>{{ session.student.fname }} {{ session.student.lname }}</td>
+											<td>{{ session.student.ratingLong }}</td>
+											<td>{{ dtStandard(session.lastSession) }}</td>
+											<td>{{ session.milestone?.name || "Unknown" }}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -61,13 +61,11 @@ export default {
 		};
 	},
 	async mounted() {
-		const {data: statsData} = await zabApi.get('/stats/ins');
+		const { data: statsData } = await zabApi.get('/stats/ins');
 		this.stats = statsData.data;
 	}
 };
 </script>
-
-
 
 <style scoped lang="scss">
 .table_wrapper {

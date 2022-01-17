@@ -93,7 +93,7 @@ export default {
 		async addRequest() {
 			try {
 				const requests = this.chips.chipsData.map(chip => chip.tag);
-				const {data} = await zabApi.put(`/event/${this.$route.params.slug}/signup`, {requests});
+				const { data } = await zabApi.put(`/event/${this.$route.params.slug}/signup`, {requests});
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Request submitted');
 
@@ -113,7 +113,8 @@ export default {
 				while(this.chips.chipsData.length) {
 					this.chips.deleteChip(0);
 				}
-				const {data} = await zabApi.delete(`/event/${this.$route.params.slug}/signup`);
+
+				const { data } = await zabApi.delete(`/event/${this.$route.params.slug}/signup`);
 
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Request deleted');
