@@ -30,6 +30,9 @@
 							<a :href="`#modal_request_${i}`" data-position="top" data-tooltip="View Request" class="tooltipped modal-trigger">
 								<i class="material-icons" @click="setTimes(i)">search</i>
 							</a>
+							<router-link data-position="top" data-tooltip="View Training Sessions" class="tooltipped" :to="`/ins/training/sessions/${request.student.cid}`">
+								<i class="material-icons">assignment</i>
+							</router-link>
 							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Request" class="tooltipped modal-trigger red-text text-darken-2" v-if="requiresAuth(['atm', 'datm', 'ta', 'ins'])">
 								<i class="material-icons">delete</i>
 							</a>

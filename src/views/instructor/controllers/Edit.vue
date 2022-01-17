@@ -235,4 +235,10 @@ export default {
 #certs_container, #roles_container {
 	margin-top: 5px;
 }
+
+#roles_container {
+	.cert {
+		pointer-events: none;
+	}
+}
 </style>
