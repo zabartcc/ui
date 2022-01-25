@@ -65,7 +65,7 @@
 						<tr v-for="position in event.positions" :key="position.pos">
 							<td>{{position.pos}}</td>
 							<td>
-								<select name="" id="" @change="assignPos(position._id)" :ref="`pos_${position._id}`" class="materialize-select">
+								<select @change="assignPos($event)" :id="`${position._id}`" class="materialize-select">
 									<option value="" :selected="!position.takenBy">Unassigned</option>
 									<option v-for="signup in event.signups" :key="signup.cid" :selected="position.takenBy === signup.cid" :value="signup.cid">{{signup.user.fname}} {{signup.user.lname}}</option>
 								</select>
@@ -184,13 +184,14 @@ export default {
 				console.log(e);
 			}
 		},
-		async assignPos(pos) {
+		async assignPos(event) {
+			console.log(event.target.id, event.target.value)
 			const update = await zabApi.put(`/event/${this.$route.params.slug}/assign`, {
-				position: pos,
-				cid: this.$refs[`pos_${pos}`].value,
+				position: event.target.id,
+				cid: event.target.value ?? null
 			});
 			if(update.data.ret_det.code === 200) {
-				this.toastSuccess(`Position ${update.data.data.pos} assigned`);
+				this.toastSuccess(`Position ${update.data.data.pos} updated`);
 			} else {
 				this.toastError();
 			}
