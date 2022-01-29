@@ -15,8 +15,9 @@ https://creativecommons.org/licenses/by-nc-sa/4.0/
 The following people have contributed to this project. If you have contributed, but your name is not listed here, or if you are on this list and would like to be removed, please email atm@zabartcc.org.
 
 Daan Janssen  
-Austin Robison  
+Alexandra Robison  
 Robby Maura  
+Shane Friedman  
 
 Thank you to all contributors, past and present.
 
