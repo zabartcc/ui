@@ -33,13 +33,14 @@
 		<div id="lgbt_modal" class="modal">
 			<div class="modal-content">
 				<h5>We stand with the LGBTQIA+ community on VATSIM</h5>
-				<p>Albuquerque ARTCC displays the rainbow, transgender and bisexual flags as a show of solidarity with the LGBTQIA+ community on VATSIM. You are welcome here, and you have our support.</p>
+				<p>Albuquerque ARTCC displays the rainbow, transgender, bisexual and pansexual flags as a show of solidarity with the LGBTQIA+ community on VATSIM. You are welcome here, and you have our support.</p>
 				<p>As an organization with LGBTQIA+ members, we recognize the importance of creating a welcoming environment to all members. Everyone is welcome here, regardless of their race, nationality, national origin, ethnicity, ethnic origin, socioeconomic status, religion, age, disability, sexual orientation, gender or gender identity.</p>
 				<p>We recognize CZQO, CZWG, ZJX, ZMA, ZNY, ZOA, ZOB and ZSE for displaying similar statements on their websites.</p>
 				<div class="modal_flags">
 					<div class="lgbt_flag"></div>
 					<div class="trans_flag"></div>
 					<div class="bi_flag"></div>
+					<div class="pan_flag"></div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -180,6 +181,10 @@ body .page-footer {
 
 .bi_flag {
 	background: linear-gradient(180deg, #D60270 40%, #9B4F96 40%, 60%, #0038A8 60%);
+}
+
+.pan_flag {
+	background: linear-gradient(180deg, #FF218C 33%, #FFD800 33%, 66%, #21B1FF 66%);
 }
 
 .trans_flag {
