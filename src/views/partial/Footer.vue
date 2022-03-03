@@ -14,6 +14,7 @@
 					<div class="lgbt_flag"></div>
 					<div class="trans_flag"></div>
 					<div class="bi_flag"></div>
+					<div class="pan_flag"></div>
 				</div>
 				<a href="#lgbt_modal" class="modal-trigger">
 					The Albuquerque ARTCC stands with the LGBTQIA+ community on VATSIM
