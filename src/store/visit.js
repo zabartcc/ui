@@ -11,25 +11,25 @@ export default {
 		}
 	},
 	actions: {
-		getVisit: async ({commit, state}) => {
+		getVisit: async ({ commit, state }) => {
 			if(!state.visit.isLoggedIn) { // we have a token already set
 				zabApi.get('/user/visit').then(({data}) => {
 					if(data) {
 						commit('setVisit', data);
 						commit('setVisitLoggedIn', true);
 					}
-				}).catch(err => {
+				}).catch((err) => {
 					console.log(err);
 					return router.push('/');
 				});
 			}
 			commit('setVisitQuery', true);
 		},
-		logout: async ({commit}) => {
+		logout: async ({ commit }) => {
 			zabApi.get('/user/visit/logout').then(() => {
 				commit('setVisit', null);
 				commit('setVisitLoggedIn', false);
-			}).catch(err => {
+			}).catch((err) => {
 				console.log(err);
 			});
 		}

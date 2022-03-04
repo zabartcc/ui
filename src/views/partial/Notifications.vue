@@ -7,7 +7,7 @@
 		<div v-else>
 			<div class="notif" v-for="notification in notifications" :key="notification._id" @click="redirectTo(notification.link, notification._id)">
 				<div class="notif_unread" v-if="notification.read === false"></div>
-				<div :class="`notif_title ${notification.read ? '' : 'unread'}`">{{notification.title}}</div>
+				<div :class="`notif_title ${notification.read ? '' : 'unread'}`">{{ notification.title }}</div>
 				<div class="notif_text" v-html="notification.content"></div>
 			</div>
 			<span class="load_more" v-if="amount > (page * limit)" @click="getMoreNotifications">Load More</span>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: "Notifications",
@@ -49,9 +49,7 @@ export default {
 				this.amount = data.data.amount;
 				this.notifications = data.data.notif;
 
-				if(this.unread > 0) {
-					this.$parent.unread = true;
-				}
+				if(this.unread) this.$parent.unread = true;
 			} catch(e) {
 				console.log(e);
 			}
@@ -80,9 +78,7 @@ export default {
 			try {
 				await zabApi.put(`/user/notifications/read/all`);
 				this.notifications.forEach((notif) => {
-					if(notif.read === false) {
-						notif.read = true;
-					}
+					if(notif.read === false) notif.read = true;
 				});
 				this.$parent.unread = false;
 			} catch(e) {
@@ -96,9 +92,7 @@ export default {
 					this.notifications = [];
 					this.$parent.unread = false;
 					this.toastSuccess('Deleted all notifications successfully');
-				} else {
-					this.toastInfo('You have no notifications');
-				}
+				} else this.toastInfo('You have no notifications');
 			} catch(e) {
 				console.log(e);
 			}

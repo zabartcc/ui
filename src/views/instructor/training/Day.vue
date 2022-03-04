@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="!requests">
 			<Spinner />
 		</div>
-		<div v-else-if="requests.length === 0" class="no_requests">
+		<div v-else-if="!requests.length" class="no_requests">
 			There are no training requests for {{ formatDate(date) }}
 		</div>
 		<div class="requests_wrapper" v-else>
@@ -22,10 +22,10 @@
 				</thead>
 				<tbody class="requests_list_row">
 					<tr v-for="(request, i) in requests" :key="request._id">
-						<td>{{request.student.fname + ' ' + request.student.lname}} <span v-if="request.student.vis === true">(VC)</span></td>
-						<td>{{request.milestone.name}}</td>
-						<td>{{dtLong(request.startTime)}}</td>
-						<td>{{dtLong(request.endTime)}}</td>
+						<td>{{ request.student.fname + ' ' + request.student.lname }} <span v-if="request.student.vis">(VC)</span></td>
+						<td>{{ request.milestone.name }}</td>
+						<td>{{ dtLong(request.startTime) }}</td>
+						<td>{{ dtLong(request.endTime) }}</td>
 						<td class="options">
 							<a :href="`#modal_request_${i}`" data-position="top" data-tooltip="View Request" class="tooltipped modal-trigger">
 								<i class="material-icons" @click="setTimes(i)">search</i>
@@ -43,11 +43,11 @@
 								<div class="request">
 									<div class="row row_no_margin" id="request">
 										<div class="input-field col s12 m6">
-											<p id="student">{{request.student.fname + ' ' + request.student.lname}} <span v-if="request.student.vis === true">(VC)</span></p>
+											<p id="student">{{ request.student.fname + ' ' + request.student.lname }} <span v-if="request.student.vis">(VC)</span></p>
 											<label for="student" class="active">Student</label>
 										</div>
 										<div class="input-field col s12 m6">
-											<p id="milestone">{{request.milestone.name}} ({{request.milestone.code}})</p>
+											<p id="milestone">{{ request.milestone.name }} ({{ request.milestone.code }})</p>
 											<label for="milestone" class="active">Milestone</label>
 										</div>
 										<div class="input-field col s12 m6">
@@ -71,7 +71,7 @@
 											<label for="end_time" class="active">End Time (Zulu) </label>
 										</div>
 										<div class="input-field remarks_wrapper col s12">
-											<p id="remarks">{{request.remarks ? request.remarks : '—'}}</p>
+											<p id="remarks">{{ request.remarks ? request.remarks : '—' }}</p>
 											<label for="remarks" class="active">Remarks</label>
 										</div>
 									</div>
@@ -85,7 +85,7 @@
 						<div :id="`modal_delete_${i}`" class="modal modal_request">
 							<div class="modal-content">
 								<div class="modal_title">Delete Request?</div>
-								Are you sure you want to delete <b>{{request.student.fname + ' ' + request.student.lname}}</b>'s training request from <b>{{dtLong(request.startTime)}}</b> until <b>{{dtLong(request.endTime)}}</b>?
+								Are you sure you want to delete <b>{{ request.student.fname + ' ' + request.student.lname }}</b>'s training request from <b>{{ dtLong(request.startTime) }}</b> until <b>{{ dtLong(request.endTime) }}</b>?
 							</div>
 							<div class="modal-footer">
 								<a href="#!" class="waves-effect btn modal-close" @click="deleteRequest(request._id)">Delete</a>
@@ -142,9 +142,7 @@ export default {
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Training request taken');
 					this.$router.push('/ins/training/requests');
-				} else {
-					this.toastError(data.ret_det.message);
-				}
+				} else this.toastError(data.ret_det.message);
 			} catch(e) {
 				console.log(e);
 			}
@@ -157,24 +155,19 @@ export default {
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Training request deleted');
 					await this.getRequests();
-				} else {
-					this.toastError(data.ret_det.message);
-				}
+				} else this.toastError(data.ret_det.message);
 			} catch(e) {
 				console.log(e);
 			}
 		},
 		verifyRoute() {
 			const d = this.$route.params.date;
-			if(/^\d+$/.test(d) === false) {
-				this.$router.push('/ins/training/requests');
-			} else {
-				this.date = `${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}`;
-			}
+			if(/^\d+$/.test(d) === false) this.$router.push('/ins/training/requests');
+			else this.date = `${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}`;
 		},
 		formatDate(value) {
 			const d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',});
+			return d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 		},
 		formatHtmlDate(value) {
 			const d = new Date(value).toISOString();
@@ -209,12 +202,7 @@ export default {
 			}
 		},
 		requiresAuth(roles) {
-			const havePermissions = roles.some(r => this.user.data.roleCodes.includes(r));
-			if(havePermissions) {
-				return true;
-			} else {
-				return false;
-			}
+			return roles.some((r) => this.user.data.roleCodes.includes(r));
 		}
 	},
 	computed: {

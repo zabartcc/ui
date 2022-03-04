@@ -1,14 +1,14 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<h5 class="staff_heading">{{staffItem.title}}</h5>
+			<h5 class="staff_heading">{{ staffItem.title }}</h5>
 			<div v-if="staffItem.users.length">
-				<span v-for="user in staffItem.users" :key="user.cid" class="staff_member"><router-link :to="`/controllers/${user.cid}`">{{user.fname}} {{user.lname}}</router-link></span>
+				<span v-for="user in staffItem.users" :key="user.cid" class="staff_member"><router-link :to="`/controllers/${user.cid}`">{{ user.fname }} {{ user.lname }}</router-link></span>
 			</div>
 			<div v-else>
 				<span class="staff_member">Vacant</span>
 			</div>
-			<a :href="`mailto:${staffItem.code}@zabartcc.org`" class="staff_email"><i class="material-icons">email</i> {{staffItem.code}}@zabartcc.org</a>
+			<a :href="`mailto:${staffItem.code}@zabartcc.org`" class="staff_email"><i class="material-icons">email</i> {{ staffItem.code }}@zabartcc.org</a>
 		</div>
 	</div>
 </template>

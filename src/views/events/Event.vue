@@ -42,12 +42,9 @@ export default {
 	},
 	methods: {
 		async getEvent() {
-			const {data} = await zabApi.get(`/event/${this.$route.params.slug}`);
-			if(!data.data) {
-				this.$router.push('/events');
-			} else {
-				this.event = data.data;
-			}
+			const { data } = await zabApi.get(`/event/${this.$route.params.slug}`);
+			if(!data.data) this.$router.push('/events');
+			else this.event = data.data;
 		},
 		formatTime(value) {
 			const d = new Date(value);

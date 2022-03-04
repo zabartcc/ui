@@ -17,7 +17,7 @@
 					<Spinner />
 				</div>
 				<div v-else-if="atcOnline && atcOnline.length">
-					<AtcOnlineItem v-for="(atc, k) in atcOnline" :key=k :controller="atc" />
+					<AtcOnlineItem v-for="(atc, k) in atcOnline" :key="k" :controller="atc" />
 				</div>
 				<div v-else>
 					<p>There are no controllers online right now</p>
@@ -28,7 +28,7 @@
 					<Spinner />
 				</div>
 				<div v-else-if="pilotsOnline && pilotsOnline.length">
-					<PilotOnlineItem v-for="(pilot, k) in depsArrs" :key=k :pilot="pilot" />
+					<PilotOnlineItem v-for="(pilot, k) in depsArrs" :key="k" :pilot="pilot" />
 				</div>
 				<div v-else>
 					<p>There are no departures/arrivals online right now</p>
@@ -40,10 +40,10 @@
 		<div class="card" v-if="user.isLoggedIn">
 			<div class="card-content">
 				<span class="card-title">
-					{{new Date().toLocaleString('en-US', {
+					{{ new Date().toLocaleString('en-US', {
 						month: 'long',
 						timeZone: 'UTC', 
-					})}} Leaderboard
+					}) }} Leaderboard
 				</span>
 			</div>
 			<div class="card-tabs">
@@ -122,7 +122,7 @@ export default {
 			this.getZuluTime(); // update time when refreshing who's online
 		},
 		getZuluTime() {
-			return new Date().toLocaleString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
+			return new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 		},
 		sec2hms(secs) {
 			if(!secs) return null;
@@ -143,9 +143,7 @@ export default {
 			'user'
 		]),
 		depsArrs() {
-			return this.pilotsOnline.filter(flight => {
-				return this.airports.includes(flight.dep) || this.airports.includes(flight.dest);
-			});
+			return this.pilotsOnline.filter((flight) => this.airports.includes(flight.dep) || this.airports.includes(flight.dest));
 		}
 	}
 };

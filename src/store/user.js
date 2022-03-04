@@ -1,4 +1,4 @@
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	namespaced: true,
@@ -27,7 +27,7 @@ export default {
 			zabApi.get('/user/logout').then(() => {
 				commit('setUser', null);
 				commit('setLoggedIn', false);
-			}).catch(err => {
+			}).catch((err) => {
 				console.log(err);
 			});
 		}

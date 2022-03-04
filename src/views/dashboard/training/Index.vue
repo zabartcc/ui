@@ -9,7 +9,7 @@
 		<div class="loading_container" v-if="!upcomingSessions">
 			<Spinner />
 		</div>
-		<p class="no_sessions" v-else-if="upcomingSessions && upcomingSessions.length === 0">You have no upcoming training sessions.</p>
+		<p class="no_sessions" v-else-if="upcomingSessions && !upcomingSessions.length">You have no upcoming training sessions.</p>
 		<div class="session_wrapper" v-else>
 			<table class="session_list striped">
 				<thead class="session_list_head">
@@ -22,10 +22,10 @@
 				</thead>
 				<tbody class="session_list_row" v-if="upcomingSessions">
 					<tr v-for="session in upcomingSessions" :key="session._id">
-						<td>{{session.milestone.code + ' - ' + session.milestone.name}}</td>
-						<td>{{dtLong(session.startTime)}}</td>
-						<td>{{dtLong(session.endTime)}}</td>
-						<td>{{session.instructor ? (session.instructor.fname + ' ' + session.instructor.lname) : 'Unfulfilled'}}</td>
+						<td>{{ session.milestone.code + ' - ' + session.milestone.name }}</td>
+						<td>{{ dtLong(session.startTime) }}</td>
+						<td>{{ dtLong(session.endTime) }}</td>
+						<td>{{ session.instructor ? (session.instructor.fname + ' ' + session.instructor.lname) : 'Unfulfilled' }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import PastSessions from './Past.vue';
 
 export default {
@@ -54,7 +54,7 @@ export default {
 	},
 	methods: {
 		async getUpcomingSessions() {
-			const {data} = await zabApi.get(`/training/request/upcoming`);
+			const { data } = await zabApi.get(`/training/request/upcoming`);
 			this.upcomingSessions = data.data;
 		}
 	}

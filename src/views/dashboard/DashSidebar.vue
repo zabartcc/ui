@@ -25,12 +25,6 @@
 	</div>
 </template>
 
-<script>
-export default {
-
-};
-</script>
-
 <style scoped lang="scss">
 .card.admin_sidebar {
 	padding: 0;

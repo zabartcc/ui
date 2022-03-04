@@ -138,7 +138,7 @@ export default {
 	},
 	methods: {
 		async getController() {
-			const {data} = await zabApi.get(`/controller/${this.$route.params.cid}`);
+			const { data } = await zabApi.get(`/controller/${this.$route.params.cid}`);
 			this.controller = data.data;
 			this.form = {
 				...this.form,
@@ -149,8 +149,8 @@ export default {
 				vis: this.controller.vis,
 			};
 			
-			this.controller.certifications.forEach(cert => this.form.certs[cert.code] = true);
-			this.controller.roles.forEach(role => this.form.roles[role.code] = true);
+			this.controller.certifications.forEach((cert) => this.form.certs[cert.code] = true);
+			this.controller.roles.forEach((role) => this.form.roles[role.code] = true);
 			this.usedOi = (await zabApi.get(`/controller/oi`)).data.data;
 		},
 		toggleCert(e) {
@@ -163,11 +163,8 @@ export default {
 					form: this.form
 				});
 
-				if(data.ret_det.code === 200) {
-					this.toastSuccess('Controller updated');
-				} else {
-					this.toastError(data.ret_det.message);
-				}
+				if(data.ret_det.code === 200) this.toastSuccess('Controller updated');
+				else this.toastError(data.ret_det.message);
 			} catch(e) {
 				console.log(e);
 			}

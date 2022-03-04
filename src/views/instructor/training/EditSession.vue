@@ -31,7 +31,7 @@
 						</div>
 						<div class="input-field col s12 m6">
 							<div id="start_time">
-								<div class="date">{{formatHtmlDate(session.startTime)}}</div>
+								<div class="date">{{ formatHtmlDate(session.startTime) }}</div>
 								<div class="controls">
 									<div><i class="material-icons" @click="increaseTime('start')">arrow_drop_up</i></div>
 									<div><i class="material-icons" @click="decreaseTime('start')">arrow_drop_down</i></div>
@@ -41,7 +41,7 @@
 						</div>
 						<div class="input-field col s12 m6">
 							<div id="end_time">
-								<div class="date">{{formatHtmlDate(session.endTime)}}</div>
+								<div class="date">{{ formatHtmlDate(session.endTime) }}</div>
 								<div class="controls">
 									<div><i class="material-icons" @click="increaseTime('end')">arrow_drop_up</i></div>
 									<div><i class="material-icons" @click="decreaseTime('end')">arrow_drop_down</i></div>
@@ -51,7 +51,7 @@
 						</div>
 						<div class="input-field col s12 m6 milestone">
 							<select required disabled class="materialize-select">
-								<option disabled selected>{{session.milestone.name}}</option>
+								<option disabled selected>{{ session.milestone.name }}</option>
 							</select>
 							<label>Milestone</label>
 						</div>
@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 export default {
 	name: 'EditSessionNotes',
 	title: 'Enter Session Notes',
@@ -145,7 +145,7 @@ export default {
 	methods: {
 		async getSessionDetails() {
 			try {
-				const {data} = await zabApi.get(`/training/session/${this.$route.params.id}`);
+				const { data } = await zabApi.get(`/training/session/${this.$route.params.id}`);
 				this.session = data.data;
 			} catch(e) {
 				console.log(e);
@@ -153,7 +153,7 @@ export default {
 		},
 		async saveForm() {
 			try {
-				const {data} = await zabApi.put(`/training/session/save/${this.$route.params.id}`, {
+				const { data } = await zabApi.put(`/training/session/save/${this.$route.params.id}`, {
 					position: this.session.position,
 					movements: this.session.movements,
 					progress: this.session.progress,
@@ -164,12 +164,11 @@ export default {
 					studentNotes: this.session.studentNotes,
 					insNotes: this.session.insNotes
 				});
+
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Session notes saved');
 					this.$router.push('/ins/training/sessions');
-				} else {
-					this.toastError(data.ret_det.message);
-				}
+				} else this.toastError(data.ret_det.message);
 			} catch(e) {
 				console.log(e);
 			}
@@ -180,9 +179,7 @@ export default {
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Session notes finalized');
 					this.$router.push('/ins/training/sessions');
-				} else {
-					this.toastError(data.ret_det.message);
-				}
+				} else this.toastError(data.ret_det.message);
 			} catch(e) {
 				console.log(e);
 			}

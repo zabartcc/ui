@@ -22,17 +22,11 @@ export default {
 			code: this.$route.query.code
 		});
 
-		if(data.ret_det.code === 200) {
-			this.toastSuccess('Discord account linked');
-		} else {
-			this.toastError(data.ret_det.message);
-		}
+		if(data.ret_det.code === 200) this.toastSuccess('Discord account linked');
+		else this.toastError(data.ret_det.message);
 		
-		if(this.user.data.isMem) {
-			this.$router.push('/dash');
-		} else {
-			this.$router.push('/');
-		}
+		if(this.user.data.isMem) this.$router.push('/dash');
+		else this.$router.push('/');
 	},
 	computed: {
 		...mapState('user', [

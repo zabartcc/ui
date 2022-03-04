@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import StaffCard from './StaffCard.vue';
 
 export default {
@@ -107,7 +107,7 @@ export default {
 		StaffCard
 	},
 	async mounted() {
-		const {data} = await zabApi.get('/controller/staff');
+		const { data } = await zabApi.get('/controller/staff');
 		this.staff =  data.data;
 	}
 };

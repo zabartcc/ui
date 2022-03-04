@@ -25,7 +25,7 @@
 				<div class="input-field col s12 m6">
 					<select v-model="pfr.student" required class="materialize-select">
 						<option value="" disabled selected>Select a controller</option>
-						<option v-for="controller in controllers" :value="`${controller.fname} ${controller.lname}`" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
+						<option v-for="controller in controllers" :value="`${controller.fname} ${controller.lname}`" :key="controller.cid">{{ controller.fname }} {{ controller.lname }}</option>
 					</select>
 					<label>Controller*</label>
 				</div>
@@ -73,13 +73,11 @@ export default {
 		await this.getControllers();
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
-		if(this.user && this.user.isLoggedIn) {
-			this.pfr.name = `${this.user.data.fname} ${this.user.data.lname}`;
-		}
+		if(this.user && this.user.isLoggedIn) this.pfr.name = `${this.user.data.fname} ${this.user.data.lname}`;
 	},
 	methods: {
 		async getControllers() {
-			const {data} = await zabApi.get('/feedback/controllers');
+			const { data } = await zabApi.get('/feedback/controllers');
 			this.controllers = data.data;
 		},
 		async login() {
@@ -87,7 +85,7 @@ export default {
 			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${import.meta.env.VITE_ULS_LOGIN_REDIRECT_URL || 1}`;
 		},
 		async submitPfr() {
-			const {data} = await zabApi.post('/discord/pfr', this.pfr);
+			const { data } = await zabApi.post('/discord/pfr', this.pfr);
 			if(data.ret_det.code === 200) {
 				this.toastSuccess('PFR sent, thank you!');
 
@@ -105,9 +103,7 @@ export default {
 					M.textareaAutoResize(document.querySelector('textarea'));
 					M.updateTextFields();
 				});
-			} else {
-				this.toastError(data.ret_det.message);
-			}
+			} else this.toastError(data.ret_det.message);
 		}
 	},
 	computed: {

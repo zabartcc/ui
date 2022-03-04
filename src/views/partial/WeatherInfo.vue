@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import parse from 'metar-parser';
 
 export default {
@@ -58,32 +58,20 @@ export default {
 					},
 					getLanding: function() {
 						if(this.parsedMetar.wind.speedKt <= 6) {
-							if(this.parsedMetar.time.hour >= 7 && this.parsedMetar.time.hour <= 18) { // morning
-								return this.configs.landing.E;
-							} else {
-								return this.configs.landing.W;
-							}
+							if(this.parsedMetar.time.hour >= 7 && this.parsedMetar.time.hour <= 18) return this.configs.landing.E; // morning
+							else return this.configs.landing.W;
 						} else {
-							if(this.parsedMetar.wind.direction > 0 && this.parsedMetar.wind.direction <=180) {
-								return this.configs.landing.E;
-							} else {
-								return this.configs.landing.W;
-							}
+							if(this.parsedMetar.wind.direction > 0 && this.parsedMetar.wind.direction <= 180) return this.configs.landing.E;
+							else return this.configs.landing.W;
 						}
 					},
 					getDeparting: function() {
 						if(this.parsedMetar.wind.speedKt <= 6) {
-							if(this.parsedMetar.time.hour >= 7 && this.parsedMetar.time.hour <= 18) { // morning
-								return this.configs.departing.E;
-							} else {
-								return this.configs.departing.W;
-							}
+							if(this.parsedMetar.time.hour >= 7 && this.parsedMetar.time.hour <= 18) return this.configs.departing.E; // morning
+							else return this.configs.departing.W;
 						} else {
-							if(this.parsedMetar.wind.direction > 0 && this.parsedMetar.wind.direction <=180) {
-								return this.configs.departing.E;
-							} else {
-								return this.configs.departing.W;
-							}
+							if(this.parsedMetar.wind.direction > 0 && this.parsedMetar.wind.direction <= 180) return this.configs.departing.E;
+							else return this.configs.departing.W;
 						}
 					}
 				} ,
@@ -103,25 +91,17 @@ export default {
 						}
 					},
 					getLanding: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.landing.E;
-						} else {
-							if(this.parsedMetar.wind.direction > 150 && this.parsedMetar.wind.direction <=350) {
-								return this.configs.landing.W;
-							} else {
-								return this.configs.landing.E;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.landing.E;
+						else {
+							if(this.parsedMetar.wind.direction > 150 && this.parsedMetar.wind.direction <= 350) return this.configs.landing.W;
+							else return this.configs.landing.E;
 						}
 					},
 					getDeparting: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.departing.E;
-						} else {
-							if(this.parsedMetar.wind.direction > 150 && this.parsedMetar.wind.direction <=350) {
-								return this.configs.departing.W;
-							} else {
-								return this.configs.departing.E;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.departing.E;
+						else {
+							if(this.parsedMetar.wind.direction > 150 && this.parsedMetar.wind.direction <= 350) return this.configs.departing.W;
+							else return this.configs.departing.E;
 						}
 					}
 				}, 
@@ -141,25 +121,17 @@ export default {
 						}
 					},
 					getLanding: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.landing.SE;
-						} else {
-							if(this.parsedMetar.wind.direction > 20 && this.parsedMetar.wind.direction <= 200) {
-								return this.configs.landing.SE;
-							} else {
-								return this.configs.landing.NW;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.landing.SE;
+						else {
+							if(this.parsedMetar.wind.direction > 20 && this.parsedMetar.wind.direction <= 200) return this.configs.landing.SE;
+							else return this.configs.landing.NW;
 						}
 					},
 					getDeparting: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.departing.SE;
-						} else {
-							if(this.parsedMetar.wind.direction > 20 && this.parsedMetar.wind.direction <= 200) {
-								return this.configs.departing.SE;
-							} else {
-								return this.configs.departing.NW;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.departing.SE;
+						else {
+							if(this.parsedMetar.wind.direction > 20 && this.parsedMetar.wind.direction <= 200) return this.configs.departing.SE;
+							else return this.configs.departing.NW;
 						}
 					}
 				}, 
@@ -181,29 +153,19 @@ export default {
 						}
 					},
 					getLanding: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.landing.SE;
-						} else {
-							if(this.parsedMetar.wind.direction >= 0 && this.parsedMetar.wind.direction < 130) {
-								return this.configs.landing.SW;
-							} else if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) {
-								return this.configs.landing.NE;
-							} else {
-								return this.configs.landing.SE;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.landing.SE;
+						else {
+							if(this.parsedMetar.wind.direction >= 0 && this.parsedMetar.wind.direction < 130) return this.configs.landing.SW;
+							else if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) return this.configs.landing.NE;
+							else return this.configs.landing.SE;
 						}
 					},
 					getDeparting: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.departing.SE;
-						} else {
-							if(this.parsedMetar.wind.direction >= 0 && this.parsedMetar.wind.direction < 130) {
-								return this.configs.departing.SW;
-							} else if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) {
-								return this.configs.departing.NE;
-							} else {
-								return this.configs.departing.SE;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.departing.SE;
+						else {
+							if(this.parsedMetar.wind.direction >= 0 && this.parsedMetar.wind.direction < 130) return this.configs.departing.SW;
+							else if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) return this.configs.departing.NE;
+							else return this.configs.departing.SE;
 						}
 					}
 				}, 
@@ -223,25 +185,17 @@ export default {
 						}
 					},
 					getLanding: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.landing.NE;
-						} else {
-							if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) {
-								return this.configs.landing.SW;
-							} else {
-								return this.configs.landing.NE;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.landing.NE;
+						else {
+							if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) return this.configs.landing.SW;
+							else return this.configs.landing.NE;
 						}
 					},
 					getDeparting: function() {
-						if(this.parsedMetar.wind.speedKt <= 6) {
-							return this.configs.departing.NE;
-						} else {
-							if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) {
-								return this.configs.departing.SW;
-							} else {
-								return this.configs.departing.NE;
-							}
+						if(this.parsedMetar.wind.speedKt <= 6) return this.configs.departing.NE;
+						else {
+							if(this.parsedMetar.wind.direction >= 130 && this.parsedMetar.wind.direction < 310) return this.configs.departing.SW;
+							else return this.configs.departing.NE;
 						}
 					}
 				}

@@ -2,7 +2,7 @@
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">Training Session Details</span>
-			<div class="loading_wrapper" v-if="session === null">
+			<div class="loading_wrapper" v-if="!session">
 				<Spinner />
 			</div>
 			<div class="session_wrapper" v-else>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'ViewSession',
@@ -72,7 +72,7 @@ export default {
 	},
 	methods: {
 		async getSessionDetails() {
-			const {data} = await zabApi.get(`/training/session/${this.$route.params.id}`);
+			const { data } = await zabApi.get(`/training/session/${this.$route.params.id}`);
 			this.session = data.data;
 		},
 		formatLocation(location) {

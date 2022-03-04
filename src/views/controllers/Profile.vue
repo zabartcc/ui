@@ -16,26 +16,26 @@
 						</div>
 						<div class="col s7 m8 l9">
 							<div class="controller_name">
-								{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-								<span v-if="controller.absence.length > 0" class="controller_loa">LOA</span>
+								{{ controller.fname }} {{ controller.lname }} ({{ controller.oi }})
+								<span v-if="controller.absence.length" class="controller_loa">LOA</span>
 							</div>
 							<div class="controller_rating">{{controller.ratingLong}}</div>
 						</div>
 						<div class="col s12 m8 l9">
 							<div class="controller_certs">
 								<span v-for="role in controller.roles" :class="`cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-									{{role.name}}
+									{{ role.name }}
 								</span>
 								<div v-if="controller.certifications.length" class="title">Certifications</div>
 								<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-									{{cert.name}}
+									{{ cert.name }}
 								</span>
 							</div>
 						</div>
 					</div>
 					<div class="card z-depth-2" v-if="controller.bio">
 						<div class="card-content">
-							<p class="bio">{{controller.bio}}</p>
+							<p class="bio">{{ controller.bio }}</p>
 						</div>
 					</div>
 				</div>
@@ -56,41 +56,41 @@
 						</thead>
 						<tbody>
 							<tr v-for="month in stats.months" :key="month" class="hover">
-								<td>{{month}}</td>
-								<td>{{sec2hm(stats[month].del)}}</td>
-								<td>{{sec2hm(stats[month].gnd)}}</td>
-								<td>{{sec2hm(stats[month].twr)}}</td>
-								<td>{{sec2hm(stats[month].app)}}</td>
-								<td>{{sec2hm(stats[month].ctr)}}</td>
-								<td>{{sec2hm(totalTime(stats[month])) || '0:00'}}</td>
+								<td>{{ month}}</td>
+								<td>{{ sec2hm(stats[month].del) }}</td>
+								<td>{{ sec2hm(stats[month].gnd) }}</td>
+								<td>{{ sec2hm(stats[month].twr) }}</td>
+								<td>{{ sec2hm(stats[month].app) }}</td>
+								<td>{{ sec2hm(stats[month].ctr) }}</td>
+								<td>{{ sec2hm(totalTime(stats[month])) || '0:00' }}</td>
 							</tr>
 							<tr class="hover">
 								<td>>1 Year</td>
-								<td>{{sec2hm(stats.gtyear.del)}}</td>
-								<td>{{sec2hm(stats.gtyear.gnd)}}</td>
-								<td>{{sec2hm(stats.gtyear.twr)}}</td>
-								<td>{{sec2hm(stats.gtyear.app)}}</td>
-								<td>{{sec2hm(stats.gtyear.ctr)}}</td>
-								<td>{{sec2hm(totalTime(stats.gtyear)) || '0:00'}}</td>
+								<td>{{ sec2hm(stats.gtyear.del) }}</td>
+								<td>{{ sec2hm(stats.gtyear.gnd) }}</td>
+								<td>{{ sec2hm(stats.gtyear.twr) }}</td>
+								<td>{{ sec2hm(stats.gtyear.app) }}</td>
+								<td>{{ sec2hm(stats.gtyear.ctr) }}</td>
+								<td>{{ sec2hm(totalTime(stats.gtyear)) || '0:00' }}</td>
 							</tr>
 							<tr>
 								<td>Total</td>
-								<td>{{sec2hm(stats.total.del) || '0:00'}}</td>
-								<td>{{sec2hm(stats.total.gnd) || '0:00'}}</td>
-								<td>{{sec2hm(stats.total.twr) || '0:00'}}</td>
-								<td>{{sec2hm(stats.total.app) || '0:00'}}</td>
-								<td>{{sec2hm(stats.total.ctr) || '0:00'}}</td>
-								<td>{{sec2hm(totalTime(stats.total)) || '0:00'}}</td>
+								<td>{{ sec2hm(stats.total.del) || '0:00' }}</td>
+								<td>{{ sec2hm(stats.total.gnd) || '0:00' }}</td>
+								<td>{{ sec2hm(stats.total.twr) || '0:00' }}</td>
+								<td>{{ sec2hm(stats.total.app) || '0:00' }}</td>
+								<td>{{ sec2hm(stats.total.ctr) || '0:00' }}</td>
+								<td>{{ sec2hm(totalTime(stats.total)) || '0:00' }}</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="card-content">
 					<div>
-						<strong>Total Sessions:</strong> {{stats.sessionCount}}
+						<strong>Total Sessions:</strong> {{ stats.sessionCount }}
 					</div>
 					<div>
-						<strong>Average Session Length:</strong> {{sec2hm(stats.sessionAvg) || '0:00'}}
+						<strong>Average Session Length:</strong> {{ sec2hm(stats.sessionAvg) || '0:00' }}
 					</div>
 				</div>
 			</div>
@@ -118,7 +118,7 @@ export default {
 	methods: {
 		async getController() {
 			this.loading = true;
-			const {data} = await zabApi.get(`/controller/${this.$route.params.cid}`);
+			const { data } = await zabApi.get(`/controller/${this.$route.params.cid}`);
 			if(data.ret_det.code === 200) {
 				this.controller = data.data;
 				const {data: statsData} = await zabApi.get(`/controller/stats/${this.$route.params.cid}`);
@@ -129,12 +129,11 @@ export default {
 		},
 		reduceControllerCerts(certs) {
 			if(!certs) return [];
-			const hasCerts = certs.map(cert => cert.code);
+			const hasCerts = certs.map((cert) => cert.code);
 			let certsToShow = [];
-			certs.forEach(cert => {
-				if(cert.class === "major" || cert.class === "center") {
-					certsToShow.push(cert);
-				} else {
+			certs.forEach((cert) => {
+				if(cert.class === "major" || cert.class === "center") certsToShow.push(cert);
+				else {
 					const certPos = cert.code.slice(-3);
 					if(!hasCerts.includes(`p50${certPos}`)) {
 						certsToShow.push(cert);

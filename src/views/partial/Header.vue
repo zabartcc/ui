@@ -55,7 +55,7 @@
 						</ul>
 					</li>
 					<li class="user">
-						<a v-show="user.isLoggedIn" class="dropdown-right user_name" href="#!" data-target="user-dropdown">{{user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...'}}<i class="material-icons user_dropdown_arrow">arrow_drop_down</i></a>
+						<a v-show="user.isLoggedIn" class="dropdown-right user_name" href="#!" data-target="user-dropdown">{{ user.isLoggedIn ? `${user.data.fname} ${user.data.lname}` : '...' }}<i class="material-icons user_dropdown_arrow">arrow_drop_down</i></a>
                         <a v-if="!user.isLoggedIn" id="login_button" @click.prevent="processLogin" href="#">Login</a>
 						<ul v-show="user.isLoggedIn" id="user-dropdown" class="dropdown-content">
 							<li v-if="user.isLoggedIn && user.data.isMem">
@@ -147,9 +147,7 @@ export default {
 		async processLogout() {
 			await this.logout();
 			this.toastInfo('Successfully logged out');
-			if(this.$route.meta.isAdmin || this.$route.meta.isAdmin || this.$route.meta.loggedIn) {
-				this.$router.push('/');
-			}
+			if(this.$route.meta.isAdmin || this.$route.meta.isAdmin || this.$route.meta.loggedIn) this.$router.push('/');
 		}
 	},
 	computed: {

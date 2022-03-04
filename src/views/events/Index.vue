@@ -47,7 +47,7 @@ export default {
 	},
 	methods: {
 		async getUpcomingEvents() {
-			const {data} = await zabApi.get('/event');
+			const { data } = await zabApi.get('/event');
 			this.events = data.data;
 		},
 		formatTime(value) {

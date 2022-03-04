@@ -14,8 +14,8 @@
 			<div class="card-content">
 				<div class="row">
 					<div class="col s12 l8">
-						<span class="card-title event_title">{{event.name}}</span>
-						<span class="card-title event_date">{{dtLong(event.eventStart)}} <i class="material-icons rotate tiny">airplanemode_active</i> {{ formatTime(event.eventEnd) }}z</span>
+						<span class="card-title event_title">{{ event.name }}</span>
+						<span class="card-title event_date">{{ dtLong(event.eventStart) }} <i class="material-icons rotate tiny">airplanemode_active</i> {{ formatTime(event.eventEnd) }}z</span>
 					</div>
                     <div class="col s12 l4">
                         <router-link :to="`/events/${event.url}`" class="btn btn-signup waves-effect waves-light right">More Info &amp; Sign Up</router-link>

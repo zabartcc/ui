@@ -22,10 +22,10 @@
 				</thead>
 				<tbody class="session_list_row">
 					<tr v-for="session in sessions" :key="session._id">
-						<td>{{ session.student ? `${session.student.fname} ${session.student.lname}` : session.studentCid}}</td>
-						<td>{{dtLong(session.startTime)}}</td>
-						<td>{{dtLong(session.endTime)}}</td>
-						<td>{{session.instructor ? `${session.instructor.fname} ${session.instructor.lname}` : session.instructorCid}}</td>
+						<td>{{ session.student ? `${session.student.fname} ${session.student.lname}` : session.studentCid }}</td>
+						<td>{{ dtLong(session.startTime) }}</td>
+						<td>{{ dtLong(session.endTime) }}</td>
+						<td>{{ session.instructor ? `${session.instructor.fname} ${session.instructor.lname}` : session.instructorCid }}</td>
 						<td class="options">
 							<router-link :to="`/ins/training/session/${session._id}`" data-position="top" data-tooltip="View Details" class="tooltipped">
 								<i class="material-icons">search</i>
@@ -35,14 +35,14 @@
 				</tbody>
 			</table>
 		</div>
-		<div v-if="sessions && sessionAmount !== 0">
+		<div v-if="sessions && sessionAmount">
 			<Pagination :amount="sessionAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
 		</div>
 	</div>
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import Pagination from '@/components/Pagination.vue';
 
 export default {

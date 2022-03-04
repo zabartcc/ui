@@ -27,20 +27,20 @@
 						<tr v-for="controller in controllers.home" :key="controller.cid">
 							<td class="name">
 								<router-link :to="`/controllers/${controller.cid}`">
-									{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-									<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
+									{{ controller.fname }} {{ controller.lname }} ({{ controller.oi }})
+									<span v-if="controller.absence && controller.absence.length" class="controller_loa hide-on-med-and-down">LOA</span>
 								</router-link><br />
 								<div class="rating">
-									{{controller.ratingLong}}
+									{{ controller.ratingLong }}
 								</div>
-								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
+								<span v-if="controller.absence && controller.absence.length" class="controller_loa hide-on-large-only mobile">LOA</span>
 							</td>
 							<td class="certs">
 								<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-									{{role.code.toUpperCase()}}
+									{{ role.code.toUpperCase() }}
 								</span>
 								<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-									{{cert.name}}
+									{{ cert.name }}
 								</span>
 							</td>
 						</tr>
@@ -65,20 +65,20 @@
 						<tr v-for="controller in controllers.visiting" :key="controller.cid">
 							<td class="name">
 								<router-link :to="`/controllers/${controller.cid}`">
-									{{controller.fname}} {{controller.lname}} ({{controller.oi}})
-									<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-med-and-down">LOA</span>
+									{{ controller.fname }} {{ controller.lname }} ({{ controller.oi }})
+									<span v-if="controller.absence && controller.absence.length" class="controller_loa hide-on-med-and-down">LOA</span>
 								</router-link><br />
 								<div class="rating">
-									{{controller.ratingLong}}
+									{{ controller.ratingLong }}
 								</div>
-								<span v-if="controller.absence && controller.absence.length > 0" class="controller_loa hide-on-large-only mobile">LOA</span>
+								<span v-if="controller.absence && controller.absence.length" class="controller_loa hide-on-large-only mobile">LOA</span>
 							</td>
 							<td class="certs">
 								<span v-for="role in controller.roles" :class="`tooltipped cert cert_${role.class}`" :key="role.id" :data-tooltip="role.name" data-position="top">
-									{{role.code.toUpperCase()}}
+									{{ role.code.toUpperCase() }}
 								</span>
 								<span v-for="cert in reduceControllerCerts(controller.certifications)" :class="`cert cert_${cert.class}`" :key="cert.id">
-									{{cert.name}}
+									{{ cert.name }}
 								</span>
 							</td>
 						</tr>
@@ -117,8 +117,8 @@ export default {
 		async getControllers() {
 			const {data} = await zabApi.get('/controller');
 			this.controllers = data.data;
-			this.controllers.home = this.controllers.home.filter(c => c.member);
-			this.controllers.visiting = this.controllers.visiting.filter(c => c.member);
+			this.controllers.home = this.controllers.home.filter((c) => c.member);
+			this.controllers.visiting = this.controllers.visiting.filter((c) => c.member);
 		},
 		async login() {
 			localStorage.setItem('redirect', this.$route.path);
@@ -126,12 +126,11 @@ export default {
 		},
 		reduceControllerCerts(certs) {
 			if(!certs) return [];
-			const hasCerts = certs.map(cert => cert.code);
+			const hasCerts = certs.map((cert) => cert.code);
 			let certsToShow = [];
-			certs.forEach(cert => {
-				if(cert.class === "major" || cert.class === "center") {
-					certsToShow.push(cert);
-				} else {
+			certs.forEach((cert) => {
+				if(cert.class === "major" || cert.class === "center") certsToShow.push(cert);
+				else {
 					const certPos = cert.code.slice(-3);
 					if(!hasCerts.includes(`p50${certPos}`)) {
 						certsToShow.push(cert);

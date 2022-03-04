@@ -28,7 +28,8 @@ export default {
 			hour: '2-digit', 
 			minute: '2-digit', 
 			second: '2-digit', 
-			hourCycle: 'h23'});
+			hourCycle: 'h23'
+		});
 	},
 	dLong(isoDate) { // January 2, 2006
 		const d =  new Date(isoDate);
@@ -45,6 +46,6 @@ export default {
 	},
 	dtRegionalUS(isoDate) { // 1/2/2006, 15:04
 		const d = new Date(isoDate);
-		return d.toLocaleString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
+		return d.toLocaleString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 	}
 };

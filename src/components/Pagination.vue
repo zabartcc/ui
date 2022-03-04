@@ -36,16 +36,11 @@ export default {
 		},
 		showPages() {
 			const ceiling = Math.ceil(this.amount / this.limit);
-			if(ceiling <= 5) {
-				return (ceiling);
-			} else if (ceiling > 5 && this.page <= 3 && (this.page - 2) <= this.amountOfPages) {
-				return 5;
-			} else if (ceiling > 5 && this.page > (this.amountOfPages - 2)) {
-				if(this.page != this.amountOfPages) {
-					return [this.page - 3, this.page -2, this.page -1, this.page, this.page + 1];
-				} else {
-					return [this.page - 4, this.page -3, this.page -2, this.page -1, this.page];
-				}
+			if(ceiling <= 5) return (ceiling);
+			else if (ceiling > 5 && this.page <= 3 && (this.page - 2) <= this.amountOfPages) return 5;
+			else if (ceiling > 5 && this.page > (this.amountOfPages - 2)) {
+				if(this.page != this.amountOfPages) return [this.page - 3, this.page -2, this.page -1, this.page, this.page + 1];
+				else return [this.page - 4, this.page -3, this.page -2, this.page -1, this.page];
 			} else {
 				let array = [];
 				let j = 0; // array starts at zero

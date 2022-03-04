@@ -103,7 +103,7 @@ export default {
 			}
 		},
 		getName(cid2) {
-			const controller = this.controllers.filter(i => { return i.cid === cid2; });
+			const controller = this.controllers.filter((i) => i.cid === cid2);
 			return controller[0].fname + ' ' + controller[0].lname;
 		}
 	}

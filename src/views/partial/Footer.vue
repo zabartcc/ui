@@ -11,7 +11,7 @@
 		<div class="footer_pride">
 			<div class="wrapper">
 				<div class="footer_flags">
-					<div class="lgbt_flag"></div>
+					<div class="pride_flag"></div>
 					<div class="trans_flag"></div>
 					<div class="bi_flag"></div>
 					<div class="pan_flag"></div>
@@ -26,7 +26,7 @@
 				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
 				<div class="hide-on-small-only">•</div>
 				<!-- Made with ♥ and (╯°□°）╯︵ ┻━┻ by Alexandra Robison and Daan Janssen. -->
-				<div><span ref="zulu_time">{{footerTime}}</span></div>
+				<div><span ref="zulu_time">{{ footerTime }}</span></div>
 				<div class="hide-on-small-only">•</div>
 				<p class="footer_notice">Open source on <a href="https://github.com/zabartcc" class="white-text" target="_blank" rel="noopener noreferrer">GitHub</a></p>
 			</div>
@@ -38,7 +38,7 @@
 				<p>As an organization with LGBTQIA+ members, we recognize the importance of creating a welcoming environment to all members. Everyone is welcome here, regardless of their race, nationality, national origin, ethnicity, ethnic origin, socioeconomic status, religion, age, disability, sexual orientation, gender or gender identity.</p>
 				<p>We recognize CZQO, CZWG, ZJX, ZMA, ZNY, ZOA, ZOB and ZSE for displaying similar statements on their websites.</p>
 				<div class="modal_flags">
-					<div class="lgbt_flag"></div>
+					<div class="pride_flag"></div>
 					<div class="trans_flag"></div>
 					<div class="bi_flag"></div>
 					<div class="pan_flag"></div>
@@ -171,7 +171,7 @@ body .page-footer {
 	}
 }
 
-.lgbt_flag {
+.pride_flag {
 	background: linear-gradient(180deg, #FE0000 16.66%,
 	#FD8C00 16.66%, 33.32%,
 	#FFE500 33.32%, 49.98%,

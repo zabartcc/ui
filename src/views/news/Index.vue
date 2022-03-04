@@ -17,20 +17,20 @@
 				</thead>
 				<tbody class="news_list_row">
 					<tr v-for="news in newsItems" :key="news._id" @click="goToArticle(news.uriSlug)">
-						<td class="title">{{news.title}}</td>
-						<td class="right">{{dLong(news.createdAt)}}</td>
+						<td class="title">{{ news.title }}</td>
+						<td class="right">{{ dLong(news.createdAt) }}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div v-if="newsItems && newsAmount > 0">
+		<div v-if="newsItems && newsAmount">
 			<Pagination :amount="newsAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
 		</div>
 	</div>
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
+import { zabApi } from '@/helpers/axios.js';
 import Spinner from '@/components/Spinner.vue';
 import Pagination from '@/components/Pagination.vue';
 

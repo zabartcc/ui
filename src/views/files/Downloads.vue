@@ -43,12 +43,12 @@ export default {
 	},
 	methods: {
 		async getDownloads() {
-			const {data: fileData} = await zabApi.get('/file/downloads');
+			const { data: fileData } = await zabApi.get('/file/downloads');
 			this.downloads = {
-				sector: fileData.data.filter(file => file.category === 'sectorFiles'),
-				training: fileData.data.filter(file => file.category === 'training'),
-				mfr: fileData.data.filter(file => file.category === 'mfr'),
-				misc: fileData.data.filter(file => file.category === 'misc'),
+				sector: fileData.data.filter((file) => file.category === 'sectorFiles'),
+				training: fileData.data.filter((file) => file.category === 'training'),
+				mfr: fileData.data.filter((file) => file.category === 'mfr'),
+				misc: fileData.data.filter((file) => file.category === 'misc'),
 			};
 		},
 	},

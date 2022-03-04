@@ -2,7 +2,7 @@
 	<div class="card">
 		<div class="card-content">
 			<div class="card-title">Training Requests</div>
-			<div class="loading_container" v-if="loading === true">
+			<div class="loading_container" v-if="loading">
 				<Spinner />
 			</div>
 			<div class="calendar_wrapper" v-else>
@@ -20,34 +20,34 @@
 					</div>
 					<div class="calendar-body">
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length ? 'has_request' : ''}`" v-for="date in dates.slice(0,7)" :key="date.date">
 								<div class="week_date">
 									<span :class="[((new Date(date.date).getTime()) - (new Date().getTime()) < 0 ? 'past_date' : ''), (new Date(new Date().getTime()).getUTCDate() === new Date(date.date).getUTCDate() ? 'current_date' : '')]">
-										{{new Date(date.date).toUTCString().slice(5, 11)}}
+										{{ new Date(date.date).toUTCString().slice(5, 11) }}
 									</span>
 								</div>
-								<div :class="`date_requests ${(new Date(Date.UTC(date.date)).getTime()) - (new Date().getTime()) < 0 ? 'past' : ''}`" v-if="date.requests.length > 0">
-									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
+								<div :class="`date_requests ${(new Date(Date.UTC(date.date)).getTime()) - (new Date().getTime()) < 0 ? 'past' : ''}`" v-if="date.requests.length">
+									{{ date.requests.length }} request<span v-if="date.requests.length > 1">s</span>
 								</div>
 							</router-link>
 						</div>
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length ? 'has_request' : ''}`" v-for="date in dates.slice(7,14)" :key="date.date">
 								<div class="week_date">
-									{{new Date(date.date).toUTCString().slice(5, 11)}}
+									{{ new Date(date.date).toUTCString().slice(5, 11) }}
 								</div>
-								<div class="date_requests" v-if="date.requests.length > 0">
-									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
+								<div class="date_requests" v-if="date.requests.length">
+									{{ date.requests.length }} request<span v-if="date.requests.length > 1">s</span>
 								</div>
 							</router-link>
 						</div>
 						<div class="week">
-							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length > 0 ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date">
+							<router-link :to="`/ins/training/requests/${urlSafeDate(date.date)}`" :class="`day ${date.requests.length ? 'has_request' : ''}`" v-for="date in dates.slice(14)" :key="date.date">
 								<div class="week_date">
-									{{new Date(date.date).toUTCString().slice(5, 11)}}
+									{{ new Date(date.date).toUTCString().slice(5, 11) }}
 								</div>
-								<div class="date_requests" v-if="date.requests.length > 0">
-									{{date.requests.length}} request<span v-if="date.requests.length > 1">s</span>
+								<div class="date_requests" v-if="date.requests.length">
+									{{ date.requests.length }} request<span v-if="date.requests.length > 1">s</span>
 								</div>
 							</router-link>
 						</div>
@@ -78,7 +78,7 @@ export default {
 	methods: {
 		async getRequests() {
 			try {
-				const {data} = await zabApi.get('/training/request/open', {
+				const { data } = await zabApi.get('/training/request/open', {
 					params: {
 						period: 21 // 21 days from start of week
 					}
@@ -86,9 +86,7 @@ export default {
 
 				for(const request of data.data) {
 					for(const date of this.dates) {
-						if(date.date.slice(0,10) === new Date(request.startTime).toISOString().slice(0, 10)) {
-							date.requests.push(request);
-						}
+						if(date.date.slice(0,10) === new Date(request.startTime).toISOString().slice(0, 10)) date.requests.push(request);
 					}
 				}
 				this.loading = false;

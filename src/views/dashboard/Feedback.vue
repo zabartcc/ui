@@ -6,7 +6,7 @@
 		<div class="loading_container" v-if="!feedback">
 			<Spinner />
 		</div>
-		<p class="no_feedback" v-else-if="feedback && feedback.length === 0">You have not received any feedback yet</p>
+		<p class="no_feedback" v-else-if="feedback && !feedback.length">You have not received any feedback yet</p>
 		<div class="feedback_wrapper" v-else>
 			<table class="feedback_list striped">
 				<thead class="feedback_list_head">
@@ -19,9 +19,9 @@
 				</thead>
 				<tbody class="feedback_list_row" v-if="feedback">
 					<tr v-for="(feedback, i) in feedback" :key="feedback._id">
-						<td>{{dtLong(feedback.createdAt)}}</td>
-						<td id="position">{{feedback.position || '—'}}</td>
-						<td>{{convertRating(feedback.rating)}}</td>
+						<td>{{ dtLong(feedback.createdAt) }}</td>
+						<td id="position">{{ feedback.position || '—' }}</td>
+						<td>{{ convertRating(feedback.rating) }}</td>
 						<td class="options">
 							<a :href="`#modal_feedback_${i}`" data-position="top" data-tooltip="View Details" class="tooltipped modal-trigger">
 								<i class="material-icons">search</i>
@@ -33,23 +33,23 @@
 								<div class="feedback">
 									<div class="row row_no_margin" id="feedback">
 										<div class="input-field col s12 m6">
-											<p id="first_name">{{feedback.anonymous ? 'Anonymous' : feedback.name}}</p>
+											<p id="first_name">{{ feedback.anonymous ? 'Anonymous' : feedback.name }}</p>
 											<label for="first_name" class="active">From</label>
 										</div>
 										<div class="input-field col s12 m6">
-											<p id="submission">{{dtLong(feedback.createdAt)}}</p>
+											<p id="submission">{{ dtLong(feedback.createdAt) }}</p>
 											<label for="submission" class="active">Date</label>
 										</div>
 										<div class="input-field col s12 m6">
-											<p id="position">{{feedback.position || '—'}}</p>
+											<p id="position">{{ feedback.position || '—' }}</p>
 											<label for="position" class="active">Position</label>
 										</div>
 										<div class="input-field col s12 m6">
-											<p id="rating">{{convertRating(feedback.rating)}}</p>
+											<p id="rating">{{ convertRating(feedback.rating) }}</p>
 											<label for="rating" class="active">Rating</label>
 										</div>
 										<div class="input-field col s12">
-											<div id="comments">{{feedback.comments || '—'}}</div>
+											<div id="comments">{{ feedback.comments || '—' }}</div>
 											<label for="comments" class="active">Comments</label>
 										</div>
 									</div>
@@ -63,7 +63,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div v-if="feedback && feedbackAmount !== 0">
+		<div v-if="feedback && feedbackAmount">
 			<Pagination :amount="feedbackAmount" :page="page" :limit="limit" :amountOfPages="amountOfPages" />
 		</div>
 	</div>
@@ -100,7 +100,7 @@ export default {
 	},
 	methods: {
 		async getMyFeedback() {
-			const {data} = await zabApi.get(`/feedback/own`, {
+			const { data } = await zabApi.get(`/feedback/own`, {
 				params: {
 					page: this.page,
 					limit: this.limit

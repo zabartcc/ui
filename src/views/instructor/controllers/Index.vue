@@ -74,15 +74,15 @@ export default {
 	},
 	methods: {
 		async getControllers() {
-			const {data} = await zabApi.get('/controller');
+			const { data } = await zabApi.get('/controller');
 			this.controllers = data.data.home.concat(data.data.visiting);
 			this.controllers = this.controllers.filter(c => c.member);
 			this.controllersFiltered = this.controllers;
 		},
 		filterControllers() {
 			const search = new RegExp(this.filter, 'ig');
-			this.controllersFiltered = this.controllers.filter(controller => {
-				if(
+			this.controllersFiltered = this.controllers.filter((controller) => {
+				if (
 					controller.fname.match(search) ||
 					controller.lname.match(search) ||
 					controller.oi.match(search) ||

@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
-import {zabApi} from '@/helpers/axios.js';
+import { mapState } from 'vuex';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'VisitorApply',
@@ -83,7 +83,7 @@ export default {
 		},
 		async checkOpenApplications() {
 			try {
-				const {data: statusData} = await zabApi.get('/controller/visit/status');
+				const { data: statusData } = await zabApi.get('/controller/visit/status');
 				this.pendingApplication = !!statusData.data;
 			} catch(e) {
 				console.log(e);
@@ -92,7 +92,7 @@ export default {
 		async submitApplication() {
 			try {
 				this.$refs.submitButton.classList.add('disabled');
-				const {data} = await zabApi.post('/controller/visit', {
+				const { data } = await zabApi.post('/controller/visit', {
 					...this.form,
 					email: this.$refs.email.value
 				});

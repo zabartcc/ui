@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
-import {zabApi} from '@/helpers/axios.js';
+import { mapState } from 'vuex';
+import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	data() {
@@ -39,11 +39,8 @@ export default {
 		async updateProfile() {
 			const {data} = await zabApi.put('/user/profile', this.form);
 
-			if(data.ret_det.code === 200) {
-				this.toastSuccess('Profile successfully updated');
-			} else {
-				this.toastError(data.ret_det.message);
-			}
+			if(data.ret_det.code === 200) this.toastSuccess('Profile successfully updated');
+			else this.toastError(data.ret_det.message);
 		}
 	},
 	computed: {

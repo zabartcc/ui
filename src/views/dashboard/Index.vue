@@ -8,17 +8,17 @@
 			<div v-else>
 				<div class="hours_info">
 					<span>
-						You have controlled for <b>{{hoursCalc}}</b> in the past 60 days.
+						You have controlled for <b>{{ hoursCalc }}</b> in the past 60 days.
 					</span>
 					<span v-if="user.data.rating !== 1">
-						You will need to control again by <b>{{calcControlDate}}</b> to prevent removal from the roster.
+						You will need to control again by <b>{{ calcControlDate }}</b> to prevent removal from the roster.
 					</span>
 				</div>
 				<span class="section_title">
 					<br>IDS Token
 				</span>
 				<div class="hidden" id="token_wrap">
-					<code>{{token}}</code>
+					<code>{{ token }}</code>
 					<span class="generate right" @click="generateToken">
 						<i class="material-icons">refresh</i>
 					</span>
@@ -50,7 +50,7 @@
 		<div class="loading_container" v-if="!controllingSessions">
 			<Spinner />
 		</div>
-		<p v-else-if="controllingSessions && controllingSessions.length === 0" class="no_sessions">There are no recent connections to display</p>
+		<p v-else-if="controllingSessions && !controllingSessions.length" class="no_sessions">There are no recent connections to display</p>
 		<div class="table_wrapper" v-else>
 			<table class="medium hover striped">
 				<thead>
@@ -61,10 +61,10 @@
 				</thead>
 				<tbody>
 					<tr v-for="session in controllingSessions" :key="session.timeStart">
-						<td>{{session.position}}</td>
-						<td>{{dtLong(session.timeStart)}}</td>
-						<td>{{dtLong(session.timeEnd)}}</td>
-						<td>{{sec2hms((new Date(session.timeEnd).getTime() - new Date(session.timeStart).getTime()) / 1000)}}</td>
+						<td>{{ session.position }}</td>
+						<td>{{ dtLong(session.timeStart) }}</td>
+						<td>{{ dtLong(session.timeEnd) }}</td>
+						<td>{{ sec2hms((new Date(session.timeEnd).getTime() - new Date(session.timeStart).getTime()) / 1000) }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -96,9 +96,7 @@ export default {
 			if(tokenRet.ret_det.code === 200) {
 				this.toastSuccess('Token successfully generated');
 				this.token = tokenRet.data;
-			} else {
-				this.toastError(tokenRet.ret_det.message);
-			}
+			} else this.toastError(tokenRet.ret_det.message);
 		},
 		async getDiscordStatus() {
 			const { data: discordData } = await zabApi.get('/user/discord');
@@ -124,9 +122,7 @@ export default {
 			if(unlinkData.ret_det.code === 200) {
 				this.toastSuccess('Discord unlinked.');
 				await this.getDiscordStatus();
-			} else {
-				this.toastError(unlinkData.ret_det.message);
-			}
+			} else this.toastError(unlinkData.ret_det.message);
 		},
 		sec2hms(secs){
 			const days = Math.floor(secs / 86400);
@@ -136,7 +132,7 @@ export default {
 		},
 		formatDate(value) {
 			const d = new Date(value);
-			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',});
+			return d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 		},
 		...mapActions('user', [
 			'getUser'
@@ -168,9 +164,7 @@ export default {
 						date = new Date(session.timeEnd);
 					}
 
-					if(seconds >= 7200) {
-						break;
-					}
+					if(seconds >= 7200) break;
 				}
 			}
 

@@ -15,14 +15,14 @@
 				<div v-else-if="assignedPositions" class="sign_up_err">You have been assigned a position. Contact the EC if you need to cancel.</div>
 				<div v-else-if="requestedPositions" class="requested_pos">
 					You have requested<br />
-					{{currentUserRequests || 'No preference'}}<br />
+					{{ currentUserRequests || 'No preference' }}<br />
 					<button @click="deleteRequest()" class="btn btn-small waves-effect waves-light btn_delete">Delete Request</button>
 				</div>
 				<button v-else class="btn waves-effect waves-light modal-trigger btn_signup" data-target="assignment_modal">Sign up</button>
 			</div>
 			<div id="assignment_modal" class="modal assignment_modal">
 				<div class="modal-content">
-					<h4>Sign up for {{event.name}}</h4>
+					<h4>Sign up for {{ event.name }}</h4>
 					<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty. <br><b>You must press enter after each callsign to add the preference!</b></p>
 					<p>Please be advised that requests are just that — requests. The events coordinator may place you on any (or no) position depending on multiple factors.</p>
 					<div class="chips chips-placeholder"></div>
@@ -132,25 +132,16 @@ export default {
 			'user'
 		]),
 		requestedPositions() {
-			if(this.event.signups) {
-				return this.event.signups.some(su => su.cid == this.user.data.cid);
-			} else {
-				return false;
-			}
+			if(this.event.signups) return this.event.signups.some((su) => su.cid === this.user.data.cid);
+			else return false;
 		},
 		assignedPositions() {
-			if(this.event.positions) {
-				return this.event.positions.some(su => su.user && (su.user.cid == this.user.data.cid));
-			} else {
-				return false;
-			}
+			if(this.event.positions) return this.event.positions.some((su) => su.user && (su.user.cid === this.user.data.cid));
+			else return false;
 		},
 		currentUserRequests() {
-			if(this.event.signups) {
-				return this.event.signups.filter(su => su.cid == this.user.data.cid)[0].requests.join(`, `);
-			} else {
-				return false;
-			}
+			if(this.event.signups) return this.event.signups.filter((su) => su.cid == this.user.data.cid)[0].requests.join(`, `);
+			else return false;
 		}
 	}
 };

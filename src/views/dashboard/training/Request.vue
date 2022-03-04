@@ -13,7 +13,7 @@
 					Please make sure that you've studied the relevant training material, as per the Training Syllabus, before requesting a session.</p>
 				</div>
 				<div class="col s12 l6 pull-l6">
-					<form class="row row_no_margin" @submit.prevent=submitRequest>
+					<form class="row row_no_margin" @submit.prevent="submitRequest">
 						<div class="input-field col s12">
 							<input id="start_date" type="text" ref="start_date" required>
 							<label for="start_date">Start Time (Zulu)<span class="red-text">*</span></label>
@@ -98,15 +98,15 @@ export default {
 	methods: {
 		async submitRequest() {
 			try {
-				if(!this.request.milestone) {
-					this.toastError('You must select a milestone');
-				} else {
+				if(!this.request.milestone) this.toastError('You must select a milestone');
+				else {
 					this.makingRequest = true;
-					const {data} = await zabApi.post('/training/request/new', {
+					const { data } = await zabApi.post('/training/request/new', {
 						...this.request,
 						startTime: `${this.$refs.start_date.value}`,
 						endTime: `${this.$refs.end_date.value}`
 					});
+
 					if(data.ret_det.code === 200) {
 						this.toastSuccess('Training session requested');
 						this.$router.push('/dash/training');
@@ -121,7 +121,7 @@ export default {
 			}
 		},
 		async getTrainingMilestones() {
-			const {data} = await zabApi.get(`/training/milestones`);
+			const { data } = await zabApi.get(`/training/milestones`);
 			this.milestones = data.data.milestones;
 		}
 	},
@@ -130,14 +130,13 @@ export default {
 			const certs = this.user.data.certCodes;
 			const rating = this.user.data.rating;
 
-			if(this.milestones !== null) {
+			if(this.milestones) {
 				const minorPrerequisites = ["obs", "gnd", "twr", "app"];
 				const majorPrerequisites = ["obs", "gnd", "p50gnd", "p50twr", "p50app"];
 
 				let milestonesShowed = this.milestones.filter((milestone) => {
-					if(this.user.data.vis) {
-						return (milestone.certCode.substring(0, 3) === "vis" && milestone.rating <= rating) || milestone.code === "GT1";
-					} else {
+					if(this.user.data.vis) return (milestone.certCode.substring(0, 3) === "vis" && milestone.rating <= rating) || milestone.code === "GT1";
+					else {
 						return (  // This is still slightly hard to understand.  It returns the milestones that haven't been completed yet for the rating, or the P50 equivelant (if no major cert has been attained yet) and next rating's milestones, or center milestones if all other certs have been attained.
 							!certs.includes(milestone.certCode) &&
 							(

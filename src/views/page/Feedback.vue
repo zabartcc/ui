@@ -33,7 +33,7 @@
 					<div class="input-field col s12 m6">
 						<select v-model="feedback.controller" required class="materialize-select">
 							<option value="" disabled selected>Select a controller</option>
-							<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{controller.fname}} {{controller.lname}}</option>
+							<option v-for="controller in controllers" :value="controller.cid" :key="controller.cid">{{ controller.fname }} {{ controller.lname }}</option>
 						</select>
 						<label>Controller</label>
 					</div>
@@ -116,11 +116,11 @@ export default {
 			window.location.href = `https://login.vatusa.net/uls/v2/login?fac=ZAB&url=${import.meta.env.VITE_ULS_LOGIN_REDIRECT_URL || 1}`;
 		},
 		async getControllers() {
-			const {data} = await zabApi.get('/feedback/controllers');
+			const { data } = await zabApi.get('/feedback/controllers');
 			this.controllers = data.data;
 		},
 		async submitFeedback() {
-			const {data} = await zabApi.post('/feedback', this.feedback);
+			const { data } = await zabApi.post('/feedback', this.feedback);
 			if(data.ret_det.code === 200) {
 				this.toastSuccess('Feedback sent');
 
@@ -135,9 +135,7 @@ export default {
 					M.textareaAutoResize(document.querySelector('textarea'));
 					M.updateTextFields();
 				});
-			} else {
-				this.toastError(data.ret_det.message);
-			}
+			} else this.toastError(data.ret_det.message);
 		}
 	},
 	computed: {
