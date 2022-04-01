@@ -20,27 +20,27 @@
   },
   "dependencies": {
     "@materializecss/materialize": "^1.1.0-alpha",
-    "@sentry/browser": "^6.18.1",
-    "@sentry/integrations": "^6.18.1",
-    "@sentry/tracing": "^6.18.1",
+    "@sentry/browser": "^6.19.3",
+    "@sentry/integrations": "^6.19.3",
+    "@sentry/tracing": "^6.19.3",
     "@toast-ui/editor": "^3.1.3",
     "@toast-ui/editor-plugin-table-merged-cell": "^3.0.2",
-    "axios": "^0.26.0",
+    "axios": "^0.26.1",
     "chart.js": "^3.7.1",
     "core-js": "^3.21.1",
-    "flatpickr": "^4.6.9",
+    "flatpickr": "^4.6.11",
     "luxon": "^2.3.1",
     "metar-parser": "^1.0.0",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.13",
+    "vue-router": "^4.0.14",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "vite": "^2.8.6",
-    "@vitejs/plugin-vue": "^2.2.4",
-    "eslint": "^8.10.0",
+    "vite": "^2.9.1",
+    "@vitejs/plugin-vue": "^2.3.1",
+    "eslint": "^8.12.0",
     "eslint-plugin-vue": "^8.5.0",
     "babel-eslint": "^10.1.0",
-    "sass": "^1.49.9"
+    "sass": "^1.49.10"
   }
 }

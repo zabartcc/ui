@@ -1,6 +1,6 @@
 <template>
 	<header>
-		<div id="header_hero" :class="`hero${number === 69 ? '_aprilfools' : '6'}`">
+		<div id="header_hero" :class="`hero${true ? '_aprilfools' : '6'}`">
 			<div class="wrapper">
 				<div>
 					<router-link to="/"><h1>ALBUQUERQUE<span>ARTCC</span></h1></router-link>
