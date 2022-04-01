@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import url('https://allfont.net/allfont.css?fonts=comic-sans-ms');
 
 $primary-color: #122049;
 $primary-color-light: #192d66;
@@ -46,8 +45,7 @@ $cert_junior: #e84393;
 $cert_training: #0fbcf9;
 
 html {
-	// font-family: "Lato", "Helvetica", sans-serif!important;
-	font-family: "Comic Sans MS", "Comic Sans", cursive!important;
+	font-family: "Lato", "Helvetica", sans-serif!important;
 }
 
 body {
