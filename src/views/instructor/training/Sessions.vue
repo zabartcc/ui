@@ -7,7 +7,7 @@
 			<Spinner />
 		</div>
 		<div v-else-if="!sessions.length" class="no_sessions">
-			You have no open training sessions
+			You have no open training sessions.
 		</div>
 		<div class="sessions_wrapper" v-else>
 			<table class="sessions_list striped">
