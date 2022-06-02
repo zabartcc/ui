@@ -6,7 +6,7 @@
 				<p>This site works best in Google Chrome, Mozilla Firefox, and Microsoft Edge.</p>
 				<p>If you are still using Internet Explorer, please consider switching to a more modern browser.</p>
 			</div>
-			<img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo.png" alt="" draggable="false" height="70" width="70">
+			<img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo_pride.png" alt="" draggable="false" height="70" width="70">
 		</div>
 		<div class="footer_pride">
 			<div class="wrapper">
