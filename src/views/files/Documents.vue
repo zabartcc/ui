@@ -46,9 +46,10 @@ export default {
 		async getDocuments() {
 			const {data: fileData} = await zabApi.get('/file/documents');
 			this.documents = {
+				policy: fileData.data.filter(doc => doc.category === 'policy'),
 				loa: fileData.data.filter(doc => doc.category === 'loa'),
 				sop: fileData.data.filter(doc => doc.category === 'sop'),
-				policy: fileData.data.filter(doc => doc.category === 'policy'),
+				ref: fileData.data.filter(doc => doc.category === 'ref'),
 				misc: fileData.data.filter(doc => doc.category === 'misc'),
 			};
 		},
