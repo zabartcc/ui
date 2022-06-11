@@ -5,11 +5,12 @@
 		</div>
 		<div class="row">
 			<div class="col s12">
-				<ul class="tabs">
-					<li class="tab col s6 l2"><a class="active" href="#sop">SOPs</a></li>
-					<li class="tab col s6 l3"><a href="#loa">LOAs</a></li>
-					<li class="tab col s7 l3"><a href="#policy">Policies</a></li>
-					<li class="tab col s6 l4"><a href="#misc">Miscellaneous</a></li>
+				<ul class="tabs tabs-fixed-width">
+					<li class="tab"><a class="active" href="#policy">Policies</a></li>
+					<li class="tab"><a href="#sop">SOPs</a></li>
+					<li class="tab"><a href="#loa">LOAs</a></li>
+					<li class="tab"><a href="#ref">References</a></li>
+					<li class="tab"><a href="#misc">Miscellaneous</a></li>
 				</ul>
 			</div>
 			<div class="loading_container loading_files" v-if="!documents">

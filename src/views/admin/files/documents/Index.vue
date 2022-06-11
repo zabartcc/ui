@@ -85,9 +85,10 @@ export default {
 			}
 		},
 		convertCategory(cat) {
-			if(cat == "loa") return "Agreements";
+			if(cat == "policy") return "Policies";
+			else if(cat == "loa") return "Agreements";
 			else if(cat == "sop") return "Procedures";
-			else if(cat == "policy") return "Policies";
+			else if(cat == "ref") returm "Field References";
 			else return "Miscellaneous";
 		}
 	},
