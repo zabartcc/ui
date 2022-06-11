@@ -85,9 +85,10 @@ export default {
 			}
 		},
 		convertCategory(cat) {
-			if(cat == "sectorFiles") return "Sector Files";
-			else if(cat == "training") return "Training";
-			else if(cat == "mfr") return "MFR";
+			if(cat == "veram") return "vERAM";
+			else if(cat == "vstars") return "vSTARS";
+			else if(cat == "vrc") return "vrc";
+			else if(cat == "vatis") return "vATIS";
 			else return "Miscellaneous";
 		}
 	},
