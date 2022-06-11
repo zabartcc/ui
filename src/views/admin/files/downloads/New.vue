@@ -11,9 +11,10 @@
 					<div class="input-field col s12 l6">
 						<select id="category" v-model="form.category" class="materialize-select">
 							<option value="" disabled selected>Choose a category</option>
-							<option value="sectorFiles">Sector Files</option>
-							<option value="training">Training</option>
-							<option value="mfr">Minor Field References</option>
+							<option value="veram">vERAM</option>
+							<option value="vstars">vSTARS</option>
+							<option value="vrc">VRC</option>
+							<option value="vatis">vATIS</option>
 							<option value="misc">Miscellaneous</option>
 						</select>
 						<label>Category</label>
