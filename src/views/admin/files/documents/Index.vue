@@ -88,7 +88,7 @@ export default {
 			if(cat == "policy") return "Policies";
 			else if(cat == "loa") return "Agreements";
 			else if(cat == "sop") return "Procedures";
-			else if(cat == "ref") returm "Field References";
+			else if(cat == "ref") return "Field References";
 			else return "Miscellaneous";
 		}
 	},
