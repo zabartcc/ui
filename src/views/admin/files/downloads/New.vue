@@ -13,7 +13,6 @@
 							<option value="" disabled selected>Choose a category</option>
 							<option value="veram">vERAM</option>
 							<option value="vstars">vSTARS</option>
-							<option value="vrc">VRC</option>
 							<option value="vatis">vATIS</option>
 							<option value="misc">Miscellaneous</option>
 						</select>

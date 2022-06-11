@@ -8,7 +8,6 @@
 				<ul class="tabs">
 					<li class="tab col s6 12"><a href="#veram">vERAM</a></li>
 					<li class="tab col s6 12"><a href="#vstars">vSTARS</a></li>
-					<li class="tab col s6 12"><a href="#vrc">VRC</a></li>
 					<li class="tab col s6 12"><a href="#vatis">vATIS</a></li>
 					<li class="tab col s6 l3"><a href="#misc">Miscellaneous</a></li>
 				</ul>
@@ -48,7 +47,6 @@ export default {
 			this.downloads = {
 				veram: fileData.data.filter((file) => file.category === 'veram'),
 				vstars: fileData.data.filter((file) => file.category === 'vstars'),
-				vrc: fileData.data.filter((file) => file.category === 'vrc'),
 				vatis: fileData.data.filter((file) => file.category === 'vatis'),
 				misc: fileData.data.filter((file) => file.category === 'misc'),
 			};

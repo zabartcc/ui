@@ -87,7 +87,6 @@ export default {
 		convertCategory(cat) {
 			if(cat == "veram") return "vERAM";
 			else if(cat == "vstars") return "vSTARS";
-			else if(cat == "vrc") return "VRC";
 			else if(cat == "vatis") return "vATIS";
 			else return "Miscellaneous";
 		}
