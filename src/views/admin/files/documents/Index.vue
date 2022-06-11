@@ -38,7 +38,6 @@
 							<a href="#!" class="waves-effect waves-light btn" @click="deleteDownload(doc._id)">Delete</a>
 							<a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
 						</div>
-					</div>
 					</tr>
 				</tbody>
 			</table>
