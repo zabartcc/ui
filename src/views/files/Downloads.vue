@@ -5,11 +5,11 @@
 		</div>
 		<div class="row">
 			<div class="col s12">
-				<ul class="tabs">
-					<li class="tab col s6 12"><a href="#veram">vERAM</a></li>
-					<li class="tab col s6 12"><a href="#vstars">vSTARS</a></li>
-					<li class="tab col s6 12"><a href="#vatis">vATIS</a></li>
-					<li class="tab col s6 l3"><a href="#misc">Miscellaneous</a></li>
+				<ul class="tabs tabs-fixed-width">
+					<li class="tab"><a href="#veram">vERAM</a></li>
+					<li class="tab"><a href="#vstars">vSTARS</a></li>
+					<li class="tab"><a href="#vatis">vATIS</a></li>
+					<li class="tab"><a href="#misc">Miscellaneous</a></li>
 				</ul>
 			</div>
 			<div class="loading_container loading_files" v-if="!downloads">
