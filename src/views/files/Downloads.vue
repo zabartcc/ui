@@ -6,9 +6,10 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs">
-					<li class="tab col s6 l3"><a class="active" href="#sector">Sector Files</a></li>
-					<li class="tab col s6 l2"><a href="#training">Training</a></li>
-					<li class="tab col s7 l4"><a href="#mfr">Minor Field References</a></li>
+					<li class="tab col s6 12"><a href="#veram">vERAM</a><li>
+					<li class="tab col s6 12"><a href="#vstars">vSTARS</a><li>
+					<li class="tab col s6 12"><a href="#vrc">VRC</a><li>
+					<li class="tab col s6 12"><a href="#vATIS">vATIS</a><li>
 					<li class="tab col s6 l3"><a href="#misc">Miscellaneous</a></li>
 				</ul>
 			</div>
@@ -45,9 +46,10 @@ export default {
 		async getDownloads() {
 			const { data: fileData } = await zabApi.get('/file/downloads');
 			this.downloads = {
-				sector: fileData.data.filter((file) => file.category === 'sectorFiles'),
-				training: fileData.data.filter((file) => file.category === 'training'),
-				mfr: fileData.data.filter((file) => file.category === 'mfr'),
+				veram: fileData.data.filter((file) => file.category === 'veram'),
+				vstars: fileData.data.filter((file) => file.category === 'vstars'),
+				vrc: fileData.data.filter((file) => file.category === 'vrc'),
+				vatis: fileData.data.filter((file) => file.category === 'vatis'),
 				misc: fileData.data.filter((file) => file.category === 'misc'),
 			};
 		},
