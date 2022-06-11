@@ -30,13 +30,14 @@
 							<a :href="`#modal_delete_${i}`" data-position="top" data-tooltip="Delete Document" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
 						</td>
 						<div :id="`modal_delete_${i}`" class="modal modal_delete">
-						<div class="modal-content">
-							<h4>Delete document?</h4>
-							<p>This will delete <b>{{doc.name}}</b> from the documents section completely</p>
-						</div>
-						<div class="modal-footer">
-							<a href="#!" class="waves-effect waves-light btn" @click="deleteDownload(doc._id)">Delete</a>
-							<a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
+							<div class="modal-content">
+								<h4>Delete document?</h4>
+								<p>This will delete <b>{{doc.name}}</b> from the documents section completely</p>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="waves-effect waves-light btn" @click="deleteDownload(doc._id)">Delete</a>
+								<a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
+							</div>
 						</div>
 					</tr>
 				</tbody>
