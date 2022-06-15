@@ -20,6 +20,9 @@
 					<div class="col s12 l4">
 						<router-link :to="`/events/${event.url}`" class="btn btn-signup waves-effect waves-light right">More Info &amp; Sign Up</router-link>
 					</div>
+					<div class="col s12 event_desc">
+						{{ event.description }}
+					</div>
 				</div>
 			</div>
 		</div>
