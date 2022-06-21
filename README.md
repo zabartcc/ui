@@ -18,8 +18,8 @@ Daan Janssen
 Alexandra Robison  
 Robby Maura  
 Shane Friedman  
-Evan Bradley
-Jeremy Werderman
+Evan Bradley  
+Jeremy Werderman  
 
 Thank you to all contributors, past and present.
 
