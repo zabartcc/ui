@@ -31,7 +31,7 @@
 <script>
 export default {
 	name: 'PrivacyPolicy',
-	title: 'IDS'
+	title: 'Privacy Policy'
 };
 </script>
 
