@@ -6,7 +6,7 @@
 				<p>This site works best in Google Chrome, Mozilla Firefox, and Microsoft Edge.</p>
 				<p>If you are still using Internet Explorer, please consider switching to a more modern browser.</p>
 			</div>
-			<img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo_pride.png" alt="" draggable="false" height="70" width="70">
+			<img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo.png" alt="" draggable="false" height="70" width="70">
 		</div>
 		<div class="footer_pride">
 			<div class="wrapper">
@@ -36,8 +36,8 @@
 		<div id="lgbt_modal" class="modal">
 			<div class="modal-content">
 				<h5>We stand with the LGBTQIA+ community on VATSIM</h5>
-				<p>Albuquerque ARTCC displays the rainbow, transgender, bisexual and pansexual flags as a show of solidarity with the LGBTQIA+ community on VATSIM. You are welcome here, and you have our support.</p>
-				<p>As an organization with LGBTQIA+ members, we recognize the importance of creating a welcoming environment to all members. Everyone is welcome here, regardless of their race, nationality, national origin, ethnicity, ethnic origin, socioeconomic status, religion, age, disability, sexual orientation, gender or gender identity.</p>
+				<p>Albuquerque ARTCC displays the rainbow, transgender, bisexual, and pansexual flags as a show of solidarity with the LGBTQIA+ community on VATSIM. You are welcome here, and you have our support.</p>
+				<p>As an organization with LGBTQIA+ members, we recognize the importance of creating a welcoming environment to all members. Everyone is welcome here, regardless of their race, nationality, national origin, ethnicity, ethnic origin, socioeconomic status, religion, age, disability, sexual orientation, gender, or gender identity.</p>
 				<p>We recognize CZQO, CZWG, ZJX, ZMA, ZNY, ZOA, ZOB and ZSE for displaying similar statements on their websites.</p>
 				<div class="modal_flags">
 					<div class="pride_flag"></div>
