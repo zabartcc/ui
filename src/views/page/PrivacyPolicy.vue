@@ -28,6 +28,13 @@
 	</div>
 </template>
 
+<script>
+export default {
+	name: 'PrivacyPolicy',
+	title: 'IDS'
+};
+</script>
+
 <style lang="scss" scoped>
 .card-content {
 	p + p {
