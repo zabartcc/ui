@@ -26,6 +26,8 @@
 				<div class="text-lg font-bold copyright-text">Copyright &copy; <span id="full_year"></span> Albuquerque ARTCC</div>
 				<div class="hide-on-small-only">•</div>
 				<!-- Made with ♥ and (╯°□°）╯︵ ┻━┻ by Alexandra Robison and Daan Janssen. -->
+				<div><router-link to="/privacy-policy" class="white-text">Privacy Policy</router-link></div>
+				<div class="hide-on-small-only">•</div>
 				<div><span ref="zulu_time">{{ footerTime }}</span></div>
 				<div class="hide-on-small-only">•</div>
 				<p class="footer_notice">Open source on <a href="https://github.com/zabartcc" class="white-text" target="_blank" rel="noopener noreferrer">GitHub</a></p>

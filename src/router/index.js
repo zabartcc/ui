@@ -88,6 +88,10 @@ const routes = [
 			{
 				path: '/tanmac/pfr',
 				component: () => import('../views/page/TanmacPFR.vue')
+			},
+			{
+				path: '/privacy-policy',
+				component: () => import('../views/page/PrivacyPolicy.vue')
 			}
 		]
 	},
