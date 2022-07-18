@@ -35,10 +35,10 @@
 						<a class="dropdown-left" href="#!" data-target="files-dropdown">FILES</a>
 						<ul id="files-dropdown" class="dropdown-content">
 							<li>
-								<router-link to="/files/downloads">Downloads</router-link>
+								<router-link to="/files/documents">Documents</router-link>
 							</li>
 							<li>
-								<router-link to="/files/documents">Documents</router-link>
+								<router-link to="/files/downloads">Downloads</router-link>
 							</li>
 						</ul>
 					</li>
@@ -89,16 +89,16 @@
 				<router-link class="sidenav-close" to="/">HOME</router-link>
 			</li>
 			<li>
-				<router-link class="sidenav-close" to="/controllers">CONTROLLER ROSTER</router-link>
+				<router-link class="sidenav-close" to="/controllers">ROSTER</router-link>
 			</li>
 			<li>
-				<router-link class="sidenav-close" to="/files/downloads">CONTROLLER DOWNLOADS</router-link>
+				<router-link class="sidenav-close" to="/files/documents">DOCUMENTS</router-link>
 			</li>
 			<li>
-				<router-link class="sidenav-close" to="/files/documents">CONTROLLER DOCUMENTS</router-link>
+				<router-link class="sidenav-close" to="/files/downloads">DOWNLOADS</router-link>
 			</li>
 			<li>
-				<router-link class="sidenav-close" to="/controllers/staff">ARTCC STAFF</router-link>
+				<router-link class="sidenav-close" to="/controllers/staff">STAFF</router-link>
 			</li>
 			<li>
 				<router-link class="sidenav-close" to="/events">EVENTS</router-link>
