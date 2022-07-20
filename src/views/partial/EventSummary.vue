@@ -31,7 +31,6 @@ import { zabApi } from '@/helpers/axios.js';
 
 export default {
 	name: 'Events',
-	title: 'Events',
 	data() {
 		return {
 			events: null
