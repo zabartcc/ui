@@ -8,12 +8,12 @@
 			<table class="medium striped" v-if="report">
 				<thead>
 					<th>Active?</th>
-					<th @click="sort('fname')">
+					<th @click="sort('lname')">
 						Controller
 						<div class="right">
-							<i class="material-icons" v-if="sortBy !== 'fname'">unfold_more</i>
-							<i class="material-icons active" v-else-if="sortBy === 'fname' && descending">arrow_drop_down</i>
-							<i class="material-icons active" v-else-if="sortBy === 'fname' && !descending">arrow_drop_up</i>
+							<i class="material-icons" v-if="sortBy !== 'lname'">unfold_more</i>
+							<i class="material-icons active" v-else-if="sortBy === 'lname' && descending">arrow_drop_down</i>
+							<i class="material-icons active" v-else-if="sortBy === 'lname' && !descending">arrow_drop_up</i>
 						</div>
 					</th>
 					<th @click="sort('rating')">
@@ -32,12 +32,12 @@
 							<i class="material-icons active" v-else-if="sortBy === 'totalTime' && !descending">arrow_drop_up</i>
 						</div>
 					</th>
-					<th @click="sort('createdAt')">
+					<th @click="sort('joinDate')">
 						Join Date
 						<div class="right">
-							<i class="material-icons" v-if="sortBy !== 'createdAt'">unfold_more</i>
-							<i class="material-icons active" v-else-if="sortBy === 'createdAt' && descending">arrow_drop_down</i>
-							<i class="material-icons active" v-else-if="sortBy === 'createdAt' && !descending">arrow_drop_up</i>
+							<i class="material-icons" v-if="sortBy !== 'joinDate'">unfold_more</i>
+							<i class="material-icons active" v-else-if="sortBy === 'joinDate' && descending">arrow_drop_down</i>
+							<i class="material-icons active" v-else-if="sortBy === 'joinDate' && !descending">arrow_drop_up</i>
 						</div>
 					</th>
 					<th class="options">Options</th>
@@ -74,14 +74,14 @@
 						</td>
 						<td>{{controller.ratingShort}}</td>
 						<td>{{secondsToHms(controller.totalTime)}}</td>
-						<td>{{dLong(new Date(controller.createdAt))}}</td>
+						<td>{{dLong(new Date(controller.joinDate))}}</td>
 						<td class="options">
 							<a :href="`#modal_delete_${controller.cid}`" data-position="top" data-tooltip="Remove Controller" class="tooltipped modal-trigger"><i class="material-icons red-text text-darken-2">delete</i></a>
 						</td>
 						<div :id="`modal_delete_${controller.cid}`" class="modal modal_delete">
 							<div class="modal-content">
 								<h4>Remove Controller?</h4>
-								<p>This will remove <b>{{controller.fname}} {{controller.lname}}</b> from the Albuquerque ARTCC. You must state a reason for removal below. Please note that this will delete the controller from both the website and the VATUSA facility roster.</p>
+								<p>This will remove <b>{{controller.fname}} {{controller.lname}} | {{controller.cid}}</b> from the Albuquerque ARTCC. You must state a reason for removal below. Please note that this will delete the controller from both the website and the VATUSA facility roster.</p>
 								<textarea class="materialize-textarea" placeholder="Reason for removal" v-model="reason" required></textarea>
 							</div>
 							<div class="modal-footer">
