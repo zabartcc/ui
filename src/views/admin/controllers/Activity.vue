@@ -65,8 +65,8 @@
 											—
 										</span>
 									</div>
-									<div class="certifications training_request" v-else>
-										Observer has made <b>{{controller.totalRequests}}</b> training request(s) in the last 60 days
+									<div class="certifications training_request" v-if="controller.rating >= 0">
+										Controller has made <b>{{controller.totalRequests}}</b> training request(s) in the last 60 days
 									</div>
 								</div>
 							</router-link>
