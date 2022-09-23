@@ -52,6 +52,7 @@
 							<i class="type_controller material-icons right">{{controller.vis?'work':'home'}}</i>
 							<router-link :to="`/controllers/${controller.cid}`" class="controller_name">
 								<span class="bold">{{controller.fname}} {{controller.lname}}</span>
+								<span v-if="controller.absence && controller.absence.length" class="controller_loa hide-on-med-and-down">LOA</span>
 								<div class="controller_info">
 									<h6>Controller Details</h6>
 									<p class="bold">{{controller.fname}} {{controller.lname}} ({{controller.oi}})</p>
