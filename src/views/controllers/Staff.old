@@ -84,9 +84,6 @@
 						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.mtr" />
 						</div>
-						<div class="col s12 l6">
-							<StaffCard :staffItem="staff.dta" />
-						</div>
 					</div>
 				</div>
 			</div>

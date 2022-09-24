@@ -86,7 +86,6 @@
 							<span id="wm" class="cert cert_junior" :class="{active: form.roles.wm}" @click="toggleRole">WM</span>
 							<span id="ins" class="cert cert_training" :class="{active: form.roles.ins}"  @click="toggleRole">INS</span>
 							<span id="mtr" class="cert cert_training" :class="{active: form.roles.mtr}"  @click="toggleRole">MTR</span>
-							<span id="dta" class="cert cert_training" :class="{active: form.roles.dta}"  @click="toggleRole">DTA</span>
 							<span id="vis" class="cert cert_training" :class="{active: form.vis}"  @click="toggleVis">VIS</span>
 						</div>
 					</div>
