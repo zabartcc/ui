@@ -1,4 +1,4 @@
-<template>
+f<template>
 	<div>
 		<div class="card card_margin">
 			<div class="card-content">
@@ -42,6 +42,7 @@
 					</div>
 					<div class="row">
 						<div class="col s1 push-s3 border_left hide-on-med-and-down"></div>
+						<div class="col s5 push-s5 border_right hide-on-med-and-down"></div>
 						<div class="col s4 push-s4 border_right hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
@@ -49,6 +50,9 @@
 							<StaffCard :staffItem="staff.ec" />
 						</div>
 						<div class="col s12 l6">
+							<StaffCard :staffItem="staff.fe" />
+						</div>
+					<div class="col s12 l6">
 							<StaffCard :staffItem="staff.fe" />
 						</div>
 					</div>
