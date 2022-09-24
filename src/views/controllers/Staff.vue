@@ -82,7 +82,7 @@ f<template>
 						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.ins" />
 						</div>
-							<div class="col s12 l6">
+						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.dta" />
 						</div>
 						<div class="col s12 l6">
