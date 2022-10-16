@@ -1,4 +1,4 @@
-# Albuquerque ARTCC 2020  - UI
+# Albuquerque ARTCC - UI
 A Vue SPA for the Albuquerque ARTCC Website. This communicates with the ZAB API in order to deliver content to users.
 
 ## License
