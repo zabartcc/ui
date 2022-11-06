@@ -5,7 +5,11 @@
 				<div>
 					<router-link to="/"><h1>ALBUQUERQUE<span>ARTCC</span></h1></router-link>
 				</div>
+<<<<<<< Updated upstream
              	<router-link to="/"><img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo.png" alt="" draggable="false" height="125" width="125"></router-link>
+=======
+                <router-link to="/"><img src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo.png" alt="" draggable="false" height="125" width="125"></router-link>
+>>>>>>> Stashed changes
 			</div>
 		</div>
 		<nav>
