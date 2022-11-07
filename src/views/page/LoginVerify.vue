@@ -22,7 +22,7 @@ export default {
   },
   async mounted() {
     const { data } = await zabApi.post("/user/login", {
-      token: this.$route.query.code,
+      code: this.$route.query.code,
     });
 
     if (data.ret_det.code === 200) {
