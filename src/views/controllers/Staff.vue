@@ -29,6 +29,7 @@ f<template>
 						</div>
 						<div class="col s12 l4 pull-l4">
 							<StaffCard :staffItem="staff.ta" />
+							<StaffCard :staffItem="staff.dta" />
 						</div>
 						<div class="col s12 l4">
 							<StaffCard :staffItem="staff.wm" />
@@ -71,6 +72,14 @@ f<template>
 						<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
+						<div class="col s12 l4 push-l4">
+							<StaffCard :staffItem="staff.dta" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
+					</div>
+					<div class="row">
 						<div class="col s6 push-s3 border_top hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
@@ -81,9 +90,7 @@ f<template>
 						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.ins" />
 						</div>
-						<div class="col s12 l6">
-							<StaffCard :staffItem="staff.dta" />
-						</div>
+
 						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.mtr" />
 						</div>
