@@ -8,8 +8,10 @@ jobs:
   build-docker-image:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master
+      - name: Checkout branch
         uses: actions/checkout@v2
+        with:
+          ref: "DD_add-dev-deployment"
       - name: Log in to container registry
         uses: docker/login-action@v1
         with:
