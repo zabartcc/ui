@@ -9,7 +9,7 @@
         </div>
         <router-link to="/"
           ><img
-            src="https://zabartcc.sfo3.digitaloceanspaces.com/images/ZAB_halloween.png"
+            src="https://zabartcc.sfo3.digitaloceanspaces.com/images/zab_logo.png"
             alt=""
             draggable="false"
             height="125"
