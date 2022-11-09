@@ -1,6 +1,6 @@
 export const vatsimAuthRedirectUrl = `${
-  import.meta.env.VITE_VATSIM_AUTH_URL
-}/authorize?client_id=${
+  import.meta.env.VITE_VATSIM_AUTH_ENDPOINT
+}/oauth/authorize?client_id=${
   import.meta.env.VITE_VATSIM_AUTH_CLIENT_ID
 }&redirect_uri=${
   window.location.origin + "/login/verify"
