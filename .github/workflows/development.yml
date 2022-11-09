@@ -2,7 +2,7 @@ name: Build and Deploy to Development
 
 on:
   push:
-    branches: "DD_add-dev-deployment"
+    branches: [development]
 
 jobs:
   build-docker-image:
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v2
         with:
-          ref: "DD_add-dev-deployment"
+          ref: "development"
       - name: Log in to container registry
         uses: docker/login-action@v1
         with:
