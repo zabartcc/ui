@@ -64,9 +64,9 @@ f<template>
 						</div>
 					</div>
 				</div>
+				<!-- END STAFF ROW -->
 			</div>
 		</div>
-		<!-- END STAFF ROW -->
 		<div class="card card_margin">
 			<div class="card-content">
 				<span class="card-title">Training Staff</span>
