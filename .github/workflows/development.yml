@@ -36,6 +36,6 @@ jobs:
       - name: Log into K8s cluster
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 tcs
       - name: Deploy image to cluster
-        run: kubectl set image deployment/devui devui=ghcr.io/${{ github.repository }}:${{ github.sha }} --record -n zab-web-stack
+        run: kubectl set image deployment/devui devui=ghcr.io/${{ github.repository }}:${{ github.sha }} --record -n dev-zab-web-stack
       - name: Verify deployment
-        run: kubectl rollout status deployment/devui -n zab-web-stack
+        run: kubectl rollout status deployment/devui -n dev-zab-web-stack
