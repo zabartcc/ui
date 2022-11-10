@@ -25,16 +25,20 @@ export default {
       code: this.$route.query.code,
     });
 
-    if (data.ret_det.code === 200) {
-      this.getUser();
-    } else if (
-      data.ret_det.code === 400 &&
-      data.ret_det.message.includes("[Authorize Data]")
-    ) {
-      this.toastError(
-        "Unable to process login, please authorize all requested VATSIM data."
-      );
-    } else {
+    try {
+      if (data.ret_det.code === 200) {
+        this.getUser();
+      } else if (
+        data.ret_det.code === 400 &&
+        data.ret_det.message.includes("[Authorize Data]")
+      ) {
+        this.toastError(
+          "Unable to process login, please authorize all requested VATSIM data."
+        );
+      } else {
+        this.toastError("Something went wrong, please try again");
+      }
+    } catch {
       this.toastError("Something went wrong, please try again");
     }
 
