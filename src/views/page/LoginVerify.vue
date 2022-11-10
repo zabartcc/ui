@@ -21,11 +21,11 @@ export default {
     ...mapActions("user", ["getUser"]),
   },
   async mounted() {
-    const { data } = await zabApi.post("/user/login", {
-      code: this.$route.query.code,
-    });
-
     try {
+      const { data } = await zabApi.post("/user/login", {
+        code: this.$route.query.code,
+      });
+
       if (data.ret_det.code === 200) {
         this.getUser();
       } else if (
