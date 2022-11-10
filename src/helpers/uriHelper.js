@@ -22,7 +22,9 @@ function getAuthEndpoint() {
   const authUrl = "https://auth.vatsim.net";
   const authDevUrl = "https://auth-dev.vatsim.net";
 
-  if (window.location.origin.includes("zabartcc.org")) {
+  if (window.location.origin.includes("beta")) {
+    return authDevUrl;
+  } else if (window.location.origin.includes("zabartcc.org")) {
     return authUrl;
   } else {
     return authDevUrl;
