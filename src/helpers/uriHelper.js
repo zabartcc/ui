@@ -5,7 +5,7 @@ export const vatsimAuthRedirectUrl = `${getAuthEndpoint()}/oauth/authorize?clien
 export const discordRedirectUrl = `https://discord.com/api/oauth2/authorize?client_id=546531280842653696&redirect_uri=https%3A%2F%2Fzabartcc.org%2Fconnect%2Fdiscord&response_type=code&scope=identify`;
 
 function getClientId() {
-  const betaClientId = 471;
+  const betaClientId = 1167;
   const prodClientId = 1143;
   const devClientId = 466;
 
@@ -22,9 +22,7 @@ function getAuthEndpoint() {
   const authUrl = "https://auth.vatsim.net";
   const authDevUrl = "https://auth-dev.vatsim.net";
 
-  if (window.location.origin.includes("beta")) {
-    return authDevUrl;
-  } else if (window.location.origin.includes("zabartcc.org")) {
+  if (window.location.origin.includes("zabartcc.org")) {
     return authUrl;
   } else {
     return authDevUrl;
