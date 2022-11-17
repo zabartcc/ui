@@ -7,7 +7,6 @@ f<template>
 					<Spinner />
 				</div>
 				<div v-else>
-					<!-- ARTCC STAFF ROW -->
 					<div class="row">
 						<div class="col s12 l4 push-l4">
 							<StaffCard :staffItem="staff.atm" />
@@ -28,7 +27,7 @@ f<template>
 						<div class="col s12 l4 push-l4">
 							<StaffCard :staffItem="staff.datm" />
 						</div>
-						<div class="col s12 l4 pull-l4 cardta">
+						<div class="col s12 l4 pull-l4">
 							<StaffCard :staffItem="staff.ta" />
 						</div>
 						<div class="col s12 l4">
@@ -36,18 +35,8 @@ f<template>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col s1 push-s5 border_long2 hide-on-med-and-down"></div>
-						<div class="col s1 push-s1 border_dta hide-on-med-and-down"></div>
+						<div class="col s1 push-s5 border_right border_long hide-on-med-and-down"></div>
 					</div>
-					<div class="row">
-						<div class="col s1 push-s5 border_long2 hide-on-med-and-down"></div>
-						<div class="col s12 l4 pull-l1">
-							<StaffCard :staffItem="staff.dta" />
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s1 push-s5 border_long2 hide-on-med-and-down"></div>
-						</div>
 					<div class="row">
 						<div class="col s6 push-s3 border_top hide-on-med-and-down"></div>
 					</div>
@@ -64,7 +53,6 @@ f<template>
 						</div>
 					</div>
 				</div>
-				<!-- END STAFF ROW -->
 			</div>
 		</div>
 		<div class="card card_margin">
@@ -74,19 +62,13 @@ f<template>
 					<Spinner />
 				</div>
 				<div v-else>
-					<!-- TRANING STAFF ROW  -->
 					<div class="row">
-						<div class="col s12 l4 card-distance-trainigstaff ">
-							<StaffCard :staffItem="staff.dta" />
-						</div>
-						<div class="col s12 l5 card-distance-trainigstaff">
+						<div class="col s12 l4 push-l4">
 							<StaffCard :staffItem="staff.ta" />
 						</div>
-						<!-- the middle line between position DTA and TA  -->
-						<div class="col s6 push-s1 border_middle hide-on-med-and-down"></div>  
 					</div>
 					<div class="row">
-						<div class="col s7 push-s1 border_right hide-on-med-and-down"></div>
+						<div class="col s1 push-s5 border_right hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
 						<div class="col s6 push-s3 border_top hide-on-med-and-down"></div>
@@ -99,7 +81,9 @@ f<template>
 						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.ins" />
 						</div>
-
+						<div class="col s12 l6">
+							<StaffCard :staffItem="staff.dta" />
+						</div>
 						<div class="col s12 l6">
 							<StaffCard :staffItem="staff.mtr" />
 						</div>
@@ -108,7 +92,6 @@ f<template>
 			</div>
 		</div>
 	</div>
-	
 </template>
 
 <script>
@@ -143,22 +126,8 @@ export default {
 	z-index: 1;
 }
 
-.card-distance-trainigstaff {
-	// is use for distance between TA and DTA card
-	margin: 0 5.7em;
-}
-
-.border_long2 {
-	// is use for the big line under DATM 
-	border-right: 3px solid $primary-color;
-	height: 145px;
-	margin-top: -95px;
-	z-index: 0;
-}
-
 .card-content .card {
-	margin: 0 .6em;
-
+	margin: 0 .5em;
 }
 
 .staff_table {
@@ -175,24 +144,12 @@ export default {
 
 .border_right {
 	border-right: 3px solid $primary-color;
-	height: 70px;
-
+	height: 30px;
 }
 
 .border_left {
 	border-left: 3px solid $primary-color;
-	height: 70px;
-}
-
-.border_dta {
-	border-left: 3px solid $primary-color;
-	height: 100px;
-	
-}
-
-.border_middle {
-	top: -50px;
-	border-top: 3px solid $primary-color;
+	height: 30px;
 }
 
 .border_long {
