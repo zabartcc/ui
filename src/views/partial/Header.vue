@@ -146,7 +146,6 @@
         </ul>
       </div>
     </nav>
-
     <ul class="sidenav" id="mobile-menu">
       <li>
         <router-link class="sidenav-close" to="/">HOME</router-link>
