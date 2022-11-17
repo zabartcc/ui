@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const zabApi = axios.create({
-  baseURL: isRunningOnDev ? "/devapi" : "/api",
+  baseURL: isRunningOnDev() ? "/devapi" : "/api",
   withCredentials: true,
 });
 
