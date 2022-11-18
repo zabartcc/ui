@@ -6,7 +6,7 @@ export const discordRedirectUrl = `https://discord.com/api/oauth2/authorize?clie
 
 function getClientId() {
   const betaClientId = 1167;
-  const prodClientId = 1143;
+  const prodClientId = 1171;
   const devClientId = 466;
 
   if (window.location.origin.includes("beta")) {
