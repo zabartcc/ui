@@ -1,0 +1,41 @@
+name: Build and Deploy to Development
+
+on:
+  push:
+    branches: [development]
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+        with:
+          ref: "development"
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:development
+  deploy-docker-image:
+    needs: build-docker-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialize doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Log into K8s cluster
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 tcs
+      - name: Deploy image to cluster
+        run: kubectl set image deployment/devui devui=ghcr.io/${{ github.repository }}:${{ github.sha }} --record -n dev-zab-web-stack
+      - name: Verify deployment
+        run: kubectl rollout status deployment/devui -n dev-zab-web-stack
