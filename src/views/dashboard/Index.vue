@@ -28,18 +28,14 @@
 					External Integrations
 				</span>
 				<div class="discord_connect">
-					<button v-if="!discordConnected" class="btn waves-effect waves-light" @click.prevent="linkDiscord">
-						<img src="@/assets/images/discord.svg" alt="" draggable="false" class="discord_logo" height="24">
-						Link Discord
-					</button>
-					<button v-else class="btn waves-effect grey lighten-1" @click.prevent="unlinkDiscord">
-						<img src="@/assets/images/discord.svg" alt="" draggable="false" class="discord_logo" height="24">
-						Unlink Discord
+						<button class="btn waves-effect waves-light">
+							<a href="https://www.vatusa.net/my/profile" class="discord_text">Link Discord</a>
+						<img src="@/assets/images/discord.svg" alt="" draggable="false" class="discord_logo" height="24">	
 					</button>
 					<button class="btn-flat waves-effect">
 						<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
 					</button>
-				</div>
+				</div>	
 			</div>
 		</div>
 	</div>
@@ -87,7 +83,6 @@ export default {
 	},
 	async mounted() {
 		this.token = this.user.data.idsToken || 'None Set';
-		await this.getDiscordStatus();
 		await this.getControllingSessions();
 	},
 	methods: {
@@ -97,10 +92,6 @@ export default {
 				this.toastSuccess('Token successfully generated');
 				this.token = tokenRet.data;
 			} else this.toastError(tokenRet.ret_det.message);
-		},
-		async getDiscordStatus() {
-			const { data: discordData } = await zabApi.get('/user/discord');
-			this.discordConnected = discordData.data;
 		},
 		async getControllingSessions() {
 			const { data: sessionData } = await zabApi.get('/user/sessions');
@@ -113,16 +104,6 @@ export default {
 		hideToken() {
 			document.getElementById('token_wrap').classList.add('hidden');
 			document.getElementById('click_to_see').classList.remove('hidden');
-		},
-		linkDiscord() {
-			this.$router.push('/login/discord');
-		},
-		async unlinkDiscord() {
-			const { data: unlinkData } = await zabApi.delete('/user/discord');
-			if(unlinkData.ret_det.code === 200) {
-				this.toastSuccess('Discord unlinked.');
-				await this.getDiscordStatus();
-			} else this.toastError(unlinkData.ret_det.message);
 		},
 		sec2hms(secs){
 			const days = Math.floor(secs / 86400);
@@ -267,6 +248,10 @@ export default {
 		left: 0;
 		margin-left: 6px;
 		margin-top: 7px;
+	}
+	
+	.discord_text{
+		color:azure
 	}
 }
 
