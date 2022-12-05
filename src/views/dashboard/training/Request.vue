@@ -66,7 +66,7 @@ export default {
 	},
 	async mounted() {
 		await this.getTrainingMilestones();
-		const today = new Date(new Date().toUTCString());
+		const today = new Date(new Date().toLocaleTimeString());
 
 		M.FormSelect.init(document.querySelectorAll('select'), {});
 		M.CharacterCounter.init(document.querySelectorAll('textarea'), {});
@@ -79,7 +79,7 @@ export default {
 			minDate: today,
 			disableMobile: true,
 			minuteIncrement: 15,
-			dateFormat: 'Y-m-dTH:i:00.000\\Z',
+			dateFormat: 'Y-m-dTH:i:00.000\\LT',
 			altFormat: 'Y-m-d H:i',
 			altInput: true,
 		});
@@ -90,7 +90,7 @@ export default {
 			minDate: today,
 			disableMobile: true,
 			minuteIncrement: 15,
-			dateFormat: 'Y-m-dTH:i:00.000\\Z',
+			dateFormat: 'Y-m-dTH:i:00.000\\LT',
 			altFormat: 'Y-m-d H:i',
 			altInput: true,
 		});
