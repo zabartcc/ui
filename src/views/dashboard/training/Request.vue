@@ -79,7 +79,7 @@ export default {
 			minDate: today,
 			disableMobile: true,
 			minuteIncrement: 15,
-			dateFormat: 'Y-m-dTH:i:00.000\\LT',
+			dateFormat: 'Y-m-dTH:i:00.000\\Z',
 			altFormat: 'Y-m-d H:i',
 			altInput: true,
 		});
@@ -90,7 +90,7 @@ export default {
 			minDate: today,
 			disableMobile: true,
 			minuteIncrement: 15,
-			dateFormat: 'Y-m-dTH:i:00.000\\LT',
+			dateFormat: 'Y-m-dTH:i:00.000\\Z',
 			altFormat: 'Y-m-d H:i',
 			altInput: true,
 		});
@@ -101,8 +101,11 @@ export default {
 				if(!this.request.milestone) this.toastError('You must select a milestone');
 				else {
 					this.makingRequest = true;
+					this.$refs.end_date = new date(this.$refs.end_date.value).toUTCString();
+					this.$refs.start_date.value = new date(this.$refs.start_date.value).toUTCString();
 					const { data } = await zabApi.post('/training/request/new', {
 						...this.request,
+						
 						startTime: `${this.$refs.start_date.value}`,
 						endTime: `${this.$refs.end_date.value}`
 					});

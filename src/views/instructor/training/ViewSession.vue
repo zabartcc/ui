@@ -78,7 +78,7 @@ export default {
 	methods: {
 		async getSessionDetails() {
 			const { data } = await zabApi.get(`/training/session/${this.$route.params.id}`);
-			this.session = data.data;
+			this.session = new data.data;
 		},
 		formatLocation(location) {
 			const locations = ['Classroom', 'Live Network', 'Sweatbox'];

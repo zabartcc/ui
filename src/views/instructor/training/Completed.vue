@@ -76,6 +76,8 @@ export default {
 			});
 
 			this.sessions = data.data.sessions;
+			this.sessions = new date(this.sessions).toLocaleString();
+			console.log(this.sessions)
 			this.sessionAmount = data.data.count;
 		}
 	},
@@ -88,6 +90,9 @@ export default {
 		}
 	}
 };
+
+
+console.log(startTime)
 </script>
 
 <style scoped lang="scss">

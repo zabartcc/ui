@@ -77,6 +77,8 @@ export default {
 			});
 
 			this.sessions = data.data.sessions;
+			this.session = new date(data.data.sessions).toLocaleString();
+			console.log(this.session.startTime);
 			this.sessionAmount = data.data.count;
 			this.controller = data.data.controller.fname + ' ' + data.data.controller.lname;
 		}
