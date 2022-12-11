@@ -128,6 +128,12 @@ export default {
 			try {
 				const { data } = await zabApi.get(`/training/request/${this.$route.params.date}`);
 				this.requests = data.data;
+				this.requests.forEach((request, i) => {
+					this.times[i] = {
+						start: new Date(request.startTime).toLocaleString,
+						end: new Date(request.endTime).toLocaleString
+					};
+				});
 			} catch(e) {
 				console.log(e);
 			}
