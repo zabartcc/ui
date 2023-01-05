@@ -22,8 +22,8 @@
 				</thead>
 				<tbody class="requests_list_row">
 					<tr v-for="(request, i) in requests" :key="request._id">
-						<td>{{ request.student.fname + ' ' + request.student.lname }} <span v-if="request.student.vis">(VC)</span></td>
-						<td>{{ request.milestone.name }}</td>
+						<td>{{ session?.student ? `${session.student.fname} ${session.student.lname}` : session?.studentCid }}</td>
+						<td>{{ request.milestone?.name }}</td>
 						<td>{{ dtLong(request.startTime) }}</td>
 						<td>{{ dtLong(request.endTime) }}</td>
 						<td class="options">
@@ -47,7 +47,7 @@
 											<label for="student" class="active">Student</label>
 										</div>
 										<div class="input-field col s12 m6">
-											<p id="milestone">{{ request.milestone.name }} ({{ request.milestone.code }})</p>
+											<p id="milestone">{{ request.milestone?.name }} ({{ request.milestone?.code }})</p>
 											<label for="milestone" class="active">Milestone</label>
 										</div>
 										<div class="input-field col s12 m6">

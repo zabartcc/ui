@@ -22,8 +22,8 @@
 				</thead>
 				<tbody class="sessions_list_row">
 					<tr v-for="(session, i) in sessions" :key="session._id">
-						<td>{{ session.student.fname + ' ' + session.student.lname }} <span v-if="session.student.vis">(VC)</span></td>
-						<td>{{ session.milestone.name }}</td>
+					<td>{{ session.student.fname + ' ' + session.student.lname }} <span v-if="session.student.vis">(VC)</span></td>
+						<td>{{ session.milestone?.name }}</td>
 						<td>{{ dtLong(session.startTime) }}</td>
 						<td>{{ dtLong(session.endTime) }}</td>
 						<td class="options">
@@ -44,7 +44,7 @@
 											<label for="student" class="active">Student</label>
 										</div>
 										<div class="input-field col s6">
-											<p id="milestone">{{ session.milestone.name }} ({{ session.milestone.code }})</p>
+											<p id="milestone">{{ session.milestone?.name }} ({{ session.milestone?.code }})</p>
 											<label for="milestone" class="active">Milestone</label>
 										</div>
 										<div class="input-field col s6">
