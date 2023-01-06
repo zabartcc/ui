@@ -22,7 +22,7 @@
 				<form @submit.prevent=submitTraining >
 					<div class="row row_no_margin" v-show="step === 1">
 						<div class="input-field col s12 m6">
-							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname" required disabled>
+							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname +'(' + session.student.cid + ')'" required disabled>
 							<label for="student" class="active">Student Name</label>
 						</div>
 						<div class="input-field col s12 m6">
@@ -51,7 +51,7 @@
 						</div>
 						<div class="input-field col s12 m6 milestone">
 							<select required disabled class="materialize-select">
-								<option disabled selected>{{ session.milestone.name }}</option>
+								<option disabled selected>{{ session.milestone?.name }}</option>
 							</select>
 							<label>Milestone</label>
 						</div>
@@ -91,7 +91,7 @@
 								<option value=0>No OTS</option>
 								<option value=1>OTS Pass</option>
 								<option value=2>OTS Fail</option>
-								<option value=3>Recommend OTS</option>
+								<option value=3>OTS Recommended</option>
 							</select>
 							<label>OTS</label>
 						</div>
@@ -108,7 +108,7 @@
 					</div>
 					<div class="row row_no_margin">
 						<div class="input-field col s12 submit_buttons">
-							<button type="button" v-if="step === 3" class="btn right" @click="submitForm">Finalize</button>
+							<button type="button" v-if="step === 3" class="btn right" @click="submitForm(); submitTraining(); ">Finalize</button>
 							<button type="button" v-if="step === 3" class="btn-flat right" @click="saveForm">Save</button>
 							<button type="button" class="btn right" v-if="step !== 3" @click="step += 1">Next</button>
 							<button type="button" v-if="step !== 1" @click="step -= 1" class="btn-flat right">Back</button>
@@ -121,8 +121,7 @@
 </template>
 
 <script>
-import { vatusaApiAuth, zabApi } from '@/helpers/axios.js'
-const duration = this.session.startTime - this.session.endTime;
+import { vatusaApiAuth, vatusaApi, zabApi } from '@/helpers/axios.js'
 export default {
 	name: 'EditSessionNotes',
 	title: 'Enter Session Notes',
@@ -178,17 +177,16 @@ export default {
 		async submitTraining() {
 			try {
 				const formData = new FormData();
-				formData.append('cid', this.session.cid);
+				formData.append('instructor_id', this.session.instructor.cid);
 				formData.append('session_date', this.session.startTime);
 				formData.append('position', this.session.position);
-				formData.append('duration', duration);
+				formData.append('duration', this?.session.startTime - this?.session.endTime);
 				formData.append('movements', this.session.movements);
 				formData.append('score', this.session.progress);
 				formData.append('notes', this.session.studentNotes);
 				formData.append('location', this.session.location);
 				formData.append('ots', this.session.ots);
-				formData.append('expDate', this.$refs.expirationDate.value);
-				await vatusaApiAuth.post(`/user/${this.session.cid}/training/record`, formData);
+				await vatusaApi.post(`/user/${this.session.student.cid}/training/record`, formData);
 
 				this.toastSuccess('Traning Record issued');
 			} catch(e) {
