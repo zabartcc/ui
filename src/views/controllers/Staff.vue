@@ -36,13 +36,12 @@ f<template>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col s1 push-s5 border_long2 hide-on-med-and-down"></div>
-						<div class="col s1 push-s1 border_dta hide-on-med-and-down"></div>
+						<div class="col s1 push-s1 border_long2 hide-on-med-and-down"></div>
 					</div>
 					<div class="row">
 						<div class="col s1 push-s5 border_long2 hide-on-med-and-down"></div>
 						<div class="col s12 l4 pull-l1">
-							<StaffCard :staffItem="staff.dta" />
+							<StaffCard :staffItem="staff.dta" />	
 						</div>
 					</div>
 					<div class="row">
