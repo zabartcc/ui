@@ -202,6 +202,7 @@ export default {
 				this.toastSuccess('Traning Record issued');
 			} catch(e) {
 				this.toastError(e);
+				console.log(e);
 			}
 		},
 		async submitForm() {
