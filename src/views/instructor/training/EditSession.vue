@@ -19,10 +19,10 @@
 					<div class="stepper_divider"></div>
 					<div :class="`step ${step > 2 ? 'active' : ''}`">3</div>
 				</div>
-				<form @submit.prevent=submitTraining >
+				<form>
 					<div class="row row_no_margin" v-show="step === 1">
 						<div class="input-field col s12 m6">
-							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname +'(' + session.student.cid + ')'" required disabled>
+							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname" required disabled>
 							<label for="student" class="active">Student Name</label>
 						</div>
 						<div class="input-field col s12 m6">
@@ -51,7 +51,7 @@
 						</div>
 						<div class="input-field col s12 m6 milestone">
 							<select required disabled class="materialize-select">
-								<option disabled selected>{{ session.milestone?.name }}</option>
+								<option disabled selected>{{ session.milestone.name }}</option>
 							</select>
 							<label>Milestone</label>
 						</div>
@@ -91,7 +91,7 @@
 								<option value=0>No OTS</option>
 								<option value=1>OTS Pass</option>
 								<option value=2>OTS Fail</option>
-								<option value=3>OTS Recommended</option>
+								<option value=3>Recommend OTS</option>
 							</select>
 							<label>OTS</label>
 						</div>
@@ -108,8 +108,7 @@
 					</div>
 					<div class="row row_no_margin">
 						<div class="input-field col s12 submit_buttons">
-							<button type="button" v-if="step === 3" class="btn right" @click="submitForm(); submitTraining(); ">Send to VATUSA</button>
-							<!-- <button type="button" v-if="step === 3" class="btn right" @click="submitTraining(); ">Finalize</button> -->
+							<button type="button" v-if="step === 3" class="btn right" @click="submitForm">Finalize</button>
 							<button type="button" v-if="step === 3" class="btn-flat right" @click="saveForm">Save</button>
 							<button type="button" class="btn right" v-if="step !== 3" @click="step += 1">Next</button>
 							<button type="button" v-if="step !== 1" @click="step -= 1" class="btn-flat right">Back</button>
@@ -122,7 +121,7 @@
 </template>
 
 <script>
-import { vatusaApiAuth, vatusaApi, zabApi } from '@/helpers/axios.js'
+import { zabApi } from '@/helpers/axios.js';
 export default {
 	name: 'EditSessionNotes',
 	title: 'Enter Session Notes',
@@ -152,10 +151,8 @@ export default {
 				console.log(e);
 			}
 		},
-		
 		async saveForm() {
 			try {
-				// save the form for ZAB API
 				const { data } = await zabApi.put(`/training/session/save/${this.$route.params.id}`, {
 					position: this.session.position,
 					movements: this.session.movements,
@@ -176,37 +173,8 @@ export default {
 				console.log(e);
 			}
 		},
-		
-		async submitTraining() {
-			try {
-				// math for get duration of traning session
-				const delta = Math.abs(new Date(this?.session.endTime) - new Date(this?.session.startTime)) / 1000;
-				const hours = Math.floor(delta / 3600);
-				const minutes = Math.floor(delta / 60) % 60;
-				this.duration = `${('00' + hours).slice(-2)}:${('00' + minutes).slice(-2)}`;
-
-				// form and sending system traning record to VATUSA API 
-				const formData = new FormData();
-				formData.append('instructor_id', this.session.instructor.cid);
-				formData.append('session_date', this.session.startTime);
-				formData.append('position', this.session.position);
-				formData.append('duration', this.duration);
-				formData.append('movements', this.session.movements);
-				formData.append('score', this.session.progress);
-				formData.append('notes', this.session.studentNotes);
-				formData.append('location', this.session.location);
-				formData.append('ots', this.session.ots);
-				await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record?test=true`, formData);
-
-				// VATUSA API response
-				this.toastSuccess('Traning Record issued');
-			} catch(e) {
-				this.toastError(e);
-			}
-		},
 		async submitForm() {
 			try {
-				// submission form to ZAB API 
 				const { data } = await zabApi.put(`/training/session/submit/${this.$route.params.id}`, this.session);
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Session notes finalized');
