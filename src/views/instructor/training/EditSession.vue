@@ -51,7 +51,7 @@
 						</div>
 						<div class="input-field col s12 m6 milestone">
 							<select required disabled class="materialize-select">
-								<option disabled selected>{{ session.milestone?.name }}</option>
+								<option disabled selected>{{ session.milestone.name }}</option>
 							</select>
 							<label>Milestone</label>
 						</div>
@@ -109,7 +109,6 @@
 					<div class="row row_no_margin">
 						<div class="input-field col s12 submit_buttons">
 							<button type="button" v-if="step === 3" class="btn right" @click="submitForm(); submitTraining(); ">Send to VATUSA</button>
-							<!-- <button type="button" v-if="step === 3" class="btn right" @click="submitTraining(); ">Finalize</button> -->
 							<button type="button" v-if="step === 3" class="btn-flat right" @click="saveForm">Save</button>
 							<button type="button" class="btn right" v-if="step !== 3" @click="step += 1">Next</button>
 							<button type="button" v-if="step !== 1" @click="step -= 1" class="btn-flat right">Back</button>
@@ -180,7 +179,7 @@ export default {
 		async submitTraining() {
 			try {
 				// math for get duration of traning session
-				const delta = Math.abs(new Date(this?.session.endTime) - new Date(this?.session.startTime)) / 1000;
+				const delta = Math.abs(new Date(this.session.endTime) - new Date(this.session.startTime)) / 1000;
 				const hours = Math.floor(delta / 3600);
 				const minutes = Math.floor(delta / 60) % 60;
 				this.duration = `${('00' + hours).slice(-2)}:${('00' + minutes).slice(-2)}`;
@@ -196,7 +195,7 @@ export default {
 				formData.append('notes', this.session.studentNotes);
 				formData.append('location', this.session.location);
 				formData.append('ots', this.session.ots);
-				await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record?test=true`, formData);
+				await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record?test`, formData);
 
 				// VATUSA API response
 				this.toastSuccess('Traning Record issued');
