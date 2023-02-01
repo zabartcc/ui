@@ -4,7 +4,7 @@
 			<span class="card-title">
 				Enter Session Notes
 			</span>
-			<div class="loading_container" v-if="!session">
+			<div class="loading_container" v-if="!session === null">
 				<Spinner />
 			</div>
 			<div class="session_notes" v-else>
@@ -19,7 +19,7 @@
 					<div class="stepper_divider"></div>
 					<div :class="`step ${step > 2 ? 'active' : ''}`">3</div>
 				</div>
-				<form @submit.prevent=submitTraining >
+				<form>
 					<div class="row row_no_margin" v-show="step === 1">
 						<div class="input-field col s12 m6">
 							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname +'(' + session.student.cid + ')'" required disabled>
@@ -186,17 +186,30 @@ export default {
 				this.duration = `${('00' + hours).slice(-2)}:${('00' + minutes).slice(-2)}`;
 
 				// form and sending system traning record to VATUSA API 
-				const formData = new FormData();
-				formData.append('instructor_id', this.session.instructor.cid);
-				formData.append('session_date', this.session.startTime);
-				formData.append('position', this.session.position);
-				formData.append('duration', this.duration);
-				formData.append('movements', this.session.movements);
-				formData.append('score', this.session.progress);
-				formData.append('notes', this.session.studentNotes);
-				formData.append('location', this.session.location);
-				formData.append('ots', this.session.ots);
-				await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record?test`, formData);
+				// const formData = new FormData();
+				// formData.append('instructor_id', this.session.instructor.cid);
+				// formData.append('session_date', this.session.startTime);
+				// formData.append('position', this.session.position);
+				// formData.append('duration', this.duration);
+				// formData.append('movements', this.session.movements);
+				// formData.append('score', this.session.progress);
+				// formData.append('notes', this.session.studentNotes);
+				// formData.append('location', this.session.location);
+				// formData.append('ots', this.session.ots);
+				// await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record`, formData);
+
+				await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record` , {
+					"instructor_id": this.session.instructor.cid,
+					"session_date": dayjs(this.session.startTime).format("YYYY-MM-DD HH:mm"),
+					"position": this.session.position,
+					"duration": this.duration,
+					"movements": this.session.movements,
+					"score": this.session.progress,
+					"notes": this.session.studentNotes,
+					"location": this.session.location,
+					"ots": this.session.ots
+				});
+				
 
 				// VATUSA API response
 				this.toastSuccess('Traning Record issued');
