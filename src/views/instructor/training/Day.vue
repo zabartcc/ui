@@ -22,7 +22,7 @@
 				</thead>
 				<tbody class="requests_list_row">
 					<tr v-for="(request, i) in requests" :key="request._id">
-						<td>{{ request.student.fname + ' ' + request.student.lname }} <span v-if="request.student.vis">(VC)</span></td>
+						<td>{{ session?.student ? `${session.student.fname} ${session.student.lname}` : session?.studentCid }}</td>
 						<td>{{ request.milestone?.name }}</td>
 						<td>{{ dtLong(request.startTime) }}</td>
 						<td>{{ dtLong(request.endTime) }}</td>
