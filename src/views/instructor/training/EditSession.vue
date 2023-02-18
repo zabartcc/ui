@@ -187,19 +187,7 @@ export default {
 				const minutes = Math.floor(delta / 60) % 60;
 				this.duration = `${('00' + hours).slice(-2)}:${('00' + minutes).slice(-2)}`;
 
-				// form and sending system traning record to VATUSA API 
-				// const formData = new FormData();
-				// formData.append('instructor_id', this.session.instructor.cid);
-				// formData.append('session_date', this.session.startTime);
-				// formData.append('position', this.session.position);
-				// formData.append('duration', this.duration);
-				// formData.append('movements', this.session.movements);
-				// formData.append('score', this.session.progress);
-				// formData.append('notes', this.session.studentNotes);
-				// formData.append('location', this.session.location);
-				// formData.append('ots', this.session.ots);
-				// await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record`, formData);
-
+				// send the form to VATUSA API
 				await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record` , {
 					"instructor_id": this.session.instructor.cid,
 					"session_date": dayjs(this.session.startTime).format("YYYY-MM-DD HH:mm"),
@@ -214,10 +202,9 @@ export default {
 				
 
 				// VATUSA API response
-				this.toastSuccess('Traning Record issued');
+				this.toastSuccess('Training Record Issued');
 			} catch(e) {
 				this.toastError(e);
-				console.log(e);
 			}
 		},
 		async submitForm() {
