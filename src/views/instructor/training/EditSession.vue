@@ -4,7 +4,7 @@
 			<span class="card-title">
 				Enter Session Notes
 			</span>
-			<div class="loading_container" v-if="!session">
+			<div class="loading_container" v-if="!session === null">
 				<Spinner />
 			</div>
 			<div class="session_notes" v-else>
@@ -121,7 +121,9 @@
 </template>
 
 <script>
-import { zabApi } from '@/helpers/axios.js';
+import { vatusaApiAuth, vatusaApi, zabApi } from '@/helpers/axios.js'
+import dayjs from 'dayjs';
+
 export default {
 	name: 'EditSessionNotes',
 	title: 'Enter Session Notes',
@@ -173,6 +175,36 @@ export default {
 				console.log(e);
 			}
 		},
+    
+		async submitTraining() {
+			try {
+				// math for get duration of traning session
+				const delta = Math.abs(new Date(this.session.endTime) - new Date(this.session.startTime)) / 1000;
+				const hours = Math.floor(delta / 3600);
+				const minutes = Math.floor(delta / 60) % 60;
+				this.duration = `${('00' + hours).slice(-2)}:${('00' + minutes).slice(-2)}`;
+
+				// send the form to VATUSA API
+				await vatusaApiAuth.post(`/user/${this.session.student.cid}/training/record` , {
+					"instructor_id": this.session.instructor.cid,
+					"session_date": dayjs(this.session.startTime).format("YYYY-MM-DD HH:mm"),
+					"position": this.session.position,
+					"duration": this.duration,
+					"movements": this.session.movements,
+					"score": this.session.progress,
+					"notes": this.session.studentNotes,
+					"location": this.session.location,
+					"ots": this.session.ots
+				});
+				
+
+				// VATUSA API response
+				this.toastSuccess('Training Record Issued');
+			} catch(e) {
+				this.toastError(e);
+			}
+		},
+
 		async submitForm() {
 			try {
 				const { data } = await zabApi.put(`/training/session/submit/${this.$route.params.id}`, this.session);
