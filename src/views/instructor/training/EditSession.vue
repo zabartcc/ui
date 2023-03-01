@@ -51,7 +51,7 @@
 						</div>
 						<div class="input-field col s12 m6 milestone">
 							<select required disabled class="materialize-select">
-								<option disabled selected>{{ session.milestone.name }}</option>
+								<option disabled selected>{{ session.milestone?.name }}</option>
 							</select>
 							<label>Milestone</label>
 						</div>
