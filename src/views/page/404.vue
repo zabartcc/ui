@@ -3,10 +3,10 @@
 		<div class="card-content">
 			<span class="card-title">404 – Page Not Found</span>
 			<p>
-				Daan made an uh-oh.
+				Cole and Gio made an uh-oh oopsie whoopsie uwu.
 			</p>
 			<p>
-				We're sorry, but the content you request could not be found. If you believe that you are receiving this message in error, please email the webmaster. In the meantime, a cute pupper has been dispatched to ease your sorrows.
+				We're sorry, but the content you requested was not something we felt was important, or you typed something wrong. If you believe that you are receiving this message in error, please email the webmaster (wm@zabartcc.org). In the meantime, a cute pupper has been dispatched to ease your sorrows.
 			</p>
 			<p>
 				<img src="@/assets/images/dog.jpg" alt="Cute dog">
