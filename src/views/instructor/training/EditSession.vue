@@ -4,7 +4,7 @@
 			<span class="card-title">
 				Enter Session Notes
 			</span>
-			<div class="loading_container" v-if="!session === null">
+			<div class="loading_container" v-if="!session">
 				<Spinner />
 			</div>
 			<div class="session_notes" v-else>
@@ -22,7 +22,7 @@
 				<form>
 					<div class="row row_no_margin" v-show="step === 1">
 						<div class="input-field col s12 m6">
-							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname" required disabled>
+							<input id="student" type="text" :value="session.student.fname + ' ' + session.student.lname +' (' + session.student.cid + ')'" required disabled>
 							<label for="student" class="active">Student Name</label>
 						</div>
 						<div class="input-field col s12 m6">
@@ -91,7 +91,7 @@
 								<option value=0>No OTS</option>
 								<option value=1>OTS Pass</option>
 								<option value=2>OTS Fail</option>
-								<option value=3>Recommend OTS</option>
+								<option value=3>OTS Recommended</option>
 							</select>
 							<label>OTS</label>
 						</div>
@@ -108,7 +108,7 @@
 					</div>
 					<div class="row row_no_margin">
 						<div class="input-field col s12 submit_buttons">
-							<button type="button" v-if="step === 3" class="btn right" @click="submitForm">Finalize</button>
+							<button type="button" v-if="step === 3" class="btn right" @click="SubmitTraining">Send to VATUSA</button>
 							<button type="button" v-if="step === 3" class="btn-flat right" @click="saveForm">Save</button>
 							<button type="button" class="btn right" v-if="step !== 3" @click="step += 1">Next</button>
 							<button type="button" v-if="step !== 1" @click="step -= 1" class="btn-flat right">Back</button>
@@ -121,9 +121,8 @@
 </template>
 
 <script>
-import { vatusaApiAuth, vatusaApi, zabApi } from '@/helpers/axios.js'
-import dayjs from 'dayjs';
-
+import { vatusaApiAuth, zabApi } from '@/helpers/axios.js'
+import dayjs from 'dayjs'
 export default {
 	name: 'EditSessionNotes',
 	title: 'Enter Session Notes',
@@ -153,8 +152,10 @@ export default {
 				console.log(e);
 			}
 		},
+		
 		async saveForm() {
 			try {
+				// save the form in ZAB API
 				const { data } = await zabApi.put(`/training/session/save/${this.$route.params.id}`, {
 					position: this.session.position,
 					movements: this.session.movements,
@@ -175,8 +176,8 @@ export default {
 				console.log(e);
 			}
 		},
-    
-		async submitTraining() {
+
+		async SubmitTraining(){
 			try {
 				// math for get duration of traning session
 				const delta = Math.abs(new Date(this.session.endTime) - new Date(this.session.startTime)) / 1000;
@@ -196,17 +197,14 @@ export default {
 					"location": this.session.location,
 					"ots": this.session.ots
 				});
-				
 
 				// VATUSA API response
 				this.toastSuccess('Training Record Issued');
 			} catch(e) {
 				this.toastError(e);
 			}
-		},
-
-		async submitForm() {
 			try {
+				// submission form to ZAB API 
 				const { data } = await zabApi.put(`/training/session/submit/${this.$route.params.id}`, this.session);
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Session notes finalized');
