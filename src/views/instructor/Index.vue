@@ -28,7 +28,7 @@
 											<td><strong>{{ member.fname }} {{ member.lname }}</strong></td>
 											<td>{{ member.ratingLong }}</td>
 											<td>{{ stats.lastRequest[member.cid] ? dtStandard(stats.lastRequest[member.cid].lastRequest) : 'N/A' }}</td>
-											<td>{{ stats.lastRequest[member.cid]?.milestone?.name ?? 'N/A' }}</td>
+											<td>{{ stats.lastRequest[member.cid]?.milestone.name ?? 'N/A' }}</td>
 										</tr>
 										<tr>
 											<td colspan="4" style="background-color: #333;"></td>
