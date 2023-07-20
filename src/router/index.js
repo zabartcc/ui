@@ -170,6 +170,10 @@ const routes = [
         component: () => import("../views/admin/Index.vue"),
       },
       {
+        path: "TaPage",
+        component: () => import("../views/admin/TaPage/TrainingControlPage.vue"),
+      },
+      {
         path: "controllers",
         component: () => import("../views/admin/controllers/Index.vue"),
       },
@@ -249,6 +253,7 @@ const routes = [
         path: "absence/new",
         component: () => import("../views/admin/absence/New.vue"),
       },
+      
       {
         path: "log",
         component: () => import("../views/admin/log/Index.vue"),

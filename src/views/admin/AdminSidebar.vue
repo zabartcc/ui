@@ -5,6 +5,10 @@
 				Dashboard
 				<div class="secondary-content"><i class="material-icons">dashboard</i></div>
 			</router-link>
+			<router-link to="/admin/TaPage" class="collection-item" v-if="requiresAuth(['atm', 'ta', 'dta'])">
+				Training Control Page
+				<div class="secondary-content"><i class="material-icons"></i></div>
+			</router-link>
 			<router-link to="/admin/controllers" class="collection-item">
 				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
@@ -36,10 +40,6 @@
 			<router-link to="/admin/news" class="collection-item">
 				News
 				<div class="secondary-content"><i class="material-icons">rss_feed</i></div>
-			</router-link>
-			<router-link to="/admin/visit/TrainingControlPage" class="collection-item" v-if="requiresAuth(['atm', 'ta', 'dta'])">
-				Training control page
-				<div class="secondary-content"><i class="material-icons">group_add</i></div>
 			</router-link>
 			<router-link to="/admin/visit/applications" class="collection-item" v-if="requiresAuth(['atm', 'datm'])">
 				Visitor Applications

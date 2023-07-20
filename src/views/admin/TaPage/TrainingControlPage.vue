@@ -1,19 +1,23 @@
 <template>
 	<div class="card">
 		<div class="card-content">
-			<div class="card-title">Your Training Sessions</div>
+			<div class="card-title">Traning Control Page</div>
+			<div class="card-subtitle">{{ greeting }}</div>
+
 		</div>
 		<div v-if="!sessions" class="loading_container">
+			<div class="card-title">Loading...</div>
 			<Spinner />
 		</div>
 		<div v-else-if="!sessions.length" class="no_sessions">
-			You have no open training sessions.
+			Fantastic! You don't have training sessions to review.
 		</div>
 		<div class="sessions_wrapper" v-else>
 			<table class="sessions_list striped">
 				<thead class="sessions_list_head">
 					<tr>
 						<th>Student</th>
+						<th>Instructor</th>
 						<th>Milestone</th>
 						<th>Start</th>
 						<th>End</th>
@@ -23,6 +27,7 @@
 				<tbody class="sessions_list_row">
 					<tr v-for="(session, i) in sessions" :key="session._id">
 						<td>{{ session.student.fname + ' ' + session.student.lname }} <span v-if="session.student.vis">(VC)</span></td>
+						<td>{{ session.instructor.fname + ' ' + session.instructor.lname }}</td>
 						<td>{{ session.milestone?.name }}</td>
 						<td>{{ dtLong(session.startTime) }}</td>
 						<td>{{ dtLong(session.endTime) }}</td>
@@ -72,18 +77,22 @@
 
 <script>
 import { zabApi } from '@/helpers/axios.js';
-import Completed from './Completed.vue';
+import Completed from '../../instructor/training/Completed.vue';
 
 export default {
 	name: 'UpcomingSessions',
 	title: 'Training Sessions',
 	data() {
 		return {
-			sessions: null
+			sessions: null,
+			greeting: ''
 		};
 	},
 	components: {
 		Completed
+	},
+	created() {
+		this.setGreeting();
 	},
 	async mounted() {
 		await this.getSessions();
@@ -108,6 +117,18 @@ export default {
 			const d = new Date(value);
 			return d.toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC', hour12: false});
 		},
+		setGreeting() {
+			const currentHour = new Date().getHours();
+			if (currentHour >= 6 && currentHour < 13) {
+				this.greeting = 'Good morning training team';
+			} else if (currentHour >= 13 && currentHour < 18) {
+				this.greeting = 'Good Afternoon training Team';
+			} else if (currentHour >= 18 || currentHour < 0) {
+				this.greeting = 'Good evening training team';
+			} else {
+				this.greeting = 'Good night training team';
+			}
+		}
 	}
 };
 </script>
