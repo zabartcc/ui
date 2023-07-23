@@ -8,12 +8,10 @@ What does this PR do?
 
 ---
 
-### DB Changes (if any)
-
-- [] What is the change?
+### What it Looks Like
 
 ```
-changes here
+Photos or GIFs of the changes here.
 ```
 
 ---
