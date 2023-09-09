@@ -3,7 +3,6 @@
 		<div class="card-content">
 			<div class="card-title">Traning Control Page</div>
 			<div class="card-subtitle">{{ greeting }}</div>
-
 		</div>
 		<div v-if="!sessions" class="loading_container">
 			<div class="card-title">Loading...</div>
@@ -106,12 +105,17 @@ export default {
 	},
 	methods: {
 		async getSessions() {
-			try {
-				const { data } = await zabApi.get(`/training/session/open`);
-				this.sessions = data.data;
-			} catch(e) {
-				console.log(e);
-			}
+ 		 	try {
+    			const { data } = await zabApi.get(`/training/session/save`);
+    				if (this.sessions.length) {
+      				this.sessions = data.data;
+      				this.sessions.forEach(session => {
+        			session.approved = false;
+      				});
+    				}
+  				} catch(e) {
+    				console.log(e);
+  			}
 		},
 		formatDateTime(value) {
 			const d = new Date(value);
