@@ -33,7 +33,7 @@
 						<img src="@/assets/images/discord.svg" alt="" draggable="false" class="discord_logo" height="24">	
 					</button>
 					<button class="btn-flat waves-effect">
-						<a href="https://vats.im/zabdiscord" target="_blank" rel="noreferrer noopener">Join Discord</a>
+						<a href="https://discord.gg/zabartcc" target="_blank" rel="noreferrer noopener">Join Discord</a>
 					</button>
 				</div>	
 			</div>
