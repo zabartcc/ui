@@ -29,11 +29,11 @@
 				</span>
 				<div class="discord_connect">
 						<button class="btn waves-effect waves-light">
-							<a href="https://www.vatusa.net/my/profile" class="discord_text" target="_blank">Link Discord</a>
+							<a href="https://www.vatusa.net/my/profile" class="discord_text">Link Discord</a>
 						<img src="@/assets/images/discord.svg" alt="" draggable="false" class="discord_logo" height="24">	
 					</button>
 					<button class="btn-flat waves-effect">
-						<a :href="discordLink" target="_blank" rel="noreferrer noopener">Join Discord</a>
+						<a href="https://discord.gg/czGbR9uh" target="_blank" rel="noreferrer noopener">Join Discord</a>
 					</button>
 				</div>	
 			</div>
@@ -79,7 +79,6 @@ export default {
 			token: '',
 			discordConnected: false,
 			controllingSessions: null,
-			discordLink: import.meta.env.VITE_DISCORD_LINK,
 		};
 	},
 	async mounted() {
