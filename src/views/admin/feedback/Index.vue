@@ -69,7 +69,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal-footer">
+							<div class="modal-footer" v-if="requiresAuth(['atm', 'datm', 'ta'])">
 								<a href="#!" class="waves-effect waves-light btn" @click="approveFeedback(feedback._id)">Approve</a>
 								<a href="#!" class="waves-effect waves-light btn-flat" @click="rejectFeedback(feedback._id)">Reject</a>
 							</div>
@@ -85,6 +85,7 @@
 <script>
 import {zabApi} from '@/helpers/axios.js';
 import RecentFeedback from './Recent.vue';
+import { mapState } from 'vuex';
 
 export default {
 	name: 'Feedback',
@@ -107,6 +108,14 @@ export default {
 		});
 	},
 	methods: {
+		requiresAuth(roles) {
+			const havePermissions = roles.some(r => this.user.data.roleCodes.includes(r));
+			if(havePermissions) {
+				return true;
+			} else {
+				return false;
+			}
+		},
 		async getUnapproved() {
 			const {data} = await zabApi.get('/feedback/unapproved');
 			this.unapproved = data.data;
@@ -149,6 +158,11 @@ export default {
 			const ratings = ['Poor', 'Below Average', 'Average', 'Above Average', 'Excellent'];
 			return ratings[rating - 1];
 		}
+	},
+	computed: {
+		...mapState('user', [
+			'user'
+		])
 	}
 };
 </script>

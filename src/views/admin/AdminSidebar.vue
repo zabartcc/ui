@@ -25,7 +25,7 @@
 				Events
 				<div class="secondary-content"><i class="material-icons">event</i></div>
 			</router-link>
-			<router-link to="/admin/feedback" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta'])">
+			<router-link to="/admin/feedback" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta', 'ec'])">
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
 			</router-link>
