@@ -175,15 +175,12 @@ export default {
 			const hasCerts = certs.map(cert => cert.code);
 			let certsToShow = [];
 			certs.forEach(cert => {
-				if(cert.class === "major" || cert.class === "center") {
+				if(cert.class === "tier-one" || cert.class === "tier-two") {
 					certsToShow.push(cert);
-				} else {
-					const certPos = cert.code.slice(-3);
-					if(!hasCerts.includes(`p50${certPos}`)) {
-						certsToShow.push(cert);
-					}
 				}
 			});
+
+			certsToShow = certsToShow.sort((a, b) => a.class.localeCompare(b.class, 'en', { numeric: true }) || a.order - b.order)
 			return certsToShow;
 		},
 		sort(p) {
@@ -342,15 +339,11 @@ export default {
 			background: $cert_training;
 		}
 		
-		&.cert_center {
+		&.cert_tier-one {
 			background-color: $secondary-color-dark;
 		}
 
-		&.cert_major {
-			background: $secondary-color;
-		}
-
-		&.cert_minor {
+		&.cert_tier-two {
 			background: $secondary-color-light;
 		}
 	}

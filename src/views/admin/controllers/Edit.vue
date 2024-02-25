@@ -132,13 +132,6 @@ export default {
 				oi: '',
 				vis: false,
 				certs: {
-					zab: false,
-					p50app: false,
-					p50twr: false,
-					p50gnd: false,
-					app: false,
-					twr: false,
-					gnd: false
 				},
 				roles: {
 					atm: false,
