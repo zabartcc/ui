@@ -127,27 +127,29 @@ export default {
 	},
 	computed: {
 		filteredMilestones() {
-			const certs = this.user.data.certCodes;
+			const userCerts = this.user.data.certCodes;
 			const rating = this.user.data.rating;
 
 			if(this.milestones) {
-				const minorPrerequisites = ["obs", "gnd", "twr", "app"];
-				const majorPrerequisites = ["obs", "gnd", "p50gnd", "p50twr", "p50app"];
+				const minorPrerequisites = ["obs"];
+				const majorPrerequisites = ["obs", "kabq", "kphxground", "kphxtower", "p50"];
 
 				let milestonesShowed = this.milestones.filter((milestone) => {
-					if(this.user.data.vis) return (milestone.certCode.substring(0, 3) === "vis" && milestone.rating <= rating) || milestone.code === "GT1";
-					else {
-						return (  // This is still slightly hard to understand.  It returns the milestones that haven't been completed yet for the rating, or the P50 equivelant (if no major cert has been attained yet) and next rating's milestones, or center milestones if all other certs have been attained.
-							!certs.includes(milestone.certCode) &&
-							(
-								milestone.code === "GT1" ||
-								(milestone.certCode.substring(0, 3) === "p50" && certs.includes(milestone.certCode.slice(-3)) && certs.includes(majorPrerequisites[milestone.rating - 1])) || 
-								(milestone.certCode.substring(0, 3) !== "p50" && (certs.includes(minorPrerequisites[milestone.rating - 1]) || (milestone.rating === "1" && certs.length === 0)) && milestone.certCode !== "zab") ||
-								(milestone.certCode === "zab" && certs.includes("p50app"))
-							) && 
-							milestone.certCode.substring(0, 3) !== "vis"
-						);
+					const milestoneAvailableAtRating = milestone.availableAtRatings.includes(rating); // Milestones available for rating.
+					let userHasTierOneForCurrentRating = false;
+
+					// See if the user has a tier one cert for their current rating.
+					if (rating == 2) {
+						userHasTierOneForCurrentRating = userCerts.includes('kphxground');
+					} else if (rating == 3) {
+						userHasTierOneForCurrentRating = userCerts.includes('kphxtower');
 					}
+					else if (rating == 4) {
+						userHasTierOneForCurrentRating = userCerts.includes('p50');
+					}
+
+					// Return milestones available to user (hide tier one if they have the cert already).
+					return milestoneAvailableAtRating && !(milestone.hiddenWhenControllerHasTierOne && userHasTierOneForCurrentRating)
 				});
 
 				return milestonesShowed;
