@@ -35,44 +35,60 @@
 							<i v-else class="material-icons red-text text-darken-1">remove_circle</i>
 						</div>
 					</div>
-					<div class="input-field col s12">
-						<label for="certs" class="active">Certifications</label>
+					<div class="input-field col s5">
+						<label for="certs" class="active">Endorsements</label>
+						<div id="certs_container">
+                            <span 
+                                id="enroute" 
+                                :class="{active: form.certs.enroute}" 
+                                class="cert cert_major" 
+                                @click="toggleCert">Center</span>
+                            <span 
+                                id="p50" 
+                                :class="{active: form.certs.p50}" 
+                                class="cert cert_major" 
+                                @click="toggleCert">P50</span>
+                            <span 
+                                id="kphxtower" 
+                                :class="{active: form.certs.kphxtower}" 
+                                class="cert cert_major" 
+                                @click="toggleCert">KPHX TWR</span>
+							<span 
+                                id="kphxground" 
+                                :class="{active: form.certs.kphxground}" 
+                                class="cert cert_major" 
+                                @click="toggleCert">KPHX GND</span>
+						</div>
+						<div id="tier_one_explainer">
+							<p class="endorsement_category_explainer">Tier One</p>
+						</div>
+					</div>
+					<div class="input-field col s7">
 						<div id="certs_container">
 							<span 
-								id="zab" 
-								:class="{active: form.certs.zab}" 
-								class="cert cert_center" 
-								@click="toggleCert">Albuquerque Center</span>
+								id="kabq" 
+								:class="{active: form.certs.kabq}" 
+								class="cert cert_minor m-1"
+								style="margin-left: 0" 
+								@click="toggleCert">KABQ</span>
 							<span 
-								id="p50app" 
-								:class="{active: form.certs.p50app}" 
-								class="cert cert_major" 
-								@click="toggleCert">Major Approach</span>
+								id="kflg" 
+								:class="{active: form.certs.kflg}" 
+								class="cert cert_minor tier_two_button" 
+								@click="toggleCert">KFLG</span>
 							<span 
-								id="p50twr" 
-								:class="{active: form.certs.p50twr}" 
-								class="cert cert_major" 
-								@click="toggleCert">Major Tower</span>
+								id="kluf" 
+								:class="{active: form.certs.kluf}" 
+								class="cert cert_minor tier_two_button" 
+								@click="toggleCert">KLUF</span>
 							<span 
-								id="p50gnd" 
-								:class="{active: form.certs.p50gnd}" 
-								class="cert cert_major" 
-								@click="toggleCert">Major Ground</span>
-							<span 
-								id="app" 
-								:class="{active: form.certs.app}" 
-								class="cert cert_minor" 
-								@click="toggleCert">Minor Approach</span>
-							<span 
-								id="twr" 
-								:class="{active: form.certs.twr}" 
-								class="cert cert_minor" 
-								@click="toggleCert">Minor Tower</span>
-							<span 
-								id="gnd" 
-								:class="{active: form.certs.gnd}" 
-								class="cert cert_minor" 
-								@click="toggleCert">Minor Ground</span>
+								id="ksaf" 
+								:class="{active: form.certs.ksaf}" 
+								class="cert cert_minor tier_two_button" 
+								@click="toggleCert">KSAF</span>
+						</div>
+						<div id="tier_two_explainer">
+							<p class="endorsement_category_explainer">Tier Two</p>
 						</div>
 					</div>
 					<div class="input-field col s12">
@@ -116,13 +132,6 @@ export default {
 				oi: '',
 				vis: false,
 				certs: {
-					zab: false,
-					p50app: false,
-					p50twr: false,
-					p50gnd: false,
-					app: false,
-					twr: false,
-					gnd: false
 				},
 				roles: {
 					atm: false,
@@ -255,5 +264,14 @@ export default {
 
 #certs_container, #roles_container {
 	margin-top: 5px;
+}
+
+.endorsement_category_explainer {
+	text-style: italic;
+	font-size: 10px;
+}
+
+.tier_two_button {
+	margin: 0 5px;
 }
 </style>

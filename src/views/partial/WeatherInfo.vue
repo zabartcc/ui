@@ -112,12 +112,12 @@ export default {
 					parsedMetar: null,
 					configs: {
 						landing: {
-							NW: '29R',
-							SE: '11L',
+							NW: '30',
+							SE: '12',
 						}, 
 						departing: {
-							NW: '29R',
-							SE: '11L',
+							NW: '30',
+							SE: '12',
 						}
 					},
 					getLanding: function() {
