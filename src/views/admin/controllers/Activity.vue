@@ -67,7 +67,7 @@
 										</span>
 									</div>
 									<div class="certifications training_request" v-if="controller.rating >= 0">
-										Controller has made <b>{{controller.totalRequests}}</b> training request(s) in the last 60 days
+										Controller has made <b>{{controller.totalRequests}}</b> training request(s) in the last 90 days
 									</div>
 								</div>
 							</router-link>
@@ -126,7 +126,7 @@ export default {
 	methods: {
 		async getActivity() {
 			const d = new Date();
-			this.chkDate = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() - 61));
+			this.chkDate = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() - 91));
 			const {data: reportData} = await zabApi.get('/stats/activity');
 			this.report = reportData.data;
 		},
