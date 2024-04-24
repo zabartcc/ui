@@ -178,3 +178,7 @@ select:not(.materialize-select):not(.browser-default) {
 .table_wrapper {
 	overflow: auto;
 }
+
+.flatpickr-monthDropdown-months {
+	opacity: 1;
+}
