@@ -22,7 +22,7 @@
 				<div class="secondary-content"><i class="material-icons">event_note</i></div>
 			</router-link>
       <router-link to="/ins/training/sessions/picked-up" class="collection-item">
-        Picked-up Sessions
+        Picked Up Sessions
         <div class="secondary-content"><i class="material-icons">groups</i></div>
       </router-link>
 		</div>
