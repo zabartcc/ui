@@ -146,6 +146,10 @@ const routes = [
         component: () => import("../views/instructor/training/Sessions.vue"),
       },
       {
+        path: "training/sessions/picked-up",
+        component: () => import("../views/instructor/training/PickedUpSessions.vue"),
+      },
+      {
         path: "training/sessions/:cid",
         component: () =>
           import("../views/instructor/training/UserSessions.vue"),
