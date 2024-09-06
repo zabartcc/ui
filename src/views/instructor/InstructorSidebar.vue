@@ -13,14 +13,14 @@
 				Solo Certifications
 				<div class="secondary-content"><i class="material-icons">streetview</i></div>
 			</router-link>
-			<router-link to="https://training.zabartcc.net/" class="collection-item">
+			<a href="https://training.zabartcc.net/" class="collection-item">
 				Training Requests
 				<div class="secondary-content"><i class="material-icons">event</i></div>
-			</router-link>
-			<router-link to="https://training.zabartcc.net/" class="collection-item">
+			</a>
+			<a href="https://training.zabartcc.net/" class="collection-item">
 				Training Sessions
 				<div class="secondary-content"><i class="material-icons">event_note</i></div>
-			</router-link>
+			</a>
 		</div>
 	</div>
 </template>
