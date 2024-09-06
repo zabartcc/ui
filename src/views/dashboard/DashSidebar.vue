@@ -13,10 +13,10 @@
 				IDS
 				<div class="secondary-content"><i class="material-icons">computer</i></div>
 			</router-link>
-			<router-link to="https://training.zabartcc.net/" class="collection-item">
+			<a href="https://training.zabartcc.net/" class="collection-item">
 				Training Sessions
 				<div class="secondary-content"><i class="material-icons">insert_invitation</i></div>
-			</router-link>
+			</a>
 			<router-link to="/dash/feedback" class="collection-item">
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
