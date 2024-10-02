@@ -8,10 +8,13 @@
 			<div v-else>
 				<div class="hours_info">
 					<span>
-						You have controlled for <b>{{ hoursCalc }}</b> in the past 60 days.
+						You have controlled for <b>{{ hoursCalc }}</b> in the past quarter.
 					</span>
-					<span v-if="user.data.rating !== 1">
-						You will need to control again by <b>{{ calcControlDate }}</b> to prevent removal from the roster.
+					<span v-if="user.data.rating !== 0">
+						You will need to control for 3 hours at any ZAB facility every quarter to prevent removal from the roster.
+					</span>
+					<span v-else="user.data.rating !== 180"> 
+						You have met the minimum controlling requirements for this quarter!
 					</span>
 				</div>
 				<span class="section_title">
