@@ -70,6 +70,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { zabApi } from '@/helpers/axios.js';
+import { DateTime as luxon } from 'luxon';
+
 export default {
 	name: 'UserDash',
 	title: 'Dashboard',
@@ -124,9 +126,11 @@ export default {
 			'user'
 		]),
 		hoursCalc() {
+			const now = luxon.utc();
+			const startOfQuarter = now.startOf('quarter');
 			let seconds = 0;
 			for(const session of this.controllingSessions) {
-				if((Math.abs(new Date().getTime() - new Date(session.timeEnd).getTime()) / (1000 * 60 * 60 * 24) < 91)) { // Update from 61 to 91 days
+				if(new Date(session.timeEnd) >= startOfQuarter.toJSDate()) {
 					const newSeconds = (new Date(session.timeEnd) - new Date(session.timeStart)) / 1000;
 					seconds += newSeconds;
 				}
@@ -134,20 +138,9 @@ export default {
 			return this.sec2hms(seconds);
 		},
 		calcControlDate() {
-			let date = new Date(this.user.data.joinDate ?? Date.now());
-			if(this.controllingSessions.length > 0 ) {
-				let seconds = 0;
-				for (const session of this.controllingSessions) {
-					if(seconds < 10800 && this.approvedAirports.includes(session.position.slice(0, 3))) { // Ensure 3 hours (10800 seconds)
-						const newSeconds = (new Date(session.timeEnd) - new Date(session.timeStart)) / 1000;
-						seconds += newSeconds;
-						date = new Date(session.timeEnd);
-					}
-					if(seconds >= 10800) break;
-				}
-			}
-			date.setUTCDate(date.getUTCDate() + 91); // Update from 61 to 91 days
-			return this.formatDate(date);
+			const now = luxon.utc();
+			const endOfQuarter = now.endOf('quarter');
+			return this.formatDate(endOfQuarter.toJSDate());
 		}
 	}
 };
