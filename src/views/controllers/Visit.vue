@@ -24,7 +24,7 @@
           staff team will review your application as soon as possible. In the
           meantime, if you have any questions or concerns, please don't hesitate
           to
-          <a class="mailto_link" href="mailto:datm@zabartcc.org"
+          <a class="mailto_link" href="mailto:zab-datm@vatusa.net"
             >let the DATM know.</a
           >
         </p>

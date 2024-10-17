@@ -9,7 +9,7 @@
 				Controllers
 				<div class="secondary-content"><i class="material-icons">people</i></div>
 			</router-link>
-			<router-link to="/admin/activity" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta', 'wm'])">
+			<router-link to="/admin/activity" class="collection-item" v-if="requiresAuth(['atm1', 'datm', 'ta', 'wm'])">
 				Controller Activity
 				<div class="secondary-content"><i class="material-icons">assessment</i></div>
 			</router-link>
@@ -21,15 +21,15 @@
 				Downloads
 				<div class="secondary-content"><i class="material-icons">insert_drive_file</i></div>
 			</router-link>
-			<router-link to="/admin/events" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta', 'ec'])">
+			<router-link to="/admin/events" class="collection-item" v-if="requiresAuth(['atm1', 'datm', 'ta', 'ec'])">
 				Events
 				<div class="secondary-content"><i class="material-icons">event</i></div>
 			</router-link>
-			<router-link to="/admin/feedback" class="collection-item" v-if="requiresAuth(['atm', 'datm', 'ta', 'ec'])">
+			<router-link to="/admin/feedback" class="collection-item" v-if="requiresAuth(['atm1', 'datm', 'ta', 'ec'])">
 				Feedback
 				<div class="secondary-content"><i class="material-icons">feedback</i></div>
 			</router-link>
-			<router-link to="/admin/absence" class="collection-item" v-if="requiresAuth(['atm', 'datm'])">
+			<router-link to="/admin/absence" class="collection-item" v-if="requiresAuth(['atm1', 'datm'])">
 				Leave of Absence
 				<div class="secondary-content"><i class="material-icons">access_time</i></div>
 			</router-link>
@@ -37,7 +37,7 @@
 				News
 				<div class="secondary-content"><i class="material-icons">rss_feed</i></div>
 			</router-link>
-			<router-link to="/admin/visit/applications" class="collection-item" v-if="requiresAuth(['atm', 'datm'])">
+			<router-link to="/admin/visit/applications" class="collection-item" v-if="requiresAuth(['atm1', 'datm'])">
 				Visitor Applications
 				<div class="secondary-content"><i class="material-icons">group_add</i></div>
 			</router-link>

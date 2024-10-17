@@ -90,7 +90,7 @@
 					<div class="input-field col s12">
 						<label for="roles" class="active">Roles</label>
 						<div id="roles_container">
-							<span id="atm" class="cert cert_senior" :class="{active: form.roles.atm}">ATM</span>
+							<span id="atm1" class="cert cert_senior" :class="{active: form.roles.atm1}">ATM</span>
 							<span id="datm" class="cert cert_senior" :class="{active: form.roles.datm}">DATM</span>
 							<span id="ta" class="cert cert_senior" :class="{active: form.roles.ta}">TA</span>
 							<span id="ec" class="cert cert_junior" :class="{active: form.roles.ec}">EC</span>
@@ -129,7 +129,7 @@ export default {
 				certs: {
 				},
 				roles: {
-					atm: false,
+					atm1: false,
 					datm: false,
 					ta: false,
 					ec: false,
@@ -249,7 +249,7 @@ export default {
 }
 
 .endorsement_category_explainer {
-	text-style: italic;
+	font-style: italic;
 	font-size: 10px;
 }
 </style>
