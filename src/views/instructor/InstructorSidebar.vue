@@ -13,11 +13,11 @@
 				Solo Certifications
 				<div class="secondary-content"><i class="material-icons">streetview</i></div>
 			</router-link>
-			<a href="https://training.zabartcc.net/" class="collection-item">
+			<a href="https://go.setmore.com/calendar" class="collection-item">
 				Training Requests
 				<div class="secondary-content"><i class="material-icons">event</i></div>
 			</a>
-			<a href="https://training.zabartcc.net/" class="collection-item">
+			<a href="https://zabartcc.notion.site/instructor-home" class="collection-item">
 				Training Sessions
 				<div class="secondary-content"><i class="material-icons">event_note</i></div>
 			</a>
