@@ -3,7 +3,7 @@
 		<div class="card-content">
 			<div class="row row_no_margin">
 				<div class="card-title col s8"><span class="card-title">Training Requests</span></div>
-				<div class="col s4"><a href="https://training.zabartcc.net/"><span class="btn new_event_button right">Request</span></a></div>
+				<div class="col s4"><a href="https://zabartcc.notion.site/"><span class="btn new_event_button right">Request</span></a></div>
 			</div>
 		</div>
 		<div class="loading_container" v-if="!upcomingSessions">
