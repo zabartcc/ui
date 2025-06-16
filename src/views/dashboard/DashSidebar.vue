@@ -13,8 +13,8 @@
 				IDS
 				<div class="secondary-content"><i class="material-icons">computer</i></div>
 			</router-link>
-			<a href="https://training.zabartcc.net/" class="collection-item">
-				Training Sessions
+			<a href="https://zabartcc.notion.site/" class="collection-item">
+				Training Homepage
 				<div class="secondary-content"><i class="material-icons">insert_invitation</i></div>
 			</a>
 			<router-link to="/dash/feedback" class="collection-item">

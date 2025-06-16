@@ -18,7 +18,10 @@
     <div v-else>
       <div class="card">
         <div class="card-content">
-          <span class="card-title">Home Controllers</span>
+          <div class="row row_no_margin">
+	    <div class="card-title col s8"><span class="card-title">Home Controllers</span></div>
+	    <div class="col s4"><a href="https://zabartcc.notion.site/event-endorsements" class="btn new_event_button right">Event Endorsements</a></div>
+	  </div>
         </div>
         <table class="controller_list striped">
           <thead class="controller_list_head">

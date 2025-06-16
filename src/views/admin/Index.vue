@@ -10,7 +10,7 @@
 					<div class="col m4 s12">
 						<div class="card stats_card">
 							<div class="card-content">
-								<h6>Total Hours (This Month)</h6>
+								<h6>Total Hours (This Quarter)</h6>
 								<h5>
 									{{sec2hms(stats.totalTime)}}
 								</h5>
@@ -31,7 +31,7 @@
 					<div class="col m4 s12">
 						<div class="card stats_card">
 							<div class="card-content">
-								<h6>Total Sessions (This Month)</h6>
+								<h6>Total Sessions (This Quarter)</h6>
 								<h5>
 									{{stats.totalSessions}}
 								</h5>

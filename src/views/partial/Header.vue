@@ -125,7 +125,7 @@
                 v-if="user.isLoggedIn && (user.data.isIns || user.data.isStaff)"
               >
                 <a
-                  href="https://sunport.zabartcc.org/mail/"
+                  href="https://www.gmail.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   >Webmail</a
