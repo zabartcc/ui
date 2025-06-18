@@ -22,12 +22,38 @@
 			</div>
 			<div id="assignment_modal" class="modal assignment_modal">
 				<div class="modal-content">
-					<h4>Sign up for {{ event.name }}</h4>
-					<p>The positions for this event will be assigned by the events coordinator. Please indicate up to three preferred positions below. If you do not have a preference, leave the field empty. <br><b>You must press enter after each callsign to add the preference!</b></p>
-					<p>Please be advised that requests are just that — requests. The events coordinator may place you on any (or no) position depending on multiple factors.</p>
-					<div class="chips chips-placeholder"></div>
+
+					<div class="col s12">
+						<h4>Sign up for {{ event.name }}</h4>
+						<p>The positions for this event will be assigned by the Events Team. Please indicate up to three preferred positions below.</p>
+						<p>Please be advised that requests are just that — requests. The Events Team may place you on any (or no) position depending on multiple factors.</p>
+					</div>
+
+					<div class="col s12">
+						<label style="display: block;">1st Position Request</label>
+						<select v-model="positionRequested1" class="materialize-select" style="opacity: 1;">
+							<option value="" selected>Any</option>
+							<option v-for="pos in positionsAvailable" :value="pos.pos">{{pos.pos}}</option>
+						</select>
+					</div>
+
+					<div class="col s12" style="margin-top: 10px">
+						<label style="display: block;">2nd Position Request</label>
+						<select v-model="positionRequested2" class="materialize-select" style="opacity: 1;">
+							<option value="" selected>Any</option>
+							<option v-for="pos in positionsAvailable" :value="pos.pos">{{pos.pos}}</option>
+						</select>
+					</div>
+
+					<div class="col s12" style="margin-top: 10px">
+						<label style="display: block;">3rd Position Request</label>
+						<select v-model="positionRequested3" class="materialize-select" style="opacity: 1;">
+							<option value="" selected>Any</option>
+							<option v-for="pos in positionsAvailable" :value="pos.pos">{{pos.pos}}</option>
+						</select>
+					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer" style="margin-bottom: 15px">
 					<a href="#" class="waves-effect waves-light btn" @click.prevent="addRequest()">Sign up</a>
 					<a href="#!" class="modal-close waves-effect btn-flat">Cancel</a>
 				</div>
@@ -62,17 +88,16 @@ export default {
 					positions: null
 				}
 			},
+			positionsAvailable: [],
+			positionRequested1: "",
+			positionRequested2: "",
+			positionRequested3: ""
 		};
 	},
 	async mounted() {
 		await this.getPositions();
 		M.Modal.init(document.querySelectorAll('.modal'), {
 			preventScrolling: false
-		});
-		this.chips = M.Chips.init(document.querySelector('.chips'), {
-			placeholder: 'Enter a callsign',
-			secondaryPlaceholder: ' ',
-			limit: 3
 		});
 	},
 	methods: {
@@ -85,6 +110,7 @@ export default {
 					this.positionCategories.enroute.positions =  this.event.positions.filter(position => ['CTR'].includes(position.type));
 					this.positionCategories.tracon.positions = this.event.positions.filter(position => ['DEP', 'APP'].includes(position.type));
 					this.positionCategories.local.positions = this.event.positions.filter(position => ['DEL', 'GND', 'TWR'].includes(position.type));
+					this.positionsAvailable = this.event.positions;
 				}
 			} catch(e) {
 				console.log(e);
@@ -92,8 +118,12 @@ export default {
 		},
 		async addRequest() {
 			try {
-				const requests = this.chips.chipsData.map(chip => chip.tag);
-				const { data } = await zabApi.put(`/event/${this.$route.params.slug}/signup`, {requests});
+				const body = 
+				{
+					requests: [this.positionRequested1, this.positionRequested2, this.positionRequested3]
+				};
+
+				const { data } = await zabApi.put(`/event/${this.$route.params.slug}/signup`, body);
 				if(data.ret_det.code === 200) {
 					this.toastSuccess('Request submitted');
 
@@ -110,9 +140,6 @@ export default {
 		},
 		async deleteRequest() {
 			try {
-				while(this.chips.chipsData.length) {
-					this.chips.deleteChip(0);
-				}
 
 				const { data } = await zabApi.delete(`/event/${this.$route.params.slug}/signup`);
 

@@ -69,7 +69,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal-footer" v-if="requiresAuth(['atm1', 'datm', 'ta'])">
+							<div class="modal-footer" v-if="requiresAuth(['atm', 'datm', 'ta'])">
 								<a href="#!" class="waves-effect waves-light btn" @click="approveFeedback(feedback._id)">Approve</a>
 								<a href="#!" class="waves-effect waves-light btn-flat" @click="rejectFeedback(feedback._id)">Reject</a>
 							</div>
