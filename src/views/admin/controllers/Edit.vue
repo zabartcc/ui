@@ -94,7 +94,7 @@
 					<div class="input-field col s12">
 						<label for="roles" class="active">Roles</label>
 						<div id="roles_container">
-							<span id="atm" class="cert cert_senior" :class="{active: form.roles.atm1}" @click="toggleRole">ATM</span>
+							<span id="atm" class="cert cert_senior" :class="{active: form.roles.atm}" @click="toggleRole">ATM</span>
 							<span id="datm" class="cert cert_senior" :class="{active: form.roles.datm}" @click="toggleRole">DATM</span>
 							<span id="ta" class="cert cert_senior" :class="{active: form.roles.ta}" @click="toggleRole">TA</span>
 							<span id="ec" class="cert cert_junior" :class="{active: form.roles.ec}" @click="toggleRole">EC</span>
@@ -134,7 +134,7 @@ export default {
 				certs: {
 				},
 				roles: {
-					atm1: false,
+					atm: false,
 					datm: false,
 					ta: false,
 					ec: false,
