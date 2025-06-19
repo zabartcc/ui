@@ -133,31 +133,31 @@ const routes = [
         path: "solo/new",
         component: () => import("../views/instructor/solocerts/New.vue"),
       },
-      {
-        path: "training/requests",
-        component: () => import("../views/instructor/training/Requests.vue"),
-      },
-      {
-        path: "training/requests/:date",
-        component: () => import("../views/instructor/training/Day.vue"),
-      },
-      {
-        path: "training/sessions",
-        component: () => import("../views/instructor/training/Sessions.vue"),
-      },
-      {
-        path: "training/sessions/:cid",
-        component: () =>
-          import("../views/instructor/training/UserSessions.vue"),
-      },
-      {
-        path: "training/session/edit/:id",
-        component: () => import("../views/instructor/training/EditSession.vue"),
-      },
-      {
-        path: "training/session/:id",
-        component: () => import("../views/instructor/training/ViewSession.vue"),
-      },
+      // {
+      //   path: "training/requests",
+      //   component: () => import("../views/instructor/training/Requests.vue"),
+      // },
+      // {
+      //   path: "training/requests/:date",
+      //   component: () => import("../views/instructor/training/Day.vue"),
+      // },
+      // {
+      //   path: "training/sessions",
+      //   component: () => import("../views/instructor/training/Sessions.vue"),
+      // },
+      // {
+      //   path: "training/sessions/:cid",
+      //   component: () =>
+      //     import("../views/instructor/training/UserSessions.vue"),
+      // },
+      // {
+      //   path: "training/session/edit/:id",
+      //   component: () => import("../views/instructor/training/EditSession.vue"),
+      // },
+      // {
+      //   path: "training/session/:id",
+      //   component: () => import("../views/instructor/training/ViewSession.vue"),
+      // },
     ],
   },
   {
@@ -272,18 +272,18 @@ const routes = [
         path: "feedback",
         component: () => import("../views/dashboard/Feedback.vue"),
       },
-      {
-        path: "training",
-        component: () => import("../views/dashboard/training/Index.vue"),
-      },
-      {
-        path: "training/new",
-        component: () => import("../views/dashboard/training/Request.vue"),
-      },
-      {
-        path: "training/session/:id",
-        component: () => import("../views/dashboard/training/ViewSession.vue"),
-      },
+      // {
+      //   path: "training",
+      //   component: () => import("../views/dashboard/training/Index.vue"),
+      // },
+      // {
+      //   path: "training/new",
+      //   component: () => import("../views/dashboard/training/Request.vue"),
+      // },
+      // {
+      //   path: "training/session/:id",
+      //   component: () => import("../views/dashboard/training/ViewSession.vue"),
+      // },
     ],
   },
   {
