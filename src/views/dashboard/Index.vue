@@ -44,7 +44,7 @@
           </button>
           <button class="btn-flat waves-effect">
             <a
-              href="https://discord.gg/zabartcc"
+              href="https://discord.gg/8fhxbNfuKK"
               target="_blank"
               rel="noreferrer noopener"
               >Join Discord</a
