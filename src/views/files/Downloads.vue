@@ -57,7 +57,7 @@ export default {
       miscFiles.unshift({
         id: "landline",
         name: "Landline ATC Coordination",
-        description: "ATC coordination software used by ZAB controllers.",
+        description: "Virtual ATC coordination software used by controllers.",
         updatedAt: "2026-01-17T00:00:00Z",
         redirectUrl: "https://landline.creativeshrimp.dev/",
       });
