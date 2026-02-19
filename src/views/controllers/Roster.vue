@@ -183,17 +183,31 @@ export default {
     },
     reduceControllerCerts(certs) {
       if (!certs) return [];
-      const hasCerts = certs.map((cert) => cert.code);
       let certsToShow = [];
-			certs.forEach(cert => {
-				if(cert.class === "tier-one" || cert.class === "tier-two") {
-					certsToShow.push(cert);
-				}
-			});
 
-      certsToShow = certsToShow.sort((a, b) => a.class.localeCompare(b.class, 'en', { numeric: true }) || a.order - b.order)
+      certs.forEach((cert) => {
+        const cls = String(cert.class || "").toLowerCase();
+        if (["tier-one", "tier-two", "cpa"].includes(cls)) {
+          certsToShow.push({ ...cert, class: cls });
+        }
+      });
+
+      const classPriority = {
+        "tier-one": 1,
+        "tier-two": 2,
+        "cpa": 3,
+      };
+
+      certsToShow = certsToShow.sort((a, b) => {
+        const ap = classPriority[a.class] ?? 99;
+        const bp = classPriority[b.class] ?? 99;
+        if (ap !== bp) return ap - bp;
+        return (a.order ?? 999) - (b.order ?? 999);
+      });
+
+
       return certsToShow;
-    },
+    }
   },
   computed: {
     ...mapState("user", ["user"]),
@@ -279,6 +293,11 @@ td {
 	&.cert_tier-two {
 		background: $secondary-color-light;
 	}
+  &.cert_cpa {
+    background: #2e7d32;
+    color: #fff;
+  }
+
 }
 
 .tooltipped {

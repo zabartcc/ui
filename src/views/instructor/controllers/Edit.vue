@@ -87,6 +87,33 @@
 							<p class="endorsement_category_explainer">Tier Two</p>
 						</div>
 					</div>
+					<div class="input-field col s7">
+						<div id="certs_container">
+							<span
+							  id="CPALocal"
+							  :class="{ active: form.certs.CPALocal }"
+							  class="cert cert_cpa"
+							  @click="toggleCert"
+							>Local Data</span>
+
+							<span
+							  id="CPATerminal"
+							  :class="{ active: form.certs.CPATerminal }"
+							  class="cert cert_cpa"
+							  @click="toggleCert"
+							>Terminal Data</span>
+
+							<span
+							  id="CPAEnroute"
+							  :class="{ active: form.certs.CPAEnroute }"
+							  class="cert cert_cpa"
+							  @click="toggleCert"
+							>Enroute Data</span>
+						</div>
+						<div id="tier_two_explainer">
+							<p class="endorsement_category_explainer">Combined Position Authority</p>
+						</div>
+					</div>
 					<div class="input-field col s12">
 						<label for="roles" class="active">Roles</label>
 						<div id="roles_container">
@@ -99,6 +126,7 @@
 							<span id="ins" class="cert cert_training" :class="{active: form.roles.ins}">INS</span>
 							<span id="mtr" class="cert cert_training" :class="{active: form.roles.mtr}">MTR</span>
 							<span id="vis" class="cert cert_training" :class="{active: form.vis}">VIS</span>
+							<span id="cpa" class="cert cert_training" :class="{active: form.roles.cm}">CM</span>
 						</div>
 					</div>
 					<div class="input-field col s12">
@@ -137,6 +165,7 @@ export default {
 					wm: false,
 					ins: false,
 					mtr: false,
+					cm: false,
 				},
 			}
 		};
@@ -234,6 +263,10 @@ export default {
 			background: $secondary-color-light;
 			color: #fff;
 		}
+		  &.cert_cpa {
+			background: #2e7d32;
+			color: #fff;
+		  }
 	}
 
 }
