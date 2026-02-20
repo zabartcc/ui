@@ -1,85 +1,141 @@
 <template>
-	<div class="card card_documents">
-		<div class="card-content">
-			<span class="card-title">Documents</span>
-		</div>
-		<div class="row">
-			<div class="col s12">
-				<ul class="tabs tabs-fixed-width">
-					<li class="tab"><a class="active" href="#policy">Policies</a></li>
-					<li class="tab"><a href="#sop">SOPs</a></li>
-					<li class="tab"><a href="#loa">LOAs</a></li>
-					<li class="tab"><a href="#ref">References</a></li>
-					<li class="tab"><a href="#misc">Miscellaneous</a></li>
-				</ul>
-			</div>
-			<div class="loading_container loading_files" v-if="!documents">
-				<Spinner />
-			</div>
-			<div class="tabs_content" v-else>
-				<DocumentCategory v-for="(docs, cat) in documents" :key="cat" :cat="cat" :docs="docs" />
-			</div>
-		</div>
-	</div>
+  <div class="card card_downloads">
+    <div class="card-content">
+      <span class="card-title">Downloads</span>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs tabs-fixed-width">
+          <li class="tab"><a href="#veram">vERAM</a></li>
+          <li class="tab"><a href="#vstars">vSTARS</a></li>
+          <li class="tab"><a href="#vatis">vATIS</a></li>
+          <li class="tab"><a href="#misc">Miscellaneous</a></li>
+        </ul>
+      </div>
+      <div class="loading_container loading_files" v-if="!downloads">
+        <Spinner />
+      </div>
+      <div class="tabs_content" v-else>
+        <DownloadCategory
+          v-for="(files, cat) in downloads"
+          :key="cat"
+          :cat="cat"
+          :files="files"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import {zabApi} from '@/helpers/axios.js';
-import DocumentCategory from './DocumentCategory.vue';
+import { zabApi } from "@/helpers/axios.js";
+import DownloadCategory from "./DownloadCategory.vue";
 
 export default {
-	name: 'Documents',
-	title: 'Documents',
-	data() {
-		return {
-			documents: null
-		};
-	},
-	components: {
-		DocumentCategory
-	},
-	async mounted() {
-		await this.getDocuments();
-		M.Tabs.init(document.querySelectorAll('.tabs'), {});
-	},
-	methods: {
-		async getDocuments() {
-			const {data: fileData} = await zabApi.get('/file/documents');
-			this.documents = {
-				policy: fileData.data.filter(doc => doc.category === 'policy'),
-				loa: fileData.data.filter(doc => doc.category === 'loa'),
-				sop: fileData.data.filter(doc => doc.category === 'sop'),
-				ref: fileData.data.filter(doc => doc.category === 'ref'),
-				misc: fileData.data.filter(doc => doc.category === 'misc'),
-			};
-		},
-	},
+  name: "Downloads",
+  title: "Downloads",
+  data() {
+    return {
+      downloads: null,
+    };
+  },
+  components: {
+    DownloadCategory,
+  },
+  async mounted() {
+    await this.getDownloads();
+    M.Tabs.init(document.querySelectorAll(".tabs"));
+  },
+  methods: {
+    async getDownloads() {
+      const { data: fileData } = await zabApi.get("/file/downloads");
+
+      const miscFiles = fileData.data.filter(
+        (file) => file.category === "misc"
+      );
+
+      miscFiles.unshift({
+        id: "landline",
+        name: "Landline ATC Coordination",
+        description: "Virtual ATC coordination software used by controllers.",
+        updatedAt: "2026-01-17T00:00:00Z",
+        redirectUrl: "https://landline.creativeshrimp.dev/",
+      });
+
+      this.downloads = {
+        veram: fileData.data.filter((file) => file.category === "veram"),
+        vstars: fileData.data.filter((file) => file.category === "vstars"),
+        vatis: fileData.data.filter((file) => file.category === "vatis"),
+        misc: miscFiles,
+      };
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
+.download {
+  padding: 1em 1em 0.5em 1em;
+  transition: background-color 0.3s ease;
+
+  .title {
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+
+  .desc {
+    font-size: 0.9rem;
+  }
+
+  .button {
+    float: right;
+    margin-top: -30px;
+    background: $primary-color-light;
+
+    &.btn {
+      width: auto;
+      padding: 0 0.6em;
+      color: #fff;
+    }
+  }
+
+  .info {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    color: #9e9e9e;
+  }
+
+  &:nth-of-type(odd) {
+    background: hsla(0, 0%, 94.9%, 0.5);
+  }
+
+  &:hover {
+    background: #eaeaea;
+  }
+}
+
 .no_files {
-	padding: 1.5em 1em;
-	font-style: italic;
+  padding: 1.5em 1em;
+  font-style: italic;
 }
 
 .tabs {
-	overflow-x: auto;
+  overflow-x: auto;
 
-	&::-webkit-scrollbar {
-		height: 3px;
-	}
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
 
-	&::-webkit-scrollbar-track {
-		background-color: #fff;
-	}
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
 
-	&::-webkit-scrollbar-thumb:horizontal {
-		background-color: $gray_light;
-	}
+  &::-webkit-scrollbar-thumb:horizontal {
+    background-color: $gray_light;
+  }
 }
 
 .loading_files {
-	padding-top: 5em;
+  padding-top: 5em;
 }
 </style>
